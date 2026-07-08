@@ -5,22 +5,18 @@
     },
     {
         "shortcode_name": "Style 02",
-        "shortcode_settings": "{\"gs_teca_template\":\"gs-teca-style-3\",\"view_type\":\"ticker\"}"
+        "shortcode_settings": "{\"gs_teca_template\":\"gs-teca-style-2\",\"view_type\":\"ticker\"}"
     },
     {
         "shortcode_name": "Style 03",
-        "shortcode_settings": "{\"gs_teca_template\":\"gs-teca-style-4\",\"view_type\":\"filter\",\"gs_teca_filter_type\":\"ajax-filter\"}"
+        "shortcode_settings": "{\"gs_teca_template\":\"gs-teca-style-3\",\"view_type\":\"filter\",\"gs_teca_filter_type\":\"ajax-filter\"}"
     },
     {
         "shortcode_name": "List 01",
-        "shortcode_settings": "{\"gs_teca_template\":\"gs-teca-list-style-2\",\"view_type\":\"grid\",\"pagination_type\":\"load-more-button\"}"
+        "shortcode_settings": "{\"gs_teca_template\":\"gs-teca-list-style-1\",\"view_type\":\"grid\",\"pagination_type\":\"load-more-button\"}"
     },
     {
         "shortcode_name": "Table 01",
-        "shortcode_settings": "{\"gs_teca_template\":\"gs-teca-table-style-2\",\"view_type\":\"filter\",\"gs_teca_filter_type\":\"normal-filter\"}"
-    },
-    {
-        "shortcode_name": "List 02",
-        "shortcode_settings": "{\"gs_teca_template\":\"gs-teca-list-style-3\",\"view_type\":\"grid\",\"pagination_type\":\"ajax-pagination\"}"
+        "shortcode_settings": "{\"gs_teca_template\":\"gs-teca-table-style-1\",\"view_type\":\"filter\",\"gs_teca_filter_type\":\"normal-filter\"}"
     }
 ]
