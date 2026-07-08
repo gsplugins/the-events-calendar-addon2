@@ -2205,7 +2205,7 @@ final class Builder {
         $prefs = [
             
             'gs_teca_nxt_prev'                         => 'off',
-            'gs_teca_enable_multilingual'              => 'on',
+            'gs_teca_enable_multilingual'              => 'off',
             'gs_teca_custom_css'                       => '',
             'anchor_tag_rel'                           => 'noopener',
             
