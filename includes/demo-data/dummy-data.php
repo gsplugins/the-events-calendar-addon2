@@ -11,7 +11,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
     final class GS_TECA_Dummy_Data {
 
         private static $_instance = null;
-        const DEMO_DATETIME_REPAIR_VERSION = 2;
+        const DEMO_DATETIME_REPAIR_VERSION = 3;
         
         public static function get_instance() {
 
@@ -436,8 +436,11 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 return;
             }
 
-            foreach ( $this->get_dummy_events() as $event ) {
-                teca_sync_event_via_tec( $event->ID, $event->post_date, true );
+            foreach ( $this->get_dummy_events() as $index => $event ) {
+                $schedule = teca_get_demo_event_datetime_pair( $index );
+
+                teca_force_demo_event_published( $event->ID );
+                teca_sync_event_via_tec( $event->ID, $schedule['start'], true );
             }
 
             teca_flush_event_caches_after_demo_import();
@@ -447,8 +450,13 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
 
         public function repair_demo_event_datetimes() {
 
-            foreach ( $this->get_dummy_events() as $event ) {
-                teca_sync_event_via_tec( $event->ID, $event->post_date, true );
+            $events = $this->get_dummy_events();
+
+            foreach ( $events as $index => $event ) {
+                $schedule = teca_get_demo_event_datetime_pair( $index );
+
+                teca_force_demo_event_published( $event->ID );
+                teca_sync_event_via_tec( $event->ID, $schedule['start'], true );
             }
         }
 
