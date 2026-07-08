@@ -2226,7 +2226,7 @@ final class Builder {
             'gs_teca_view_details_text'                => __( 'View Details', 'the-events-calendar-addon' ),
             'gs_teca_related_events_title'             => __( 'Related Events', 'the-events-calendar-addon' ),
             'gs_teca_event_website_text'               => __( 'Event Website', 'the-events-calendar-addon' ),
-            'gs_teca_add_to_calendar_text'             => '',
+            'gs_teca_add_to_calendar_text'             => __( 'Add to calendar', 'the-events-calendar-addon' ),
         ];
 
         return $translations;
@@ -2635,6 +2635,12 @@ final class Builder {
         $settings['gs_teca_related_events_title']    = sanitize_text_field( $settings['gs_teca_related_events_title'] );
         $settings['gs_teca_event_website_text']      = sanitize_text_field( $settings['gs_teca_event_website_text'] );
         $settings['gs_teca_add_to_calendar_text']    = sanitize_text_field( $settings['gs_teca_add_to_calendar_text'] );
+
+        // Legacy installs may have an empty string saved; treat that as unset so the default shows like "More" / "Prev".
+        if ( '' === trim( $settings['gs_teca_add_to_calendar_text'] ) ) {
+            $settings['gs_teca_add_to_calendar_text'] = $defaults['gs_teca_add_to_calendar_text'];
+        }
+
         $settings['gs_teca_custom_css']        = wp_strip_all_tags( $settings['gs_teca_custom_css'] );
 
         return $settings;

@@ -237,7 +237,7 @@ function teca_get_google_calendar_button_label_default( $context = 'card' ) {
 		return __( 'Add to Calendar', 'the-events-calendar-addon' );
 	}
 
-	return __( 'Add to Google Calendar', 'the-events-calendar-addon' );
+	return __( 'Add to calendar', 'the-events-calendar-addon' );
 }
 
 /**
