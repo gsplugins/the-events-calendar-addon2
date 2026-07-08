@@ -1,5 +1,5 @@
 <template>
-    <div :class="['group-control--wrapper typography-control', isHasValue ? 'group-has--values' : '', proLocked ? 'sh-disabled' : '']">
+    <div :class="['group-control--wrapper typography-control', isHasValue ? 'group-has--values' : '']">
         <div class="group-control--trigger teca-style-control-actions">
             <a href="#" @click.prevent.stop="toggleControls" :title="editLabel" :aria-label="editLabel">
                 <i class="zmdi zmdi-edit"></i>
@@ -181,14 +181,6 @@ export default {
             default() {
                 return this.getDefaults();
             }
-        },
-        proLocked: {
-            type: Boolean,
-            default: false
-        },
-        proLockedMessage: {
-            type: String,
-            default: 'This typography control is available in the Pro version only.'
         }
     },
 
@@ -220,19 +212,6 @@ export default {
     },
 
     methods: {
-        showProLockedAlert() {
-            alert(this.proLockedMessage);
-        },
-
-        guardProLocked() {
-            if (this.proLocked) {
-                this.showProLockedAlert();
-                return true;
-            }
-
-            return false;
-        },
-
         getControlToFieldMap() {
             return {
                 getFonts: 'font_family',
@@ -391,10 +370,6 @@ export default {
         },
 
         resetTypography(event) {
-            if (this.guardProLocked()) {
-                return;
-            }
-
             if (event) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -418,10 +393,6 @@ export default {
             });
         },
         toggleControls() {
-            if (this.guardProLocked()) {
-                return;
-            }
-
             this.showControls = !this.showControls;
             if (this.showControls) {
                 window.dispatchEvent(new CustomEvent('typography-popup-open', {
@@ -492,12 +463,6 @@ export default {
 
         updateValue() {
             if (this.isSyncingFromParent || this.isResetting) {
-                return;
-            }
-
-            if (this.proLocked) {
-                this.showProLockedAlert();
-                this.syncLocalValueFromProp();
                 return;
             }
 

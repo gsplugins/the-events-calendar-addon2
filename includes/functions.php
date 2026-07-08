@@ -1,7 +1,6 @@
 <?php 
 
 namespace GS_TECA;
-use function GS_TECA_PRO\is_pro_valid;
 
 require_once GS_TECA_PLUGIN_DIR . 'includes/calendar-renderer.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/teca-calendar-layout.php';
@@ -14,40 +13,15 @@ require_once GS_TECA_PLUGIN_DIR . 'includes/timeline-renderer.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/accordion-renderer.php';
 
 function is_pro_compatible() {
-    require_once ABSPATH . 'wp-admin/includes/plugin.php';
-    if ( defined('GS_TECA_PRO_VERSION') && is_plugin_active( GS_TECA_PRO_PLUGIN ) ) {
-        if ( version_compare( GS_TECA_PRO_VERSION, GS_TECA_MIN_PRO_VERSION, '<' ) ) {
-            add_action( 'admin_notices', 'GS_TECA\pro_compatibility_notice' );
-            return false;
-        }
-    }
     return true;
 }
 
 function is_pro_active() {
-    require_once ABSPATH . 'wp-admin/includes/plugin.php';
-    return defined('GS_TECA_PRO_VERSION') && is_plugin_active( GS_TECA_PRO_PLUGIN );
+    return false;
 }
 
-function is_pro_active_and_valid(){
-    return is_pro_active() && is_pro_valid();
-}
-
-function pro_compatibility_notice() {
-
-    $screen = get_current_screen();
-    
-    if ( isset( $screen->parent_file ) && 'plugins.php' === $screen->parent_file && 'update' === $screen->id ) return;
-    if ( 'update' === $screen->base && 'update' === $screen->id ) return;
-
-    if ( ! current_user_can( 'update_plugins' ) ) return;
-
-    $upgrade_url = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' . GS_TECA_PRO_PLUGIN ), 'upgrade-plugin_' . GS_TECA_PRO_PLUGIN );
-    $message = '<p>' . __( 'The Events Calendar Addon is not working because you need to upgrade The Events Calendar Addon Pro plugin to latest version.', 'the-events-calendar-addon' ) . '</p>';
-    $message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $upgrade_url, __( 'Upgrade  The Events Calendar Addon Pro Now', 'the-events-calendar-addon' ) ) . '</p>';
-
-    echo esc_html('<div class="error"><p>' . $message . '</p></div>');
-    
+function is_pro_active_and_valid() {
+    return false;
 }
 
 /**
@@ -64,17 +38,6 @@ function on_deactivation() {
     delete_option('gs_teca_active_time');
     delete_option('gs_teca_maybe_later');
     delete_option('gsadmin_maybe_later');
-}
-
-/**
- * Plugins action links
- */
-function add_pro_link( $links ) {
-    if ( ! is_pro_active_and_valid() ) {
-        $links[] = '<a style="color: red; font-weight: bold;" class="gs-pro-link" href="https://www.gsplugins.com/product/the-events-calendar-addon" target="_blank">Go Pro!</a>';
-    }
-    $links[] = '<a href="https://www.gsplugins.com/wordpress-plugins" target="_blank">GS Plugins</a>';
-    return $links;
 }
 
 /**
@@ -928,16 +891,7 @@ function gs_validate_boolean( $var ) {
 }
 
 function disable_pro_items( $free_items, $pro_items ) {
-
-    if (!is_pro_active_and_valid()) {
-        $pro_items = array_map(function ($item) {
-            $item['label'] = $item['label'] . ' (Pro)';
-            $item['pro'] = true;
-            return $item;
-        }, $pro_items);
-    }
-
-    return array_merge($free_items, $pro_items);
+    return $free_items;
 }
 
 /**
@@ -1319,21 +1273,18 @@ function teca_order_theme_template_options( array $options, array $slug_order ) 
 }
 
 function apply_pro_guards( array $options, array $values, bool $reverse = false ): array {
-    // Skip if Pro is active and valid
-    if ( is_pro_active_and_valid() ) {
-        return $options;
-    }
-
     $checker = $reverse
-        ? fn($val) => ! in_array( $val, $values, true )
-        : fn($val) =>   in_array( $val, $values, true );
+        ? static fn( $val ) => in_array( $val, $values, true )
+        : static fn( $val ) => ! in_array( $val, $values, true );
 
-    return array_map( static function( $item ) use ( $checker ) {
-        if ( $checker( $item['value'] ?? null ) ) {
-            $item['pro'] = true;
-        }
-        return $item;
-    }, $options );
+    return array_values(
+        array_filter(
+            $options,
+            static function( $item ) use ( $checker ) {
+                return $checker( $item['value'] ?? null );
+            }
+        )
+    );
 }
 
 

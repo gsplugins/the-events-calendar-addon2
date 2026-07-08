@@ -20,38 +20,6 @@
                             </span>
                             <span class="gs-nav__label">Single Event</span>
                         </li>
-
-                        <!-- archive group -->
-                        <li class="gs-nav__group">
-                            <button
-                                class="gs-nav__group-btn"
-                                :class="{ 'is-open': openGroups.archive }"
-                                @click="toggleGroup('archive')"
-                                type="button"
-                            >
-                                <span class="gs-nav__icon" v-html="icons.archive"></span>
-                                <span class="gs-nav__label">Archive</span>
-                                <span class="gs-nav__caret" aria-hidden="true"></span>
-                            </button>
-
-                            <ul class="gs-sub" v-show="openGroups.archive">
-                                <li 
-                                    class="gs-sub__item"
-                                    :class="{ 'is-active': activeMain==='archive' && activeSub === 'category' }"
-                                    @click="activate({ type:'sub', main:'archive', key: 'category' })">
-                                    <span class="gs-sub__dot" aria-hidden="true"></span>
-                                    <span class="gs-sub__label">Category</span>
-                                </li>
-
-                                <li 
-                                    class="gs-sub__item"
-                                    :class="{ 'is-active': activeMain==='archive' && activeSub === 'tags' }"
-                                    @click="activate({ type:'sub', main:'archive', key: 'tags' })">
-                                    <span class="gs-sub__dot" aria-hidden="true"></span>
-                                    <span class="gs-sub__label">Tags</span>
-                                </li>
-                            </ul>
-                        </li>
                     </ul>
                 </aside>
 
@@ -69,7 +37,7 @@
                                     </div>
 
                                     <div class="gs-col-xs-12">
-                                        <input-select class="" key="single_page_style" id="single_page_style" v-model="layout.single_page_style" :options="layout_options.single_page_style" :placeholder="translation('single_page_style')" :pro-locked-message="translation('single_page_style_pro_message')"></input-select>
+                                        <input-select class="" key="single_page_style" id="single_page_style" v-model="layout.single_page_style" :options="layout_options.single_page_style" :placeholder="translation('single_page_style')"></input-select>
                                     </div>
                                 </div>
                             </div>
@@ -155,96 +123,6 @@
                             </template>
                         </div>
 
-                        <div v-if="activeSub === 'category'">
-
-                            <div class="shortcode-setting--row shortcode-setting--row-v2">
-                                <label class="m-t-10" for="event_cat">{{translation('event_cat')}}:</label>
-                                <input-toggle class="m-t-6" name="event_cat" v-model="layout.event_cat" offLabel="Off" onLabel="On"></input-toggle>
-                            </div>
-                            
-                            <template v-if="layout.event_cat">
-
-                                <div class="shortcode-setting--row">
-
-                                    <div class="gs-roow row-20">
-
-                                        <div class="gs-col-xs-12">
-                                            <label class="m-t-10" for="event_cat_shortcode">{{translation('event_select_shortcode')}}:</label>
-                                        </div>
-
-                                        <div class="gs-col-xs-12">
-                                            <input-select key="event_cat_shortcode" id="event_cat_shortcode" v-model="layout.event_cat_shortcode" :options="layout_options.shortcodes" :placeholder="translation('posts_select_shortcode')"></input-select>
-                                        </div>
-
-                                    </div>
-                                
-                                </div>
-
-                                <div class="shortcode-setting--row">
-
-                                    <div class="gs-roow row-20">
-
-                                        <div class="gs-col-xs-12">
-                                            <label class="m-t-10" for="event_cat_replace_type">{{translation('event_replace_type')}}:</label>
-                                        </div>
-
-                                        <div class="gs-col-xs-12">
-                                            <input-select key="event_cat_replace_type" id="event_cat_replace_type" v-model="layout.event_cat_replace_type" :options="layout_options.replace_types" :placeholder="translation('posts_replace_type')"></input-select>
-                                        </div>
-
-                                    </div>
-                                
-                                </div>
-
-                            </template>
-
-                        </div>
-
-                        <div v-if="activeSub === 'tags'">
-
-                            <div class="shortcode-setting--row shortcode-setting--row-v2">
-                                <label class="m-t-10" for="event_tag">{{translation('event_tag')}}:</label>
-                                <input-toggle class="m-t-6" name="event_tag" v-model="layout.event_tag" offLabel="Off" onLabel="On"></input-toggle>
-                            </div>
-                            
-                            <template v-if="layout.event_tag">
-
-                                <div class="shortcode-setting--row">
-
-                                    <div class="gs-roow row-20">
-
-                                        <div class="gs-col-xs-12">
-                                            <label class="m-t-10" for="event_tag_shortcode">{{translation('event_select_shortcode')}}:</label>
-                                        </div>
-
-                                        <div class="gs-col-xs-12">
-                                            <input-select key="event_tag_shortcode" id="event_tag_shortcode" v-model="layout.event_tag_shortcode" :options="layout_options.shortcodes" :placeholder="translation('posts_select_shortcode')"></input-select>
-                                        </div>
-
-                                    </div>
-                                
-                                </div>
-
-                                <div class="shortcode-setting--row">
-
-                                    <div class="gs-roow row-20">
-
-                                        <div class="gs-col-xs-12">
-                                            <label class="m-t-10" for="event_tag_replace_type">{{translation('event_replace_type')}}:</label>
-                                        </div>
-
-                                        <div class="gs-col-xs-12">
-                                            <input-select key="event_tag_replace_type" id="event_tag_replace_type" v-model="layout.event_tag_replace_type" :options="layout_options.replace_types" :placeholder="translation('posts_replace_type')"></input-select>
-                                        </div>
-
-                                    </div>
-                                
-                                </div>
-
-                            </template>
-
-                        </div>
-
                     </div>
                 </section>
             </div>
@@ -272,30 +150,11 @@ export default {
                 date_formats: {}
             },
             layout_options: {},  
-            // active location
-            activeMain: 'archive',
-            activeSub: 'category',
-            // groups open/close
-            openGroups: { archive: true },
+            activeMain: 'singular',
 
-            // icons (inline svgs, raw)
             icons: {
                 single:'<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M7 3h6l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4z"/><path d="M13 3v6h6"/></svg>',
-                search:'<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>',
-                archive:'<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="4"/><path d="M5 8v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8"/></svg>',
             },
-
-            // simple (non-group) items
-            flatItems: [
-                { key: 'single', label: 'Singular', icon: null, type: 'item' }
-            ],
-
-            // archive children
-            archiveChildren: [
-                { key: 'category', label: 'Category' },
-                { key: 'tags', label: 'Tags' },
-                { key: 'date', label: 'Date' }
-            ],
         };
     },
 
@@ -310,24 +169,10 @@ export default {
 
     },
 
-    created() {
-        // attach SVGs to flat items
-        this.flatItems = this.flatItems.map(it => ({ ...it, icon: this.icons[it.key] || this.icons.all }));
-    },
-
     computed: {
 
-        currentSubLabel() {
-            const found = this.archiveChildren.find(c => c.key === this.activeSub);
-            return found ? found.label : '';
-        },
-
         sectionHeading() {
-            if (this.activeMain === "archive") {
-                return `${this.currentSubLabel} Archive Template`;
-            }
-            const cur = this.flatItems.find((i) => i.key === this.activeMain);
-            return cur ? cur.label : "Single Page Template";
+            return "Single Page Template";
         },
 
         shownTemplates() {
@@ -342,22 +187,12 @@ export default {
             return value === true || value === 'on' || value === 1 || value === '1';
         },
 
-        toggleGroup(key) {
-            this.openGroups[key] = !this.openGroups[key];
+        isActive(key) {
+            return this.activeMain === key;
         },
 
-        isActive(item) {
-            return this.activeMain === item.key;
-        },
-
-        activate(item) {
-            if (item.type === 'sub') {
-                this.activeMain = item.main;
-                this.activeSub  = item.key;
-                return;
-            }
-            this.activeMain = item.key;
-            if (item.key !== 'archive') this.activeSub = '';
+        activate(key) {
+            this.activeMain = key;
         },
 
         getLayout( json = false ) {
@@ -463,8 +298,7 @@ export default {
         },
 
         setInitialSettings() {
-            const layoutOptions = this.applyProLocksToLayoutOptions( this._getLayoutOptions() );
-            this.$set( this, 'layout_options', layoutOptions );
+            this.$set( this, 'layout_options', this._getLayoutOptions() );
             this.setLayout( this._getLayout() );
         },
 
@@ -480,7 +314,7 @@ export default {
             })
             .done(function(response) {
                 if (response && response.data && response.success) {
-                    self.layout_options = self.applyProLocksToLayoutOptions( response.data );
+                    self.layout_options = response.data;
                 }
             })
             .fail(function(response) {

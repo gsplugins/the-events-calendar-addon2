@@ -245,8 +245,6 @@ final class Builder {
             "ajaxurl" => admin_url("admin-ajax.php"),
             "adminurl" => admin_url(),
             "siteurl" => home_url(),
-            'is_pro' => is_pro_active(),
-            'is_pro_valid' => is_pro_active_and_valid(),
         );
 
         $data['shortcode_settings'] = $this->get_shortcode_default_settings();
@@ -1128,9 +1126,9 @@ final class Builder {
             'related_events_sources'                => teca_get_related_events_source_options(),
             'popup_related_events_sources'          => teca_get_related_events_source_options(),
             'details_length_type'                   => $this->get_details_length_type_options(),
-            'color_typography_fields'               => teca_get_color_typography_select_options(),
-            'popup_detail_typography_groups'        => teca_get_popup_detail_typography_select_options(),
-            'popup_detail_color_fields'             => teca_get_popup_detail_color_select_options(),
+            'color_typography_fields'               => teca_get_free_color_typography_select_options(),
+            'popup_detail_typography_groups'        => teca_get_free_popup_detail_typography_select_options(),
+            'popup_detail_color_fields'             => teca_get_free_popup_detail_color_select_options(),
             'popup_detail_design_registry'          => teca_get_popup_detail_design_registry_for_builder(),
             'style_design_registry'                 => teca_get_style_design_registry_for_builder(),
             'date_format_presets'                   => teca_get_date_format_preset_options(),
@@ -1201,7 +1199,7 @@ final class Builder {
 
         $options = apply_pro_guards( $options, $pro_slugs );
 
-        return $this->append_pro_labels_to_order_options( $options );
+        return $options;
     }
 
     public function get_cat_orderby_options() {
@@ -1228,33 +1226,6 @@ final class Builder {
         $pro_slugs = array( 'term_order' );
 
         $options = apply_pro_guards( $options, $pro_slugs );
-
-        return $this->append_pro_labels_to_order_options( $options );
-    }
-
-    /**
-     * Append (Pro) to locked order dropdown options when Pro is inactive.
-     *
-     * @param array<int, array<string, mixed>> $options Dropdown options.
-     * @return array<int, array<string, mixed>>
-     */
-    private function append_pro_labels_to_order_options( array $options ) {
-        if ( is_pro_active_and_valid() ) {
-            return $options;
-        }
-
-        foreach ( $options as &$item ) {
-            if ( empty( $item['pro'] ) ) {
-                continue;
-            }
-
-            $label = (string) ( $item['label'] ?? '' );
-
-            if ( false === strpos( $label, '(Pro)' ) ) {
-                $item['label'] = $label . ' (Pro)';
-            }
-        }
-        unset( $item );
 
         return $options;
     }
@@ -1310,14 +1281,7 @@ final class Builder {
     }
 
     public function get_popup_styles() {
-        if ( is_pro_active_and_valid() ) {
-            return self::get_all_popup_style_options();
-        }
-
-        return disable_pro_items(
-            self::get_free_popup_style_options(),
-            self::get_pro_popup_style_options()
-        );
+        return self::get_free_popup_style_options();
     }
 
     /**
@@ -1391,14 +1355,7 @@ final class Builder {
 
 
     public function get_shortcode_options_paginations() {
-        if ( is_pro_active_and_valid() ) {
-            return self::get_all_pagination_type_options();
-        }
-
-        return disable_pro_items(
-            self::get_free_pagination_type_options(),
-            self::get_pro_pagination_type_options()
-        );
+        return self::get_free_pagination_type_options();
     }
 
     /**
@@ -1684,14 +1641,7 @@ final class Builder {
     }
 
     public function get_theme_styles() {
-        if ( is_pro_active_and_valid() ) {
-            return self::get_all_view_type_options();
-        }
-
-        $free_view_types = self::get_free_view_types();
-        $pro_view_types  = self::get_pro_view_types();
-
-        return disable_pro_items( $free_view_types, $pro_view_types );
+        return self::get_free_view_types();
     }
 
     /**
@@ -1868,22 +1818,7 @@ final class Builder {
     }
 
     public function get_shortcode_templates() {
-        $extra_pro_themes = apply_filters( 'gs_teca_pro_shortcode_templates', array() );
-
-        if ( is_pro_active_and_valid() ) {
-            $themes = self::get_all_theme_template_options();
-
-            if ( ! empty( $extra_pro_themes ) ) {
-                $themes = array_merge( $themes, $extra_pro_themes );
-            }
-        } else {
-            $free_themes = self::get_free_templates();
-            $pro_themes  = self::get_pro_templates();
-
-            $themes = disable_pro_items( $free_themes, $pro_themes );
-        }
-
-        return apply_filters( 'gs_teca_shortcode_templates', $themes );
+        return apply_filters( 'gs_teca_shortcode_templates', self::get_free_templates() );
     }
 
     public static function get_all_theme_template_options() {
@@ -2462,14 +2397,7 @@ final class Builder {
     }
 
      public function get_single_page_style() {
-        if ( is_pro_active_and_valid() ) {
-            return self::get_all_single_page_style_options();
-        }
-
-        return disable_pro_items(
-            self::get_free_single_page_style_options(),
-            self::get_pro_single_page_style_options()
-        );
+        return self::get_free_single_page_style_options();
     }
 
     /**

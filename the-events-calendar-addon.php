@@ -32,9 +32,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 if ( ! defined( 'GS_TECA_VERSION' ) )
     define( 'GS_TECA_VERSION', '1.0.0' );
 
-if ( ! defined( 'GS_TECA_MIN_PRO_VERSION' ) )
-    define( 'GS_TECA_MIN_PRO_VERSION', '1.0.0' );
-
 if ( ! defined( 'GS_TECA_MENU_POSITION' ) )
     define( 'GS_TECA_MENU_POSITION', 6 );
 
@@ -50,9 +47,6 @@ if ( ! defined( 'GS_TECA_PLUGIN_URI' ) )
 if ( ! defined('GS_TECA_PLUGIN_URL') ) {
     define( 'GS_TECA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
-
-if ( ! defined( 'GS_TECA_PRO_PLUGIN' ) )
-    define( 'GS_TECA_PRO_PLUGIN', 'the-events-calendar-addon-pro/the-events-calendar-addon-pro.php' );
 
 require_once GS_TECA_PLUGIN_DIR . 'includes/autoloader.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/functions.php';

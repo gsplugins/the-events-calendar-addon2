@@ -159,40 +159,6 @@ const helpers = {
 
 	getFonts() {
 		return GS_TECA_DATA.fonts_data || [];
-	},
-
-	isProValid() {
-		return Boolean( GS_TECA_DATA.is_pro_valid );
-	},
-
-	applyProLocksToOptionList( optionList ) {
-		if ( ! Array.isArray( optionList ) || this.isProValid() ) {
-			return optionList;
-		}
-
-		if ( ! optionList.some( item => item && item.pro ) ) {
-			return optionList;
-		}
-
-		return optionList.map( item => {
-			if ( item && item.pro ) {
-				return Object.assign( {}, item, { disabled: true } );
-			}
-
-			return item;
-		} );
-	},
-
-	applyProLocksToLayoutOptions( layoutOptions ) {
-		if ( ! layoutOptions || typeof layoutOptions !== 'object' ) {
-			return layoutOptions;
-		}
-
-		if ( Array.isArray( layoutOptions.single_page_style ) ) {
-			layoutOptions.single_page_style = this.applyProLocksToOptionList( layoutOptions.single_page_style );
-		}
-
-		return layoutOptions;
 	}
 	
 }

@@ -17,10 +17,6 @@ final class Template_Loader {
     public function __construct() {
 
         self::$plugin_template_path = GS_TECA_PLUGIN_DIR . 'templates/';
-        
-        if ( is_pro_active() ) {
-            // self::$pro_plugin_template_path = GS_PG_PRO_PLUGIN_DIR . 'templates/';
-        }
 
         add_action( 'init', [$this, 'set_theme_template_path'] );
 

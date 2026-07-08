@@ -51,8 +51,8 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 		/**
 		 * Add Sort menu
 		 */
-		public function 	gs_teca_enable_sort() {
-			add_submenu_page('gs-the-events-calendar-addon', 'Sort Events', 'Sort Order', 'edit_posts', 'sort_' . $this->posttype, array( $this, 'dhf_sort'), 4);
+		public function gs_teca_enable_sort() {
+			return;
 		}
 
 		public function dhf_sort() {

@@ -220,14 +220,7 @@ function teca_get_pro_calendar_layout_select_options() {
  * @return array<int, array{label:string, value:string}>
  */
 function teca_get_calendar_layout_select_options() {
-	if ( is_pro_active_and_valid() ) {
-		return teca_get_all_calendar_layout_select_options();
-	}
-
-	return disable_pro_items(
-		teca_get_free_calendar_layout_select_options(),
-		teca_get_pro_calendar_layout_select_options()
-	);
+	return teca_get_free_calendar_layout_select_options();
 }
 
 /**

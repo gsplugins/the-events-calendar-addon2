@@ -1,7 +1,7 @@
 <template>
-    <div :class="['teca-style-control-row teca-color-field', isHasValue ? 'teca-color-field--active' : '', proLocked ? 'sh-disabled' : '']" @click.capture="handleProLockClick">
+    <div :class="['teca-style-control-row teca-color-field', isHasValue ? 'teca-color-field--active' : '']">
         <div class="teca-style-control-label">
-            <label>{{ label }}<span v-if="proLocked"> (Pro)</span></label>
+            <label>{{ label }}</label>
         </div>
         <div class="teca-style-control-actions teca-color-field__controls">
             <input-color v-model="localValue"></input-color>
@@ -42,14 +42,6 @@ export default {
         isCustom: {
             type: Boolean,
             default: false
-        },
-        proLocked: {
-            type: Boolean,
-            default: false
-        },
-        proLockedMessage: {
-            type: String,
-            default: 'This typography control is available in the Pro version only.'
         }
     },
 
@@ -78,25 +70,7 @@ export default {
     },
 
     methods: {
-        handleProLockClick(event) {
-            if (!this.proLocked) {
-                return;
-            }
-
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-
-            alert(this.proLockedMessage);
-        },
-
         resetColor(event) {
-            if (this.proLocked) {
-                this.handleProLockClick(event);
-                return;
-            }
-
             if (event) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -139,12 +113,6 @@ export default {
 
         updateValue() {
             if (this.isSyncingFromParent || this.isResetting) {
-                return;
-            }
-
-            if (this.proLocked) {
-                this.handleProLockClick();
-                this.syncFromProp();
                 return;
             }
 

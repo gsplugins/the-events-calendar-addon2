@@ -37,7 +37,7 @@
 
     <transition :name="transition">
       <ul ref="dropdownMenu" v-if="dropdownOpen" class="dropdown-menu" :style="{ 'max-height': maxHeight }">
-        <li v-for="(option, index) in filteredOptions" v-bind:key="index" :class="{ disabled: isOptionDisabled(option), 'pro-locked': isProLockedOption(option), active: isOptionSelected(option), highlight: index === typeAheadPointer }" @mouseover="typeAheadPointer = index">
+        <li v-for="(option, index) in filteredOptions" v-bind:key="index" :class="{ disabled: isOptionDisabled(option), active: isOptionSelected(option), highlight: index === typeAheadPointer }" @mouseover="typeAheadPointer = index">
           <a @mousedown.prevent="select(option)">
             {{ getOptionLabel(option) }}
           </a>
@@ -118,15 +118,6 @@
       placeholder: {
         type: String,
         default: ''
-      },
-
-      /**
-       * Alert message shown when a Pro-locked option is clicked.
-       * @type {String}
-       */
-      proLockedMessage: {
-        type: String,
-        default: 'This is a premium theme. Please upgrade the plan'
       },
 
       /**
@@ -407,8 +398,7 @@
        */
       select(option) {
         
-        if ( option.disabled || this.isProLockedOption( option ) ) {
-          alert( this.proLockedMessage );
+        if ( option.disabled ) {
           return;
         }
 
@@ -529,11 +519,7 @@
       },
 
       isOptionDisabled(option) {
-        return ( option.disabled && option.disabled === true ) || this.isProLockedOption( option );
-      },
-
-      isProLockedOption( option ) {
-        return Boolean( option && option.pro && option.disabled === true );
+        return option.disabled && option.disabled === true;
       },
 
       /**

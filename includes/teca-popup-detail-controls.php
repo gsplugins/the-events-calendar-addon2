@@ -1028,6 +1028,38 @@ function teca_get_popup_detail_color_select_options() {
 }
 
 /**
+ * Free-only popup detail typography group options for builder UI.
+ *
+ * @return array<int, array{label:string, value:string, setting_key:string}>
+ */
+function teca_get_free_popup_detail_typography_select_options() {
+	return array_values(
+		array_filter(
+			teca_get_popup_detail_typography_select_options(),
+			static function( $option ) {
+				return teca_is_free_popup_detail_typography_group( $option['value'] ?? '' );
+			}
+		)
+	);
+}
+
+/**
+ * Free-only popup detail color field options for builder UI.
+ *
+ * @return array<int, array{label:string, value:string, group:string}>
+ */
+function teca_get_free_popup_detail_color_select_options() {
+	return array_values(
+		array_filter(
+			teca_get_popup_detail_color_select_options(),
+			static function( $option ) {
+				return teca_is_free_popup_detail_color_field( $option['value'] ?? '' );
+			}
+		)
+	);
+}
+
+/**
  * Get field-level custom flags for a popup detail typography group.
  *
  * @param array  $settings Shortcode settings.

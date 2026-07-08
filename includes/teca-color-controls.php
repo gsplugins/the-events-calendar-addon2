@@ -474,6 +474,22 @@ function teca_get_color_typography_select_options() {
 }
 
 /**
+ * Free-only color field options for shortcode builder UI.
+ *
+ * @return array<int, array{label:string, value:string, group:string}>
+ */
+function teca_get_free_color_typography_select_options() {
+	return array_values(
+		array_filter(
+			teca_get_color_typography_select_options(),
+			static function( $option ) {
+				return teca_is_free_color_typography_field( $option['value'] ?? '' );
+			}
+		)
+	);
+}
+
+/**
  * Default color field settings for new shortcodes.
  *
  * @return array<string, mixed>

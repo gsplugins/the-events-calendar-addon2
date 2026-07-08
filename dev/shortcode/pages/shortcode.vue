@@ -89,178 +89,6 @@
 
 						</div>
 
-						<div class="shortcode-setting--row box-accordion" v-if="shouldShowFiltersByName()" :class="{'accordion-open': styleAccordionOpen.filtersByName, 'accordion-open-icon': styleAccordionOpen.filtersByName, 'sh-disabled': !isProValid()}">
-							<div class="top-area teca-style-accordion-header teca-filters-by-accordion-header">
-								<h3 class="teca-accordion-label">{{ translation('style_accordion_filters_by') }}<span v-if="!isProValid()"> (Pro)</span></h3>
-								<div class="accordion-control teca-accordion-icon">
-									<a href="#" @click.prevent="toggleStyleAccordion('filtersByName')"></a>
-								</div>
-							</div>
-							<div class="bottom-area teca-style-accordion-panel teca-filters-by-accordion-panel">
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_date">{{ translation('filter_by_date') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_date" v-model="shortcode_settings.filter_by_date" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_day">{{ translation('filter_by_day') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_day" v-model="shortcode_settings.filter_by_day" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_category">{{ translation('filter_by_category') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_category" v-model="shortcode_settings.filter_by_category" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_tag">{{ translation('filter_by_tag') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_tag" v-model="shortcode_settings.filter_by_tag" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_venue">{{ translation('filter_by_venue') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_venue" v-model="shortcode_settings.filter_by_venue" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_city">{{ translation('filter_by_city') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_city" v-model="shortcode_settings.filter_by_city" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_state">{{ translation('filter_by_state') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_state" v-model="shortcode_settings.filter_by_state" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_country">{{ translation('filter_by_country') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_country" v-model="shortcode_settings.filter_by_country" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_organizer">{{ translation('filter_by_organizer') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_organizer" v-model="shortcode_settings.filter_by_organizer" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_cost">{{ translation('filter_by_cost') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_cost" v-model="shortcode_settings.filter_by_cost" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_time">{{ translation('filter_by_time') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_time" v-model="shortcode_settings.filter_by_time" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_featured">{{ translation('filter_by_featured') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_featured" v-model="shortcode_settings.filter_by_featured" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="filter_by_event_status">{{ translation('filter_by_event_status') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="filter_by_event_status" v-model="shortcode_settings.filter_by_event_status" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="shortcode-setting--row box-accordion" v-if="shouldShowSearchBy()" :class="{'accordion-open': styleAccordionOpen.searchBy, 'accordion-open-icon': styleAccordionOpen.searchBy, 'sh-disabled': !isProValid()}">
-							<div class="top-area teca-style-accordion-header teca-search-by-accordion-header">
-								<h3 class="teca-accordion-label">{{ translation('style_accordion_search_by') }}<span v-if="!isProValid()"> (Pro)</span></h3>
-								<div class="accordion-control teca-accordion-icon">
-									<a href="#" @click.prevent="toggleStyleAccordion('searchBy')"></a>
-								</div>
-							</div>
-							<div class="bottom-area teca-style-accordion-panel teca-search-by-accordion-panel">
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="search_by_title">{{ translation('search_by_title') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="search_by_title" v-model="shortcode_settings.search_by_title" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="search_by_venue">{{ translation('search_by_venue') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="search_by_venue" v-model="shortcode_settings.search_by_venue" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="search_by_organizer">{{ translation('search_by_organizer') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="search_by_organizer" v-model="shortcode_settings.search_by_organizer" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="search_by_city">{{ translation('search_by_city') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input-toggle class="m-t-6" name="search_by_city" v-model="shortcode_settings.search_by_city" offLabel="Off" onLabel="On"></input-toggle>
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label">
-										<label for="search_result_limit">{{ translation('search_result_limit') }}:</label>
-									</div>
-									<div class="teca-style-control-actions">
-										<input type="number" class="bi-input-control m-t-6" id="search_result_limit" v-model.number="shortcode_settings.search_result_limit" min="1" max="100" placeholder="10">
-									</div>
-								</div>
-								<div class="teca-style-control-row">
-									<div class="teca-style-control-label"></div>
-									<div class="teca-style-control-actions">
-										<p class="bi-text-help">{{ translation('search_result_limit__details') }}</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
 						<div class="shortcode-setting--row" v-if="isCalendarLayoutView()">
 							<div class="gs-roow row-20">
 								<div class="gs-col-xs-5">
@@ -453,7 +281,7 @@
 									</div>
 
 									<div class="gs-col-xs-7">
-										<input-select key="pagination_type" id="pagination_type" v-model="shortcode_settings.pagination_type" :options="shortcode_options.pagination_type" :placeholder="translation('pagination_type')" :pro-locked-message="translation('pagination_type_pro_message')"></input-select>
+										<input-select key="pagination_type" id="pagination_type" v-model="shortcode_settings.pagination_type" :options="shortcode_options.pagination_type" :placeholder="translation('pagination_type')"></input-select>
 									</div>
 
 									<div class="gs-col-xs-12 bi-text-help--area">
@@ -1278,78 +1106,6 @@
 										<typography v-model="shortcode_settings.title_typography" :key="'title-' + getTypographyScopeClass()" :field-custom="getTypographyFieldCustom('title')" @update:fieldCustom="setTypographyFieldCustom('title', $event)" :layout-defaults="getTypographyLayoutDefaults('title')" :device="currentDevice" typography-key="title" typography-group="title"></typography>
 									</div>
 								</div>
-
-								<div class="teca-style-control-row" :class="{ 'sh-disabled': isTypographyGroupProLocked('cat') }" @click.capture="handleTypographyColorProLockClick(isTypographyGroupProLocked('cat'), $event)">
-									<div class="teca-style-control-label">
-										<label for="cat_typography">{{ translation('cat_typography') }}<span v-if="isTypographyGroupProLocked('cat')"> (Pro)</span>:</label>
-									</div>
-									<div class="teca-style-control-actions" id="cat_typography">
-										<typography v-model="shortcode_settings.cat_typography" :key="'cat-' + getTypographyScopeClass()" :field-custom="getTypographyFieldCustom('cat')" @update:fieldCustom="setTypographyFieldCustom('cat', $event)" :layout-defaults="getTypographyLayoutDefaults('cat')" :device="currentDevice" typography-key="category" typography-group="cat" :pro-locked="isTypographyGroupProLocked('cat')" :pro-locked-message="getTypographyColorProLockedMessage()"></typography>
-									</div>
-								</div>
-
-								<div class="teca-style-control-row" :class="{ 'sh-disabled': isTypographyGroupProLocked('tag') }" @click.capture="handleTypographyColorProLockClick(isTypographyGroupProLocked('tag'), $event)">
-									<div class="teca-style-control-label">
-										<label for="tag_typography">{{ translation('tag_typography') }}<span v-if="isTypographyGroupProLocked('tag')"> (Pro)</span>:</label>
-									</div>
-									<div class="teca-style-control-actions" id="tag_typography">
-										<typography v-model="shortcode_settings.tag_typography" :key="'tag-' + getTypographyScopeClass()" :field-custom="getTypographyFieldCustom('tag')" @update:fieldCustom="setTypographyFieldCustom('tag', $event)" :layout-defaults="getTypographyLayoutDefaults('tag')" :device="currentDevice" typography-key="tag" typography-group="tag" :pro-locked="isTypographyGroupProLocked('tag')" :pro-locked-message="getTypographyColorProLockedMessage()"></typography>
-									</div>
-								</div>
-
-								<div class="teca-style-control-row" :class="{ 'sh-disabled': isTypographyGroupProLocked('org') }" @click.capture="handleTypographyColorProLockClick(isTypographyGroupProLocked('org'), $event)">
-									<div class="teca-style-control-label">
-										<label for="org_typography">{{ translation('org_typography') }}<span v-if="isTypographyGroupProLocked('org')"> (Pro)</span>:</label>
-									</div>
-									<div class="teca-style-control-actions" id="org_typography">
-										<typography v-model="shortcode_settings.org_typography" :key="'org-' + getTypographyScopeClass()" :field-custom="getTypographyFieldCustom('org')" @update:fieldCustom="setTypographyFieldCustom('org', $event)" :layout-defaults="getTypographyLayoutDefaults('org')" :device="currentDevice" typography-key="organizer" typography-group="org" :pro-locked="isTypographyGroupProLocked('org')" :pro-locked-message="getTypographyColorProLockedMessage()"></typography>
-									</div>
-								</div>
-
-								<div class="teca-style-control-row" :class="{ 'sh-disabled': isTypographyGroupProLocked('date') }" @click.capture="handleTypographyColorProLockClick(isTypographyGroupProLocked('date'), $event)">
-									<div class="teca-style-control-label">
-										<label for="date_typography">{{ translation('date_typography') }}<span v-if="isTypographyGroupProLocked('date')"> (Pro)</span>:</label>
-									</div>
-									<div class="teca-style-control-actions" id="date_typography">
-										<typography v-model="shortcode_settings.date_typography" :key="'date-' + getTypographyScopeClass()" :field-custom="getTypographyFieldCustom('date')" @update:fieldCustom="setTypographyFieldCustom('date', $event)" :layout-defaults="getTypographyLayoutDefaults('date')" :device="currentDevice" typography-key="date" typography-group="date" :pro-locked="isTypographyGroupProLocked('date')" :pro-locked-message="getTypographyColorProLockedMessage()"></typography>
-									</div>
-								</div>
-
-								<div class="teca-style-control-row" :class="{ 'sh-disabled': isTypographyGroupProLocked('details') }" @click.capture="handleTypographyColorProLockClick(isTypographyGroupProLocked('details'), $event)">
-									<div class="teca-style-control-label">
-										<label for="details_typography">{{ translation('details_typography') }}<span v-if="isTypographyGroupProLocked('details')"> (Pro)</span>:</label>
-									</div>
-									<div class="teca-style-control-actions" id="details_typography">
-										<typography v-model="shortcode_settings.details_typography" :key="'details-' + getTypographyScopeClass()" :field-custom="getTypographyFieldCustom('details')" @update:fieldCustom="setTypographyFieldCustom('details', $event)" :layout-defaults="getTypographyLayoutDefaults('details')" :device="currentDevice" typography-key="excerpt" typography-group="details" :pro-locked="isTypographyGroupProLocked('details')" :pro-locked-message="getTypographyColorProLockedMessage()"></typography>
-									</div>
-								</div>
-
-								<div class="teca-style-control-row" :class="{ 'sh-disabled': isTypographyGroupProLocked('venue') }" @click.capture="handleTypographyColorProLockClick(isTypographyGroupProLocked('venue'), $event)">
-									<div class="teca-style-control-label">
-										<label for="venue_typography">{{ translation('venue_typography') }}<span v-if="isTypographyGroupProLocked('venue')"> (Pro)</span>:</label>
-									</div>
-									<div class="teca-style-control-actions" id="venue_typography">
-										<typography v-model="shortcode_settings.venue_typography" :key="'venue-' + getTypographyScopeClass()" :field-custom="getTypographyFieldCustom('venue')" @update:fieldCustom="setTypographyFieldCustom('venue', $event)" :layout-defaults="getTypographyLayoutDefaults('venue')" :device="currentDevice" typography-key="venue" typography-group="venue" :pro-locked="isTypographyGroupProLocked('venue')" :pro-locked-message="getTypographyColorProLockedMessage()"></typography>
-									</div>
-								</div>
-
-								<div class="teca-style-control-row" :class="{ 'sh-disabled': isTypographyGroupProLocked('view_details') }" @click.capture="handleTypographyColorProLockClick(isTypographyGroupProLocked('view_details'), $event)">
-									<div class="teca-style-control-label">
-										<label for="view_details_button_typography">{{ translation('view_details_button_typography') }}<span v-if="isTypographyGroupProLocked('view_details')"> (Pro)</span>:</label>
-									</div>
-									<div class="teca-style-control-actions" id="view_details_button_typography">
-										<typography v-model="shortcode_settings.view_details_button_typography" :key="'view-details-' + getTypographyScopeClass()" :field-custom="getTypographyFieldCustom('view_details')" @update:fieldCustom="setTypographyFieldCustom('view_details', $event)" :layout-defaults="getTypographyLayoutDefaults('view_details')" :device="currentDevice" typography-key="view-details-button" typography-group="view_details" :pro-locked="isTypographyGroupProLocked('view_details')" :pro-locked-message="getTypographyColorProLockedMessage()"></typography>
-									</div>
-								</div>
-
-								<div class="teca-style-control-row" :class="{ 'sh-disabled': isTypographyGroupProLocked('google_calendar') }" @click.capture="handleTypographyColorProLockClick(isTypographyGroupProLocked('google_calendar'), $event)">
-									<div class="teca-style-control-label">
-										<label for="google_calendar_button_typography">{{ translation('google_calendar_button_typography') }}<span v-if="isTypographyGroupProLocked('google_calendar')"> (Pro)</span>:</label>
-									</div>
-									<div class="teca-style-control-actions" id="google_calendar_button_typography">
-										<typography v-model="shortcode_settings.google_calendar_button_typography" :key="'google-calendar-' + getTypographyScopeClass()" :field-custom="getTypographyFieldCustom('google_calendar')" @update:fieldCustom="setTypographyFieldCustom('google_calendar', $event)" :layout-defaults="getTypographyLayoutDefaults('google_calendar')" :device="currentDevice" typography-key="google-calendar-button" typography-group="google_calendar" :pro-locked="isTypographyGroupProLocked('google_calendar')" :pro-locked-message="getTypographyColorProLockedMessage()"></typography>
-									</div>
-								</div>
 							</div>
 						</div>
 
@@ -1370,8 +1126,6 @@
 									v-model="shortcode_settings[field.value]"
 									:is-custom="isColorFieldCustom(field.value)"
 									@update:isCustom="setColorFieldCustom(field.value, $event)"
-									:pro-locked="isColorTypographyFieldProLocked(field)"
-									:pro-locked-message="getTypographyColorProLockedMessage()"
 								></color-field>
 							</div>
 						</div>
@@ -1384,9 +1138,9 @@
 								</div>
 							</div>
 							<div class="bottom-area teca-style-accordion-panel teca-typography-accordion-panel">
-								<div class="teca-style-control-row" v-for="group in getPopupDetailTypographyGroups()" :key="group.value + '-detail-typo-' + getPopupDetailTypographyScopeClass()" :class="{ 'sh-disabled': isPopupDetailTypographyGroupProLocked(group) }" @click.capture="handleTypographyColorProLockClick(isPopupDetailTypographyGroupProLocked(group), $event)">
+								<div class="teca-style-control-row" v-for="group in getPopupDetailTypographyGroups()" :key="group.value + '-detail-typo-' + getPopupDetailTypographyScopeClass()">
 									<div class="teca-style-control-label">
-										<label :for="group.setting_key">{{ group.label }}<span v-if="isPopupDetailTypographyGroupProLocked(group)"> (Pro)</span>:</label>
+										<label :for="group.setting_key">{{ group.label }}:</label>
 									</div>
 									<div class="teca-style-control-actions" :id="group.setting_key">
 										<typography
@@ -1398,8 +1152,6 @@
 											:device="currentDevice"
 											:typography-key="'popup-detail-' + group.value"
 											:typography-group="'popup-detail-' + group.value"
-											:pro-locked="isPopupDetailTypographyGroupProLocked(group)"
-											:pro-locked-message="getTypographyColorProLockedMessage()"
 										></typography>
 									</div>
 								</div>
@@ -1423,8 +1175,6 @@
 									v-model="shortcode_settings[field.value]"
 									:is-custom="isPopupDetailColorFieldCustom(field.value)"
 									@update:isCustom="setPopupDetailColorFieldCustom(field.value, $event)"
-									:pro-locked="isPopupDetailColorFieldProLocked(field)"
-									:pro-locked-message="getTypographyColorProLockedMessage()"
 								></color-field>
 							</div>
 						</div>
@@ -1479,7 +1229,7 @@
 								</div>
 
 								<div class="gs-col-xs-7">
-									<input-select key="orderby" id="orderby" v-model="shortcode_settings.orderby" :options="shortcode_options.orderby" :placeholder="translation('order-by--placeholder')" :pro-locked-message="translation('query_custom_order_pro_message')"></input-select>
+									<input-select key="orderby" id="orderby" v-model="shortcode_settings.orderby" :options="shortcode_options.orderby" :placeholder="translation('order-by--placeholder')"></input-select>
 								</div>
 
 							</div>
@@ -1517,177 +1267,12 @@
 								<div class="gs-col-xs-7">
 									<input-select key="cat_order_by" id="cat_order_by"
 										v-model="shortcode_settings.cat_order_by" :options="shortcode_options.cat_order_by"
-										:placeholder="translation('cat-order-by')"
-										:pro-locked-message="translation('query_custom_order_pro_message')"></input-select>
+										:placeholder="translation('cat-order-by')"></input-select>
 								</div>
 
 							</div>
 
 						</div>
-
-						<template>
-
-							<div class="gs-she-tabs--buttons">
-								<button :class="active_query_tab == 'include' && 'is-active'"
-									@click="active_query_tab = 'include'">Include</button>
-								<button :class="active_query_tab == 'exclude' && 'is-active'"
-									@click="active_query_tab = 'exclude'">Exclude</button>
-							</div>
-
-							<template v-if="active_query_tab == 'include'">
-
-								<div class="shortcode-setting--row" :class="{ 'sh-disabled': isQueryIncludeExcludeCategoriesProLocked() }" @click.capture="handleQueryIncludeExcludeProLockClick(isQueryIncludeExcludeCategoriesProLocked(), 'categories', $event)">
-
-									<div class="gs-roow row-20">
-
-										<div class="gs-col-xs-5">
-											<label class="m-t-10" for="include_cat">{{ translation('group') }}<span v-if="isQueryIncludeExcludeCategoriesProLocked()"> (Pro)</span>:</label>
-											<button class="gs-teca-show--info"><i
-													class="zmdi zmdi-help-outline"></i></button>
-										</div>
-
-										<div class="gs-col-xs-7">
-											<input-select id="include_cat" key="include_cat" v-model="shortcode_settings.include_cat"
-												:options="shortcode_options.include_cat" :placeholder="translation('group')"
-												:pro-locked-message="getQueryIncludeExcludeCategoriesProLockedMessage()" multiple></input-select>
-										</div>
-
-										<div class="gs-col-xs-12 bi-text-help--area">
-											<p class="bi-text-help">{{ translation('group__help') }}</p>
-										</div>
-
-									</div>
-
-								</div>
-
-								<div class="shortcode-setting--row" :class="{ 'sh-disabled': isQueryIncludeExcludeTagsProLocked() }" @click.capture="handleQueryIncludeExcludeProLockClick(isQueryIncludeExcludeTagsProLocked(), 'tags', $event)">
-
-									<div class="gs-roow row-20">
-
-										<div class="gs-col-xs-5">
-											<label class="m-t-10" for="include_tags">{{ translation('include_tags')
-												}}<span v-if="isQueryIncludeExcludeTagsProLocked()"> (Pro)</span>:</label>
-											<button class="gs-teca-show--info"><i
-													class="zmdi zmdi-help-outline"></i></button>
-										</div>
-
-										<div class="gs-col-xs-7">
-											<input-select id="include_tags" key="include_tags"
-												v-model="shortcode_settings.include_tags"
-												:options="shortcode_options.include_tags"
-												:placeholder="translation('include_tags')"
-												:pro-locked-message="getQueryIncludeExcludeTagsProLockedMessage()" multiple></input-select>
-										</div>
-
-										<div class="gs-col-xs-12 bi-text-help--area">
-											<p class="bi-text-help">{{ translation('include_tags__help') }}</p>
-										</div>
-
-									</div>
-
-								</div>
-
-								<div class="shortcode-setting--row" :class="{ 'sh-disabled': !isProValid() }">
-
-									<div class="gs-roow row-20">
-
-										<div class="gs-col-xs-5">
-											<label class="m-t-10" for="select_by_title">{{ translation('select-by-title') }}:</label>
-											<button class="gs-teca-show--info"><i
-													class="zmdi zmdi-help-outline"></i></button>
-										</div>
-
-										<div class="gs-col-xs-7">
-											<input-select id="select_by_title" key="select_by_title" v-model="shortcode_settings.select_by_title"
-												:options="shortcode_options.select_by_title" :placeholder="translation('select-by-title')"
-												multiple></input-select>
-										</div>
-
-									</div>
-
-								</div>
-
-							</template>
-
-							<template v-if="active_query_tab == 'exclude'">
-
-								<div class="shortcode-setting--row" :class="{ 'sh-disabled': isQueryIncludeExcludeCategoriesProLocked() }" @click.capture="handleQueryIncludeExcludeProLockClick(isQueryIncludeExcludeCategoriesProLocked(), 'categories', $event)">
-
-									<div class="gs-roow row-20">
-
-										<div class="gs-col-xs-5">
-											<label class="m-t-10" for="exclude_cat">{{ translation('exclude_group')
-												}}<span v-if="isQueryIncludeExcludeCategoriesProLocked()"> (Pro)</span>:</label>
-											<button class="gs-teca-show--info"><i
-													class="zmdi zmdi-help-outline"></i></button>
-										</div>
-
-										<div class="gs-col-xs-7">
-											<input-select id="exclude_cat" key="exclude_cat"
-												v-model="shortcode_settings.exclude_cat"
-												:options="shortcode_options.exclude_cat"
-												:placeholder="translation('exclude_group')"
-												:pro-locked-message="getQueryIncludeExcludeCategoriesProLockedMessage()" multiple></input-select>
-										</div>
-
-										<div class="gs-col-xs-12 bi-text-help--area">
-											<p class="bi-text-help">{{ translation('exclude_group__help') }}</p>
-										</div>
-
-									</div>
-
-								</div>
-
-								<div class="shortcode-setting--row" :class="{ 'sh-disabled': isQueryIncludeExcludeTagsProLocked() }" @click.capture="handleQueryIncludeExcludeProLockClick(isQueryIncludeExcludeTagsProLocked(), 'tags', $event)">
-
-									<div class="gs-roow row-20">
-
-										<div class="gs-col-xs-5">
-											<label class="m-t-10" for="exclude_tags">{{ translation('exclude_tags')
-												}}<span v-if="isQueryIncludeExcludeTagsProLocked()"> (Pro)</span>:</label>
-											<button class="gs-teca-show--info"><i
-													class="zmdi zmdi-help-outline"></i></button>
-										</div>
-
-										<div class="gs-col-xs-7">
-											<input-select id="exclude_tags" key="exclude_tags"
-												v-model="shortcode_settings.exclude_tags"
-												:options="shortcode_options.exclude_tags"
-												:placeholder="translation('exclude_tags')"
-												:pro-locked-message="getQueryIncludeExcludeTagsProLockedMessage()" multiple></input-select>
-										</div>
-
-										<div class="gs-col-xs-12 bi-text-help--area">
-											<p class="bi-text-help">{{ translation('exclude_tags__help') }}</p>
-										</div>
-
-									</div>
-
-								</div>
-
-								<div class="shortcode-setting--row" :class="{ 'sh-disabled': !isProValid() }">
-
-									<div class="gs-roow row-20">
-
-										<div class="gs-col-xs-5">
-											<label class="m-t-10" for="deselect_by_title">{{ translation('deselect-by-title') }}:</label>
-											<button class="gs-teca-show--info"><i
-													class="zmdi zmdi-help-outline"></i></button>
-										</div>
-
-										<div class="gs-col-xs-7">
-											<input-select id="deselect_by_title" key="deselect_by_title" v-model="shortcode_settings.deselect_by_title"
-												:options="shortcode_options.deselect_by_title" :placeholder="translation('deselect-by-title')"
-												multiple></input-select>
-										</div>
-
-									</div>
-
-								</div>
-
-							</template>
-
-						</template>
 
 					</div>
 
@@ -1922,8 +1507,6 @@
 
 				shortcode_options: {},
 
-				active_query_tab: 'include',
-
 				custom_image_size_width: '',
 				custom_image_size_height: '',
 				custom_image_size_crop: 'hard-crop',
@@ -1933,9 +1516,7 @@
 					typography: true,
 					colorTypography: false,
 					detailTypography: false,
-					detailColorTypography: false,
-					filtersByName: false,
-					searchBy: false
+					detailColorTypography: false
 				}
 
 			}
@@ -2126,14 +1707,6 @@
 
 			shouldShowThemeStyle() {
 				return ! this.isCalendarView();
-			},
-
-			shouldShowFiltersByName() {
-				return ['grid', 'masonry', 'filter'].includes( this.shortcode_settings.view_type );
-			},
-
-			shouldShowSearchBy() {
-				return ['grid', 'masonry', 'filter'].includes( this.shortcode_settings.view_type );
 			},
 
 			shouldShowPopupDetailTypography() {
@@ -2337,24 +1910,6 @@
 					if( ! Array.isArray(shortcode_options[option_group]) ) {
 						shortcode_options[option_group] = [];
 					}
-					if ( ! this.isProValid() && shortcode_options[option_group].some( item => item.pro ) ) {
-						shortcode_options[option_group] = shortcode_options[option_group].map( item => {
-							if ( item.pro ) item.disabled = true;
-							return item;
-						});
-					}
-				}
-
-				if ( ! this.isProValid() ) {
-					[ 'include_cat', 'exclude_cat', 'include_tags', 'exclude_tags' ].forEach( optionKey => {
-						if ( ! Array.isArray( shortcode_options[ optionKey ] ) ) {
-							shortcode_options[ optionKey ] = [];
-						}
-
-						shortcode_options[ optionKey ] = shortcode_options[ optionKey ].map( item => {
-							return Object.assign( {}, item, { pro: true, disabled: true } );
-						} );
-					} );
 				}
 
 				this.$set( this, 'shortcode_options', shortcode_options );
@@ -2417,77 +1972,6 @@
 
 			getColorTypographyFields() {
 				return this.shortcode_options.color_typography_fields || [];
-			},
-
-			isFreeTypographyGroup( group ) {
-				return group === 'title';
-			},
-
-			isTypographyGroupProLocked( group ) {
-				return ! this.isProValid() && ! this.isFreeTypographyGroup( group );
-			},
-
-			isColorTypographyFieldProLocked( field ) {
-				return ! this.isProValid() && field && field.pro;
-			},
-
-			isPopupDetailTypographyGroupProLocked( group ) {
-				return ! this.isProValid() && group && group.pro;
-			},
-
-			isPopupDetailColorFieldProLocked( field ) {
-				return ! this.isProValid() && field && field.pro;
-			},
-
-			isQueryIncludeExcludeCategoriesProLocked() {
-				return ! this.isProValid();
-			},
-
-			isQueryIncludeExcludeTagsProLocked() {
-				return ! this.isProValid();
-			},
-
-			getQueryIncludeExcludeCategoriesProLockedMessage() {
-				return this.translation( 'query_include_exclude_categories_pro_message' );
-			},
-
-			getQueryIncludeExcludeTagsProLockedMessage() {
-				return this.translation( 'query_include_exclude_tags_pro_message' );
-			},
-
-			handleQueryIncludeExcludeProLockClick( isLocked, type, event ) {
-				if ( ! isLocked ) {
-					return;
-				}
-
-				if ( event ) {
-					event.preventDefault();
-					event.stopPropagation();
-				}
-
-				if ( type === 'tags' ) {
-					alert( this.getQueryIncludeExcludeTagsProLockedMessage() );
-					return;
-				}
-
-				alert( this.getQueryIncludeExcludeCategoriesProLockedMessage() );
-			},
-
-			getTypographyColorProLockedMessage() {
-				return this.translation( 'typography_color_pro_message' );
-			},
-
-			handleTypographyColorProLockClick( isLocked, event ) {
-				if ( ! isLocked ) {
-					return;
-				}
-
-				if ( event ) {
-					event.preventDefault();
-					event.stopPropagation();
-				}
-
-				alert( this.getTypographyColorProLockedMessage() );
 			},
 
 			getPopupDetailTypographyGroups() {

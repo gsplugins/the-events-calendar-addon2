@@ -18,32 +18,15 @@ add_action('plugins_loaded', function() {
     /**
      * Compatibility check with Pro plugin
      */
-    if ( is_pro_compatible() ) {
-        /**
-         * Activation redirects
-         */
-        register_activation_hook( GS_TECA_PLUGIN_FILE, 'GS_TECA\on_activation' );
+    register_activation_hook( GS_TECA_PLUGIN_FILE, 'GS_TECA\on_activation' );
 
-        /**
-         * Init Appsero
-         */
-
-        /**
-         * Load Main Plugin
-         */
-        require_once GS_TECA_PLUGIN_DIR . 'includes/plugin.php';
-    }
+    require_once GS_TECA_PLUGIN_DIR . 'includes/plugin.php';
     
     /**
      * Remove Reviews Metadata on plugin Deactivation.
      */
     register_deactivation_hook( GS_TECA_PLUGIN_FILE, 'GS_TECA\on_deactivation' );
     
-    /**
-     * Plugins action links
-     */
-    add_filter( 'plugin_action_links_' . plugin_basename( GS_TECA_PLUGIN_FILE ), 'GS_TECA\add_pro_link' );
-
     /**
      * Plugins Load Text Domain
      */
