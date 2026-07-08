@@ -151,9 +151,29 @@ class Query {
     }
 
     public static function get_event_date_meta( int $event_id ) : array {
+        $start = (string) get_post_meta( $event_id, '_EventStartDate', true );
+        $end   = (string) get_post_meta( $event_id, '_EventEndDate', true );
+
+        $is_demo = ! empty( get_post_meta( $event_id, 'gsteca-demo_data', true ) );
+        $needs   = teca_event_datetime_needs_time_fallback( $start )
+            || ( '' !== $start && '' === $end );
+
+        if ( $is_demo || $needs ) {
+            $fallback   = (string) get_post_field( 'post_date', $event_id );
+            $normalized = teca_normalize_event_datetime_pair( $start, $end, $fallback );
+
+            if ( '' !== $normalized['start'] ) {
+                $start = $normalized['start'];
+            }
+
+            if ( '' !== $normalized['end'] ) {
+                $end = $normalized['end'];
+            }
+        }
+
         return [
-            'start' => get_post_meta( $event_id, '_EventStartDate', true ),
-            'end'   => get_post_meta( $event_id, '_EventEndDate', true ),
+            'start' => $start,
+            'end'   => $end,
         ];
     }
 

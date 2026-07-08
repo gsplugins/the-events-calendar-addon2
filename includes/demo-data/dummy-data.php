@@ -27,6 +27,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             if ( ! is_admin() ) return;
 
             add_action( 'admin_init', array($this, 'maybe_auto_import_all_data') );
+            add_action( 'admin_init', array($this, 'maybe_repair_demo_event_datetimes') );
             
             add_action( 'gsteca_shortcode_submenu', array($this,'register_submenu'), -1 );
 
@@ -50,6 +51,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
 
                 // Force delete option if have any
                 delete_option( 'gsteca_dummy_data_created' );
+                delete_option( 'gsteca_demo_datetime_repaired' );
 
                 // Force update the process
                 set_transient( 'gsteca_dummy_data_creating', 1, 3 * MINUTE_IN_SECONDS );
@@ -292,6 +294,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             $this->delete_dummy_events();
 
             delete_option( 'gsteca_dummy_data_created' );
+            delete_option( 'gsteca_demo_datetime_repaired' );
             delete_transient( 'gsteca_dummy_data_creating' );
 
             $message = __( 'Dummy events deleted', 'the-events-calendar-addon' );
@@ -408,12 +411,49 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
 
         }
 
-        public function get_meta_inputs( $meta_inputs = [] ) {
+        public function get_meta_inputs( $meta_inputs = [], $event_index = null ) {
 
             $meta_inputs['_thumbnail_id'] = $this->get_attachment_id_by_filename( $meta_inputs['_thumbnail_id'] );
 
+            if ( null !== $event_index ) {
+                $schedule = teca_get_demo_event_datetime_pair( (int) $event_index );
+
+                $meta_inputs['_EventStartDate'] = $schedule['start'];
+                $meta_inputs['_EventEndDate']   = $schedule['end'];
+                $meta_inputs['_EventAllDay']      = '0';
+                $meta_inputs['_EventDuration']    = HOUR_IN_SECONDS;
+            }
+
             return $meta_inputs;
 
+        }
+
+        public function maybe_repair_demo_event_datetimes() {
+
+            if ( ! current_user_can( 'manage_options' ) ) {
+                return;
+            }
+
+            if ( get_option( 'gsteca_demo_datetime_repaired' ) ) {
+                return;
+            }
+
+            if ( ! get_option( 'gsteca_dummy_data_created' ) ) {
+                return;
+            }
+
+            foreach ( $this->get_dummy_events() as $event ) {
+                teca_ensure_event_datetime_meta( $event->ID, $event->post_date, true );
+            }
+
+            update_option( 'gsteca_demo_datetime_repaired', 1, false );
+        }
+
+        public function repair_demo_event_datetimes() {
+
+            foreach ( $this->get_dummy_events() as $event ) {
+                teca_ensure_event_datetime_meta( $event->ID, $event->post_date, true );
+            }
         }
 
         // portfolios
@@ -440,7 +480,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 ]),
                 'meta_input' => $this->get_meta_inputs([
                     '_thumbnail_id' => 'gs-teca-1',
-                ])
+                ], 0)
             );
 
             $events[] = array(
@@ -455,7 +495,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 ]),
                 'meta_input' => $this->get_meta_inputs([
                     '_thumbnail_id' => 'gs-teca-2',
-                ])
+                ], 1)
             );
 
             $events[] = array(
@@ -471,7 +511,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 'meta_input' => $this->get_meta_inputs([
                     '_thumbnail_id' => 'gs-teca-3',
                     
-                ])
+                ], 2)
             );
 
             $events[] = array(
@@ -490,7 +530,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 ]),
                 'meta_input' => $this->get_meta_inputs([
                     '_thumbnail_id' => 'gs-teca-4',
-                ]),
+                ], 3),
             );
 
             $events[] = array(
@@ -509,7 +549,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 ]),
                 'meta_input' => $this->get_meta_inputs([
                     '_thumbnail_id' => 'gs-teca-5',
-                ])
+                ], 4)
             );
 
             $events[] = array(
@@ -528,15 +568,21 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 ]),
                 'meta_input' => $this->get_meta_inputs([
                     '_thumbnail_id' => 'gs-teca-6',
-                ])
+                ], 5)
             );
 
             foreach ( $events as $event ) {
                 // Insert the post into the database
                 $post_id = wp_insert_post( $event );
-                // Add meta value for demo
-                if ( $post_id ) add_post_meta( $post_id, 'gsteca-demo_data', 1 );
+
+                if ( $post_id ) {
+                    add_post_meta( $post_id, 'gsteca-demo_data', 1 );
+                    teca_ensure_event_datetime_meta( $post_id, $event['post_date'] ?? '', true );
+                }
             }
+
+            $this->repair_demo_event_datetimes();
+            update_option( 'gsteca_demo_datetime_repaired', 1, false );
 
             do_action( 'gsteca_dummy_portfolios_process_finished' );
 
