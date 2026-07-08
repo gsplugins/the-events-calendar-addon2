@@ -11,7 +11,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
     final class GS_TECA_Dummy_Data {
 
         private static $_instance = null;
-        const DEMO_DATETIME_REPAIR_VERSION = 3;
+        const DEMO_DATETIME_REPAIR_VERSION = 4;
         
         public static function get_instance() {
 
@@ -54,6 +54,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 delete_option( 'gsteca_dummy_data_created' );
                 delete_option( 'gsteca_demo_datetime_repaired' );
                 delete_option( 'gsteca_demo_datetime_repair_version' );
+                delete_option( 'gsteca_demo_linked_post_ids' );
 
                 // Force update the process
                 set_transient( 'gsteca_dummy_data_creating', 1, 3 * MINUTE_IN_SECONDS );
@@ -294,10 +295,12 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             $this->delete_dummy_attachments();
             $this->delete_dummy_terms();
             $this->delete_dummy_events();
+            teca_delete_demo_linked_posts();
 
             delete_option( 'gsteca_dummy_data_created' );
             delete_option( 'gsteca_demo_datetime_repaired' );
             delete_option( 'gsteca_demo_datetime_repair_version' );
+            delete_option( 'gsteca_demo_linked_post_ids' );
             delete_transient( 'gsteca_dummy_data_creating' );
 
             $message = __( 'Dummy events deleted', 'the-events-calendar-addon' );
@@ -436,11 +439,15 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 return;
             }
 
+            $linked = teca_get_or_create_demo_linked_posts();
+
             foreach ( $this->get_dummy_events() as $index => $event ) {
-                $schedule = teca_get_demo_event_datetime_pair( $index );
+                $schedule   = teca_get_demo_event_datetime_pair( $index );
+                $assignment = teca_get_demo_linked_post_assignment( $index, $linked );
 
                 teca_force_demo_event_published( $event->ID );
                 teca_sync_event_via_tec( $event->ID, $schedule['start'], true );
+                teca_sync_event_linked_posts( $event->ID, $assignment['venue_id'], $assignment['organizer_id'], true );
             }
 
             teca_flush_event_caches_after_demo_import();
@@ -451,12 +458,15 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
         public function repair_demo_event_datetimes() {
 
             $events = $this->get_dummy_events();
+            $linked = teca_get_or_create_demo_linked_posts();
 
             foreach ( $events as $index => $event ) {
-                $schedule = teca_get_demo_event_datetime_pair( $index );
+                $schedule   = teca_get_demo_event_datetime_pair( $index );
+                $assignment = teca_get_demo_linked_post_assignment( $index, $linked );
 
                 teca_force_demo_event_published( $event->ID );
                 teca_sync_event_via_tec( $event->ID, $schedule['start'], true );
+                teca_sync_event_linked_posts( $event->ID, $assignment['venue_id'], $assignment['organizer_id'], true );
             }
         }
 
@@ -575,10 +585,17 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 ]
             );
 
+            $linked = teca_get_or_create_demo_linked_posts();
+
             foreach ( $events as $index => $event ) {
                 if ( ! empty( $event['meta_input']['_thumbnail_id'] ) && ! is_numeric( $event['meta_input']['_thumbnail_id'] ) ) {
                     $event['meta_input']['_thumbnail_id'] = $this->get_attachment_id_by_filename( $event['meta_input']['_thumbnail_id'] );
                 }
+
+                $assignment = teca_get_demo_linked_post_assignment( $index, $linked );
+
+                $event['venue_id']     = $assignment['venue_id'];
+                $event['organizer_id'] = $assignment['organizer_id'];
 
                 teca_insert_demo_event( $event, $index );
             }

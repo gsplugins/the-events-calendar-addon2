@@ -401,6 +401,21 @@ function teca_insert_demo_event( array $event, $index ) {
 		$args['FeaturedImage'] = $thumbnail_id;
 	}
 
+	$venue_id     = (int) ( $event['venue_id'] ?? 0 );
+	$organizer_id = (int) ( $event['organizer_id'] ?? 0 );
+
+	if ( $venue_id > 0 ) {
+		$args['Venue'] = array(
+			'VenueID' => $venue_id,
+		);
+	}
+
+	if ( $organizer_id > 0 ) {
+		$args['Organizer'] = array(
+			'OrganizerID' => $organizer_id,
+		);
+	}
+
 	if ( function_exists( 'tribe_create_event' ) ) {
 		$post_id = tribe_create_event( $args );
 	} else {
@@ -412,11 +427,13 @@ function teca_insert_demo_event( array $event, $index ) {
 				'post_date_gmt' => $post_now_gmt,
 				'edit_date'     => true,
 				'meta_input'    => array(
-					'_thumbnail_id'   => $thumbnail_id,
-					'_EventStartDate' => $schedule['start'],
-					'_EventEndDate'   => $schedule['end'],
-					'_EventAllDay'    => '0',
-					'_EventDuration'  => HOUR_IN_SECONDS,
+					'_thumbnail_id'        => $thumbnail_id,
+					'_EventStartDate'      => $schedule['start'],
+					'_EventEndDate'        => $schedule['end'],
+					'_EventAllDay'         => '0',
+					'_EventDuration'       => HOUR_IN_SECONDS,
+					'_EventVenueID'        => $venue_id,
+					'_EventOrganizerID'    => $organizer_id,
 				),
 			)
 		);
@@ -431,6 +448,7 @@ function teca_insert_demo_event( array $event, $index ) {
 	add_post_meta( (int) $post_id, 'gsteca-demo_data', 1, true );
 	teca_force_demo_event_published( (int) $post_id );
 	teca_sync_event_via_tec( (int) $post_id, $schedule['start'], true );
+	teca_sync_event_linked_posts( (int) $post_id, $venue_id, $organizer_id, true );
 
 	return (int) $post_id;
 }

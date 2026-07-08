@@ -50,6 +50,7 @@ if ( ! defined('GS_TECA_PLUGIN_URL') ) {
 
 require_once GS_TECA_PLUGIN_DIR . 'includes/autoloader.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/teca-event-datetime.php';
+require_once GS_TECA_PLUGIN_DIR . 'includes/teca-demo-linked-posts.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/functions.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/init.php';
 
