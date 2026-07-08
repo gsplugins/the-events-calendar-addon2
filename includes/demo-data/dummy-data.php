@@ -11,6 +11,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
     final class GS_TECA_Dummy_Data {
 
         private static $_instance = null;
+        const DEMO_DATETIME_REPAIR_VERSION = 2;
         
         public static function get_instance() {
 
@@ -52,6 +53,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 // Force delete option if have any
                 delete_option( 'gsteca_dummy_data_created' );
                 delete_option( 'gsteca_demo_datetime_repaired' );
+                delete_option( 'gsteca_demo_datetime_repair_version' );
 
                 // Force update the process
                 set_transient( 'gsteca_dummy_data_creating', 1, 3 * MINUTE_IN_SECONDS );
@@ -295,6 +297,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
 
             delete_option( 'gsteca_dummy_data_created' );
             delete_option( 'gsteca_demo_datetime_repaired' );
+            delete_option( 'gsteca_demo_datetime_repair_version' );
             delete_transient( 'gsteca_dummy_data_creating' );
 
             $message = __( 'Dummy events deleted', 'the-events-calendar-addon' );
@@ -411,18 +414,9 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
 
         }
 
-        public function get_meta_inputs( $meta_inputs = [], $event_index = null ) {
+        public function get_meta_inputs( $meta_inputs = [] ) {
 
             $meta_inputs['_thumbnail_id'] = $this->get_attachment_id_by_filename( $meta_inputs['_thumbnail_id'] );
-
-            if ( null !== $event_index ) {
-                $schedule = teca_get_demo_event_datetime_pair( (int) $event_index );
-
-                $meta_inputs['_EventStartDate'] = $schedule['start'];
-                $meta_inputs['_EventEndDate']   = $schedule['end'];
-                $meta_inputs['_EventAllDay']      = '0';
-                $meta_inputs['_EventDuration']    = HOUR_IN_SECONDS;
-            }
 
             return $meta_inputs;
 
@@ -434,7 +428,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 return;
             }
 
-            if ( get_option( 'gsteca_demo_datetime_repaired' ) ) {
+            if ( (int) get_option( 'gsteca_demo_datetime_repair_version', 0 ) >= self::DEMO_DATETIME_REPAIR_VERSION ) {
                 return;
             }
 
@@ -443,16 +437,18 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             }
 
             foreach ( $this->get_dummy_events() as $event ) {
-                teca_ensure_event_datetime_meta( $event->ID, $event->post_date, true );
+                teca_sync_event_via_tec( $event->ID, $event->post_date, true );
             }
 
-            update_option( 'gsteca_demo_datetime_repaired', 1, false );
+            teca_flush_event_caches_after_demo_import();
+            update_option( 'gsteca_demo_datetime_repair_version', self::DEMO_DATETIME_REPAIR_VERSION, false );
+            delete_option( 'gsteca_demo_datetime_repaired' );
         }
 
         public function repair_demo_event_datetimes() {
 
             foreach ( $this->get_dummy_events() as $event ) {
-                teca_ensure_event_datetime_meta( $event->ID, $event->post_date, true );
+                teca_sync_event_via_tec( $event->ID, $event->post_date, true );
             }
         }
 
@@ -478,9 +474,9 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                     'tribe_events_cat' => ['branding', 'beauty'],
                     'post_tag' => ['abstract'],
                 ]),
-                'meta_input' => $this->get_meta_inputs([
+                'meta_input' => [
                     '_thumbnail_id' => 'gs-teca-1',
-                ], 0)
+                ]
             );
 
             $events[] = array(
@@ -493,9 +489,9 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                     'tribe_events_cat' => ['strategy'],
                     'post_tag' => ['cutest'],
                 ]),
-                'meta_input' => $this->get_meta_inputs([
+                'meta_input' => [
                     '_thumbnail_id' => 'gs-teca-2',
-                ], 1)
+                ]
             );
 
             $events[] = array(
@@ -508,10 +504,10 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                     'tribe_events_cat' => ['business'],
                     'post_tag' => ['cutest', 'fashion'],
                 ]),
-                'meta_input' => $this->get_meta_inputs([
+                'meta_input' => [
                     '_thumbnail_id' => 'gs-teca-3',
                     
-                ], 2)
+                ]
             );
 
             $events[] = array(
@@ -528,9 +524,9 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                     'tribe_events_cat' => ['planning'],
                     'post_tag' => ['cutest'],
                 ]),
-                'meta_input' => $this->get_meta_inputs([
+                'meta_input' => [
                     '_thumbnail_id' => 'gs-teca-4',
-                ], 3),
+                ],
             );
 
             $events[] = array(
@@ -547,9 +543,9 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                     'tribe_events_cat' => ['planning', 'business'],
                     'post_tag' => ['cutest', 'fashion'],
                 ]),
-                'meta_input' => $this->get_meta_inputs([
+                'meta_input' => [
                     '_thumbnail_id' => 'gs-teca-5',
-                ], 4)
+                ]
             );
 
             $events[] = array(
@@ -566,23 +562,23 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                     'tribe_events_cat' => ['beauty'],
                     'post_tag' => ['fashion'],
                 ]),
-                'meta_input' => $this->get_meta_inputs([
+                'meta_input' => [
                     '_thumbnail_id' => 'gs-teca-6',
-                ], 5)
+                ]
             );
 
-            foreach ( $events as $event ) {
-                // Insert the post into the database
-                $post_id = wp_insert_post( $event );
-
-                if ( $post_id ) {
-                    add_post_meta( $post_id, 'gsteca-demo_data', 1 );
-                    teca_ensure_event_datetime_meta( $post_id, $event['post_date'] ?? '', true );
+            foreach ( $events as $index => $event ) {
+                if ( ! empty( $event['meta_input']['_thumbnail_id'] ) && ! is_numeric( $event['meta_input']['_thumbnail_id'] ) ) {
+                    $event['meta_input']['_thumbnail_id'] = $this->get_attachment_id_by_filename( $event['meta_input']['_thumbnail_id'] );
                 }
+
+                teca_insert_demo_event( $event, $index );
             }
 
             $this->repair_demo_event_datetimes();
-            update_option( 'gsteca_demo_datetime_repaired', 1, false );
+            teca_flush_event_caches_after_demo_import();
+            update_option( 'gsteca_demo_datetime_repair_version', self::DEMO_DATETIME_REPAIR_VERSION, false );
+            delete_option( 'gsteca_demo_datetime_repaired' );
 
             do_action( 'gsteca_dummy_portfolios_process_finished' );
 

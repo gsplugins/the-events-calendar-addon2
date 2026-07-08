@@ -121,14 +121,38 @@ function teca_event_datetime_is_complete( $start, $end ) {
 }
 
 /**
- * Persist missing/incomplete event datetime meta for demo imports or empty time values.
+ * Whether TEC has already generated the derived event meta from a normal save/update.
+ *
+ * @param int $event_id Event post ID.
+ * @return bool
+ */
+function teca_event_has_complete_tec_meta( $event_id ) {
+	$event_id  = (int) $event_id;
+	$start     = trim( (string) get_post_meta( $event_id, '_EventStartDate', true ) );
+	$end       = trim( (string) get_post_meta( $event_id, '_EventEndDate', true ) );
+	$start_utc = trim( (string) get_post_meta( $event_id, '_EventStartDateUTC', true ) );
+	$end_utc   = trim( (string) get_post_meta( $event_id, '_EventEndDateUTC', true ) );
+
+	if ( '' === $start || '' === $end ) {
+		return false;
+	}
+
+	if ( teca_event_datetime_needs_time_fallback( $start ) || teca_event_datetime_needs_time_fallback( $end ) ) {
+		return false;
+	}
+
+	return '' !== $start_utc && '' !== $end_utc;
+}
+
+/**
+ * Sync an event through TEC's save pipeline so all derived meta is generated.
  *
  * @param int    $event_id      Event post ID.
  * @param string $fallback_date Optional fallback source (e.g. post_date).
- * @param bool   $force_demo    Force repair for demo events even when partially set.
- * @return bool True when meta was updated.
+ * @param bool   $force_demo    Force sync for demo events.
+ * @return bool True when sync ran.
  */
-function teca_ensure_event_datetime_meta( $event_id, $fallback_date = '', $force_demo = false ) {
+function teca_sync_event_via_tec( $event_id, $fallback_date = '', $force_demo = false ) {
 	$event_id = (int) $event_id;
 
 	if ( $event_id <= 0 ) {
@@ -139,11 +163,7 @@ function teca_ensure_event_datetime_meta( $event_id, $fallback_date = '', $force
 	$start   = (string) get_post_meta( $event_id, '_EventStartDate', true );
 	$end     = (string) get_post_meta( $event_id, '_EventEndDate', true );
 
-	if ( ! $is_demo && teca_event_datetime_is_complete( $start, $end ) ) {
-		return false;
-	}
-
-	if ( ! $is_demo && ! teca_event_datetime_needs_time_fallback( $start ) && '' !== $start && '' !== $end ) {
+	if ( ! $is_demo && teca_event_has_complete_tec_meta( $event_id ) ) {
 		return false;
 	}
 
@@ -153,7 +173,7 @@ function teca_ensure_event_datetime_meta( $event_id, $fallback_date = '', $force
 		return false;
 	}
 
-	if ( $start === $normalized['start'] && $end === $normalized['end'] ) {
+	if ( ! $is_demo && teca_event_has_complete_tec_meta( $event_id ) ) {
 		return false;
 	}
 
@@ -167,6 +187,10 @@ function teca_ensure_event_datetime_meta( $event_id, $fallback_date = '', $force
 			)
 		);
 
+		if ( $updated ) {
+			teca_update_event_custom_tables( $event_id );
+		}
+
 		return (bool) $updated;
 	}
 
@@ -176,6 +200,55 @@ function teca_ensure_event_datetime_meta( $event_id, $fallback_date = '', $force
 	update_post_meta( $event_id, '_EventDuration', max( 0, strtotime( $normalized['end'] ) - strtotime( $normalized['start'] ) ) );
 
 	return true;
+}
+
+/**
+ * Backward-compatible wrapper used by demo repair helpers.
+ *
+ * @param int    $event_id      Event post ID.
+ * @param string $fallback_date Optional fallback source (e.g. post_date).
+ * @param bool   $force_demo    Force sync for demo events.
+ * @return bool
+ */
+function teca_ensure_event_datetime_meta( $event_id, $fallback_date = '', $force_demo = false ) {
+	return teca_sync_event_via_tec( $event_id, $fallback_date, $force_demo );
+}
+
+/**
+ * Upsert TEC custom-table rows for a single event when custom tables are enabled.
+ *
+ * @param int $event_id Event post ID.
+ * @return void
+ */
+function teca_update_event_custom_tables( $event_id ) {
+	$event_id = (int) $event_id;
+
+	if ( $event_id <= 0 || ! class_exists( '\TEC\Events\Custom_Tables\V1\Updates\Events' ) ) {
+		return;
+	}
+
+	( new \TEC\Events\Custom_Tables\V1\Updates\Events() )->update( $event_id );
+}
+
+/**
+ * Clear caches/transients after demo import so events are queryable immediately.
+ *
+ * @return void
+ */
+function teca_flush_event_caches_after_demo_import() {
+	delete_transient( 'gsteca_dummy_events' );
+
+	if ( class_exists( 'Tribe__Events__Dates__Known_Range' ) ) {
+		\Tribe__Events__Dates__Known_Range::instance()->rebuild_known_range();
+	}
+
+	if ( function_exists( 'tribe' ) && tribe()->bound( 'tec.events.custom-tables-v1.updates' ) ) {
+		tribe( 'tec.events.custom-tables-v1.updates' )->commit_updates();
+	}
+
+	if ( function_exists( 'wp_cache_flush' ) ) {
+		wp_cache_flush();
+	}
 }
 
 /**
@@ -198,4 +271,62 @@ function teca_get_demo_event_datetime_pair( $index ) {
 		'start' => wp_date( 'Y-m-d H:i:s', $start_ts ),
 		'end'   => wp_date( 'Y-m-d H:i:s', $start_ts + HOUR_IN_SECONDS ),
 	);
+}
+
+/**
+ * Create a demo event using TEC's native save pipeline when available.
+ *
+ * @param array $event Event definition.
+ * @param int   $index Demo event index.
+ * @return int Event post ID or 0 on failure.
+ */
+function teca_insert_demo_event( array $event, $index ) {
+	$schedule         = teca_get_demo_event_datetime_pair( (int) $index );
+	$thumbnail_id     = 0;
+	$thumbnail_source = $event['meta_input']['_thumbnail_id'] ?? '';
+
+	if ( is_numeric( $thumbnail_source ) ) {
+		$thumbnail_id = (int) $thumbnail_source;
+	}
+
+	$args = array(
+		'post_title'     => $event['post_title'] ?? '',
+		'post_content'   => $event['post_content'] ?? '',
+		'post_status'    => $event['post_status'] ?? 'publish',
+		'post_date'      => $schedule['start'],
+		'post_date_gmt'  => get_gmt_from_date( $schedule['start'] ),
+		'tax_input'      => $event['tax_input'] ?? array(),
+		'EventStartDate' => $schedule['start'],
+		'EventEndDate'   => $schedule['end'],
+		'EventAllDay'    => false,
+	);
+
+	if ( $thumbnail_id > 0 ) {
+		$args['FeaturedImage'] = $thumbnail_id;
+	}
+
+	if ( function_exists( 'tribe_create_event' ) ) {
+		$post_id = tribe_create_event( $args );
+	} else {
+		$insert_args              = $event;
+		$insert_args['post_date'] = $schedule['start'];
+		$insert_args['meta_input'] = array(
+			'_thumbnail_id'    => $thumbnail_id,
+			'_EventStartDate'  => $schedule['start'],
+			'_EventEndDate'    => $schedule['end'],
+			'_EventAllDay'     => '0',
+			'_EventDuration'   => HOUR_IN_SECONDS,
+		);
+
+		$post_id = wp_insert_post( $insert_args );
+	}
+
+	if ( ! $post_id || is_wp_error( $post_id ) ) {
+		return 0;
+	}
+
+	add_post_meta( (int) $post_id, 'gsteca-demo_data', 1, true );
+	teca_sync_event_via_tec( (int) $post_id, $schedule['start'], true );
+
+	return (int) $post_id;
 }
