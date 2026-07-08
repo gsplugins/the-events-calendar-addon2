@@ -1,0 +1,240 @@
+.gs_teca_area.view_type_carousel {
+	max-width: 100%;
+	width: 100%;
+	min-width: 0;
+	overflow-x: hidden;
+	box-sizing: border-box;
+
+	.gs_teca_area--inner,
+	.gs-containeer {
+		max-width: 100%;
+		width: 100%;
+		min-width: 0;
+		overflow-x: hidden;
+		box-sizing: border-box;
+	}
+
+	.gs-containeer {
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	.gs-roow.gs-teca {
+		margin-left: 0;
+		margin-right: 0;
+		max-width: 100%;
+		min-width: 0;
+		position: relative;
+	}
+
+	.swiper {
+		max-width: 100%;
+		width: 100%;
+		overflow: hidden;
+		box-sizing: border-box;
+	}
+
+	.swiper-slide {
+		box-sizing: border-box;
+		float: none !important;
+
+		// Neutralize bootstrap gs-col-* percentage widths inside Swiper.
+		// Do NOT use width !important — it blocks Swiper inline widths.
+		&[class*='gs-col-'] {
+			width: auto;
+			max-width: none;
+			flex: 0 0 auto;
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+
+	&.carousel-navs-pos--center-outside {
+		.swiper-nav-buttons {
+			.swiper-button-next {
+				right: 4%;
+				left: auto;
+			}
+
+			.swiper-button-prev {
+				left: 4%;
+				right: auto;
+			}
+		}
+	}
+
+	// Slider View nav positions — reserve gutter space so buttons never cover cards.
+	&.carousel--has-navs {
+		--teca-carousel-nav-gap: 16px;
+		--teca-carousel-nav-gutter: calc(var(--swiper-button-size, 42px) + var(--teca-carousel-nav-gap));
+		--teca-carousel-top-nav-height: calc(var(--swiper-button-size, 42px) + var(--teca-carousel-nav-gap));
+
+		&.carousel-navs-pos--top-left,
+		&.carousel-navs-pos--top-right,
+		&.carousel-navs-pos--top-center {
+			padding-top: 0;
+
+			.gs-roow.gs-teca {
+				padding-top: var(--teca-carousel-top-nav-height);
+				box-sizing: border-box;
+			}
+
+			.swiper-nav-buttons {
+				.swiper-button-next,
+				.swiper-button-prev {
+					top: 0;
+					margin-top: 0;
+				}
+			}
+		}
+
+		&.carousel-navs-pos--center {
+			.gs-roow.gs-teca {
+				padding-left: var(--teca-carousel-nav-gutter);
+				padding-right: var(--teca-carousel-nav-gutter);
+				box-sizing: border-box;
+			}
+
+			.swiper-nav-buttons {
+				.swiper-button-next,
+				.swiper-button-prev {
+					top: 50%;
+					transform: translateY(-50%);
+				}
+
+				.swiper-button-prev {
+					left: 0;
+					right: auto;
+				}
+
+				.swiper-button-next {
+					right: 0;
+					left: auto;
+				}
+			}
+		}
+
+		&.carousel-navs-pos--verticle-right {
+			.gs-roow.gs-teca {
+				padding-right: var(--teca-carousel-nav-gutter);
+				box-sizing: border-box;
+			}
+
+			.swiper-nav-buttons {
+				.swiper-button-next,
+				.swiper-button-prev {
+					left: auto;
+					right: 0;
+				}
+
+				.swiper-button-prev {
+					top: 50%;
+					transform: translateY(calc(-100% - 5px));
+
+					svg {
+						transform: rotate(-90deg);
+					}
+				}
+
+				.swiper-button-next {
+					top: 50%;
+					transform: translateY(5px);
+
+					svg {
+						transform: rotate(90deg);
+					}
+				}
+			}
+		}
+
+		&.carousel-navs-pos--verticle-left {
+			.gs-roow.gs-teca {
+				padding-left: var(--teca-carousel-nav-gutter);
+				box-sizing: border-box;
+			}
+
+			.swiper-nav-buttons {
+				.swiper-button-next,
+				.swiper-button-prev {
+					left: 0;
+					right: auto;
+				}
+
+				.swiper-button-prev {
+					top: 50%;
+					transform: translateY(calc(-100% - 5px));
+
+					svg {
+						transform: rotate(-90deg);
+					}
+				}
+
+				.swiper-button-next {
+					top: 50%;
+					transform: translateY(5px);
+
+					svg {
+						transform: rotate(90deg);
+					}
+				}
+			}
+		}
+
+		@media (max-width: 575px) {
+			--teca-carousel-nav-gap: 10px;
+
+			&.carousel-navs-pos--verticle-right,
+			&.carousel-navs-pos--verticle-left {
+				.gs-roow.gs-teca {
+					padding-left: 0;
+					padding-right: 0;
+					padding-top: var(--teca-carousel-top-nav-height);
+				}
+
+				.swiper-nav-buttons {
+					.swiper-button-next,
+					.swiper-button-prev {
+						top: 0;
+						left: auto;
+						right: auto;
+						transform: none;
+
+						svg {
+							transform: none;
+						}
+					}
+
+					.swiper-button-prev {
+						right: calc(var(--swiper-button-size, 42px) + 8px);
+					}
+
+					.swiper-button-next {
+						right: 0;
+					}
+				}
+			}
+
+			&.carousel-navs-pos--verticle-left {
+				.swiper-nav-buttons {
+					.swiper-button-next,
+					.swiper-button-prev {
+						left: auto;
+						right: auto;
+					}
+
+					.swiper-button-prev {
+						left: 0;
+						right: auto;
+					}
+
+					.swiper-button-next {
+						left: calc(var(--swiper-button-size, 42px) + 8px);
+						right: auto;
+					}
+				}
+			}
+		}
+	}
+}

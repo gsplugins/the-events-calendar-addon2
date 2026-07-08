@@ -1,0 +1,22 @@
+$brand_color				: #5E6BE5;
+$brand_color_dark			: darken($brand_color, 8%);
+$container_color			: #edf2f6;
+
+$blue_color					: #3f4257;
+$blue_color_dark			: darken($blue_color, 8%);
+$success_color				: #64d07b;
+$success_color_dark			: darken($success_color, 10%);
+
+$text_color_1 				: #515365;
+$text_color_2 				: #66717d;
+$text_color_2_dark 			: darken($text_color_2, 8%);
+$text_color_3 				: #acb0c3;
+$placeholder_color 			: #c6c8d4;
+$loader_color 				: #3f4042;
+
+$red_color 					: #ef583d;
+$red_color_dark 			: darken($red_color, 8%);
+
+
+
+$mobile: "only screen and (max-width: 767px)";

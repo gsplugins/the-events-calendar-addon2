@@ -1,0 +1,22 @@
+.vc_element-icon.icon-teca-wpbakery-events {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.vc_ui-panel-window[data-vc-shortcode="teca_wpbakery_events"] .vc_shortcode-param[data-vc-shortcode-param-name="shortcode_id"] .wpb_element_label {
+	margin-bottom: 6px;
+}
+
+.teca-wpbakery-placeholder {
+	padding: 16px;
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
+	color: #50575e;
+	background: #f6f7f7;
+	text-align: center;
+}
+
+.teca-wpbakery-widget-wrap {
+	width: 100%;
+}

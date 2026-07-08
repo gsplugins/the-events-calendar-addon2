@@ -1,0 +1,77 @@
+// Shared popup action row — View Details, Event Website, Google Calendar.
+// Scoped to popup only; does not affect grid/list/table/single layouts.
+
+.gs_teca_popup,
+.teca-popup {
+	.teca-popup-actions {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		flex-wrap: nowrap;
+		gap: 10px;
+		width: 100%;
+		min-width: 0;
+		margin-top: 16px;
+		flex-shrink: 0;
+
+		> a,
+		> button {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			white-space: nowrap;
+			overflow: visible;
+			text-overflow: clip;
+			flex: 0 1 auto;
+			min-width: 0;
+			max-width: none;
+			margin-top: 0;
+			line-height: 1.2;
+		}
+
+		.teca-popup-button,
+		.teca-popup-website-link,
+		.teca-google-calendar-btn,
+		.teca-event-button,
+		.teca-view-details,
+		.teca-event-website-btn {
+			overflow: visible;
+			text-overflow: clip;
+			white-space: nowrap;
+		}
+	}
+}
+
+@media (max-width: 991px) {
+	.gs_teca_popup .teca-popup-actions,
+	.teca-popup .teca-popup-actions {
+		gap: 8px;
+
+		> a,
+		> button,
+		.teca-popup-button,
+		.teca-popup-website-link,
+		.teca-google-calendar-btn {
+			padding: 9px 12px;
+			font-size: 13px;
+		}
+	}
+}
+
+@media (max-width: 575px) {
+	.gs_teca_popup .teca-popup-actions,
+	.teca-popup .teca-popup-actions {
+		gap: 6px;
+		flex-wrap: wrap;
+
+		> a,
+		> button,
+		.teca-popup-button,
+		.teca-popup-website-link,
+		.teca-google-calendar-btn {
+			padding: 8px 10px;
+			font-size: 12px;
+		}
+	}
+}

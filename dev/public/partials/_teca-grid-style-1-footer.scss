@@ -1,0 +1,78 @@
+// Grid Style 1 footer — tag chips + View Details alignment (loads after teca-event-terms).
+.gs_teca_area.gs-teca-style-1,
+.gs-teca-style-1 {
+	.teca-grid-style-1-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		flex-wrap: wrap;
+
+		> .gs-teca-tag,
+		> .teca-event-tags {
+			display: flex;
+			align-items: center;
+			flex: 1 1 auto;
+			flex-wrap: wrap;
+			gap: 8px;
+			min-width: 0;
+			margin: 0;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			box-shadow: none;
+		}
+
+		.teca-event-tags,
+		.gs-teca-tags {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin: 0;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			box-shadow: none;
+		}
+
+		.teca-event-tag,
+		span.gs-teca-tag {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 7px 12px;
+			border-radius: 999px;
+			border: 1px solid rgba(15, 23, 42, 0.12);
+			background: #f3f4f6;
+			color: var(--teca-s1-muted, #6b7280);
+			font-size: 10px;
+			font-weight: 600;
+			line-height: 1;
+			text-decoration: none;
+			box-shadow: none;
+			min-height: 32px;
+		}
+
+		.gs-teca-view-details {
+			display: flex;
+			align-items: center;
+			flex-shrink: 0;
+			margin-left: auto;
+		}
+
+		.teca-grid-style-1-button,
+		.gs-teca-btn-popup,
+		.gs-teca-btn-link {
+			min-height: 32px;
+			line-height: 1;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.teca-grid-style-1-footer {
+			flex-wrap: wrap;
+			align-items: center;
+		}
+	}
+}

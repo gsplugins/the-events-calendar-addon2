@@ -1,0 +1,265 @@
+// Styles 3–10 — footer tag + View Details vertical alignment (loads after teca-event-terms).
+
+$teca-styles-3-10-footers:
+	'.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer',
+	'.gs-teca-style-3 .teca-grid-style-3-footer',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer',
+	'.gs-teca-style-4 .teca-style-4-footer',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer',
+	'.gs-teca-style-5 .teca-style-5-footer',
+	'.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer',
+	'.gs-teca-style-6 .teca-grid-style-6-footer',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer',
+	'.gs-teca-style-7 .teca-grid-style-7-footer',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer',
+	'.gs-teca-style-8 .teca-grid-style-8-footer',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer',
+	'.gs-teca-style-9 .teca-grid-style-9-footer',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer',
+	'.gs-teca-style-10 .teca-grid-style-10-footer';
+
+$teca-styles-3-10-tag-wrappers:
+	'.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer > .gs-teca-tags',
+	'.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer > .teca-event-tags',
+	'.gs-teca-style-3 .teca-grid-style-3-footer > .gs-teca-tags',
+	'.gs-teca-style-3 .teca-grid-style-3-footer > .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer > .teca-style-4-tags',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer > .gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer > .teca-event-tags',
+	'.gs-teca-style-4 .teca-style-4-footer > .teca-style-4-tags',
+	'.gs-teca-style-4 .teca-style-4-footer > .gs-teca-tag',
+	'.gs-teca-style-4 .teca-style-4-footer > .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer > .teca-style-5-tags',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer > .gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer > .teca-event-tags',
+	'.gs-teca-style-5 .teca-style-5-footer > .teca-style-5-tags',
+	'.gs-teca-style-5 .teca-style-5-footer > .gs-teca-tag',
+	'.gs-teca-style-5 .teca-style-5-footer > .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer > .teca-grid-style-6-tags',
+	'.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer > .gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer > .teca-event-tags',
+	'.gs-teca-style-6 .teca-grid-style-6-footer > .teca-grid-style-6-tags',
+	'.gs-teca-style-6 .teca-grid-style-6-footer > .gs-teca-tag',
+	'.gs-teca-style-6 .teca-grid-style-6-footer > .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer > .teca-grid-style-7-tags',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer > .gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer > .teca-event-tags',
+	'.gs-teca-style-7 .teca-grid-style-7-footer > .teca-grid-style-7-tags',
+	'.gs-teca-style-7 .teca-grid-style-7-footer > .gs-teca-tag',
+	'.gs-teca-style-7 .teca-grid-style-7-footer > .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer > .teca-grid-style-8-tags',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer > .gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer > .teca-event-tags',
+	'.gs-teca-style-8 .teca-grid-style-8-footer > .teca-grid-style-8-tags',
+	'.gs-teca-style-8 .teca-grid-style-8-footer > .gs-teca-tag',
+	'.gs-teca-style-8 .teca-grid-style-8-footer > .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer > .teca-grid-style-9-tags',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer > .gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer > .teca-event-tags',
+	'.gs-teca-style-9 .teca-grid-style-9-footer > .teca-grid-style-9-tags',
+	'.gs-teca-style-9 .teca-grid-style-9-footer > .gs-teca-tag',
+	'.gs-teca-style-9 .teca-grid-style-9-footer > .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer > .teca-grid-style-10-tags',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer > .gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer > .teca-event-tags',
+	'.gs-teca-style-10 .teca-grid-style-10-footer > .teca-grid-style-10-tags',
+	'.gs-teca-style-10 .teca-grid-style-10-footer > .gs-teca-tag',
+	'.gs-teca-style-10 .teca-grid-style-10-footer > .teca-event-tags';
+
+$teca-styles-3-10-inner-tags:
+	'.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer .gs-teca-tags',
+	'.gs-teca-style-3 .teca-grid-style-3-footer .teca-event-tags',
+	'.gs-teca-style-3 .teca-grid-style-3-footer .gs-teca-tags',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer .gs-teca-tags',
+	'.gs-teca-style-4 .teca-style-4-footer .teca-event-tags',
+	'.gs-teca-style-4 .teca-style-4-footer .gs-teca-tags',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer .gs-teca-tags',
+	'.gs-teca-style-5 .teca-style-5-footer .teca-event-tags',
+	'.gs-teca-style-5 .teca-style-5-footer .gs-teca-tags',
+	'.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer .gs-teca-tags',
+	'.gs-teca-style-6 .teca-grid-style-6-footer .teca-event-tags',
+	'.gs-teca-style-6 .teca-grid-style-6-footer .gs-teca-tags',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer .gs-teca-tags',
+	'.gs-teca-style-7 .teca-grid-style-7-footer .teca-event-tags',
+	'.gs-teca-style-7 .teca-grid-style-7-footer .gs-teca-tags',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer .gs-teca-tags',
+	'.gs-teca-style-8 .teca-grid-style-8-footer .teca-event-tags',
+	'.gs-teca-style-8 .teca-grid-style-8-footer .gs-teca-tags',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer .gs-teca-tags',
+	'.gs-teca-style-9 .teca-grid-style-9-footer .teca-event-tags',
+	'.gs-teca-style-9 .teca-grid-style-9-footer .gs-teca-tags',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer .teca-event-tags',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer .gs-teca-tags',
+	'.gs-teca-style-10 .teca-grid-style-10-footer .teca-event-tags',
+	'.gs-teca-style-10 .teca-grid-style-10-footer .gs-teca-tags';
+
+$teca-styles-3-10-tag-chips:
+	'.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer .teca-event-tag',
+	'.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer span.gs-teca-tag',
+	'.gs-teca-style-3 .teca-grid-style-3-footer .teca-event-tag',
+	'.gs-teca-style-3 .teca-grid-style-3-footer span.gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer .teca-event-tag',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer span.gs-teca-tag',
+	'.gs-teca-style-4 .teca-style-4-footer .teca-event-tag',
+	'.gs-teca-style-4 .teca-style-4-footer span.gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer .teca-event-tag',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer span.gs-teca-tag',
+	'.gs-teca-style-5 .teca-style-5-footer .teca-event-tag',
+	'.gs-teca-style-5 .teca-style-5-footer span.gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer .teca-event-tag',
+	'.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer span.gs-teca-tag',
+	'.gs-teca-style-6 .teca-grid-style-6-footer .teca-event-tag',
+	'.gs-teca-style-6 .teca-grid-style-6-footer span.gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer .teca-event-tag',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer span.gs-teca-tag',
+	'.gs-teca-style-7 .teca-grid-style-7-footer .teca-event-tag',
+	'.gs-teca-style-7 .teca-grid-style-7-footer span.gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer .teca-event-tag',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer span.gs-teca-tag',
+	'.gs-teca-style-8 .teca-grid-style-8-footer .teca-event-tag',
+	'.gs-teca-style-8 .teca-grid-style-8-footer span.gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer .teca-event-tag',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer span.gs-teca-tag',
+	'.gs-teca-style-9 .teca-grid-style-9-footer .teca-event-tag',
+	'.gs-teca-style-9 .teca-grid-style-9-footer span.gs-teca-tag',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer .teca-event-tag',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer span.gs-teca-tag',
+	'.gs-teca-style-10 .teca-grid-style-10-footer .teca-event-tag',
+	'.gs-teca-style-10 .teca-grid-style-10-footer span.gs-teca-tag';
+
+$teca-styles-3-10-actions:
+	'.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer .gs-teca-view-details',
+	'.gs-teca-style-3 .teca-grid-style-3-footer .gs-teca-view-details',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer .gs-teca-view-details',
+	'.gs_teca_area.gs-teca-style-4 .teca-style-4-footer .teca-style-4-action',
+	'.gs-teca-style-4 .teca-style-4-footer .gs-teca-view-details',
+	'.gs-teca-style-4 .teca-style-4-footer .teca-style-4-action',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer .gs-teca-view-details',
+	'.gs_teca_area.gs-teca-style-5 .teca-style-5-footer .teca-style-5-action',
+	'.gs-teca-style-5 .teca-style-5-footer .gs-teca-view-details',
+	'.gs-teca-style-5 .teca-style-5-footer .teca-style-5-action',
+	'.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer .teca-grid-style-6-footer-action',
+	'.gs-teca-style-6 .teca-grid-style-6-footer .teca-grid-style-6-footer-action',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer .gs-teca-view-details',
+	'.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer .teca-grid-style-7-action',
+	'.gs-teca-style-7 .teca-grid-style-7-footer .gs-teca-view-details',
+	'.gs-teca-style-7 .teca-grid-style-7-footer .teca-grid-style-7-action',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer .gs-teca-view-details',
+	'.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer .teca-grid-style-8-action',
+	'.gs-teca-style-8 .teca-grid-style-8-footer .gs-teca-view-details',
+	'.gs-teca-style-8 .teca-grid-style-8-footer .teca-grid-style-8-action',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer .gs-teca-view-details',
+	'.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer .teca-grid-style-9-action',
+	'.gs-teca-style-9 .teca-grid-style-9-footer .gs-teca-view-details',
+	'.gs-teca-style-9 .teca-grid-style-9-footer .teca-grid-style-9-action',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer .gs-teca-view-details',
+	'.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer .teca-grid-style-10-action',
+	'.gs-teca-style-10 .teca-grid-style-10-footer .gs-teca-view-details',
+	'.gs-teca-style-10 .teca-grid-style-10-footer .teca-grid-style-10-action';
+
+#{$teca-styles-3-10-footers} {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+#{$teca-styles-3-10-tag-wrappers},
+#{$teca-styles-3-10-inner-tags} {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+	margin-top: 0;
+	padding: 0;
+}
+
+#{$teca-styles-3-10-tag-chips} {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	vertical-align: middle;
+}
+
+#{$teca-styles-3-10-actions} {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 0;
+	flex-shrink: 0;
+}
+
+.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer .teca-grid-style-3-button,
+.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer .gs-teca-btn-link,
+.gs_teca_area.gs-teca-style-3 .teca-grid-style-3-footer .gs-teca-btn-popup,
+.gs-teca-style-3 .teca-grid-style-3-footer .teca-grid-style-3-button,
+.gs-teca-style-3 .teca-grid-style-3-footer .gs-teca-btn-link,
+.gs-teca-style-3 .teca-grid-style-3-footer .gs-teca-btn-popup,
+.gs_teca_area.gs-teca-style-4 .teca-style-4-footer .teca-style-4-link,
+.gs_teca_area.gs-teca-style-4 .teca-style-4-footer .gs-teca-btn-link,
+.gs_teca_area.gs-teca-style-4 .teca-style-4-footer .gs-teca-btn-popup,
+.gs-teca-style-4 .teca-style-4-footer .teca-style-4-link,
+.gs-teca-style-4 .teca-style-4-footer .gs-teca-btn-link,
+.gs-teca-style-4 .teca-style-4-footer .gs-teca-btn-popup,
+.gs_teca_area.gs-teca-style-5 .teca-style-5-footer .teca-style-5-link,
+.gs_teca_area.gs-teca-style-5 .teca-style-5-footer .gs-teca-btn-link,
+.gs_teca_area.gs-teca-style-5 .teca-style-5-footer .gs-teca-btn-popup,
+.gs-teca-style-5 .teca-style-5-footer .teca-style-5-link,
+.gs-teca-style-5 .teca-style-5-footer .gs-teca-btn-link,
+.gs-teca-style-5 .teca-style-5-footer .gs-teca-btn-popup,
+.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer .teca-grid-style-6-link,
+.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer .gs-teca-btn-link,
+.gs_teca_area.gs-teca-style-6 .teca-grid-style-6-footer .gs-teca-btn-popup,
+.gs-teca-style-6 .teca-grid-style-6-footer .teca-grid-style-6-link,
+.gs-teca-style-6 .teca-grid-style-6-footer .gs-teca-btn-link,
+.gs-teca-style-6 .teca-grid-style-6-footer .gs-teca-btn-popup,
+.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer .teca-grid-style-7-button,
+.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer .gs-teca-btn-link,
+.gs_teca_area.gs-teca-style-7 .teca-grid-style-7-footer .gs-teca-btn-popup,
+.gs-teca-style-7 .teca-grid-style-7-footer .teca-grid-style-7-button,
+.gs-teca-style-7 .teca-grid-style-7-footer .gs-teca-btn-link,
+.gs-teca-style-7 .teca-grid-style-7-footer .gs-teca-btn-popup,
+.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer .teca-grid-style-8-button,
+.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer .gs-teca-btn-link,
+.gs_teca_area.gs-teca-style-8 .teca-grid-style-8-footer .gs-teca-btn-popup,
+.gs-teca-style-8 .teca-grid-style-8-footer .teca-grid-style-8-button,
+.gs-teca-style-8 .teca-grid-style-8-footer .gs-teca-btn-link,
+.gs-teca-style-8 .teca-grid-style-8-footer .gs-teca-btn-popup,
+.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer .teca-grid-style-9-button,
+.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer .gs-teca-btn-link,
+.gs_teca_area.gs-teca-style-9 .teca-grid-style-9-footer .gs-teca-btn-popup,
+.gs-teca-style-9 .teca-grid-style-9-footer .teca-grid-style-9-button,
+.gs-teca-style-9 .teca-grid-style-9-footer .gs-teca-btn-link,
+.gs-teca-style-9 .teca-grid-style-9-footer .gs-teca-btn-popup,
+.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer .teca-grid-style-10-button,
+.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer .gs-teca-btn-link,
+.gs_teca_area.gs-teca-style-10 .teca-grid-style-10-footer .gs-teca-btn-popup,
+.gs-teca-style-10 .teca-grid-style-10-footer .teca-grid-style-10-button,
+.gs-teca-style-10 .teca-grid-style-10-footer .gs-teca-btn-link,
+.gs-teca-style-10 .teca-grid-style-10-footer .gs-teca-btn-popup {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+}
+
+@media (max-width: 767px) {
+	#{$teca-styles-3-10-footers} {
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	#{$teca-styles-3-10-actions} {
+		margin-left: 0;
+	}
+}

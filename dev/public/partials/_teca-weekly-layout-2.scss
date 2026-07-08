@@ -1,0 +1,500 @@
+.teca-weekly-layout-2 {
+	--teca-wl2-sidebar-bg: rgba(18, 10, 36, 0.92);
+	--teca-wl2-sidebar-text: #ffffff;
+	--teca-wl2-sidebar-muted: rgba(255, 255, 255, 0.68);
+	--teca-wl2-content-gradient: linear-gradient(160deg, #2b1055 0%, #7b2cbf 38%, #c9184a 72%, #ff6b35 100%);
+	--teca-wl2-card-border: rgba(255, 255, 255, 0.92);
+	--teca-wl2-card-radius: 14px;
+	--teca-wl2-time-strip-width: 54px;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	color: #ffffff;
+	line-height: 1.35;
+}
+
+.teca-weekly-layout-2-shell {
+	display: flex;
+	align-items: stretch;
+	min-height: 560px;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+}
+
+.teca-weekly-layout-2-sidebar {
+	flex: 0 0 260px;
+	max-width: 260px;
+	background: var(--teca-wl2-sidebar-bg);
+	color: var(--teca-wl2-sidebar-text);
+	padding: 28px 0 20px;
+	overflow-y: auto;
+}
+
+.teca-weekly-layout-2-sidebar-label {
+	padding: 0 22px 16px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--teca-wl2-sidebar-muted);
+}
+
+.teca-weekly-layout-2-event-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.teca-weekly-layout-2-event-item {
+	margin: 0;
+}
+
+.teca-weekly-layout-2-event-trigger {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	padding: 12px 22px;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	text-align: left;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.teca-weekly-layout-2-event-item:hover .teca-weekly-layout-2-event-trigger,
+.teca-weekly-layout-2-event-item-active .teca-weekly-layout-2-event-trigger {
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.teca-weekly-layout-2-event-thumb {
+	flex: 0 0 52px;
+	width: 52px;
+	height: 38px;
+	border-radius: 4px;
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.teca-weekly-layout-2-event-thumb img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.teca-weekly-layout-2-event-title {
+	flex: 1;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.35;
+	color: var(--teca-wl2-sidebar-text);
+}
+
+.teca-weekly-layout-2-empty-sidebar,
+.teca-weekly-layout-2-empty-content {
+	margin: 0;
+	padding: 20px 22px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.78);
+}
+
+.teca-weekly-layout-2-content {
+	flex: 1;
+	min-width: 0;
+	padding: 36px 40px 44px;
+	background: var(--teca-wl2-content-gradient);
+	overflow-y: auto;
+}
+
+.teca-weekly-layout-2-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 24px;
+	margin-bottom: 28px;
+}
+
+.teca-weekly-layout-2-title-wrap {
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	flex-wrap: wrap;
+}
+
+.teca-weekly-layout-2-title {
+	margin: 0;
+	font-size: clamp(34px, 4vw, 52px);
+	font-weight: 700;
+	line-height: 0.95;
+	letter-spacing: 0.02em;
+	color: #fff;
+}
+
+.teca-weekly-layout-2-title-divider {
+	width: 2px;
+	height: 52px;
+	background: rgba(255, 255, 255, 0.85);
+}
+
+.teca-weekly-layout-2-title-sub {
+	margin: 0;
+	font-size: clamp(22px, 2.4vw, 30px);
+	font-weight: 700;
+	line-height: 1.05;
+	letter-spacing: 0.04em;
+	color: rgba(255, 255, 255, 0.95);
+}
+
+.teca-weekly-layout-2-toolbar {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+}
+
+.teca-weekly-layout-2-filter-label {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.teca-weekly-layout-2-type-select {
+	min-width: 170px;
+	height: 38px;
+	padding: 0 34px 0 14px;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	border-radius: 4px;
+	background-color: rgba(255, 255, 255, 0.95);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23666' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	appearance: none;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-size: 12px;
+	font-weight: 600;
+	color: #1a1a1a;
+	cursor: pointer;
+
+	&:hover,
+	&:focus,
+	&:focus-visible,
+	&:active {
+		outline: none;
+		border-color: rgba(255, 255, 255, 0.35);
+	}
+}
+
+.teca-weekly-layout-2-week {
+	margin-bottom: 34px;
+}
+
+.teca-weekly-layout-2-week:last-child {
+	margin-bottom: 0;
+}
+
+.teca-weekly-layout-2-week.is-hidden {
+	display: none;
+}
+
+.teca-weekly-layout-2-week-header {
+	margin-bottom: 16px;
+}
+
+.teca-weekly-layout-2-week-range {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.88);
+}
+
+.teca-weekly-layout-2-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.teca-weekly-layout-2-card {
+	position: relative;
+	display: block;
+	min-height: 118px;
+	overflow: hidden;
+	border: 1px solid var(--teca-wl2-card-border);
+	border-radius: var(--teca-wl2-card-radius);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.teca-weekly-layout-2-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+}
+
+.teca-weekly-layout-2-card.is-hidden {
+	display: none;
+}
+
+.teca-weekly-layout-2-card.is-highlighted {
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 12px 28px rgba(0, 0, 0, 0.24);
+}
+
+.teca-weekly-layout-2-card-media {
+	position: absolute;
+	inset: 0;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	filter: blur(1px);
+	transform: scale(1.04);
+}
+
+.teca-weekly-layout-2-card-media-empty {
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+	filter: none;
+	transform: none;
+}
+
+.teca-weekly-layout-2-card-overlay {
+	position: absolute;
+	inset: 0;
+	opacity: 0.82;
+}
+
+.teca-weekly-layout-2-card-accent-teal .teca-weekly-layout-2-card-overlay {
+	background: linear-gradient(90deg, rgba(26, 122, 140, 0.92) 0%, rgba(45, 156, 176, 0.78) 100%);
+}
+
+.teca-weekly-layout-2-card-accent-purple .teca-weekly-layout-2-card-overlay {
+	background: linear-gradient(90deg, rgba(88, 28, 135, 0.92) 0%, rgba(147, 51, 234, 0.78) 100%);
+}
+
+.teca-weekly-layout-2-card-accent-orange .teca-weekly-layout-2-card-overlay {
+	background: linear-gradient(90deg, rgba(120, 53, 15, 0.92) 0%, rgba(234, 88, 12, 0.78) 100%);
+}
+
+.teca-weekly-layout-2-card-accent-blue .teca-weekly-layout-2-card-overlay {
+	background: linear-gradient(90deg, rgba(30, 58, 138, 0.92) 0%, rgba(59, 130, 246, 0.78) 100%);
+}
+
+.teca-weekly-layout-2-card-inner {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: stretch;
+	min-height: 118px;
+	padding-right: var(--teca-wl2-time-strip-width);
+}
+
+.teca-weekly-layout-2-card-date-badge {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	padding: 0 28px;
+	font-size: clamp(42px, 4vw, 56px);
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 0.02em;
+	color: #fff;
+}
+
+.teca-weekly-layout-2-card-body {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 0;
+	padding: 18px 20px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.teca-weekly-layout-2-card-category {
+	margin-bottom: 6px;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.teca-weekly-layout-2-card-title {
+	margin: 0 0 6px;
+	font-size: clamp(16px, 1.6vw, 20px);
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: 0.04em;
+	color: #fff;
+}
+
+.teca-weekly-layout-2-card-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.teca-weekly-layout-2-card-title a:hover {
+	text-decoration: underline;
+}
+
+.teca-weekly-layout-2-card-meta {
+	margin: 0;
+	font-size: 13px;
+	font-style: italic;
+	font-weight: 400;
+	line-height: 1.35;
+	letter-spacing: 0.03em;
+	color: rgba(255, 255, 255, 0.92);
+}
+
+.teca-weekly-layout-2-card-venue,
+.teca-weekly-layout-2-card-organizer,
+.teca-weekly-layout-2-card-cost {
+	margin-top: 4px;
+	font-size: 12px;
+	line-height: 1.35;
+	color: rgba(255, 255, 255, 0.88);
+}
+
+.teca-weekly-layout-2-card-button {
+	display: inline-flex;
+	align-self: flex-start;
+	margin-top: 10px;
+	padding: 6px 12px;
+	border: 1px solid rgba(255, 255, 255, 0.75);
+	border-radius: 4px;
+	background: rgba(255, 255, 255, 0.12);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: background-color 0.2s ease;
+}
+
+.teca-weekly-layout-2-card-button:hover {
+	background: rgba(255, 255, 255, 0.22);
+	color: #fff;
+}
+
+.teca-weekly-layout-2-card-time {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: var(--teca-wl2-time-strip-width);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #fff;
+}
+
+.teca-weekly-layout-2-card-time span {
+	display: block;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: 28px;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 0.02em;
+	writing-mode: vertical-rl;
+	transform: rotate(180deg);
+}
+
+.teca-weekly-layout-2-card-accent-teal .teca-weekly-layout-2-card-time span {
+	color: #1a7a8c;
+}
+
+.teca-weekly-layout-2-card-accent-purple .teca-weekly-layout-2-card-time span {
+	color: #7c3aed;
+}
+
+.teca-weekly-layout-2-card-accent-orange .teca-weekly-layout-2-card-time span {
+	color: #ea580c;
+}
+
+.teca-weekly-layout-2-card-accent-blue .teca-weekly-layout-2-card-time span {
+	color: #2563eb;
+}
+
+.teca-weekly-layout-2-card:nth-child(even) .teca-weekly-layout-2-card-inner {
+	flex-direction: row-reverse;
+}
+
+.teca-weekly-layout-2-card:nth-child(even) .teca-weekly-layout-2-card-body {
+	align-items: flex-end;
+	text-align: right;
+}
+
+.teca-weekly-layout-2-card:nth-child(even) .teca-weekly-layout-2-card-date-badge {
+	padding-left: 18px;
+	padding-right: 24px;
+}
+
+.teca-weekly-layout-2-footer-venue {
+	margin-top: 28px;
+	text-align: center;
+	font-size: clamp(24px, 2.8vw, 34px);
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	color: rgba(255, 255, 255, 0.95);
+}
+
+@media (max-width: 1199px) {
+	.teca-weekly-layout-2-shell {
+		flex-direction: column;
+	}
+
+	.teca-weekly-layout-2-sidebar {
+		flex: none;
+		max-width: none;
+		width: 100%;
+		max-height: 220px;
+	}
+
+	.teca-weekly-layout-2-header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.teca-weekly-layout-2-content {
+		padding: 28px 24px 36px;
+	}
+}
+
+@media (max-width: 767px) {
+	.teca-weekly-layout-2-card-inner {
+		flex-direction: column !important;
+		padding-right: 0;
+		padding-bottom: var(--teca-wl2-time-strip-width);
+	}
+
+	.teca-weekly-layout-2-card-date-badge {
+		padding: 16px 20px 0;
+		font-size: 36px;
+	}
+
+	.teca-weekly-layout-2-card-body {
+		padding: 12px 20px 16px;
+		align-items: flex-start !important;
+		text-align: left !important;
+	}
+
+	.teca-weekly-layout-2-card-time {
+		top: auto;
+		left: 0;
+		width: 100%;
+		height: var(--teca-wl2-time-strip-width);
+	}
+
+	.teca-weekly-layout-2-card-time span {
+		writing-mode: horizontal-tb;
+		transform: none;
+		font-size: 24px;
+	}
+}

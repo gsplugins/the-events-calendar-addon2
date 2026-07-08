@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "teca/events",
+	"title": "TECA Events",
+	"category": "widgets",
+	"icon": "calendar-alt",
+	"description": "Insert and display TECA event layouts.",
+	"keywords": [ "events", "calendar", "teca", "shortcode" ],
+	"textdomain": "the-events-calendar-addon",
+	"attributes": {
+		"shortcode": {
+			"type": "string",
+			"default": ""
+		},
+		"align": {
+			"type": "string",
+			"default": "wide"
+		}
+	},
+	"supports": {
+		"align": [ "wide", "full" ],
+		"html": false
+	}
+}

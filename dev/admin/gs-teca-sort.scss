@@ -1,0 +1,261 @@
+#sortable-list {
+	margin-top: 30px;
+}
+
+#loading-animation {
+	display:none;
+}
+
+.ui-sortable-handle {
+
+	display: flex;
+	align-items: center;
+	justify-items: center;
+	max-width: 1000px;
+	padding: 20px;
+	cursor: move;
+	background: #fff;
+	border-radius: 4px;
+	margin-bottom: 16px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, .1);
+	transition: box-shadow .1s ease-in-out;
+
+	.sortable-icon {
+		flex: 1 0 32px;
+		max-width: 50px;
+	}
+
+	.sortable-thumbnail {
+		line-height: 0;
+		flex: 1 0 60px;
+		max-width: 100px;
+	}
+
+	.sortable-title {
+		font-size: 16px;
+		flex: 1 1 45%;
+    	max-width: 350px;
+	}
+
+	.sortable-group {
+    	flex: 1 1 45%;
+	}
+
+	.sortable-thumbnail {
+		span {
+			overflow: hidden;
+			display: block;
+			width: 40px;
+			height: 40px;
+		}
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
+
+
+	.sortable-group span {
+		display: inline-block;
+		border-radius: 25px;
+		border: 1px solid #e5e5ea;
+		margin: 4px;
+		padding: 7px;
+		line-height: 1;
+	}
+
+	&:hover {
+		box-shadow: 0px 0px 20px rgba(0, 0, 0, .12);
+	}
+
+}
+
+.gs-plugins--sort-links {
+	display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 30px;
+    background: #fff;
+    margin: 0px 0px 0 -20px;
+	box-shadow: 0px 1px 10px rgba(63, 66, 87, 0.06);
+
+	a {
+		// Make like menu link
+		color: #515365;
+		font-size: 16px;
+		text-decoration: none;
+		transition: color .3s;
+		font-weight: 500;
+		border-bottom: 2px solid transparent;
+		line-height: 64px;
+		box-shadow: none;
+		outline: none;
+
+		&.gs-sort-active {
+			color: #242429;
+			border-color: #5E6BE5;
+		}
+	}
+}
+
+.gs-plugins--sort-content {
+	margin-top: 20px;
+	padding: 0 10px;
+	position: relative;
+}
+
+.gsteca-sort--left-area {
+	h3 {
+		line-height: 1.5;
+		display: flex;
+		align-items: center;
+		img {
+			margin-left: 4px;
+			width: 16px;
+			height: 16px;
+		}
+	}
+}
+
+.events_page_sort_tribe_events {
+
+	#wpbody-content {
+		position: relative;
+	}
+	
+	.gs-teca--sort-wrap {
+		opacity: 0.3;
+		&.sort--wrap-active {
+			opacity: 1;
+		}
+	}
+
+  	.gs-teca-disable--term-inner {
+		position: absolute;
+		width: 100%;
+		height: 100vh;
+		top: 0;
+		left: 0;
+		z-index: 999;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+  
+		.gs-teca-disable--term-message {
+			display: inline-block;
+			font-size: 18px;
+			background: #6472ef;
+			padding: 20px 100px;
+			border-radius: 3px;
+			color: #fff;
+			text-decoration: none;
+			text-align: center;
+		}
+
+  	}
+}
+
+.gs-teca-disable--term-message > a {
+	text-decoration: none;
+	color: #ffffff;
+}
+
+.table-visibility {
+
+	max-width: 700px;
+
+	.table-row > div {
+		padding: 14px 18px;
+	}
+
+	.table-row > div:not(:first-child) {
+		text-align: center;
+	}
+
+	.visibility-device {
+		background: #e1e2eb;
+		color: #62646e;
+		padding: 4px 8px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 4px;
+		position: relative;
+		span {
+			position: absolute;
+			background: #4b4b51;
+			color: #f2f2ff;
+			bottom: calc(100% + 10px);
+			font-size: 13px;
+			left: 50%;
+			transform: translateX(-50%);
+			padding: 2px 6px;
+			border-radius: 4px;
+			opacity: 0;
+			transition: all 0.15s ease;
+			white-space: nowrap;
+			z-index: 1;
+			
+			&:after {
+				border: 6px solid transparent;
+				content: "";
+				position: absolute;
+				top: 100%;
+				border-top-color: #4b4b51;
+				left: calc(50% - 5px);
+			}
+		}
+		svg {
+			width: 16px;
+			height: 16px;
+		}
+		&:hover span {
+			opacity: 1;
+		}
+	}
+
+	.table-row {
+		display: flex;
+		margin: 0;
+		padding: 0;
+		max-width: 100% !important;
+		width: 100%;
+		box-shadow: none;
+		border: none;
+		background: #fff;
+
+		--item-width: max(15%, 80px);
+
+		.sortable-icon-title {
+			i {
+				margin-right: 10px;
+			}
+		}
+
+		& > div:nth-child(1) {
+			width: calc( 100% - (var(--item-width) * 4));
+		}
+		& > div:nth-child(2) {
+			width: var(--item-width);
+		}
+		& > div:nth-child(3) {
+			width: var(--item-width);
+		}
+		& > div:nth-child(4) {
+			width: var(--item-width);
+		}
+		& > div:nth-child(5) {
+			width: var(--item-width);
+		}
+	}
+
+	.ui-sortable--table {
+		width: 100%;
+		max-width: 100%;
+		position: relative;
+		display: flex;
+		gap: 2px;
+		margin-top: 2px;
+		flex-direction: column;
+	}
+}

@@ -1,0 +1,300 @@
+.teca-has-venue-template-layout-1 {
+	width: 100%;
+	max-width: none;
+	box-sizing: border-box;
+
+	.gs_teca_area--inner,
+	.gs-containeer,
+	.gs-roow.gs-teca {
+		width: 100%;
+		max-width: 100%;
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: 0;
+		margin-right: 0;
+		box-sizing: border-box;
+	}
+
+	.gs-roow.gs-teca > .teca-venue-template {
+		flex: 1 1 100%;
+		min-width: 100%;
+		max-width: 100%;
+	}
+}
+
+.teca-venue-template-layout-1 {
+	--teca-vt1-text: #0f172a;
+	--teca-vt1-muted: #64748b;
+	--teca-vt1-border: rgba(15, 23, 42, 0.08);
+	--teca-vt1-bg: #f8fafc;
+	--teca-vt1-white: #ffffff;
+	--teca-vt1-accent: #6366f1;
+	--teca-vt1-accent-soft: rgba(99, 102, 241, 0.12);
+	--teca-vt1-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+	--teca-vt1-shadow-hover: 0 24px 48px rgba(15, 23, 42, 0.14);
+	position: relative;
+	width: 100%;
+	padding-left: 24px;
+	padding-right: 24px;
+	box-sizing: border-box;
+	color: var(--teca-vt1-text);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	line-height: 1.5;
+}
+
+.teca-venue-template-layout-1 .teca-venue-template-header {
+	max-width: 760px;
+	margin: 0 auto 36px;
+	text-align: center;
+}
+
+.teca-venue-template-layout-1 .teca-venue-template-eyebrow {
+	display: inline-block;
+	margin-bottom: 12px;
+	padding: 6px 14px;
+	border-radius: 999px;
+	background: var(--teca-vt1-accent-soft);
+	color: var(--teca-vt1-accent);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.teca-venue-template-layout-1 .teca-venue-template-title {
+	margin: 0 0 12px;
+	font-size: clamp(2rem, 4vw, 2.75rem);
+	font-weight: 700;
+	line-height: 1.15;
+	letter-spacing: -0.03em;
+}
+
+.teca-venue-template-layout-1 .teca-venue-template-description {
+	margin: 0;
+	color: var(--teca-vt1-muted);
+	font-size: 1.05rem;
+}
+
+.teca-venue-template-layout-1 .teca-venue-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 28px;
+}
+
+@media (max-width: 1024px) {
+	.teca-venue-template-layout-1 .teca-venue-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 767px) {
+	.teca-venue-template-layout-1 {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.teca-venue-template-layout-1 .teca-venue-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.teca-venue-template-layout-1 .teca-venue-card {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border: 1px solid var(--teca-vt1-border);
+	border-radius: 26px;
+	background: var(--teca-vt1-white);
+	box-shadow: var(--teca-vt1-shadow);
+	transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.teca-venue-template-layout-1 .teca-venue-card:hover {
+	transform: translateY(-6px);
+	box-shadow: var(--teca-vt1-shadow-hover);
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-media {
+	position: relative;
+	height: 220px;
+	overflow: hidden;
+	background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 55%, #e0e7ff 100%);
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-fallback {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	gap: 10px;
+	color: var(--teca-vt1-accent);
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-fallback-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 56px;
+	height: 56px;
+	border-radius: 18px;
+	background: rgba(255, 255, 255, 0.72);
+	box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.12);
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-fallback-initial {
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-media-badge {
+	position: absolute;
+	left: 16px;
+	bottom: 16px;
+	padding: 7px 12px;
+	border-radius: 999px;
+	background: rgba(15, 23, 42, 0.72);
+	color: #fff;
+	font-size: 12px;
+	font-weight: 600;
+	backdrop-filter: blur(6px);
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-body {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	padding: 24px;
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-top {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+.teca-venue-template-layout-1 .teca-venue-location-chip,
+.teca-venue-template-layout-1 .teca-venue-count-chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.teca-venue-template-layout-1 .teca-venue-location-chip {
+	background: var(--teca-vt1-bg);
+	color: var(--teca-vt1-muted);
+}
+
+.teca-venue-template-layout-1 .teca-venue-count-chip {
+	margin-left: auto;
+	background: var(--teca-vt1-accent-soft);
+	color: var(--teca-vt1-accent);
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-title {
+	margin: 0 0 10px;
+	font-size: 1.35rem;
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: -0.02em;
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-title a:hover {
+	color: var(--teca-vt1-accent);
+}
+
+.teca-venue-template-layout-1 .teca-venue-address {
+	margin-bottom: 14px;
+	color: var(--teca-vt1-muted);
+	font-size: 0.95rem;
+}
+
+.teca-venue-template-layout-1 .teca-venue-contact-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 16px;
+	margin-bottom: 18px;
+}
+
+.teca-venue-template-layout-1 .teca-venue-contact-item {
+	color: var(--teca-vt1-text);
+	font-size: 0.92rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.teca-venue-template-layout-1 .teca-venue-contact-item:hover {
+	color: var(--teca-vt1-accent);
+}
+
+.teca-venue-template-layout-1 .teca-venue-card-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: auto;
+}
+
+.teca-venue-template-layout-1 .teca-venue-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 42px;
+	padding: 0 18px;
+	border-radius: 999px;
+	font-size: 0.92rem;
+	font-weight: 700;
+	text-decoration: none;
+	transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.teca-venue-template-layout-1 .teca-venue-btn-primary {
+	background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+	color: #fff;
+	box-shadow: 0 10px 24px rgba(79, 70, 229, 0.24);
+}
+
+.teca-venue-template-layout-1 .teca-venue-btn-primary:hover {
+	transform: translateY(-1px);
+	color: #fff;
+}
+
+.teca-venue-template-layout-1 .teca-venue-btn-secondary {
+	background: var(--teca-vt1-bg);
+	color: var(--teca-vt1-text);
+	box-shadow: inset 0 0 0 1px var(--teca-vt1-border);
+}
+
+.teca-venue-template-layout-1 .teca-venue-btn-secondary:hover {
+	background: #eef2ff;
+	color: var(--teca-vt1-accent);
+}
+
+.teca-venue-template-empty,
+.teca-venue-template-placeholder {
+	margin: 0;
+	padding: 28px;
+	border-radius: 18px;
+	background: var(--teca-vt1-bg, #f8fafc);
+	color: var(--teca-vt1-muted, #64748b);
+	text-align: center;
+}

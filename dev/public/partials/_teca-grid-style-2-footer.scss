@@ -1,0 +1,154 @@
+// Grid Style 2 — footer tags + View Details; Google Calendar in content area (loads after teca-event-terms).
+.gs_teca_area.gs-teca-style-2,
+.gs-teca-style-2,
+.teca-grid-style-2 {
+	.teca-grid-style-2-google-calendar-content-row {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		width: 100%;
+		margin-top: 12px;
+		padding-top: 0;
+	}
+
+	.teca-grid-style-2-google-calendar-content-row .teca-google-calendar-actions {
+		display: inline-flex;
+		align-items: center;
+		margin: 0;
+		gap: 0;
+		width: auto;
+		max-width: 100%;
+	}
+
+	.teca-grid-style-2-google-calendar-content-row .teca-google-calendar-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		white-space: nowrap;
+		width: auto;
+		max-width: 100%;
+		overflow: visible;
+		text-overflow: clip;
+		flex-shrink: 0;
+		line-height: 1;
+	}
+
+	.teca-grid-style-2-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 14px;
+		flex-wrap: wrap;
+	}
+
+	.teca-grid-style-2-top-action-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 14px;
+		width: 100%;
+	}
+
+	.teca-grid-style-2-tags,
+	.teca-grid-style-2-top-action-row > .gs-teca-tag,
+	.teca-grid-style-2-top-action-row > .teca-event-tags {
+		display: flex;
+		align-items: center;
+		flex: 1 1 auto;
+		flex-wrap: wrap;
+		gap: 8px;
+		min-width: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.teca-grid-style-2-footer .teca-event-tags,
+	.teca-grid-style-2-footer .gs-teca-tags {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.teca-grid-style-2-footer .teca-event-tags .teca-event-tag,
+	.teca-grid-style-2-footer .teca-event-tags .teca-event-tag a,
+	.teca-grid-style-2-footer .teca-event-tags span.gs-teca-tag,
+	.teca-grid-style-2-footer .gs-teca-tags .teca-event-tag,
+	.teca-grid-style-2-footer .gs-teca-tags .teca-event-tag a,
+	.teca-grid-style-2-footer .gs-teca-tags span.gs-teca-tag,
+	.teca-grid-style-2-footer .teca-event-tag,
+	.teca-grid-style-2-footer span.gs-teca-tag,
+	.teca-grid-style-2-footer .teca-event-tag a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 7px 12px;
+		border-radius: 8px;
+		border: 1px solid rgba(30, 58, 95, 0.14);
+		background: #ffffff;
+		color: var(--teca-g2-muted, #64748b);
+		font-size: 10px;
+		font-weight: 600;
+		line-height: 1;
+		text-decoration: none;
+		box-shadow: none;
+		min-height: 34px;
+	}
+
+	.teca-grid-style-2-view-details-wrap {
+		display: inline-flex;
+		align-items: center;
+		justify-content: flex-end;
+		margin-left: auto;
+		flex: 0 0 auto;
+	}
+
+	.teca-grid-style-2-view-details-wrap .teca-grid-style-2-button,
+	.teca-grid-style-2-view-details-wrap .gs-teca-btn-popup,
+	.teca-grid-style-2-view-details-wrap .gs-teca-btn-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+		white-space: nowrap;
+		min-height: 34px;
+	}
+
+	@media (max-width: 767px) {
+		.teca-grid-style-2-footer {
+			padding: 12px 16px 16px;
+		}
+
+		.teca-grid-style-2-top-action-row {
+			flex-wrap: wrap;
+			align-items: center;
+		}
+
+		.teca-grid-style-2-view-details-wrap {
+			margin-left: 0;
+		}
+
+		.teca-grid-style-2-google-calendar-content-row {
+			margin-top: auto;
+			padding-top: 12px;
+		}
+
+		.teca-grid-style-2-google-calendar-content-row .teca-google-calendar-btn {
+			max-width: 100%;
+			white-space: normal;
+			text-align: left;
+		}
+
+		.teca-grid-style-2-date-block {
+			min-height: auto;
+		}
+	}
+}

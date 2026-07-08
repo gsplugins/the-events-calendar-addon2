@@ -1,0 +1,76 @@
+/**
+ * Filter view: keep table header and rows in normal document flow.
+ * Isotope fitRows positions .gs-teca-single absolutely, which overlaps table headers.
+ * Scoped to Table 1–5 only.
+ */
+.gs_teca_area.view_type_filter {
+	@each $n in (1, 2, 3, 4, 5) {
+		&.gs-teca-table-style-#{$n} {
+			.gs-teca-filter-wrapper.gs-roow.gs-teca {
+				display: block !important;
+				width: 100%;
+				height: auto !important;
+				min-height: 0;
+				position: relative;
+			}
+
+			.gs-teca-filter-wrapper.gs-roow.gs-teca::before,
+			.gs-teca-filter-wrapper.gs-roow.gs-teca::after {
+				display: none;
+			}
+
+			.teca-table-style-#{$n}-table {
+				display: block;
+				width: 100%;
+			}
+
+			.teca-table-style-#{$n}-header {
+				position: relative;
+				z-index: 2;
+			}
+
+			.teca-table-style-#{$n}-body {
+				display: flex;
+				flex-direction: column;
+				flex-wrap: nowrap;
+				align-items: stretch;
+				position: relative;
+				z-index: 1;
+				width: 100%;
+			}
+
+			.teca-table-style-#{$n}-body > .gs-teca-single {
+				position: relative !important;
+				left: auto !important;
+				right: auto !important;
+				top: auto !important;
+				bottom: auto !important;
+				transform: none !important;
+				width: 100% !important;
+				max-width: 100% !important;
+				flex: 0 0 auto;
+			}
+
+			.teca-table-style-#{$n}-body > .gs-teca-single.teca-filter-list-hidden,
+			.teca-table-style-#{$n}-body > .gs-teca-single.is-hidden,
+			.teca-table-style-#{$n}-body > .gs-teca-single.is-filter-hidden,
+			.teca-table-style-#{$n}-body > .gs-teca-single.is-search-hidden,
+			.teca-table-style-#{$n}-body > .gs-teca-single.teca-filter-by-name-hidden {
+				display: none !important;
+				height: 0 !important;
+				min-height: 0 !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				overflow: hidden !important;
+				opacity: 0 !important;
+				pointer-events: none !important;
+			}
+		}
+	}
+
+	&.gs-teca-table-style-1 .teca-table-style-1-body,
+	&.gs-teca-table-style-2 .teca-table-style-2-body,
+	&.gs-teca-table-style-3 .teca-table-style-3-body {
+		gap: 0;
+	}
+}

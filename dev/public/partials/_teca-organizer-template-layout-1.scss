@@ -1,0 +1,332 @@
+.teca-has-organizer-template-layout-1 {
+	width: 100%;
+	max-width: none;
+	box-sizing: border-box;
+
+	.gs_teca_area--inner,
+	.gs-containeer,
+	.gs-roow.gs-teca {
+		width: 100%;
+		max-width: 100%;
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: 0;
+		margin-right: 0;
+		box-sizing: border-box;
+	}
+
+	.gs-roow.gs-teca > .teca-organizer-template {
+		flex: 1 1 100%;
+		min-width: 100%;
+		max-width: 100%;
+	}
+}
+
+.teca-organizer-template-layout-1 {
+	--teca-ot1-text: #0f172a;
+	--teca-ot1-muted: #64748b;
+	--teca-ot1-border: rgba(148, 163, 184, 0.22);
+	--teca-ot1-accent: #0d9488;
+	--teca-ot1-accent-soft: rgba(13, 148, 136, 0.12);
+	--teca-ot1-warm: #f97316;
+	position: relative;
+	width: 100%;
+	padding: 8px 24px 28px;
+	box-sizing: border-box;
+	color: var(--teca-ot1-text);
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	line-height: 1.55;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-header {
+	position: relative;
+	max-width: 720px;
+	margin: 0 auto 40px;
+	padding: 32px 28px;
+	border-radius: 28px;
+	text-align: center;
+	background:
+		radial-gradient(circle at 20% 0%, rgba(13, 148, 136, 0.14), transparent 42%),
+		radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.1), transparent 38%),
+		linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+	border: 1px solid var(--teca-ot1-border);
+	box-shadow: 0 20px 60px rgba(15, 23, 42, 0.06);
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	margin-bottom: 12px;
+	padding: 6px 14px;
+	border-radius: 999px;
+	background: linear-gradient(135deg, rgba(13, 148, 136, 0.16), rgba(249, 115, 22, 0.1));
+	color: #0f766e;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-title {
+	margin: 0 0 10px;
+	font-size: clamp(2rem, 4vw, 2.75rem);
+	font-weight: 800;
+	line-height: 1.12;
+	letter-spacing: -0.03em;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-description {
+	margin: 0 auto;
+	max-width: 52ch;
+	color: var(--teca-ot1-muted);
+	font-size: 1.05rem;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 28px;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding-top: 56px;
+	border-radius: 30px;
+	overflow: hidden;
+	background: #ffffff;
+	border: 1px solid var(--teca-ot1-border);
+	box-shadow: 0 24px 70px rgba(15, 23, 42, 0.1);
+	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-card:hover {
+	transform: translateY(-7px);
+	box-shadow: 0 34px 90px rgba(15, 23, 42, 0.16);
+	border-color: rgba(13, 148, 136, 0.35);
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-card-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 110px;
+	background:
+		radial-gradient(circle at 15% 30%, rgba(255, 255, 255, 0.35), transparent 45%),
+		linear-gradient(135deg, #14b8a6 0%, #0d9488 38%, #6366f1 100%);
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-card-bg::after {
+	content: '';
+	position: absolute;
+	top: 18px;
+	right: 18px;
+	width: 64px;
+	height: 64px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.16);
+	filter: blur(2px);
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-avatar-wrap {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	margin-top: -48px;
+	margin-bottom: 8px;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-avatar,
+.teca-organizer-template-layout-1 .teca-organizer-l1-avatar-fallback {
+	width: 96px;
+	height: 96px;
+	border-radius: 999px;
+	border: 5px solid #ffffff;
+	box-shadow: 0 14px 36px rgba(15, 23, 42, 0.18);
+	object-fit: cover;
+	object-position: center center;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-avatar-fallback {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(145deg, #0d9488 0%, #6366f1 100%);
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-avatar-initial {
+	color: #ffffff;
+	font-size: 2.2rem;
+	font-weight: 800;
+	line-height: 1;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-content {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	padding: 8px 24px 28px;
+	text-align: center;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-count-chip {
+	display: inline-flex;
+	align-self: center;
+	margin-bottom: 12px;
+	padding: 6px 12px;
+	border-radius: 999px;
+	background: var(--teca-ot1-accent-soft);
+	color: #0f766e;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-name {
+	margin: 0 0 8px;
+	font-size: 1.35rem;
+	font-weight: 800;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-name a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-name a:hover {
+	color: var(--teca-ot1-accent);
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-excerpt {
+	display: -webkit-box;
+	margin: 0 0 16px;
+	overflow: hidden;
+	color: var(--teca-ot1-muted);
+	font-size: 0.92rem;
+	line-height: 1.6;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-contact-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: 18px;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-contact-item {
+	color: var(--teca-ot1-text);
+	font-size: 0.88rem;
+	font-weight: 600;
+	text-decoration: none;
+	word-break: break-word;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-contact-item:hover {
+	color: var(--teca-ot1-accent);
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	margin-top: auto;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 40px;
+	padding: 0 16px;
+	border-radius: 999px;
+	font-size: 0.82rem;
+	font-weight: 700;
+	text-decoration: none;
+	transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-btn-primary {
+	background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+	color: #fff;
+	box-shadow: 0 10px 24px rgba(13, 148, 136, 0.28);
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-btn-primary:hover {
+	transform: translateY(-1px);
+	color: #fff;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-btn-secondary {
+	background: #f8fafc;
+	color: var(--teca-ot1-text);
+	box-shadow: inset 0 0 0 1px var(--teca-ot1-border);
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-l1-btn-secondary:hover {
+	background: #ecfdf5;
+	color: #0f766e;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-template-empty {
+	padding: 48px 28px;
+	border-radius: 28px;
+	background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+	border: 1px solid var(--teca-ot1-border);
+	text-align: center;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-template-empty-title {
+	margin: 0 0 8px;
+	font-size: 1.4rem;
+	font-weight: 800;
+}
+
+.teca-organizer-template-layout-1 .teca-organizer-template-empty-text {
+	margin: 0;
+	color: var(--teca-ot1-muted);
+}
+
+.teca-organizer-template-placeholder {
+	margin: 0;
+	padding: 28px;
+	border-radius: 18px;
+	background: #f8fafc;
+	color: #64748b;
+	text-align: center;
+}
+
+@media (max-width: 1024px) {
+	.teca-organizer-template-layout-1 .teca-organizer-l1-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 767px) {
+	.teca-organizer-template-layout-1 {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.teca-organizer-template-layout-1 .teca-organizer-l1-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.teca-organizer-template-layout-1 .teca-organizer-l1-actions {
+		flex-direction: column;
+	}
+
+	.teca-organizer-template-layout-1 .teca-organizer-l1-btn {
+		width: 100%;
+	}
+}

@@ -1,0 +1,62 @@
+.gs_teca_area.view_type_ticker {
+	max-width: 100%;
+	width: 100%;
+	min-width: 0;
+	overflow-x: hidden;
+	box-sizing: border-box;
+
+	.gs_teca_area--inner,
+	.gs-containeer {
+		max-width: 100%;
+		width: 100%;
+		min-width: 0;
+		overflow-x: hidden;
+		box-sizing: border-box;
+	}
+
+	.gs-containeer {
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	// Viewport — clips the moving track.
+	.carouselTicker__wrap {
+		max-width: 100%;
+		width: 100%;
+		overflow: hidden;
+		box-sizing: border-box;
+	}
+
+	// Track — one horizontal row; wider than viewport is OK.
+	.gs-roow.gs-teca {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: stretch;
+		width: max-content;
+		max-width: none;
+		min-width: 0;
+		margin-left: 0;
+		margin-right: 0;
+		white-space: nowrap;
+	}
+
+	.gs-teca-single {
+		flex: 0 0 auto;
+		box-sizing: border-box;
+		float: none !important;
+		white-space: normal;
+		margin-right: var(--gs-teca-ticker-gap, 30px);
+
+		// Neutralize bootstrap gs-col-* widths; JS sets item width via fixItemWidth().
+		&[class*='gs-col-'] {
+			width: auto;
+			max-width: none;
+			flex: 0 0 auto;
+			padding-left: 0;
+			padding-right: 0;
+			float: none !important;
+		}
+	}
+}

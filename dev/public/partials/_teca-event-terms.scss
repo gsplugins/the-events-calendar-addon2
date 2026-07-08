@@ -1,0 +1,288 @@
+.gs_teca_area {
+	.teca-event-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 12px;
+	}
+
+	.teca-event-tag {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+		white-space: nowrap;
+		font-size: 12px;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	// Grid / list / filter / table theme styles
+	&.view_type_grid,
+	&.view_type_list,
+	&.view_type_filter,
+	&.view_type_table {
+		&:not(.teca-timeline-1):not(.teca-timeline-2):not(.teca-timeline-3):not(.teca-accordion-1):not(.teca-accordion-2):not(.teca-accordion-3):not(.gs-teca-style-2) {
+			.teca-event-tag {
+				padding: 7px 11px;
+				border-radius: 999px;
+				background: rgba(99, 102, 241, 0.1);
+				color: #4f46e5;
+				border: 1px solid rgba(99, 102, 241, 0.18);
+			}
+		}
+	}
+
+	// Timeline 1 — match category meta style (plain inline)
+	&.teca-timeline-1,
+	.teca-timeline-1 {
+		.teca-event-tag {
+			padding: 0;
+			border: 0;
+			background: transparent;
+			border-radius: 0;
+			box-shadow: none;
+			color: inherit;
+			font-size: inherit;
+			font-weight: inherit;
+			display: inline-flex;
+			align-items: center;
+			line-height: 1.2;
+
+			&::before {
+				content: '';
+				display: none;
+			}
+		}
+	}
+
+	// Timeline 2 — dark marker chips
+	&.teca-timeline-2,
+	.teca-timeline-2 {
+		.teca-event-tag {
+			padding: 8px 12px;
+			border-radius: 14px;
+			background: #111827;
+			color: #fff;
+			border: 1px solid rgba(17, 24, 39, 0.12);
+
+			&::before {
+				content: '';
+				width: 6px;
+				height: 6px;
+				border-radius: 999px;
+				background: currentColor;
+				margin-right: 7px;
+				opacity: 0.75;
+			}
+		}
+	}
+
+	// Timeline 3 — subtle labels aligned with category row
+	&.teca-timeline-3,
+	.teca-timeline-3 {
+		.teca-timeline-3-tag {
+			padding: 0;
+			border: 0;
+			background: transparent;
+			border-radius: 0;
+			box-shadow: none;
+			color: inherit;
+			font-size: 11px;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+
+			&::before {
+				content: '';
+				display: none;
+			}
+		}
+	}
+
+	// Accordion 1 — match category meta style (plain inline)
+	&.teca-accordion-1,
+	.teca-accordion-1 {
+		.teca-event-tag {
+			padding: 0;
+			border: 0;
+			background: transparent;
+			border-radius: 0;
+			box-shadow: none;
+			color: inherit;
+			font-size: inherit;
+			font-weight: inherit;
+			display: inline-flex;
+			align-items: center;
+			line-height: 1.2;
+
+			&::before {
+				content: '';
+				display: none;
+			}
+		}
+	}
+
+	// Accordion 2 — trigger header tags only (panel tags hidden in template)
+	&.teca-accordion-2,
+	.teca-accordion-2 {
+		.teca-accordion-2-trigger .teca-accordion-2-tag {
+			display: inline-flex;
+			align-items: center;
+			padding: 5px 8px;
+			border-radius: 4px;
+			background: rgba(15, 23, 42, 0.06);
+			border: 1px solid rgba(15, 23, 42, 0.1);
+			color: #334155;
+			font-size: 11px;
+			font-weight: 600;
+			line-height: 1;
+			box-shadow: none;
+			backdrop-filter: none;
+			top: 0;
+			transform: none;
+			margin-top: 0;
+			vertical-align: middle;
+
+			&::before {
+				content: '';
+				display: none;
+			}
+		}
+
+		.teca-accordion-2-panel .teca-event-tags,
+		.teca-accordion-2-panel .teca-event-tag {
+			display: none;
+		}
+	}
+
+	// Accordion 3 — match category meta style (plain inline)
+	&.teca-accordion-3,
+	.teca-accordion-3 {
+		.teca-event-tag {
+			padding: 0;
+			border: 0;
+			background: transparent;
+			border-radius: 0;
+			box-shadow: none;
+			color: inherit;
+			font-size: inherit;
+			font-weight: inherit;
+			display: inline-flex;
+			align-items: center;
+			line-height: 1.2;
+
+			&::before {
+				content: '';
+				display: none;
+			}
+		}
+	}
+
+	// Event Layout 1 — vibrant gradient pills
+	.teca-events-layout-1 {
+		.teca-event-tag {
+			padding: 7px 12px;
+			border-radius: 999px;
+			background: linear-gradient(135deg, rgba(6, 182, 212, 0.16), rgba(124, 58, 237, 0.16));
+			color: #312e81;
+			border: 1px solid rgba(124, 58, 237, 0.18);
+		}
+	}
+
+	// Event Layout 2 — orange capsule chips
+	.teca-events-layout-2 {
+		.teca-event-tag {
+			padding: 7px 11px;
+			border-radius: 999px;
+			background: rgba(249, 115, 22, 0.12);
+			color: #c2410c;
+			border: 1px solid rgba(249, 115, 22, 0.18);
+		}
+	}
+
+	// Event Layout 3 — dark premium labels
+	.teca-events-layout-3 {
+		.teca-event-tag {
+			padding: 8px 13px;
+			border-radius: 12px;
+			background: rgba(15, 23, 42, 0.88);
+			color: #fff;
+			border: 1px solid rgba(255, 255, 255, 0.14);
+		}
+	}
+
+	// Category/tag vertical alignment — Accordion 1/2/3 & Timeline 1
+	&.teca-accordion-1,
+	.teca-accordion-1,
+	&.teca-accordion-2,
+	.teca-accordion-2,
+	&.teca-accordion-3,
+	.teca-accordion-3,
+	&.teca-timeline-1,
+	.teca-timeline-1 {
+		.teca-accordion-meta,
+		.teca-timeline-meta {
+			align-items: center;
+		}
+
+		.teca-event-categories,
+		.teca-event-tags {
+			display: inline-flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 6px;
+			vertical-align: middle;
+			line-height: 1.2;
+			margin-top: 0;
+		}
+
+		.teca-event-category,
+		.teca-event-tag {
+			display: inline-flex;
+			align-items: center;
+			vertical-align: middle;
+			line-height: 1.2;
+			position: relative;
+			top: 0;
+			transform: none;
+			margin-top: 0;
+			justify-content: flex-start;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.teca-event-tags {
+			gap: 6px;
+		}
+
+		.teca-event-tag {
+			font-size: 11px;
+			padding: 6px 9px;
+		}
+
+		.teca-accordion-1 .teca-accordion-meta .teca-event-tag,
+		.teca-accordion-3 .teca-accordion-meta .teca-event-tag,
+		.teca-timeline-1 .teca-timeline-meta .teca-event-tag,
+		&.teca-accordion-1 .teca-accordion-meta .teca-event-tag,
+		&.teca-accordion-3 .teca-accordion-meta .teca-event-tag,
+		&.teca-timeline-1 .teca-timeline-meta .teca-event-tag {
+			padding: 0;
+			font-size: inherit;
+		}
+
+		.teca-timeline-2 .teca-event-tag,
+		&.teca-timeline-2 .teca-event-tag {
+			padding: 7px 10px;
+		}
+
+		.teca-accordion-2 .teca-accordion-2-trigger .teca-accordion-2-tag,
+		&.teca-accordion-2 .teca-accordion-2-trigger .teca-accordion-2-tag {
+			padding: 5px 8px;
+		}
+
+		.teca-events-layout-3 .teca-event-tag {
+			padding: 7px 11px;
+		}
+	}
+}

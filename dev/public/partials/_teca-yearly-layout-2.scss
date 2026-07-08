@@ -1,0 +1,329 @@
+.teca-calendar-layout.teca-yearly-layout-2 {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.teca-yearly-layout-2 {
+	--teca-yl2-bg: #ffffff;
+	--teca-yl2-text: #1f2937;
+	--teca-yl2-muted: #6b7280;
+	--teca-yl2-border: #e5e7eb;
+	--teca-yl2-blue: #1e3a8a;
+	--teca-yl2-blue-badge: #1d4ed8;
+	--teca-yl2-teal: #0f766e;
+	--teca-yl2-teal-badge: #0d9488;
+	--teca-yl2-green: #4d7c0f;
+	--teca-yl2-green-badge: #65a30d;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	color: var(--teca-yl2-text);
+	line-height: 1.45;
+}
+
+.teca-yearly-layout-2-infographic {
+	background: var(--teca-yl2-bg);
+	padding: 0;
+}
+
+.teca-yearly-layout-2-header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 36px 32px 24px;
+	border-bottom: 1px dashed var(--teca-yl2-border);
+}
+
+.teca-yearly-layout-2-header-main {
+	flex: 1 1 280px;
+	min-width: 0;
+	text-align: center;
+}
+
+.teca-yearly-layout-2-title {
+	margin: 0 0 12px;
+	font-size: clamp(28px, 3.5vw, 42px);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	line-height: 1.1;
+	color: #111827;
+}
+
+.teca-yearly-layout-2-subtitle {
+	margin: 0;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--teca-yl2-muted);
+}
+
+.teca-yearly-layout-2-years-label {
+	display: inline-block;
+	padding: 4px 14px;
+	border-radius: 999px;
+	background: #f3f4f6;
+	border: 1px solid var(--teca-yl2-border);
+}
+
+.teca-yearly-layout-2-toolbar {
+	flex: 0 0 auto;
+	width: 100%;
+	max-width: 280px;
+}
+
+.teca-yearly-layout-2-toolbar .teca-calendar-filter {
+	margin: 0;
+}
+
+.teca-yearly-layout-2 .teca-calendar-filter-label {
+	color: var(--teca-yl2-muted);
+}
+
+.teca-yearly-layout-2 .teca-calendar-filter-select {
+	min-width: 180px;
+	border-color: var(--teca-yl2-border);
+	background-color: #ffffff;
+	color: var(--teca-yl2-text);
+}
+
+.teca-yearly-layout-2 .teca-calendar-filter-message {
+	background: #f9fafb;
+	border: 1px solid var(--teca-yl2-border);
+	color: var(--teca-yl2-muted);
+}
+
+.teca-yearly-layout-2-year {
+	padding: 0 32px 40px;
+}
+
+.teca-yearly-layout-2-year.is-filter-hidden {
+	display: none !important;
+}
+
+.teca-yearly-layout-2-year-header {
+	padding: 28px 0 20px;
+	text-align: center;
+}
+
+.teca-yearly-layout-2-year-label {
+	margin: 0;
+	font-size: 26px;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	color: #111827;
+}
+
+.teca-yearly-layout-2-body {
+	padding-bottom: 8px;
+}
+
+.teca-yearly-layout-2-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 22px 20px;
+}
+
+.teca-yearly-layout-2-month {
+	position: relative;
+	display: flex;
+	align-items: stretch;
+	min-height: 132px;
+	border-radius: 0 12px 12px 0;
+	overflow: visible;
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.teca-yearly-layout-2-month-tone-blue {
+	--teca-yl2-card: var(--teca-yl2-blue);
+	--teca-yl2-badge: var(--teca-yl2-blue-badge);
+}
+
+.teca-yearly-layout-2-month-tone-teal {
+	--teca-yl2-card: var(--teca-yl2-teal);
+	--teca-yl2-badge: var(--teca-yl2-teal-badge);
+}
+
+.teca-yearly-layout-2-month-tone-green {
+	--teca-yl2-card: var(--teca-yl2-green);
+	--teca-yl2-badge: var(--teca-yl2-green-badge);
+}
+
+.teca-yearly-layout-2-month-badge {
+	position: relative;
+	z-index: 2;
+	flex: 0 0 72px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: -18px;
+}
+
+.teca-yearly-layout-2-month-badge .teca-yearly-layout-2-month-name {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 72px;
+	height: 72px;
+	border-radius: 50%;
+	background: var(--teca-yl2-badge);
+	color: #ffffff;
+	font-size: 15px;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+}
+
+.teca-yearly-layout-2-month-content {
+	position: relative;
+	flex: 1 1 auto;
+	min-width: 0;
+	padding: 18px 20px 18px 28px;
+	background: var(--teca-yl2-card);
+	color: #ffffff;
+	border-radius: 0 12px 12px 0;
+	overflow: hidden;
+}
+
+.teca-yearly-layout-2-month-content::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 42%;
+	height: 100%;
+	background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.08) 100%);
+	pointer-events: none;
+}
+
+.teca-yearly-layout-2-month-events {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.teca-yearly-layout-2-event {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.teca-yearly-layout-2-event-date {
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.3;
+	opacity: 0.95;
+}
+
+.teca-yearly-layout-2-event-day {
+	display: inline-block;
+	padding-bottom: 2px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+.teca-yearly-layout-2-event-title {
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.35;
+	word-break: break-word;
+}
+
+.teca-yearly-layout-2-event-link {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.teca-yearly-layout-2-event-link:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+.teca-yearly-layout-2-event-time,
+.teca-yearly-layout-2-event-category,
+.teca-yearly-layout-2-event-venue,
+.teca-yearly-layout-2-event-cost {
+	font-size: 11px;
+	line-height: 1.4;
+	opacity: 0.9;
+	word-break: break-word;
+}
+
+.teca-yearly-layout-2-more-events {
+	font-size: 11px;
+	font-weight: 700;
+	opacity: 0.95;
+}
+
+.teca-yearly-layout-2-month-empty {
+	position: relative;
+	z-index: 1;
+	margin: 0;
+	font-size: 13px;
+	font-weight: 600;
+	opacity: 0.85;
+}
+
+.teca-yearly-layout-2 .teca-calendar-empty {
+	margin: 0 32px 32px;
+	padding: 28px 24px;
+	border-radius: 8px;
+	background: #f9fafb;
+	border: 1px solid var(--teca-yl2-border);
+	color: var(--teca-yl2-muted);
+	text-align: center;
+}
+
+@media (max-width: 1100px) {
+	.teca-yearly-layout-2-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 767px) {
+	.teca-yearly-layout-2-header,
+	.teca-yearly-layout-2-year {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.teca-yearly-layout-2-header {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.teca-yearly-layout-2-toolbar {
+		max-width: none;
+	}
+
+	.teca-yearly-layout-2-toolbar .teca-calendar-filter-select {
+		width: 100%;
+	}
+
+	.teca-yearly-layout-2-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.teca-yearly-layout-2-month {
+		min-height: 120px;
+	}
+
+	.teca-yearly-layout-2-month-badge {
+		flex-basis: 64px;
+		margin-right: -14px;
+	}
+
+	.teca-yearly-layout-2-month-badge .teca-yearly-layout-2-month-name {
+		width: 64px;
+		height: 64px;
+		font-size: 14px;
+	}
+
+	.teca-yearly-layout-2-month-content {
+		padding: 16px 16px 16px 24px;
+	}
+}

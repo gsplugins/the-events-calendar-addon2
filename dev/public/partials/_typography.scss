@@ -1,0 +1,299 @@
+// Typography overrides apply ONLY when the shortcode wrapper has a custom flag class.
+// Layout CSS remains the default design for every style.
+.gs_teca_area {
+	&.teca-typo-custom--title {
+		.gs-teca-title,
+		.gs-teca-title a,
+		.gs-teca-title h1,
+		.gs-teca-title h2,
+		.gs-teca-title h3,
+		.gs-teca-title h4,
+		.gs-teca-title h5,
+		.gs-teca-title h6,
+		.gs-teca-title h1 a,
+		.gs-teca-title h2 a,
+		.gs-teca-title h3 a,
+		.gs-teca-title h4 a,
+		.gs-teca-title h5 a,
+		.gs-teca-title h6 a,
+		.teca-event-title,
+		.teca-event-title a,
+		.teca-accordion-title,
+		.teca-accordion-1-title,
+		.teca-accordion-2-title,
+		.teca-accordion-3-title,
+		.teca-timeline-title,
+		.teca-timeline-1-title,
+		.teca-timeline-2-title,
+		.teca-timeline-3-title,
+		.teca-event-button,
+		.teca-accordion-button,
+		.teca-timeline-button,
+		.teca-timeline-2-button,
+		.teca-timeline-3-button {
+			font-family: var(--gsteca-event-title-font-family, inherit);
+			font-size: var(--gsteca-event-title-font-size, inherit) !important;
+			font-weight: var(--gsteca-event-title-font-weight, inherit) !important;
+			color: var(--gsteca-event-title-color, inherit);
+			text-transform: var(--gsteca-event-title-text-transform, inherit);
+			line-height: var(--gsteca-event-title-lineHeight, inherit);
+			background-color: var(--gsteca-event-title-background-color, inherit);
+			font-style: var(--gsteca-event-title-style, inherit);
+			letter-spacing: var(--gsteca-event-title-letterSpacing, inherit);
+			text-decoration: var(--gsteca-event-title-text-decoration, inherit) !important;
+		}
+
+		.gs-teca-title a:hover,
+		.gs-teca-title a:focus,
+		.teca-event-title a:hover,
+		.teca-event-title a:focus {
+			color: var(--gsteca-event-title-hover-color, inherit);
+			background-color: var(--gsteca-event-title-hover-bg-color, inherit);
+			text-decoration: var(--gsteca-event-title-text-decoration, inherit) !important;
+		}
+	}
+
+	&.teca-typo-custom--date {
+		.gs-teca-glass-date,
+		.gs-teca-date,
+		.gs-teca-glass-date a,
+		.gs-teca-date a,
+		.gs-teca-glass-date span,
+		.gs-teca-date span,
+		.teca-event-date,
+		.teca-event-date span,
+		.teca-accordion-date,
+		.teca-accordion-1-meta,
+		.teca-accordion-3-meta,
+		.teca-accordion-2-date,
+		.teca-timeline-date,
+		.teca-timeline-1-date-badge,
+		.teca-timeline-2-date-pill,
+		.teca-timeline-3-date-card,
+		.teca-timeline-3-month,
+		.teca-timeline-3-day,
+		.teca-timeline-3-year {
+			font-family: var(--gsteca-event-date-font-family, inherit);
+			font-size: var(--gsteca-event-date-font-size, inherit) !important;
+			font-weight: var(--gsteca-event-date-font-weight, inherit) !important;
+			color: var(--gsteca-event-date-color, inherit);
+			text-transform: var(--gsteca-event-date-text-transform, inherit);
+			line-height: var(--gsteca-event-date-lineHeight, inherit);
+			background-color: var(--gsteca-event-date-background-color, inherit);
+			font-style: var(--gsteca-event-date-style, inherit);
+			text-decoration: var(--gsteca-event-date-text-decoration, inherit) !important;
+			letter-spacing: var(--gsteca-event-date-letterSpacing, inherit);
+		}
+
+		.gs-teca-glass-date a:hover,
+		.gs-teca-glass-date a:focus,
+		.gs-teca-date a:hover,
+		.gs-teca-date a:focus {
+			color: var(--gsteca-event-date-hover-color, inherit);
+			background-color: var(--gsteca-event-date-hover-bg-color, inherit);
+		}
+	}
+
+	&.teca-typo-custom--org {
+		.gs-teca-organizers,
+		.gs-teca-organizers a,
+		.gs-teca-organizers span {
+			font-family: var(--gsteca-event-org-font-family, inherit);
+			font-size: var(--gsteca-event-org-font-size, inherit) !important;
+			font-weight: var(--gsteca-event-org-font-weight, inherit) !important;
+			color: var(--gsteca-event-org-color, inherit);
+			text-transform: var(--gsteca-event-org-text-transform, inherit);
+			line-height: var(--gsteca-event-org-lineHeight, inherit);
+			background-color: var(--gsteca-event-org-background-color, inherit);
+			font-style: var(--gsteca-event-org-style, inherit);
+			text-decoration: var(--gsteca-event-org-text-decoration, inherit) !important;
+			letter-spacing: var(--gsteca-event-org-letterSpacing, inherit);
+		}
+
+		.gs-teca-organizers a:hover,
+		.gs-teca-organizers a:focus {
+			color: var(--gsteca-event-org-hover-color, inherit);
+			background-color: var(--gsteca-event-org-hover-bg-color, inherit);
+		}
+	}
+
+	&.teca-typo-custom--venue {
+		.gs-teca-venue,
+		.gs-teca-venue a,
+		.gs-teca-venue span,
+		.teca-event-venue,
+		.teca-accordion-venue,
+		.teca-timeline-venue,
+		.teca-timeline-2-venue,
+		.teca-timeline-3-venue {
+			font-family: var(--gsteca-event-venue-font-family, inherit);
+			font-size: var(--gsteca-event-venue-font-size, inherit) !important;
+			font-weight: var(--gsteca-event-venue-font-weight, inherit) !important;
+			color: var(--gsteca-event-venue-color, inherit);
+			text-transform: var(--gsteca-event-venue-text-transform, inherit);
+			line-height: var(--gsteca-event-venue-lineHeight, inherit);
+			background-color: var(--gsteca-event-venue-background-color, inherit);
+			font-style: var(--gsteca-event-venue-style, inherit);
+			text-decoration: var(--gsteca-event-venue-text-decoration, inherit) !important;
+			letter-spacing: var(--gsteca-event-venue-letterSpacing, inherit);
+		}
+
+		.gs-teca-venue a:hover,
+		.gs-teca-venue a:focus {
+			color: var(--gsteca-event-venue-hover-color, inherit);
+			background-color: var(--gsteca-event-venue-hover-bg-color, inherit);
+		}
+	}
+
+	&.teca-typo-custom--details {
+		.gs-teca-desc,
+		.gs-teca-details,
+		.gs-teca-desc p,
+		.gs-teca-desc a,
+		.gs-teca-details a,
+		.gs-teca-details p,
+		.teca-event-excerpt,
+		.teca-accordion-excerpt,
+		.teca-timeline-excerpt,
+		.teca-timeline-2-excerpt,
+		.teca-timeline-3-excerpt {
+			font-family: var(--gsteca-event-details-font-family, inherit);
+			font-size: var(--gsteca-event-details-font-size, inherit) !important;
+			font-weight: var(--gsteca-event-details-font-weight, inherit) !important;
+			color: var(--gsteca-event-details-color, inherit);
+			text-transform: var(--gsteca-event-details-text-transform, inherit);
+			line-height: var(--gsteca-event-details-lineHeight, inherit);
+			background-color: var(--gsteca-event-details-background-color, inherit);
+			font-style: var(--gsteca-event-details-style, inherit);
+			text-decoration: var(--gsteca-event-details-text-decoration, inherit) !important;
+			letter-spacing: var(--gsteca-event-details-letterSpacing, inherit);
+		}
+
+		.gs-teca-desc a:hover,
+		.gs-teca-desc a:focus,
+		.gs-teca-details a:hover,
+		.gs-teca-details a:focus {
+			color: var(--gsteca-event-details-hover-color, inherit);
+			background-color: var(--gsteca-event-details-hover-bg-color, inherit);
+		}
+	}
+
+	&.teca-typo-custom--cat {
+		.gs-teca-categories .gs-teca-category,
+		.gs-teca-categories .gs-teca-category a,
+		.gs-teca-categories a,
+		.gs-teca-categories span,
+		.teca-event-category,
+		.teca-accordion-category,
+		.teca-timeline-category,
+		.teca-timeline-2-category,
+		.teca-timeline-3-category,
+		.teca-accordion-2-category {
+			font-family: var(--gsteca-event-cat-font-family, inherit);
+			font-size: var(--gsteca-event-cat-font-size, inherit) !important;
+			font-weight: var(--gsteca-event-cat-font-weight, inherit) !important;
+			color: var(--gsteca-event-cat-color, inherit) !important;
+			text-transform: var(--gsteca-event-cat-text-transform, inherit);
+			line-height: var(--gsteca-event-cat-lineHeight, inherit);
+			font-style: var(--gsteca-event-cat-style, inherit);
+			text-decoration: var(--gsteca-event-cat-text-decoration, inherit) !important;
+			letter-spacing: var(--gsteca-event-cat-letterSpacing, inherit);
+			background-color: var(--gsteca-event-cat-background-color, inherit) !important;
+		}
+
+		.gs-teca-categories .gs-teca-category {
+			display: inline-block;
+			border-radius: inherit;
+		}
+
+		.gs-teca-categories .gs-teca-category:hover,
+		.gs-teca-categories .gs-teca-category:focus,
+		.gs-teca-categories .gs-teca-category:hover a,
+		.gs-teca-categories .gs-teca-category:focus a,
+		.gs-teca-categories .gs-teca-category:hover span,
+		.gs-teca-categories .gs-teca-category:focus span,
+		.gs-teca-categories span.gs-teca-category:hover,
+		.gs-teca-categories span.gs-teca-category:focus,
+		.gs-teca-categories span.gs-teca-category:nth-child(1):hover,
+		.gs-teca-categories span.gs-teca-category:nth-child(2):hover,
+		.gs-teca-categories span.gs-teca-category:nth-child(3):hover,
+		.gs-teca-categories span.gs-teca-category:nth-child(4):hover,
+		.gs-teca-categories span.gs-teca-category:nth-child(5):hover,
+		.gs-teca-categories span.gs-teca-category:nth-child(6):hover,
+		.gs-teca-categories span.gs-teca-category:nth-child(7):hover {
+			background-color: var(--gsteca-event-cat-hover-bg-color, inherit) !important;
+			color: var(--gsteca-event-cat-hover-color, inherit) !important;
+		}
+
+		.gs-teca-categories .gs-teca-category,
+		.gs-teca-categories .gs-teca-category a,
+		.gs-teca-categories .gs-teca-category span,
+		.gs-teca-categories .gs-teca-category * {
+			color: var(--gsteca-event-cat-color, inherit) !important;
+		}
+
+		.gs-teca-categories .gs-teca-category:nth-child(1),
+		.gs-teca-categories .gs-teca-category:nth-child(2),
+		.gs-teca-categories .gs-teca-category:nth-child(3),
+		.gs-teca-categories .gs-teca-category:nth-child(4),
+		.gs-teca-categories .gs-teca-category:nth-child(5),
+		.gs-teca-categories .gs-teca-category:nth-child(6),
+		.gs-teca-categories .gs-teca-category:nth-child(7) {
+			color: var(--gsteca-event-cat-color, inherit) !important;
+		}
+
+		.gs-teca-categories .gs-teca-category a:hover,
+		.gs-teca-categories .gs-teca-category a:focus,
+		.gs-teca-categories .gs-teca-category:hover *,
+		.gs-teca-categories .gs-teca-category:focus * {
+			background-color: transparent !important;
+			color: var(--gsteca-event-cat-hover-color, inherit) !important;
+		}
+	}
+
+	&.teca-typo-custom--tag {
+		.gs-teca-tags .gs-teca-tag,
+		.gs-teca-tags span.gs-teca-tag,
+		.gs-teca-tag span,
+		.gs-teca-tags a,
+		.gs-teca-tag a,
+		.teca-event-tag,
+		.teca-accordion-tag,
+		.teca-timeline-tag,
+		.teca-timeline-2-tag,
+		.teca-timeline-3-tag,
+		.teca-accordion-2-tag {
+			font-family: var(--gsteca-event-tag-font-family, inherit);
+			font-size: var(--gsteca-event-tag-font-size, inherit) !important;
+			font-weight: var(--gsteca-event-tag-font-weight, inherit) !important;
+			color: var(--gsteca-event-tag-color, inherit) !important;
+			text-transform: var(--gsteca-event-tag-text-transform, inherit);
+			line-height: var(--gsteca-event-tag-lineHeight, inherit);
+			background-color: var(--gsteca-event-tag-background-color, inherit) !important;
+			font-style: var(--gsteca-event-tag-style, inherit);
+			text-decoration: var(--gsteca-event-tag-text-decoration, inherit) !important;
+			letter-spacing: var(--gsteca-event-tag-letterSpacing, inherit);
+		}
+
+		.gs-teca-tags .gs-teca-tag {
+			display: inline-block;
+			border-radius: inherit;
+		}
+
+		.gs-teca-tags .gs-teca-tag:hover,
+		.gs-teca-tags .gs-teca-tag:focus,
+		.gs-teca-tags .gs-teca-tag:hover a,
+		.gs-teca-tags .gs-teca-tag:focus a,
+		.gs-teca-tags span.gs-teca-tag:hover,
+		.gs-teca-tags span.gs-teca-tag:focus {
+			background-color: var(--gsteca-event-tag-hover-bg-color, inherit) !important;
+			color: var(--gsteca-event-tag-hover-color, inherit) !important;
+		}
+
+		.gs-teca-tags .gs-teca-tag a:hover,
+		.gs-teca-tags .gs-teca-tag a:focus {
+			background-color: transparent !important;
+			color: var(--gsteca-event-tag-hover-color, inherit) !important;
+		}
+	}
+}

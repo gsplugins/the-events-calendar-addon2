@@ -1,0 +1,227 @@
+.gs-teca-table-style-2,
+.teca-table-style-2 {
+	--teca-t2-border: #e8e8e8;
+	--teca-t2-header: #9aa3ad;
+	--teca-t2-accent: #48c0b9;
+	--teca-t2-title: #1a1a1a;
+	--teca-t2-organizer: #444444;
+	--teca-t2-desc: #777777;
+	--teca-t2-bg: #ffffff;
+	--teca-t2-image-size: 96px;
+	--teca-t2-image-radius: 20px 0 20px 0;
+
+	width: 100%;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+
+	.gs-roow.gs-teca {
+		display: block;
+		margin: 0;
+	}
+
+	.gs-teca-single {
+		width: 100% !important;
+		margin-bottom: 0 !important;
+		padding: 0;
+		border: 0;
+		float: none;
+		background: transparent;
+	}
+
+	.gs-teca-single.is-hidden,
+	.gs-teca-single.is-filter-hidden,
+	.gs-teca-single.is-search-hidden {
+		display: none !important;
+	}
+
+	.teca-table-style-2-table {
+		width: 100%;
+		border: 1px solid var(--teca-t2-border);
+		background: var(--teca-t2-bg);
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.teca-table-style-2-row {
+		display: grid;
+		grid-template-columns: var(--teca-t2-cols);
+		align-items: center;
+		column-gap: 24px;
+		padding: 22px 28px;
+		border-bottom: 1px solid var(--teca-t2-border);
+		min-width: 760px;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	.teca-table-style-2-row--header {
+		padding-top: 18px;
+		padding-bottom: 18px;
+		border-bottom: 1px solid var(--teca-t2-border);
+	}
+
+	.teca-table-style-2-header {
+		background: var(--teca-t2-bg);
+
+		.teca-table-style-2-cell {
+			font-size: 12px;
+			font-weight: 600;
+			line-height: 1.3;
+			color: var(--teca-t2-header);
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+		}
+
+		.teca-table-style-2-venue {
+			text-align: left;
+		}
+	}
+
+	.teca-table-style-2-body {
+		background: var(--teca-t2-bg);
+	}
+
+	.teca-table-style-2-cell {
+		min-width: 0;
+	}
+
+	.teca-table-style-2-image-wrap,
+	.gs-teca-thumbnail-wrapper {
+		width: var(--teca-t2-image-size);
+		height: var(--teca-t2-image-size);
+		overflow: hidden;
+		border-radius: var(--teca-t2-image-radius);
+		background: #f5f5f5;
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.teca-table-style-2-title,
+	.gs-teca-title {
+		.gs-teca-title,
+		h3,
+		a {
+			font-size: 16px;
+			font-weight: 700;
+			line-height: 1.35;
+			color: var(--teca-t2-title);
+			text-decoration: none;
+		}
+
+		a:hover,
+		a:focus {
+			color: var(--teca-t2-accent);
+		}
+	}
+
+	.teca-table-style-2-organizer {
+		.gs-teca-organizer-main {
+			display: block;
+		}
+
+		.gs-teca-icon-organizer {
+			display: none;
+		}
+
+		.gs-teca-organizer-name,
+		span {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.5;
+			color: var(--teca-t2-organizer);
+		}
+	}
+
+	.teca-table-style-2-description {
+		.teca-table-style-2-desc-inner {
+			display: inline;
+		}
+
+		.gs-teca-desc {
+			display: inline;
+		}
+
+		.gs-teca-desc,
+		.gs-teca-desc p {
+			display: inline;
+			margin: 0;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.65;
+			color: var(--teca-t2-desc);
+		}
+
+		.gs-teca-desc p + p {
+			margin-top: 0.5em;
+		}
+	}
+
+	.teca-table-style-2-more {
+		display: inline;
+		margin-left: 4px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.65;
+		color: var(--teca-t2-accent);
+		text-decoration: none;
+
+		&:hover,
+		&:focus {
+			text-decoration: underline;
+		}
+	}
+
+	.teca-table-style-2-venue,
+	.teca-table-event-venue {
+		white-space: normal;
+		word-break: normal;
+		line-height: 1.5;
+
+		.gs-teca-venue-main {
+			display: block;
+		}
+
+		.gs-teca-icon-venue {
+			display: none;
+		}
+
+		.gs-teca-venue-name,
+		.gs-teca-venue-address,
+		span {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.5;
+			color: var(--teca-t2-organizer);
+		}
+
+		.gs-teca-venue-content {
+			margin-top: 0;
+		}
+	}
+
+	@media (max-width: 991px) {
+		.teca-table-style-2-row {
+			column-gap: 18px;
+			padding: 18px 20px;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.teca-table-style-2-table {
+			overflow-x: auto;
+		}
+
+		.teca-table-style-2-row {
+			min-width: 680px;
+			padding: 16px 18px;
+		}
+	}
+}

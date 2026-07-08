@@ -1,0 +1,12 @@
+.teca-beaver-placeholder {
+	padding: 16px;
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
+	color: #50575e;
+	background: #f6f7f7;
+	text-align: center;
+}
+
+.teca-beaver-widget-wrap {
+	width: 100%;
+}

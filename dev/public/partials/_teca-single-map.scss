@@ -1,0 +1,114 @@
+.teca-single-map,
+.teca-single-element-map {
+	margin: 28px 0 32px;
+}
+
+.teca-single-map-card {
+	overflow: hidden;
+	border: 1px solid rgba(15, 23, 42, 0.08);
+	border-radius: 20px;
+	background: #ffffff;
+	box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.teca-single-map-frame {
+	position: relative;
+	overflow: hidden;
+	min-height: 320px;
+	background: #eef2f7;
+}
+
+.teca-single-map-frame iframe {
+	width: 100%;
+	height: 320px;
+	border: 0;
+	display: block;
+}
+
+.teca-single-map-info {
+	padding: 18px 20px 20px;
+}
+
+.teca-single-map-venue {
+	margin: 0 0 6px;
+	font-size: 16px;
+	font-weight: 700;
+	color: #0f172a;
+	line-height: 1.4;
+}
+
+.teca-single-map-address {
+	margin: 0 0 12px;
+	font-size: 14px;
+	line-height: 1.6;
+	color: #475569;
+}
+
+.teca-single-map-link {
+	display: inline-flex;
+	align-items: center;
+	font-size: 13px;
+	font-weight: 700;
+	color: #2563eb;
+	text-decoration: none;
+}
+
+.teca-single-map-link:hover,
+.teca-single-map-link:focus {
+	color: #1d4ed8;
+	text-decoration: underline;
+}
+
+.teca-single-default .teca-single-map-card,
+.teca-single-style-1 .teca-single-map-card,
+.teca-single-style-2 .teca-single-map-card,
+.teca-single-style-3 .teca-single-map-card,
+.teca-single-style-4 .teca-single-map-card,
+.teca-single-style-5 .teca-single-map-card {
+	width: 100%;
+}
+
+.teca-single-style-1 .teca-single-map-card {
+	border-color: rgba(255, 255, 255, 0.12);
+	background: rgba(255, 255, 255, 0.04);
+	box-shadow: none;
+}
+
+.teca-single-style-1 .teca-single-map-info {
+	background: rgba(255, 255, 255, 0.96);
+}
+
+.teca-single-style-2 .teca-single-map-card {
+	border-color: rgba(234, 88, 12, 0.18);
+	box-shadow: 0 16px 36px rgba(234, 88, 12, 0.12);
+}
+
+.teca-single-style-3 .teca-single-map-card {
+	border-radius: 24px;
+}
+
+.teca-single-style-4 .teca-single-map {
+	max-width: 100%;
+}
+
+.teca-single-style-5 .teca-single-map-card {
+	border-radius: 24px;
+	box-shadow: 0 14px 34px rgba(15, 23, 42, 0.1);
+}
+
+@media (max-width: 767px) {
+	.teca-single-map,
+	.teca-single-element-map {
+		margin-top: 22px;
+	}
+
+	.teca-single-map-frame,
+	.teca-single-map-frame iframe {
+		min-height: 260px;
+		height: 260px;
+	}
+
+	.teca-single-map-info {
+		padding: 16px;
+	}
+}

@@ -1,0 +1,220 @@
+.gs-teca-table-style-1,
+.teca-table-style-1 {
+	--teca-t1-border: #e8e8e8;
+	--teca-t1-accent: #48c0b9;
+	--teca-t1-title: #1a1a1a;
+	--teca-t1-organizer: #444444;
+	--teca-t1-desc: #777777;
+	--teca-t1-bg: #ffffff;
+	--teca-t1-image-size: 96px;
+	--teca-t1-cols: minmax(var(--teca-t1-image-size), var(--teca-t1-image-size)) minmax(150px, 1.45fr) minmax(120px, 1.05fr) minmax(110px, 0.7fr) minmax(130px, 140px);
+
+	width: 100%;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+
+	.gs-roow.gs-teca {
+		display: block;
+		margin: 0;
+	}
+
+	.gs-teca-single {
+		width: 100% !important;
+		margin-bottom: 0 !important;
+		padding: 0;
+		border: 0;
+		float: none;
+		background: transparent;
+	}
+
+	.teca-table-style-1-table {
+		width: 100%;
+		border: 1px solid var(--teca-t1-border);
+		background: var(--teca-t1-bg);
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.teca-table-style-1-row {
+		display: grid;
+		grid-template-columns: var(--teca-t1-cols);
+		align-items: center;
+		column-gap: 24px;
+		padding: 22px 28px;
+		border-bottom: 1px solid var(--teca-t1-border);
+		min-width: 760px;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	.teca-table-style-1-row--header {
+		padding-top: 18px;
+		padding-bottom: 18px;
+		border-bottom: 1px solid var(--teca-t1-border);
+	}
+
+	.teca-table-style-1-header {
+		background: var(--teca-t1-bg);
+
+		.teca-table-style-1-cell {
+			font-size: 15px;
+			font-weight: 600;
+			line-height: 1.3;
+			color: var(--teca-t1-accent);
+			text-transform: none;
+		}
+
+		.teca-table-style-1-venue {
+			text-align: left;
+		}
+	}
+
+	.teca-table-style-1-body {
+		background: var(--teca-t1-bg);
+	}
+
+	.teca-table-style-1-cell {
+		min-width: 0;
+	}
+
+	.teca-table-style-1-image-wrap,
+	.gs-teca-thumbnail-wrapper {
+		width: var(--teca-t1-image-size);
+		height: var(--teca-t1-image-size);
+		overflow: hidden;
+		background: #f5f5f5;
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.teca-table-style-1-title,
+	.gs-teca-title {
+		.gs-teca-title,
+		h3,
+		a {
+			font-size: 16px;
+			font-weight: 700;
+			line-height: 1.35;
+			color: var(--teca-t1-title);
+			text-decoration: none;
+		}
+
+		a:hover,
+		a:focus {
+			color: var(--teca-t1-accent);
+		}
+	}
+
+	.teca-table-style-1-organizer {
+		.gs-teca-organizer-main {
+			display: block;
+		}
+
+		.gs-teca-icon-organizer {
+			display: none;
+		}
+
+		.gs-teca-organizer-name,
+		span {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.5;
+			color: var(--teca-t1-organizer);
+		}
+	}
+
+	.teca-table-style-1-description {
+		.teca-table-style-1-desc-inner {
+			display: inline;
+		}
+
+		.gs-teca-desc {
+			display: inline;
+		}
+
+		.gs-teca-desc,
+		.gs-teca-desc p {
+			display: inline;
+			margin: 0;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.65;
+			color: var(--teca-t1-desc);
+		}
+
+		.gs-teca-desc p + p {
+			margin-top: 0.5em;
+		}
+	}
+
+	.teca-table-style-1-more {
+		display: inline;
+		margin-left: 4px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.65;
+		color: var(--teca-t1-accent);
+		text-decoration: none;
+
+		&:hover,
+		&:focus {
+			text-decoration: underline;
+		}
+	}
+
+	.teca-table-style-1-venue,
+	.teca-table-event-venue {
+		white-space: normal;
+		word-break: normal;
+		line-height: 1.5;
+
+		.gs-teca-venue-main {
+			display: block;
+		}
+
+		.gs-teca-icon-venue {
+			display: none;
+		}
+
+		.gs-teca-venue-name,
+		.gs-teca-venue-address,
+		span {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.5;
+			color: var(--teca-t1-organizer);
+		}
+
+		.gs-teca-venue-content {
+			margin-top: 0;
+		}
+	}
+
+	@media (max-width: 991px) {
+		--teca-t1-cols: minmax(var(--teca-t1-image-size), var(--teca-t1-image-size)) minmax(130px, 1.25fr) minmax(100px, 0.95fr) minmax(100px, 0.6fr) minmax(120px, 130px);
+
+		.teca-table-style-1-row {
+			column-gap: 18px;
+			padding: 18px 20px;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.teca-table-style-1-table {
+			overflow-x: auto;
+		}
+
+		.teca-table-style-1-row {
+			min-width: 680px;
+			padding: 16px 18px;
+		}
+	}
+}

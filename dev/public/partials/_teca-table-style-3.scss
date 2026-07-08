@@ -1,0 +1,264 @@
+.gs-teca-table-style-3,
+.teca-table-style-3 {
+	--teca-t3-header-bg: #26a69a;
+	--teca-t3-header-text: #ffffff;
+	--teca-t3-body-bg: #e8f7f9;
+	--teca-t3-row-bg: #f4fbfc;
+	--teca-t3-border: #d5e8eb;
+	--teca-t3-accent: #26a69a;
+	--teca-t3-title: #1a1a1a;
+	--teca-t3-organizer: #444444;
+	--teca-t3-desc: #777777;
+	--teca-t3-venue: #444444;
+	--teca-t3-image-size: 88px;
+
+	width: 100%;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+
+	.gs-roow.gs-teca {
+		display: block;
+		margin: 0;
+	}
+
+	.gs-teca-single {
+		width: 100% !important;
+		margin-bottom: 0 !important;
+		padding: 0;
+		border: 0;
+		float: none;
+		background: transparent;
+	}
+
+	.gs-teca-single.is-hidden,
+	.gs-teca-single.is-filter-hidden,
+	.gs-teca-single.is-search-hidden {
+		display: none !important;
+	}
+
+	.teca-table-style-3-table {
+		width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		border-radius: 4px;
+		overflow: hidden;
+		background: var(--teca-t3-body-bg);
+	}
+
+	.teca-table-style-3-row {
+		display: grid;
+		grid-template-columns: var(--teca-t3-cols);
+		align-items: center;
+		column-gap: 24px;
+		padding: 24px 28px;
+		min-width: 760px;
+	}
+
+	.teca-table-style-3-header {
+		background: var(--teca-t3-header-bg);
+
+		.teca-table-style-3-row--header {
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+
+		.teca-table-style-3-cell {
+			font-size: 13px;
+			font-weight: 700;
+			line-height: 1.3;
+			color: var(--teca-t3-header-text);
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+		}
+
+		.teca-table-style-3-venue {
+			text-align: left;
+		}
+	}
+
+	.teca-table-style-3-body {
+		background: var(--teca-t3-body-bg);
+
+		.gs-teca-single {
+			border-bottom: 1px solid var(--teca-t3-border);
+
+			&:last-child {
+				border-bottom: 0;
+			}
+		}
+
+		.teca-table-style-3-row {
+			background: var(--teca-t3-row-bg);
+		}
+
+		.gs-teca-single:nth-child(even) .teca-table-style-3-row {
+			background: var(--teca-t3-body-bg);
+		}
+	}
+
+	.teca-table-style-3-cell {
+		min-width: 0;
+	}
+
+	.teca-table-style-3-image {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.teca-table-style-3-image-wrap,
+	.gs-teca-thumbnail-wrapper {
+		width: var(--teca-t3-image-size);
+		height: var(--teca-t3-image-size);
+		overflow: hidden;
+		border-radius: 50%;
+		background: #ffffff;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.teca-table-style-3-title,
+	.gs-teca-title {
+		.gs-teca-title,
+		h3,
+		a {
+			font-size: 16px;
+			font-weight: 700;
+			line-height: 1.35;
+			color: var(--teca-t3-title);
+			text-decoration: none;
+		}
+
+		a:hover,
+		a:focus {
+			color: var(--teca-t3-accent);
+		}
+	}
+
+	.teca-table-style-3-organizer {
+		.gs-teca-organizer-main {
+			display: block;
+		}
+
+		.gs-teca-icon-organizer {
+			display: none;
+		}
+
+		.gs-teca-organizer-name,
+		span {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.5;
+			color: var(--teca-t3-organizer);
+		}
+	}
+
+	.teca-table-style-3-description {
+		.teca-table-style-3-desc-inner {
+			display: inline;
+		}
+
+		.gs-teca-desc {
+			display: inline;
+		}
+
+		.gs-teca-desc,
+		.gs-teca-desc p {
+			display: inline;
+			margin: 0;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.65;
+			color: var(--teca-t3-desc);
+		}
+
+		.gs-teca-desc p + p {
+			margin-top: 0.5em;
+		}
+	}
+
+	.teca-table-style-3-more {
+		display: inline;
+		margin-left: 4px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.65;
+		color: var(--teca-t3-accent);
+		text-decoration: none;
+
+		&:hover,
+		&:focus {
+			text-decoration: underline;
+		}
+	}
+
+	.teca-table-style-3-venue,
+	.teca-table-event-venue {
+		text-align: left;
+		white-space: normal;
+		word-break: normal;
+		line-height: 1.5;
+
+		.teca-table-venue {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: flex-start;
+			text-align: left;
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.teca-table-venue-name,
+		.teca-table-venue-meta,
+		.teca-table-venue-empty {
+			text-align: left;
+		}
+
+		.gs-teca-venue-main {
+			display: block;
+		}
+
+		.gs-teca-icon-venue {
+			display: none;
+		}
+
+		.gs-teca-venue-name,
+		.gs-teca-venue-address,
+		span {
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.5;
+			color: var(--teca-t3-venue);
+		}
+
+		.gs-teca-venue-content {
+			margin-top: 0;
+		}
+	}
+
+	@media (max-width: 991px) {
+		.teca-table-style-3-row {
+			column-gap: 18px;
+			padding: 20px 22px;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.teca-table-style-3-table {
+			overflow-x: auto;
+		}
+
+		.teca-table-style-3-row {
+			min-width: 680px;
+			padding: 18px 20px;
+		}
+	}
+}

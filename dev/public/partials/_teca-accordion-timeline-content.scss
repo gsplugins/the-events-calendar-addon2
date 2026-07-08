@@ -1,0 +1,214 @@
+// Forced default typography for Accordion 1/2/3 and Timeline 1/2/3.
+// Order: content rules first, then title rules, then layout-specific overrides.
+.gs_teca_area {
+	// -------------------------------------------------------------------------
+	// 1. Accordion 1/2/3 + Timeline 1 content typography
+	// -------------------------------------------------------------------------
+	.teca-accordion-1 .teca-accordion-panel,
+	.teca-accordion-1 .teca-accordion-panel-content,
+	.teca-accordion-1 .teca-accordion-meta,
+	.teca-accordion-1 .teca-accordion-1-meta,
+	.teca-accordion-1 .teca-event-meta,
+	.teca-accordion-1 .teca-event-date:not(.teca-accordion-1-date),
+	.teca-accordion-1 .teca-event-time,
+	.teca-accordion-1 .teca-event-venue,
+	.teca-accordion-1 .teca-event-organizer,
+	.teca-accordion-1 .teca-event-cost,
+	.teca-accordion-1 .teca-event-excerpt,
+	.teca-accordion-1 .teca-event-categories,
+	.teca-accordion-1 .teca-event-category,
+	.teca-accordion-1 .teca-event-tags,
+	.teca-accordion-1 .teca-event-tag,
+	.teca-accordion-2 .teca-accordion-panel,
+	.teca-accordion-2 .teca-accordion-panel-content,
+	.teca-accordion-2 .teca-accordion-2-content,
+	.teca-accordion-2 .teca-accordion-meta,
+	.teca-accordion-2 .teca-accordion-2-date,
+	.teca-accordion-2 .teca-event-meta,
+	.teca-accordion-2 .teca-event-date:not(.teca-accordion-2-date),
+	.teca-accordion-2 .teca-event-time,
+	.teca-accordion-2 .teca-event-venue,
+	.teca-accordion-2 .teca-event-organizer,
+	.teca-accordion-2 .teca-event-cost,
+	.teca-accordion-2 .teca-event-excerpt,
+	.teca-accordion-2 .teca-event-tags,
+	.teca-accordion-2 .teca-event-tag,
+	.teca-accordion-3 .teca-accordion-panel,
+	.teca-accordion-3 .teca-accordion-panel-content,
+	.teca-accordion-3 .teca-accordion-meta,
+	.teca-accordion-3 .teca-accordion-3-meta,
+	.teca-accordion-3 .teca-event-meta,
+	.teca-accordion-3 .teca-event-date:not(.teca-accordion-3-ticket-date),
+	.teca-accordion-3 .teca-event-time,
+	.teca-accordion-3 .teca-event-venue,
+	.teca-accordion-3 .teca-event-organizer,
+	.teca-accordion-3 .teca-event-cost,
+	.teca-accordion-3 .teca-event-excerpt,
+	.teca-accordion-3 .teca-event-categories,
+	.teca-accordion-3 .teca-event-category,
+	.teca-accordion-3 .teca-event-tags,
+	.teca-accordion-3 .teca-event-tag,
+	.teca-timeline-1 .teca-timeline-content,
+	.teca-timeline-1 .teca-timeline-1-content,
+	.teca-timeline-1 .teca-timeline-meta,
+	.teca-timeline-1 .teca-event-meta,
+	.teca-timeline-1 .teca-event-date:not(.teca-timeline-1-date-badge),
+	.teca-timeline-1 .teca-event-time,
+	.teca-timeline-1 .teca-event-venue,
+	.teca-timeline-1 .teca-event-organizer,
+	.teca-timeline-1 .teca-event-cost,
+	.teca-timeline-1 .teca-event-excerpt,
+	.teca-timeline-1 .teca-event-categories,
+	.teca-timeline-1 .teca-event-category,
+	.teca-timeline-1 .teca-event-tags,
+	.teca-timeline-1 .teca-event-tag,
+	.teca-timeline-1 .teca-timeline-1-card,
+	.teca-timeline-2 .teca-timeline-2-card,
+	.teca-timeline-3 .teca-timeline-3-card,
+	.teca-timeline-3 .teca-timeline-3-card-inner {
+		color: #6b7280;
+		font-size: 0.8125rem;
+		line-height: 1.4;
+	}
+
+	// -------------------------------------------------------------------------
+	// 2. Timeline 2 & 3 content typography (exclude category/tag)
+	// -------------------------------------------------------------------------
+	.teca-timeline-2 .teca-timeline-content,
+	.teca-timeline-2 .teca-timeline-2-content,
+	.teca-timeline-2 .teca-timeline-meta,
+	.teca-timeline-2 .teca-timeline-2-meta,
+	.teca-timeline-2 .teca-event-meta,
+	.teca-timeline-2 .teca-event-date:not(.teca-timeline-2-date-pill),
+	.teca-timeline-2 .teca-event-time,
+	.teca-timeline-2 .teca-event-venue,
+	.teca-timeline-2 .teca-event-organizer,
+	.teca-timeline-2 .teca-event-cost,
+	.teca-timeline-2 .teca-event-excerpt,
+	.teca-timeline-2 .teca-timeline-2-excerpt,
+	.teca-timeline-3 .teca-timeline-content,
+	.teca-timeline-3 .teca-timeline-3-content,
+	.teca-timeline-3 .teca-timeline-meta,
+	.teca-timeline-3 .teca-timeline-3-meta,
+	.teca-timeline-3 .teca-event-meta,
+	.teca-timeline-3 .teca-event-date:not(.teca-timeline-3-date-card):not(.teca-timeline-3-month):not(.teca-timeline-3-day):not(.teca-timeline-3-year),
+	.teca-timeline-3 .teca-event-time,
+	.teca-timeline-3 .teca-event-venue,
+	.teca-timeline-3 .teca-event-organizer,
+	.teca-timeline-3 .teca-event-cost,
+	.teca-timeline-3 .teca-event-excerpt,
+	.teca-timeline-3 .teca-timeline-3-excerpt {
+		color: #6b7280;
+		font-size: 0.8125rem;
+		line-height: 1.4;
+	}
+
+	// -------------------------------------------------------------------------
+	// 3. Title typography — after content rules
+	// -------------------------------------------------------------------------
+	&.teca-accordion-1 .teca-event-title,
+	&.teca-accordion-1 .gs-teca-title,
+	&.teca-accordion-2 .teca-event-title,
+	&.teca-accordion-2 .gs-teca-title,
+	&.teca-accordion-3 .teca-event-title,
+	&.teca-accordion-3 .gs-teca-title,
+	&.teca-timeline-1 .teca-event-title,
+	&.teca-timeline-1 .gs-teca-title,
+	&.teca-timeline-2 .teca-event-title,
+	&.teca-timeline-2 .gs-teca-title,
+	&.teca-timeline-3 .teca-event-title,
+	&.teca-timeline-3 .gs-teca-title,
+	.teca-accordion-1 .teca-event-title,
+	.teca-accordion-1 .teca-event-title a,
+	.teca-accordion-1 .teca-accordion-title,
+	.teca-accordion-1 .teca-accordion-title a,
+	.teca-accordion-1 .teca-accordion-1-title,
+	.teca-accordion-1 .teca-accordion-1-title a,
+	.teca-accordion-1 .gs-teca-title,
+	.teca-accordion-1 .gs-teca-title a,
+	.teca-accordion-1 [class*="title"]:not([class*="title-wrap"]),
+	.teca-accordion-1 [class*="title"]:not([class*="title-wrap"]) a,
+	.teca-accordion-2 .teca-event-title,
+	.teca-accordion-2 .teca-event-title a,
+	.teca-accordion-2 .teca-accordion-title,
+	.teca-accordion-2 .teca-accordion-title a,
+	.teca-accordion-2 .teca-accordion-2-title,
+	.teca-accordion-2 .teca-accordion-2-title a,
+	.teca-accordion-2 .gs-teca-title,
+	.teca-accordion-2 .gs-teca-title a,
+	.teca-accordion-2 [class*="title"]:not([class*="title-wrap"]),
+	.teca-accordion-2 [class*="title"]:not([class*="title-wrap"]) a,
+	.teca-accordion-3 .teca-event-title,
+	.teca-accordion-3 .teca-event-title a,
+	.teca-accordion-3 .teca-accordion-title,
+	.teca-accordion-3 .teca-accordion-title a,
+	.teca-accordion-3 .teca-accordion-3-title,
+	.teca-accordion-3 .teca-accordion-3-title a,
+	.teca-accordion-3 .gs-teca-title,
+	.teca-accordion-3 .gs-teca-title a,
+	.teca-accordion-3 [class*="title"]:not([class*="title-wrap"]),
+	.teca-accordion-3 [class*="title"]:not([class*="title-wrap"]) a,
+	.teca-timeline-1 .teca-event-title,
+	.teca-timeline-1 .teca-event-title a,
+	.teca-timeline-1 .teca-timeline-title,
+	.teca-timeline-1 .teca-timeline-title a,
+	.teca-timeline-1 .teca-timeline-1-title,
+	.teca-timeline-1 .teca-timeline-1-title a,
+	.teca-timeline-1 .gs-teca-title,
+	.teca-timeline-1 .gs-teca-title a,
+	.teca-timeline-1 [class*="title"]:not([class*="title-wrap"]),
+	.teca-timeline-1 [class*="title"]:not([class*="title-wrap"]) a,
+	.teca-timeline-2 .teca-event-title,
+	.teca-timeline-2 .teca-event-title a,
+	.teca-timeline-2 .teca-timeline-title,
+	.teca-timeline-2 .teca-timeline-title a,
+	.teca-timeline-2 .teca-timeline-2-title,
+	.teca-timeline-2 .teca-timeline-2-title a,
+	.teca-timeline-2 .gs-teca-title,
+	.teca-timeline-2 .gs-teca-title a,
+	.teca-timeline-2 [class*="title"]:not([class*="title-wrap"]),
+	.teca-timeline-2 [class*="title"]:not([class*="title-wrap"]) a,
+	.teca-timeline-3 .teca-event-title,
+	.teca-timeline-3 .teca-event-title a,
+	.teca-timeline-3 .teca-timeline-title,
+	.teca-timeline-3 .teca-timeline-title a,
+	.teca-timeline-3 .teca-timeline-3-title,
+	.teca-timeline-3 .teca-timeline-3-title a,
+	.teca-timeline-3 .gs-teca-title,
+	.teca-timeline-3 .gs-teca-title a,
+	.teca-timeline-3 [class*="title"]:not([class*="title-wrap"]),
+	.teca-timeline-3 [class*="title"]:not([class*="title-wrap"]) a {
+		color: #111827;
+		font-size: 1rem;
+		font-weight: 700;
+		line-height: 1.35;
+	}
+
+	.teca-accordion-1 .teca-event-title,
+	.teca-accordion-2 .teca-event-title,
+	.teca-accordion-3 .teca-event-title,
+	.teca-timeline-1 .teca-event-title,
+	.teca-timeline-2 .teca-event-title,
+	.teca-timeline-3 .teca-event-title,
+	.teca-accordion-1 h3.teca-event-title,
+	.teca-accordion-2 h3.teca-event-title,
+	.teca-accordion-3 h3.teca-event-title,
+	.teca-timeline-1 h3.teca-event-title,
+	.teca-timeline-2 h3.teca-event-title,
+	.teca-timeline-3 h3.teca-event-title {
+		margin: 0;
+	}
+
+	// -------------------------------------------------------------------------
+	// 4. Accordion 2 category — white text (after content typography)
+	// -------------------------------------------------------------------------
+	.teca-accordion-2 .teca-event-category,
+	.teca-accordion-2 .teca-event-category a,
+	.teca-accordion-2 .teca-event-categories .teca-event-category,
+	.teca-accordion-2 .teca-event-categories span,
+	.teca-accordion-2 .teca-accordion-2-category,
+	.teca-accordion-2 .teca-accordion-2-category a,
+	.teca-accordion-2 .teca-accordion-2-categories .teca-accordion-2-category {
+		color: #ffffff;
+	}
+}

@@ -1,0 +1,279 @@
+.teca-daily-layout-2 {
+	.teca-calendar-filter-bar {
+		padding: 15px;
+	}
+}
+.teca-calendar-wrapper,
+.teca-calendar-layout {
+	.teca-calendar-filter-bar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: 14px 18px;
+		margin: 0 0 18px;
+	}
+
+	.teca-calendar-filter-field {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		min-width: 180px;
+
+		&[hidden] {
+			display: none !important;
+		}
+	}
+
+	.teca-calendar-filter-mode-field {
+		min-width: 160px;
+	}
+
+	.teca-calendar-filter {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 10px;
+		margin: 0 0 18px;
+	}
+
+	.teca-calendar-filter-label {
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #666666;
+	}
+
+	.teca-calendar-filter-select {
+		min-width: 180px;
+		height: 38px;
+		padding: 0 34px 0 14px;
+		border: 1px solid #d5d5d5;
+		border-radius: 4px;
+		background-color: #ffffff;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23666' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right 12px center;
+		appearance: none;
+		font-size: 13px;
+		font-weight: 600;
+		color: #111111;
+		cursor: pointer;
+
+		&:focus {
+			border-color: #0072ff;
+			outline: none;
+			box-shadow: 0 0 0 1px #0072ff;
+		}
+	}
+
+	.teca-calendar-select,
+	.teca-calendar-event-type-filter {
+		@extend .teca-calendar-filter-select;
+	}
+
+	.teca-calendar-filter-message {
+		margin: 0 0 18px;
+		padding: 14px 16px;
+		border-radius: 6px;
+		background: #f7f7f7;
+		color: #666666;
+		font-size: 14px;
+		line-height: 1.45;
+	}
+
+	.teca-calendar-filterable-event.is-filter-hidden,
+	.is-filter-hidden,
+	.is-search-hidden {
+		display: none !important;
+	}
+}
+
+.teca-calendar-layout .is-filter-hidden,
+.teca-calendar-yearly .is-filter-hidden,
+.teca-yearly-layout-1 .is-filter-hidden,
+.teca-yearly-layout-2 .is-filter-hidden,
+.teca-yearly-layout-3 .is-filter-hidden {
+	display: none !important;
+}
+
+.teca-calendar-layout [hidden],
+.teca-yearly-layout-1-year[hidden],
+.teca-yearly-layout-2-year[hidden],
+.teca-yearly-layout-3-year[hidden],
+.teca-yearly-year-section[hidden],
+.teca-yearly-layout-1-year.is-filter-hidden,
+.teca-yearly-layout-2-year.is-filter-hidden,
+.teca-yearly-layout-3-year.is-filter-hidden,
+.teca-yearly-year-section.is-filter-hidden {
+	display: none !important;
+}
+
+.gs_teca_area.view_type_grid,
+.gs_teca_area.view_type_masonry,
+.gs_teca_area.view_type_filter {
+	.teca-filters-by-name-bar,
+	.teca-search-by-bar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: 14px 18px;
+		margin: 0 0 24px;
+		width: 100%;
+	}
+
+	.teca-filters-by-name-bar .teca-filter-field,
+	.teca-search-by-bar .teca-filter-field,
+	.teca-search-by-bar .teca-search-field {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		min-width: 180px;
+		flex: 1 1 180px;
+	}
+
+	.teca-filters-by-name-bar .teca-calendar-filter-label,
+	.teca-filters-by-name-bar .teca-filter-label,
+	.teca-search-by-bar .teca-calendar-filter-label,
+	.teca-search-by-bar .teca-filter-label,
+	.teca-search-by-bar .teca-search-label {
+		display: block;
+		margin: 0;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #666666;
+		line-height: 1;
+	}
+
+	.teca-filters-by-name-bar .teca-calendar-filter-select,
+	.teca-filters-by-name-bar .teca-filter-date-input,
+	.teca-search-by-bar .teca-calendar-filter-select,
+	.teca-search-by-bar .teca-search-input {
+		width: 100%;
+		min-width: 0;
+		height: 38px;
+		padding: 0 14px;
+		border: 1px solid #d5d5d5;
+		border-radius: 4px;
+		background-color: #ffffff;
+		font-size: 13px;
+		font-weight: 600;
+		color: #111111;
+		box-sizing: border-box;
+
+		&:focus {
+			border-color: #0072ff;
+			outline: none;
+			box-shadow: 0 0 0 1px #0072ff;
+		}
+	}
+
+	.teca-filters-by-name-bar select.teca-calendar-filter-select {
+		padding: 0 34px 0 14px;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23666' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right 12px center;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	.teca-filters-by-name-bar .teca-filter-date-input {
+		width: 100%;
+		min-width: 0;
+		cursor: pointer;
+
+		&::-webkit-calendar-picker-indicator {
+			cursor: pointer;
+		}
+	}
+
+	.teca-filters-by-name-bar .teca-filter-clear-field {
+		display: flex;
+		align-items: flex-end;
+		flex: 0 0 auto;
+		min-width: auto;
+	}
+
+	.teca-filters-by-name-bar .teca-filters-clear {
+		height: 38px;
+		padding: 0 18px;
+		border: 1px solid #d5d5d5;
+		border-radius: 4px;
+		background: #ffffff;
+		color: #334155;
+		font-size: 13px;
+		font-weight: 700;
+		line-height: 1;
+		cursor: pointer;
+		transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+
+		&:hover {
+			background: #f8fafc;
+			border-color: #b8b8b8;
+			color: #111827;
+		}
+
+		&:focus {
+			border-color: #0072ff;
+			outline: none;
+			box-shadow: 0 0 0 1px #0072ff;
+		}
+	}
+
+	.teca-filters-by-name-empty-message,
+	.teca-search-by-empty-message {
+		margin: -8px 0 24px;
+		padding: 14px 16px;
+		border-radius: 6px;
+		background: #f7f7f7;
+		color: #666666;
+		font-size: 14px;
+		line-height: 1.45;
+	}
+
+	.teca-search-loading {
+		margin: -8px 0 24px;
+		padding: 14px 16px;
+		border-radius: 6px;
+		background: #f7f7f7;
+		color: #666666;
+		font-size: 14px;
+		line-height: 1.45;
+	}
+
+	.gs_teca_area.teca-is-searching .teca-events-list-target {
+		opacity: 0.55;
+		transition: opacity 0.2s ease;
+	}
+}
+
+@media (max-width: 767px) {
+	.gs_teca_area.view_type_grid,
+	.gs_teca_area.view_type_masonry,
+	.gs_teca_area.view_type_filter {
+		.teca-filters-by-name-bar .teca-filter-field,
+		.teca-search-by-bar .teca-filter-field,
+		.teca-search-by-bar .teca-search-field {
+			flex: 1 1 100%;
+			min-width: 100%;
+		}
+
+		.teca-filters-by-name-bar .teca-calendar-filter-select,
+		.teca-filters-by-name-bar .teca-filter-date-input,
+		.teca-search-by-bar .teca-calendar-filter-select,
+		.teca-search-by-bar .teca-search-input {
+			width: 100%;
+		}
+
+		.teca-filters-by-name-bar .teca-filter-clear-field {
+			flex: 1 1 100%;
+			min-width: 100%;
+		}
+
+		.teca-filters-by-name-bar .teca-filters-clear {
+			width: 100%;
+		}
+	}
+}

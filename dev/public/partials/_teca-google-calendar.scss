@@ -1,0 +1,43 @@
+.teca-google-calendar-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 10px 16px;
+	border-radius: 999px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+	text-decoration: none;
+	color: #ffffff;
+	background: #111827;
+	border: 1px solid rgba(17, 24, 39, 0.14);
+	transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.teca-google-calendar-btn:hover,
+.teca-google-calendar-btn:focus-visible {
+	color: #ffffff;
+	background: #000000;
+	transform: translateY(-1px);
+	text-decoration: none;
+}
+
+.teca-google-calendar-btn--compact {
+	padding: 6px 10px;
+	font-size: 11px;
+	font-weight: 600;
+}
+
+.teca-google-calendar-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 0.65rem;
+}
+
+.teca-google-calendar-actions--popup,
+.teca-google-calendar-actions--single {
+	margin-top: 0.5rem;
+}

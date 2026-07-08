@@ -1,0 +1,56 @@
+.teca-single-page {
+	.teca-single-event-status-wrap {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+		margin-bottom: 12px;
+		max-width: 100%;
+	}
+
+	.teca-single-event-status {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		padding: 7px 14px;
+		border-radius: 999px;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.2;
+		letter-spacing: 0.2px;
+		width: fit-content;
+		max-width: 100%;
+		white-space: normal;
+		text-align: center;
+	}
+
+	.teca-single-event-status--postponed {
+		color: #92400e;
+		background: #fef3c7;
+		border: 1px solid #fde68a;
+	}
+
+	.teca-single-event-status--cancelled,
+	.teca-single-event-status--canceled {
+		color: #991b1b;
+		background: #fee2e2;
+		border: 1px solid #fecaca;
+	}
+
+	.teca-single-event-status-reason {
+		font-size: 14px;
+		line-height: 1.5;
+		color: #475569;
+		max-width: 100%;
+	}
+
+	.teca-single-element-title .teca-single-event-status-wrap {
+		margin-bottom: 10px;
+	}
+
+	.teca-single-event-status-fallback {
+		margin-bottom: 16px;
+		max-width: 100%;
+	}
+}

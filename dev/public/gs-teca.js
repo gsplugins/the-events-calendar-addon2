@@ -1,0 +1,4411 @@
+jQuery(function($) {
+	"use strict";
+
+	var is_rtl = $('html').attr('dir') == "rtl";
+	var popupEventsAdded = false;
+
+    if ( window.gs_debounce == undefined ) {
+
+        window.gs_debounce = function( fn, threshold ) {
+    
+            var timeout;
+    
+            return function gs_debounced() {
+				if ( timeout ) clearTimeout( timeout );
+				
+                function gs_delayed() {
+					fn();
+                    timeout = null;
+                }
+				
+                timeout = setTimeout( gs_delayed, threshold || 100 );
+				
+            };
+        }
+    }
+
+    function load_teca_carousel_class() {
+		
+		function GS_Teca_Carousel( $widgetBox ) {
+
+			this.$widgetContainer = $widgetBox;
+			this.$widget = null;
+			this.swiper = null;
+
+			if ( $widgetBox.data( 'gs-teca-carousel-ready' ) ) {
+				var existingSwiper = $widgetBox.data( 'gs-teca-carousel-swiper' );
+
+				if ( existingSwiper && existingSwiper.update ) {
+					existingSwiper.update();
+				}
+
+				return this;
+			}
+
+			if ( $widgetBox.data( 'gs-teca-carousel-pending' ) ) {
+				return this;
+			}
+
+			$widgetBox.data( 'gs-teca-carousel-pending', 1 );
+
+			var self = this;
+
+			window.gs_teca_when_carousel_ready( $widgetBox, function() {
+				self.bootstrap();
+			} );
+
+			return this;
+		}
+
+		GS_Teca_Carousel.prototype.bootstrap = function() {
+			this.$widgetContainer.data( 'gs-teca-carousel-pending', 0 );
+
+			if ( typeof GS_Swiper !== 'function' ) {
+				return this;
+			}
+
+			this.prepareDom();
+			this.$widget = this.$widgetContainer.find( '.gs-roow > .swiper' ).first();
+
+			if ( ! this.$widget.length ) {
+				return this;
+			}
+
+			var swiperEl = this.$widget[0];
+
+			if ( swiperEl.swiper && swiperEl.swiper.destroy ) {
+				try {
+					swiperEl.swiper.destroy( true, true );
+				} catch ( e ) {}
+			}
+
+			this.setup();
+			this.run();
+			this.ticker();
+
+			this.$widgetContainer.data( 'gs-teca-carousel-ready', 1 );
+			this.$widgetContainer.data( 'gs-teca-carousel-swiper', this.swiper );
+
+			return this;
+		};
+
+		GS_Teca_Carousel.prototype.prepareDom = function() {
+			var $row = this.$widgetContainer.find( '.gs-roow' ).first();
+
+			if ( ! $row.length || $row.children( '.swiper' ).length ) {
+				return this;
+			}
+
+			$row.children().not( '.swiper-nav-buttons, .swiper-pagination' )
+				.addClass( 'swiper-slide' )
+				.wrapAll( "<div class='swiper'><div class='swiper-wrapper'></div></div>" );
+
+			return this;
+		};
+
+		GS_Teca_Carousel.prototype.getSlideCount = function() {
+			var $row = this.$widgetContainer.find( '.gs-roow' ).first();
+
+			if ( $row.length ) {
+				return $row.children( '.gs-teca-single' ).length;
+			}
+
+			if ( this.$widget && this.$widget.length ) {
+				return this.$widget.find( '.swiper-slide:not(.swiper-slide-duplicate)' ).length;
+			}
+
+			return 0;
+		};
+
+		GS_Teca_Carousel.prototype.getColumnSlidesPerView = function( columnValue, fallbackGridSpan ) {
+			var raw = columnValue;
+
+			if ( raw === undefined || raw === null || raw === '' ) {
+				raw = fallbackGridSpan;
+			}
+
+			var gridSpan = parseFloat( String( raw ).replace( '_', '.' ) );
+
+			if ( ! Number.isFinite( gridSpan ) || gridSpan <= 0 ) {
+				gridSpan = parseFloat( String( fallbackGridSpan || '12' ).replace( '_', '.' ) ) || 12;
+			}
+
+			return 12 / gridSpan;
+		};
+
+		GS_Teca_Carousel.prototype.getMaxSlidesPerView = function() {
+			return Math.max(
+				this.getColumnSlidesPerView( this.config.columns_small_mobile, '12' ),
+				this.getColumnSlidesPerView( this.config.mobile_columns, '12' ),
+				this.getColumnSlidesPerView( this.config.tablet_columns, '6' ),
+				this.getColumnSlidesPerView( this.config.desktop_columns, '4' )
+			);
+		};
+
+		GS_Teca_Carousel.prototype.applyLoopSafety = function() {
+			var slideCount = this.getSlideCount();
+			var maxSlidesPerView = this.getMaxSlidesPerView();
+
+			if ( ! this.config.loop || slideCount < 2 || slideCount <= maxSlidesPerView ) {
+				this.config.loop = false;
+			}
+
+			return this;
+		};
+		
+		GS_Teca_Carousel.prototype.maybeSetupTickerOptions = function() {
+	
+			if ( this.config.ticker ) {
+	
+				this.config.slidesPerGroup = 1;
+				this.config.loop = true;
+				this.config.loopAdditionalSlides = 10;
+				
+				this.config.freeMode = true;
+				this.config.freeModeMomentumRatio = 0.1;
+				this.config.freeModeMomentumVelocityRatio = 0.1;
+				this.config.freeModeMomentumBounce = false;
+	
+				this.config.autoplay.delay = 0;
+				this.config.autoplay.disableOnInteraction = false;
+	
+			}
+	
+			return this;
+	
+		}
+
+		GS_Teca_Carousel.prototype.getDefaults = function() {
+			
+			return {
+				slidesPerGroup: 3,
+				slidesPerView: 3,
+				spaceBetween: 0,
+				loop: true,
+				speed: 600,
+				// autoplay: {},
+				pagination: {
+					el: '.swiper-pagination',
+					type: 'bullets',
+					clickable: true,
+				},
+				reverseDirection: false,
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev'
+				}
+				
+			}
+			
+		}
+		
+		GS_Teca_Carousel.prototype.getOptions = function() {
+			return this.$widgetContainer.data( 'carousel-config' ) || {};
+		}
+		
+		GS_Teca_Carousel.prototype.breakpointsSetup = function() {
+
+			var slidesPerGroup = Math.max( 1, parseInt( this.config.slidesPerGroup, 10 ) || 1 );
+			var columns_small_mobile = this.getColumnSlidesPerView( this.config.columns_small_mobile, '12' );
+			var mobile_columns = this.getColumnSlidesPerView( this.config.mobile_columns, '12' );
+			var tablet_columns = this.getColumnSlidesPerView( this.config.tablet_columns, '6' );
+			var desktop_columns = this.getColumnSlidesPerView( this.config.desktop_columns, '4' );
+
+			this.config.breakpoints = {
+				0: {
+					slidesPerView: columns_small_mobile,
+					slidesPerGroup: slidesPerGroup > columns_small_mobile ? columns_small_mobile : slidesPerGroup
+				},
+				576: {
+					slidesPerView: mobile_columns,
+					slidesPerGroup: slidesPerGroup > mobile_columns ? mobile_columns : slidesPerGroup
+				},
+				768: {
+					slidesPerView: tablet_columns,
+					slidesPerGroup: slidesPerGroup > tablet_columns ? tablet_columns : slidesPerGroup
+				},
+				1025: {
+					slidesPerView: desktop_columns,
+					slidesPerGroup: slidesPerGroup > desktop_columns ? desktop_columns : slidesPerGroup
+				}
+			};
+
+			this.config.slidesPerView = columns_small_mobile;
+
+		}
+		
+		GS_Teca_Carousel.prototype.setup = function() {
+			
+			this.config = $.extend( {}, this.getDefaults(), this.getOptions() );
+			
+			if ( this.config.speed < 100 ) this.config.speed = 100;
+			
+			this.config.reverseDirection = this.config.reverseDirection;
+			
+			if ( ! this.config.navs ) {
+				this.config.navs = false;
+			}
+			
+			if ( this.config.isAutoplay ) {
+                 this.config.autoplay =
+				   {
+     				 delay: 3000,
+    				};
+
+					if(this.config.reverseDirection){
+						this.config.autoplay.disableOnInteraction = true
+					}
+			}
+
+			if (this.config.loop) {
+				this.config.loop = true;
+			}
+			
+			if ( ! this.config.slidesPerView || this.config.slidesPerView !== 'auto' ) {
+				this.breakpointsSetup();
+			}
+
+			this.applyLoopSafety();
+			
+			if (this.config.isAutoplay && this.config.reverseDirection ) {
+				this.config.autoplay.reverseDirection = true;
+			}
+			
+			if ( ! this.$widgetContainer.hasClass('carousel_style_1') ) {
+				this.config.pagination.dynamicBullets = this.config.dynamicBullets;
+			}
+			
+			if ( this.$widgetContainer.hasClass('carousel-dots--style-two') || this.$widgetContainer.hasClass('carousel-dots--style-three') ) {
+				this.config.pagination.dynamicBullets = false;
+			}
+			
+			this.maybeSetupTickerOptions();
+
+			return this;
+					
+		}
+
+		GS_Teca_Carousel.prototype.setupDots = function() {
+			if ( ! this.config.dots ) return this;
+
+			if ( this.$widgetContainer.find('.swiper-pagination').length ) {
+				this.config.pagination.el = this.$widgetContainer.find('.swiper-pagination').get();
+				return this;
+			}
+			
+			this.$widget.parent().append( '<div class="swiper-pagination"></div>' );
+			this.config.pagination.el = this.$widgetContainer.find('.swiper-pagination').get();
+
+			return this;
+		}
+
+		GS_Teca_Carousel.prototype.setupNavs = function() {
+			
+			if ( ! this.config.navs ) return this;
+
+			if ( this.$widgetContainer.find('.swiper-nav-buttons').length ) {
+				this.config.navigation = {
+					nextEl: this.$widgetContainer.find('.swiper-button-next').get(),
+					prevEl: this.$widgetContainer.find('.swiper-button-prev').get(),
+				};
+				return this;
+			}
+			
+			this.$widget.parent().append( '<div class="swiper-nav-buttons">' + this.getPrevBtn() + this.getNextBtn() + '</div>' );
+			
+			this.config.navigation = {
+				nextEl: this.$widgetContainer.find('.swiper-button-next').get(),
+				prevEl: this.$widgetContainer.find('.swiper-button-prev').get(),
+			}
+			
+			return this;
+		}
+		
+		GS_Teca_Carousel.prototype.getPrevBtn = function() {
+
+            let nav_style = this.config.gs_teca_navs_style;
+
+            if ( nav_style == 'nav--style-03' || nav_style == 'nav--style-05' ) {
+				return '<div class="swiper-button-prev"><svg viewBox="0 0 20 12.38"><path d="M1519.51,1854.73a1.134,1.134,0,0,1-1.51.26,1.856,1.856,0,0,1,0-2l3-3h-15a0.952,0.952,0,0,1-1-.96,1.018,1.018,0,0,1,1-1.04h15l-3-2.99a1.873,1.873,0,0,1,0-2.01,1.157,1.157,0,0,1,1.51.33l5.16,4.99a0.973,0.973,0,0,1,0,1.42Z" transform="translate(-1505 -1842.81)"/></svg></div>';
+			} else if ( nav_style == 'nav--style-06' ) {
+				return '<div class="swiper-button-prev"><svg viewBox="0 0 24 34" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.39524 0.666672L0.474284 3.9665L16.1585 17.1662L0.474281 30.3659L4.39523 33.6657L24 17.1666L23.9996 17.1662L24 17.1658L4.39524 0.666672Z"/></svg></div>'
+			} else if ( nav_style == 'nav--style-07' ) {
+				return '<div class="swiper-button-prev"><svg viewBox="0 0 65 46" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M65 22.737L42.263 0L39.4209 2.84212L57.3061 20.7273H0.059639V24.7467H57.3064L39.4209 42.6321L42.263 45.4742L65 22.7373L64.9998 22.7371L65 22.737Z"/></svg></div>';
+			} 
+            else if ( nav_style == 'nav--style-08' ) {
+				return '<div class="swiper-button-prev"><svg viewBox="0 0 9.91 17"><path d="M1511,5458.51l-1.41,1.42,8.48,8.48,1.42-1.41Zm-1.41,15.56,1.41,1.42,8.49-8.49-1.42-1.41Z" transform="translate(-1509.59 -5458.5)"/></svg> Prev</div>';
+			} 
+            else if ( nav_style == 'nav--style-09' ) {
+				return '<div class="swiper-button-prev"><svg xmlns="http://www.w3.org/2000/svg" width="39" height="12" viewBox="0 0 39 12" fill="none"><path d="M38.5303 6.53033C38.8232 6.23744 38.8232 5.76256 38.5303 5.46967L33.7574 0.696699C33.4645 0.403806 32.9896 0.403806 32.6967 0.696699C32.4038 0.989593 32.4038 1.46447 32.6967 1.75736L36.9393 6L32.6967 10.2426C32.4038 10.5355 32.4038 11.0104 32.6967 11.3033C32.9896 11.5962 33.4645 11.5962 33.7574 11.3033L38.5303 6.53033ZM0 6.75H38V5.25H0V6.75Z"/></svg></div>';
+			} else if ( nav_style == 'nav--style-10' ) {
+				return '<div class="swiper-button-prev"><svg viewBox="0 0 31 12" fill="none"><path d="M30.5303 6.53033C30.8232 6.23744 30.8232 5.76256 30.5303 5.46967L25.7573 0.696699C25.4644 0.403806 24.9896 0.403806 24.6967 0.696699C24.4038 0.989593 24.4038 1.46447 24.6967 1.75736L28.9393 6L24.6967 10.2426C24.4038 10.5355 24.4038 11.0104 24.6967 11.3033C24.9896 11.5962 25.4644 11.5962 25.7573 11.3033L30.5303 6.53033ZM-3.05176e-05 6.75H30V5.25H-3.05176e-05V6.75Z"/></svg></div>';
+			} else if ( nav_style == 'nav--style-11' ) {
+				return '<div class="swiper-button-prev"><svg viewBox="0 0 15 12" fill="none"><path d="M14.5303 6.53033C14.8232 6.23744 14.8232 5.76256 14.5303 5.46967L9.75736 0.696699C9.46447 0.403806 8.98959 0.403806 8.6967 0.696699C8.40381 0.989593 8.40381 1.46447 8.6967 1.75736L12.9393 6L8.6967 10.2426C8.40381 10.5355 8.40381 11.0104 8.6967 11.3033C8.98959 11.5962 9.46447 11.5962 9.75736 11.3033L14.5303 6.53033ZM0 6.75H14V5.25H0V6.75Z"/></svg></div>';
+			} else {
+				return '<div class="swiper-button-prev"><svg viewBox="0 0 9.91 17"><path d="M1511,5458.51l-1.41,1.42,8.48,8.48,1.42-1.41Zm-1.41,15.56,1.41,1.42,8.49-8.49-1.42-1.41Z" transform="translate(-1509.59 -5458.5)"/></svg></div>';
+			}
+        }
+
+		GS_Teca_Carousel.prototype.getNextBtn = function() {
+
+            let nav_style = this.config.gs_teca_navs_style;
+
+            if ( nav_style == 'nav--style-03' || nav_style == 'nav--style-05' ) {
+				return '<div class="swiper-button-next"><svg viewBox="0 0 20 12.38"><path d="M1519.51,1854.73a1.134,1.134,0,0,1-1.51.26,1.856,1.856,0,0,1,0-2l3-3h-15a0.952,0.952,0,0,1-1-.96,1.018,1.018,0,0,1,1-1.04h15l-3-2.99a1.873,1.873,0,0,1,0-2.01,1.157,1.157,0,0,1,1.51.33l5.16,4.99a0.973,0.973,0,0,1,0,1.42Z" transform="translate(-1505 -1842.81)"/></svg></div>';
+			} else if ( nav_style == 'nav--style-06' ) {
+				return '<div class="swiper-button-next"><svg viewBox="0 0 24 34" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.39524 0.666672L0.474284 3.9665L16.1585 17.1662L0.474281 30.3659L4.39523 33.6657L24 17.1666L23.9996 17.1662L24 17.1658L4.39524 0.666672Z"/></svg></div>'
+			} else if ( nav_style == 'nav--style-07' ) {
+				return '<div class="swiper-button-next"><svg viewBox="0 0 65 46" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M65 22.737L42.263 0L39.4209 2.84212L57.3061 20.7273H0.059639V24.7467H57.3064L39.4209 42.6321L42.263 45.4742L65 22.7373L64.9998 22.7371L65 22.737Z"/></svg></div>';
+			} 
+            else if ( nav_style == 'nav--style-08' ) {
+				return '<div class="swiper-button-next">Next <svg viewBox="0 0 9.91 17"><path d="M1511,5458.51l-1.41,1.42,8.48,8.48,1.42-1.41Zm-1.41,15.56,1.41,1.42,8.49-8.49-1.42-1.41Z" transform="translate(-1509.59 -5458.5)"/></svg></div>';
+			} 
+            else if ( nav_style == 'nav--style-09' ) {
+				return '<div class="swiper-button-next"><svg xmlns="http://www.w3.org/2000/svg" width="39" height="12" viewBox="0 0 39 12" fill="none"><path d="M38.5303 6.53033C38.8232 6.23744 38.8232 5.76256 38.5303 5.46967L33.7574 0.696699C33.4645 0.403806 32.9896 0.403806 32.6967 0.696699C32.4038 0.989593 32.4038 1.46447 32.6967 1.75736L36.9393 6L32.6967 10.2426C32.4038 10.5355 32.4038 11.0104 32.6967 11.3033C32.9896 11.5962 33.4645 11.5962 33.7574 11.3033L38.5303 6.53033ZM0 6.75H38V5.25H0V6.75Z"/></svg></div>';
+			} else if ( nav_style == 'nav--style-10' ) {
+				return '<div class="swiper-button-next"><svg viewBox="0 0 31 12" fill="none"><path d="M30.5303 6.53033C30.8232 6.23744 30.8232 5.76256 30.5303 5.46967L25.7573 0.696699C25.4644 0.403806 24.9896 0.403806 24.6967 0.696699C24.4038 0.989593 24.4038 1.46447 24.6967 1.75736L28.9393 6L24.6967 10.2426C24.4038 10.5355 24.4038 11.0104 24.6967 11.3033C24.9896 11.5962 25.4644 11.5962 25.7573 11.3033L30.5303 6.53033ZM-3.05176e-05 6.75H30V5.25H-3.05176e-05V6.75Z"/></svg></div>';
+			} else if ( nav_style == 'nav--style-11' ) {
+				return '<div class="swiper-button-next"><svg viewBox="0 0 15 12" fill="none"><path d="M14.5303 6.53033C14.8232 6.23744 14.8232 5.76256 14.5303 5.46967L9.75736 0.696699C9.46447 0.403806 8.98959 0.403806 8.6967 0.696699C8.40381 0.989593 8.40381 1.46447 8.6967 1.75736L12.9393 6L8.6967 10.2426C8.40381 10.5355 8.40381 11.0104 8.6967 11.3033C8.98959 11.5962 9.46447 11.5962 9.75736 11.3033L14.5303 6.53033ZM0 6.75H14V5.25H0V6.75Z"/></svg></div>';
+			} else {
+				return '<div class="swiper-button-next"><svg viewBox="0 0 9.91 17"><path d="M1511,5458.51l-1.41,1.42,8.48,8.48,1.42-1.41Zm-1.41,15.56,1.41,1.42,8.49-8.49-1.42-1.41Z" transform="translate(-1509.59 -5458.5)"/></svg></div>';
+			}
+            
+        }
+		
+		GS_Teca_Carousel.prototype.bindUpdates = function() {
+			var that = this;
+			var updateSwiper = gs_debounce( function() {
+				if ( that.swiper && that.swiper.update ) {
+					that.swiper.update();
+				}
+			}, 120 );
+
+			$( window ).on( 'load.gsTecaSwiper resize.gsTecaSwiper orientationchange.gsTecaSwiper', updateSwiper );
+			this.$widgetContainer.find( 'img' ).on( 'load', updateSwiper );
+
+			if ( typeof imagesLoaded === 'function' && this.$widgetContainer.length ) {
+				imagesLoaded( this.$widgetContainer[0], updateSwiper );
+			}
+
+			return this;
+		};
+
+		GS_Teca_Carousel.prototype.bindPauseOnHover = function() {
+			if ( ! this.config.pauseOnHover || ! this.$widget || ! this.$widget.length ) {
+				return this;
+			}
+
+			var carousel = this;
+			var swiperEl = this.$widget[0];
+
+			swiperEl.addEventListener( 'mouseenter', function() {
+				if ( carousel.swiper && carousel.swiper.autoplay ) {
+					carousel.swiper.autoplay.stop();
+				}
+			} );
+
+			swiperEl.addEventListener( 'mouseleave', function() {
+				if ( carousel.swiper && carousel.swiper.autoplay ) {
+					carousel.swiper.autoplay.start();
+				}
+			} );
+
+			return this;
+		};
+
+		GS_Teca_Carousel.prototype.run = function() {
+			
+			var that = this;
+
+			if ( typeof GS_Swiper !== 'function' || ! this.$widget || ! this.$widget.length ) {
+				return this;
+			}
+
+			if ( window.gs_teca_get_layout_width( this.$widgetContainer ) <= 0 ) {
+				window.gs_teca_when_carousel_ready( this.$widgetContainer, function() {
+					that.run();
+				} );
+				return this;
+			}
+
+			if ( this.swiper && this.swiper.update ) {
+				this.swiper.update();
+				return this;
+			}
+			
+			this.setupNavs().setupDots();
+
+			this.swiper = new GS_Swiper( this.$widget[0], this.config );
+
+			this.bindPauseOnHover();
+			this.bindUpdates();
+			this.navigation();
+			
+			return this;
+		}
+		
+		GS_Teca_Carousel.prototype.navigation = function() {
+			
+			var _this = this;
+			
+			this.$widgetContainer.find('.swiper-button-next').on('click', function() {
+				is_rtl ? _this.swiper.slidePrev() : _this.swiper.slideNext();
+			});
+			
+			this.$widgetContainer.find('.swiper-button-prev').on('click', function() {
+				is_rtl ? _this.swiper.slideNext() : _this.swiper.slidePrev();
+			});
+		}
+
+		GS_Teca_Carousel.prototype.ticker = function() {
+	
+			if ( ! this.config.ticker ) return;
+	
+			this.swiper.on( 'touchEnd', function() {
+	
+				var _diff = this.slidesGrid[this.activeIndex] - Math.abs( this.translate );
+				
+				if ( _diff > 0 ) {
+					var _speed = ( this.originalParams.speed / this.slidesSizesGrid[this.activeIndex] ) * _diff;
+					this.slideToClosest( _speed );
+				}
+	
+				this.autoplay.stop();
+				this.autoplay.start();
+	
+			});
+	
+			return this;
+	
+		}
+		
+		$.fn.gs_teca_carousel = function() {
+			return new GS_Teca_Carousel( $(this).first() );
+		}
+	}
+
+    function gs_teca_do_carousel( $widget_box ) {
+		if ( ! $widget_box.length ) return;
+
+		if ( ! ('gs_teca_carousel' in $.fn) ) load_teca_carousel_class();
+
+		$widget_box.each( function() {
+			$( this ).gs_teca_carousel();
+		} );
+	}
+
+	function load_gs_teca_ticker_class() {
+	
+		function GS_Teca_Ticker( $widget ) {
+
+			this.$widget = $widget;
+			this.$widgetContainer = $widget.closest('.gs_teca_area');
+
+			if ( this.$widgetContainer.data( 'gs-teca-ticker-ready' ) ) {
+				return this;
+			}
+
+			if ( this.$widgetContainer.data( 'gs-teca-ticker-pending' ) ) {
+				return this;
+			}
+
+			this.$widgetContainer.data( 'gs-teca-ticker-pending', 1 );
+
+			var self = this;
+
+			window.gs_teca_when_carousel_ready( this.$widgetContainer, function() {
+				self.setup();
+				self.run();
+				self.$widgetContainer.data( 'gs-teca-ticker-pending', 0 );
+				self.$widgetContainer.data( 'gs-teca-ticker-ready', 1 );
+			} );
+
+			return this;
+	
+		}
+	
+		GS_Teca_Ticker.prototype.getOptions = function() {
+	
+			return this.$widget.data( 'carousel-config' ) || {};
+	
+		}
+	
+		GS_Teca_Ticker.prototype.getDefaults = function() {
+	
+			return {
+				direction: "prev",
+				mode: "horizontal",
+				speed: 1,
+				delay: 30,
+				// pauseOnHover: true
+			}
+
+			// {"mode":"horizontal","speed":1400,"pauseOnHover":false,"slideSpace":10,"desktopLogos":5,"tabletLogos":3,"mobileLogos":2,"reverseDirection":true}
+	
+		}
+	
+		GS_Teca_Ticker.prototype.setup = function() {
+
+			this.config = $.extend( {}, this.getDefaults(), this.getOptions() );
+			this.applyItemSpacing();
+	
+			return this;
+	
+		}
+
+		GS_Teca_Ticker.prototype.applyItemSpacing = function() {
+			var gap = parseInt( this.config.spaceBetween, 10 );
+
+			if ( ! Number.isFinite( gap ) || gap < 0 ) {
+				gap = 30;
+			}
+
+			this.$widgetContainer.css( '--gs-teca-ticker-gap', gap + 'px' );
+
+			return this;
+		};
+	
+		GS_Teca_Ticker.prototype.getColumnSlidesPerView = function( columnValue, fallbackGridSpan ) {
+			var raw = columnValue;
+
+			if ( raw === undefined || raw === null || raw === '' ) {
+				raw = fallbackGridSpan;
+			}
+
+			var gridSpan = parseFloat( String( raw ).replace( '_', '.' ) );
+
+			if ( ! Number.isFinite( gridSpan ) || gridSpan <= 0 ) {
+				gridSpan = parseFloat( String( fallbackGridSpan || '12' ).replace( '_', '.' ) ) || 12;
+			}
+
+			return 12 / gridSpan;
+		};
+
+		GS_Teca_Ticker.prototype.breakpointsSetup = function() {
+			var slidesPerGroup = Math.max( 1, parseInt( this.config.slidesPerGroup, 10 ) || 1 );
+			var columns_small_mobile = this.getColumnSlidesPerView( this.config.columns_small_mobile, '12' );
+			var mobile_columns = this.getColumnSlidesPerView( this.config.mobile_columns, '12' );
+			var tablet_columns = this.getColumnSlidesPerView( this.config.tablet_columns, '6' );
+			var desktop_columns = this.getColumnSlidesPerView( this.config.desktop_columns, '4' );
+			this.config.breakpoints = {
+				0: {
+					slidesPerView: columns_small_mobile,
+					slidesPerGroup: slidesPerGroup > columns_small_mobile ? columns_small_mobile : slidesPerGroup
+				},
+				576: {
+					slidesPerView: mobile_columns,
+					slidesPerGroup: slidesPerGroup > mobile_columns ? mobile_columns : slidesPerGroup
+				},
+				768: {
+					slidesPerView: tablet_columns,
+					slidesPerGroup: slidesPerGroup > tablet_columns ? tablet_columns : slidesPerGroup
+				},
+				1025: {
+					slidesPerView: desktop_columns,
+					slidesPerGroup: slidesPerGroup > desktop_columns ? desktop_columns : slidesPerGroup
+				}
+			}
+
+		}
+
+		GS_Teca_Ticker.prototype.getMaxEvents = function() {
+			if ( window.matchMedia("(min-width: 1025px)").matches ) return this.getColumnSlidesPerView( this.config.desktop_columns, '4' );
+			if ( window.matchMedia("(min-width: 768px)").matches ) return this.getColumnSlidesPerView( this.config.tablet_columns, '6' );
+			if ( window.matchMedia("(min-width: 576px)").matches ) return this.getColumnSlidesPerView( this.config.mobile_columns, '12' );
+
+			return this.getColumnSlidesPerView( this.config.columns_small_mobile, '12' );
+		}
+
+		GS_Teca_Ticker.prototype.fixItemWidth = function() {
+			var baseAreaWidth = window.gs_teca_get_layout_width( this.$widgetContainer );
+
+			if ( baseAreaWidth <= 0 ) {
+				return;
+			}
+
+			var maxEvents = Math.max( 1, this.getMaxEvents() );
+			var singleItemWidth = baseAreaWidth / maxEvents;
+			this.$widget.find('.gs-teca-single').css('width', singleItemWidth + 'px');
+		}
+
+		GS_Teca_Ticker.prototype.run = function() {
+			if ( ! gs_teca_can_use_carousel_ticker() ) return this;
+
+			this.applyItemSpacing();
+			this.fixItemWidth();
+
+			$(window).on( 'resize', gs_debounce(function() {
+				this.applyItemSpacing();
+				this.fixItemWidth();
+			}.bind(this)));
+
+			this.config.speed = this.config.speed / 1000;
+			
+			if ( this.config.reverseDirection ) {
+				this.config.direction = 'next';
+			}
+
+			this.$widget.carouselTicker( this.config );
+	
+			return this;
+	
+		}
+	
+		$.fn.gs_teca_ticker = function() {
+			return new GS_Teca_Ticker( $(this).first() );
+		}
+	
+	}
+
+	function gs_teca_do_ticker( $widget_box ) {
+		if ( ! $widget_box.length || ! gs_teca_can_use_carousel_ticker() ) return;
+
+		// Load ticker class if not loaded
+		if ( ! ('gs_teca_ticker' in $.fn) ) load_gs_teca_ticker_class();
+
+		$widget_box.each(function() {
+			$(this).gs_teca_ticker();
+		});
+	}
+
+	function gs_teca_get_event_date_range_from_item( $item ) {
+		var $item = $item.jquery ? $item : $( $item );
+		var startDate = String( $item.attr( 'data-event-start-date' ) || $item.attr( 'data-start-date' ) || '' ).trim();
+		var endDate = String( $item.attr( 'data-event-end-date' ) || $item.attr( 'data-end-date' ) || '' ).trim();
+
+		if ( ! endDate ) {
+			endDate = startDate;
+		}
+
+		return {
+			start: startDate,
+			end: endDate
+		};
+	}
+
+	function gs_teca_event_matches_date_filter( $item, selectedDate ) {
+		selectedDate = String( selectedDate || '' ).trim();
+
+		if ( ! selectedDate ) {
+			return true;
+		}
+
+		var range = gs_teca_get_event_date_range_from_item( $item );
+
+		if ( ! range.start ) {
+			return false;
+		}
+
+		if ( ! range.end ) {
+			range.end = range.start;
+		}
+
+		return selectedDate >= range.start && selectedDate <= range.end;
+	}
+
+	function gs_teca_get_event_days_from_item( $item ) {
+		var $item = $item.jquery ? $item : $( $item );
+		var daysAttr = String( $item.attr( 'data-event-days' ) || '' ).trim();
+
+		if ( daysAttr ) {
+			return daysAttr
+				.toLowerCase()
+				.split( ',' )
+				.map( function( value ) {
+					return value.trim();
+				} )
+				.filter( Boolean );
+		}
+
+		var startDay = String( $item.attr( 'data-event-start-day' ) || '' ).trim().toLowerCase();
+
+		return startDay ? [ startDay ] : [];
+	}
+
+	function gs_teca_event_matches_day_filter( $item, selectedDay ) {
+		selectedDay = String( selectedDay || '' ).trim().toLowerCase();
+
+		if ( ! selectedDay ) {
+			return true;
+		}
+
+		var days = gs_teca_get_event_days_from_item( $item );
+
+		return days.indexOf( selectedDay ) !== -1;
+	}
+
+	function gs_teca_sync_filters_by_name_state_from_controls( $wrapper ) {
+		var $bar = $wrapper.find( '.teca-filters-by-name-bar' ).first();
+
+		if ( ! $bar.length ) {
+			return;
+		}
+
+		gs_teca_set_filters_by_name_state( $wrapper, {
+			date: String( $bar.find( '.teca-filter-date-input' ).val() || '' ).trim(),
+			day: String( $bar.find( '.teca-filter-day-select' ).val() || '' ).trim().toLowerCase(),
+			category: String( $bar.find( '.teca-filter-category-select' ).val() || '' ).trim(),
+			tag: String( $bar.find( '.teca-filter-tag-select' ).val() || '' ).trim(),
+			venue: String( $bar.find( '.teca-filter-venue-select' ).val() || '' ).trim(),
+			city: String( $bar.find( '.teca-filter-city-select' ).val() || '' ).trim(),
+			state: String( $bar.find( '.teca-filter-state-select' ).val() || '' ).trim(),
+			country: String( $bar.find( '.teca-filter-country-select' ).val() || '' ).trim(),
+			organizer: String( $bar.find( '.teca-filter-organizer-select' ).val() || '' ).trim(),
+			cost: String( $bar.find( '.teca-filter-cost-select' ).val() || '' ).trim(),
+			time: String( $bar.find( '.teca-filter-time-select' ).val() || '' ).trim(),
+			featured: String( $bar.find( '.teca-filter-featured-select' ).val() || '' ).trim(),
+			eventStatus: String( $bar.find( '.teca-filter-status-select' ).val() || '' ).trim()
+		} );
+	}
+
+	function gs_teca_get_filters_by_name_date_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByDate' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_day_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByDay' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_category_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByCategory' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_tag_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByTag' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_venue_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByVenue' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_organizer_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByOrganizer' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_city_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByCity' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_state_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByState' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_country_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByCountry' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_cost_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByCost' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_time_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByTime' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_featured_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByFeatured' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_event_status_value( $wrapper ) {
+		return String( $wrapper.data( 'tecaFilterByEventStatus' ) || '' ).trim();
+	}
+
+	function gs_teca_get_filters_by_name_state( $wrapper ) {
+		return {
+			date: gs_teca_get_filters_by_name_date_value( $wrapper ),
+			day: gs_teca_get_filters_by_name_day_value( $wrapper ),
+			category: gs_teca_get_filters_by_name_category_value( $wrapper ),
+			tag: gs_teca_get_filters_by_name_tag_value( $wrapper ),
+			venue: gs_teca_get_filters_by_name_venue_value( $wrapper ),
+			city: gs_teca_get_filters_by_name_city_value( $wrapper ),
+			state: gs_teca_get_filters_by_name_state_value( $wrapper ),
+			country: gs_teca_get_filters_by_name_country_value( $wrapper ),
+			organizer: gs_teca_get_filters_by_name_organizer_value( $wrapper ),
+			cost: gs_teca_get_filters_by_name_cost_value( $wrapper ),
+			time: gs_teca_get_filters_by_name_time_value( $wrapper ),
+			featured: gs_teca_get_filters_by_name_featured_value( $wrapper ),
+			eventStatus: gs_teca_get_filters_by_name_event_status_value( $wrapper )
+		};
+	}
+
+	function gs_teca_set_filters_by_name_state( $wrapper, partialState ) {
+		partialState = partialState || {};
+
+		if ( partialState.date !== undefined ) {
+			$wrapper.data( 'tecaFilterByDate', String( partialState.date || '' ).trim() );
+		}
+
+		if ( partialState.day !== undefined ) {
+			$wrapper.data( 'tecaFilterByDay', String( partialState.day || '' ).trim().toLowerCase() );
+		}
+
+		if ( partialState.category !== undefined ) {
+			$wrapper.data( 'tecaFilterByCategory', String( partialState.category || '' ).trim() );
+		}
+
+		if ( partialState.tag !== undefined ) {
+			$wrapper.data( 'tecaFilterByTag', String( partialState.tag || '' ).trim() );
+		}
+
+		if ( partialState.venue !== undefined ) {
+			$wrapper.data( 'tecaFilterByVenue', String( partialState.venue || '' ).trim() );
+		}
+
+		if ( partialState.city !== undefined ) {
+			$wrapper.data( 'tecaFilterByCity', String( partialState.city || '' ).trim() );
+		}
+
+		if ( partialState.state !== undefined ) {
+			$wrapper.data( 'tecaFilterByState', String( partialState.state || '' ).trim() );
+		}
+
+		if ( partialState.country !== undefined ) {
+			$wrapper.data( 'tecaFilterByCountry', String( partialState.country || '' ).trim() );
+		}
+
+		if ( partialState.organizer !== undefined ) {
+			$wrapper.data( 'tecaFilterByOrganizer', String( partialState.organizer || '' ).trim() );
+		}
+
+		if ( partialState.cost !== undefined ) {
+			$wrapper.data( 'tecaFilterByCost', String( partialState.cost || '' ).trim() );
+		}
+
+		if ( partialState.time !== undefined ) {
+			$wrapper.data( 'tecaFilterByTime', String( partialState.time || '' ).trim() );
+		}
+
+		if ( partialState.featured !== undefined ) {
+			$wrapper.data( 'tecaFilterByFeatured', String( partialState.featured || '' ).trim() );
+		}
+
+		if ( partialState.eventStatus !== undefined ) {
+			$wrapper.data( 'tecaFilterByEventStatus', String( partialState.eventStatus || '' ).trim() );
+		}
+	}
+
+	function gs_teca_filters_by_name_has_active_state( state ) {
+		state = state || {};
+
+		return !!( state.date || state.day || state.category || state.tag || state.venue || state.city || state.state || state.country || state.organizer || state.cost || state.time || state.featured || state.eventStatus );
+	}
+
+	function gs_teca_item_has_taxonomy_slug( $item, attributeNames, selectedSlug ) {
+		selectedSlug = String( selectedSlug || '' ).trim();
+
+		if ( ! selectedSlug ) {
+			return true;
+		}
+
+		var names = Array.isArray( attributeNames ) ? attributeNames : [ attributeNames ];
+		var slugs = [];
+
+		names.forEach( function( attributeName ) {
+			String( $item.attr( attributeName ) || '' )
+				.split( ',' )
+				.map( function( value ) {
+					return value.trim();
+				} )
+				.filter( Boolean )
+				.forEach( function( value ) {
+					if ( slugs.indexOf( value ) === -1 ) {
+						slugs.push( value );
+					}
+				} );
+		} );
+
+		return slugs.indexOf( selectedSlug ) !== -1;
+	}
+
+	function gs_teca_event_matches_category_filter( $item, selectedCategory ) {
+		return gs_teca_item_has_taxonomy_slug(
+			$item,
+			[ 'data-event-category-slugs', 'data-event-categories', 'data-category-slugs' ],
+			selectedCategory
+		);
+	}
+
+	function gs_teca_event_matches_tag_filter( $item, selectedTag ) {
+		return gs_teca_item_has_taxonomy_slug(
+			$item,
+			[ 'data-event-tag-slugs', 'data-event-tags', 'data-tags' ],
+			selectedTag
+		);
+	}
+
+	function gs_teca_event_matches_venue_filter( $item, selectedVenue ) {
+		selectedVenue = String( selectedVenue || '' ).trim();
+
+		if ( ! selectedVenue ) {
+			return true;
+		}
+
+		var venueId = String( $item.attr( 'data-event-venue-id' ) || '' ).trim();
+		var venueName = String( $item.attr( 'data-event-venue-name' ) || '' ).trim();
+
+		if ( venueId && venueId === selectedVenue ) {
+			return true;
+		}
+
+		return venueName === selectedVenue;
+	}
+
+	function gs_teca_event_matches_organizer_filter( $item, selectedOrganizer ) {
+		selectedOrganizer = String( selectedOrganizer || '' ).trim();
+
+		if ( ! selectedOrganizer ) {
+			return true;
+		}
+
+		var organizerIds = String( $item.attr( 'data-event-organizer-ids' ) || '' )
+			.split( ',' )
+			.map( function( value ) {
+				return value.trim();
+			} )
+			.filter( Boolean );
+
+		if ( organizerIds.indexOf( selectedOrganizer ) !== -1 ) {
+			return true;
+		}
+
+		var organizerNames = String( $item.attr( 'data-event-organizer-names' ) || '' )
+			.split( ',' )
+			.map( function( value ) {
+				return value.trim();
+			} )
+			.filter( Boolean );
+
+		return organizerNames.indexOf( selectedOrganizer ) !== -1;
+	}
+
+	function gs_teca_event_matches_location_filter( $item, selectedValue, attributeName ) {
+		selectedValue = String( selectedValue || '' ).trim();
+
+		if ( ! selectedValue ) {
+			return true;
+		}
+
+		return String( $item.attr( attributeName ) || '' ).trim() === selectedValue;
+	}
+
+	function gs_teca_event_matches_city_filter( $item, selectedCity ) {
+		return gs_teca_event_matches_location_filter( $item, selectedCity, 'data-event-city' );
+	}
+
+	function gs_teca_event_matches_state_filter( $item, selectedState ) {
+		return gs_teca_event_matches_location_filter( $item, selectedState, 'data-event-state' );
+	}
+
+	function gs_teca_event_matches_country_filter( $item, selectedCountry ) {
+		return gs_teca_event_matches_location_filter( $item, selectedCountry, 'data-event-country' );
+	}
+
+	function gs_teca_event_matches_cost_filter( $item, selectedCost ) {
+		selectedCost = String( selectedCost || '' ).trim();
+
+		if ( ! selectedCost ) {
+			return true;
+		}
+
+		return String( $item.attr( 'data-event-cost' ) || 'free' ).trim() === selectedCost;
+	}
+
+	function gs_teca_parse_time_to_minutes( timeString ) {
+		timeString = String( timeString || '' ).trim();
+
+		if ( ! timeString ) {
+			return null;
+		}
+
+		var parts = timeString.split( ':' );
+
+		if ( parts.length < 2 ) {
+			return null;
+		}
+
+		var hours = parseInt( parts[0], 10 );
+		var minutes = parseInt( parts[1], 10 );
+
+		if ( isNaN( hours ) || isNaN( minutes ) ) {
+			return null;
+		}
+
+		return ( hours * 60 ) + minutes;
+	}
+
+	function gs_teca_time_matches_period( startTime, period ) {
+		var minutes = gs_teca_parse_time_to_minutes( startTime );
+
+		if ( minutes === null ) {
+			return false;
+		}
+
+		switch ( period ) {
+			case 'morning':
+				return minutes >= ( 5 * 60 ) && minutes <= ( 11 * 60 + 59 );
+			case 'afternoon':
+				return minutes >= ( 12 * 60 ) && minutes <= ( 16 * 60 + 59 );
+			case 'evening':
+				return minutes >= ( 17 * 60 ) && minutes <= ( 20 * 60 + 59 );
+			case 'night':
+				return minutes >= ( 21 * 60 ) || minutes <= ( 4 * 60 + 59 );
+			default:
+				return true;
+		}
+	}
+
+	function gs_teca_event_matches_time_filter( $item, selectedTime ) {
+		selectedTime = String( selectedTime || '' ).trim();
+
+		if ( ! selectedTime ) {
+			return true;
+		}
+
+		var startTime = String( $item.attr( 'data-event-start-time' ) || '' ).trim();
+
+		if ( ! startTime ) {
+			return false;
+		}
+
+		return gs_teca_time_matches_period( startTime, selectedTime );
+	}
+
+	function gs_teca_event_matches_featured_filter( $item, selectedFeatured ) {
+		selectedFeatured = String( selectedFeatured || '' ).trim();
+
+		if ( ! selectedFeatured ) {
+			return true;
+		}
+
+		var featured = String( $item.attr( 'data-event-featured' ) || '0' ).trim();
+
+		if ( selectedFeatured === 'featured' ) {
+			return featured === '1';
+		}
+
+		if ( selectedFeatured === 'not-featured' ) {
+			return featured === '0';
+		}
+
+		return true;
+	}
+
+	function gs_teca_event_matches_event_status_filter( $item, selectedStatus ) {
+		selectedStatus = String( selectedStatus || '' ).trim();
+
+		if ( ! selectedStatus ) {
+			return true;
+		}
+
+		return String( $item.attr( 'data-event-status' ) || '' ).trim() === selectedStatus;
+	}
+
+	function gs_teca_event_matches_filters_by_name( $item, state ) {
+		state = state || {};
+
+		return gs_teca_event_matches_date_filter( $item, state.date )
+			&& gs_teca_event_matches_day_filter( $item, state.day )
+			&& gs_teca_event_matches_category_filter( $item, state.category )
+			&& gs_teca_event_matches_tag_filter( $item, state.tag )
+			&& gs_teca_event_matches_venue_filter( $item, state.venue )
+			&& gs_teca_event_matches_city_filter( $item, state.city )
+			&& gs_teca_event_matches_state_filter( $item, state.state )
+			&& gs_teca_event_matches_country_filter( $item, state.country )
+			&& gs_teca_event_matches_organizer_filter( $item, state.organizer )
+			&& gs_teca_event_matches_cost_filter( $item, state.cost )
+			&& gs_teca_event_matches_time_filter( $item, state.time )
+			&& gs_teca_event_matches_featured_filter( $item, state.featured )
+			&& gs_teca_event_matches_event_status_filter( $item, state.eventStatus );
+	}
+
+	function gs_teca_sync_filters_by_name_empty_message( $wrapper, visibleCount, hasActiveFilter ) {
+		var $message = $wrapper.find( '.teca-filters-by-name-empty-message' ).first();
+
+		if ( ! $message.length ) {
+			return;
+		}
+
+		if ( typeof visibleCount === 'undefined' ) {
+			if ( $wrapper.hasClass( 'view_type_filter' ) ) {
+				if ( gs_teca_uses_filter_dom_layout( $wrapper ) ) {
+					visibleCount = $wrapper.find( '.gs-teca-filter-wrapper .gs-teca-single' ).not( '.teca-filter-list-hidden' ).length;
+				} else {
+					var $filterGrid = $wrapper.find( '.gs-teca-filter-wrapper' ).first();
+					var isotopeData = $filterGrid.data( 'gs_isotope' );
+
+					if ( isotopeData && Array.isArray( isotopeData.filteredItems ) ) {
+						visibleCount = isotopeData.filteredItems.length;
+					} else {
+						visibleCount = $wrapper.find( '.gs-teca-single:visible' ).length;
+					}
+				}
+			} else {
+				visibleCount = $wrapper.find( '.gs-teca-single:visible' ).length;
+			}
+		}
+
+		if ( typeof hasActiveFilter === 'undefined' ) {
+			hasActiveFilter = gs_teca_filters_by_name_has_active_state( gs_teca_get_filters_by_name_state( $wrapper ) );
+		}
+
+		var shouldShow = hasActiveFilter && visibleCount === 0;
+
+		$message.prop( 'hidden', ! shouldShow );
+		$message.css( 'display', shouldShow ? '' : 'none' );
+	}
+
+	function gs_teca_refresh_masonry_layout( $wrapper ) {
+		if ( ! $wrapper.hasClass( 'view_type_masonry' ) || ! gs_teca_can_use_isotope() ) {
+			return;
+		}
+
+		var $grid = $wrapper.find( '.gs_masonry_wrapper, .gs-roow.gs-teca' ).first();
+
+		if ( $grid.length && $grid.data( 'gs_isotope' ) ) {
+			$grid.gs_isotope( 'layout' );
+		}
+	}
+
+	function gs_teca_apply_filters_by_name( $wrapper ) {
+		gs_teca_sync_filters_by_name_state_from_controls( $wrapper );
+
+		var state = gs_teca_get_filters_by_name_state( $wrapper );
+		var hasActiveFilter = gs_teca_filters_by_name_has_active_state( state );
+
+		if ( $wrapper.hasClass( 'view_type_filter' ) ) {
+			if ( gs_teca_uses_filter_dom_layout( $wrapper ) ) {
+				var filterInstance = $wrapper.data( 'tecaFilterByInstance' );
+
+				if ( filterInstance && typeof filterInstance.applyListFilter === 'function' ) {
+					filterInstance.applyListFilter();
+				}
+
+				return;
+			}
+
+			var $filterGrid = $wrapper.find( '.gs-teca-filter-wrapper' );
+
+			if ( $filterGrid.length && $filterGrid.data( 'gs_isotope' ) ) {
+				$filterGrid.gs_isotope( 'arrange' );
+				setTimeout( function() {
+					gs_teca_sync_filters_by_name_empty_message( $wrapper );
+				}, 120 );
+			} else {
+				gs_teca_sync_filters_by_name_empty_message( $wrapper );
+			}
+
+			return;
+		}
+
+		var visibleCount = 0;
+
+		$wrapper.find( '.gs-teca-single' ).each( function() {
+			var $item = $( this );
+			var matches = gs_teca_event_matches_filters_by_name( $item, state );
+			var shouldShow = ! hasActiveFilter || matches;
+
+			$item.toggleClass( 'teca-filter-by-name-hidden', ! shouldShow );
+			$item.toggleClass( 'teca-filter-by-date-hidden', ! shouldShow );
+			$item.css( 'display', shouldShow ? '' : 'none' );
+
+			if ( shouldShow ) {
+				visibleCount++;
+			}
+		} );
+
+		gs_teca_refresh_masonry_layout( $wrapper );
+		gs_teca_sync_filters_by_name_empty_message( $wrapper, visibleCount, hasActiveFilter );
+	}
+
+	function gs_teca_apply_filters_by_name_date( $wrapper, selectedDate ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { date: selectedDate } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_day( $wrapper, selectedDay ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { day: String( selectedDay || '' ).trim().toLowerCase() } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_category( $wrapper, selectedCategory ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { category: selectedCategory } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_tag( $wrapper, selectedTag ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { tag: selectedTag } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_venue( $wrapper, selectedVenue ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { venue: selectedVenue } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_organizer( $wrapper, selectedOrganizer ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { organizer: selectedOrganizer } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_city( $wrapper, selectedCity ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { city: selectedCity } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_state( $wrapper, selectedState ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { state: selectedState } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_country( $wrapper, selectedCountry ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { country: selectedCountry } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_cost( $wrapper, selectedCost ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { cost: selectedCost } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_time( $wrapper, selectedTime ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { time: selectedTime } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_featured( $wrapper, selectedFeatured ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { featured: selectedFeatured } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_apply_filters_by_name_event_status( $wrapper, selectedStatus ) {
+		gs_teca_set_filters_by_name_state( $wrapper, { eventStatus: selectedStatus } );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_reapply_filters_by_name( $wrapper ) {
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_clear_filters_by_name( $wrapper ) {
+		var $bar = $wrapper.find( '.teca-filters-by-name-bar' ).first();
+
+		if ( ! $bar.length ) {
+			return;
+		}
+
+		$bar.find( '.teca-filter-date-input' ).val( '' );
+		$bar.find( '.teca-filter-day-select' ).val( '' );
+		$bar.find( '.teca-filter-category-select' ).val( '' );
+		$bar.find( '.teca-filter-tag-select' ).val( '' );
+		$bar.find( '.teca-filter-venue-select' ).val( '' );
+		$bar.find( '.teca-filter-city-select' ).val( '' );
+		$bar.find( '.teca-filter-state-select' ).val( '' );
+		$bar.find( '.teca-filter-country-select' ).val( '' );
+		$bar.find( '.teca-filter-organizer-select' ).val( '' );
+		$bar.find( '.teca-filter-cost-select' ).val( '' );
+		$bar.find( '.teca-filter-time-select' ).val( '' );
+		$bar.find( '.teca-filter-featured-select' ).val( '' );
+		$bar.find( '.teca-filter-status-select' ).val( '' );
+
+		gs_teca_set_filters_by_name_state( $wrapper, {
+			date: '',
+			day: '',
+			category: '',
+			tag: '',
+			venue: '',
+			city: '',
+			state: '',
+			country: '',
+			organizer: '',
+			cost: '',
+			time: '',
+			featured: '',
+			eventStatus: ''
+		} );
+		gs_teca_apply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_get_events_list_target( $wrapper ) {
+		return $wrapper.find( '.teca-events-list-target' ).first();
+	}
+
+	function gs_teca_get_search_by_state( $wrapper ) {
+		var state = $wrapper.data( 'tecaSearchByState' );
+
+		if ( ! state ) {
+			state = {
+				isSearchActive: false,
+				originalResultsHtml: '',
+				debounceTimer: null,
+				xhr: null,
+				requestId: 0
+			};
+			$wrapper.data( 'tecaSearchByState', state );
+		}
+
+		return state;
+	}
+
+	function gs_teca_search_by_collect_terms( $bar ) {
+		return {
+			search_title: String( $bar.find( '.teca-search-title-input' ).val() || '' ).trim(),
+			search_venue: String( $bar.find( '.teca-search-venue-input' ).val() || '' ).trim(),
+			search_organizer: String( $bar.find( '.teca-search-organizer-input' ).val() || '' ).trim(),
+			search_city: String( $bar.find( '.teca-search-city-input' ).val() || '' ).trim()
+		};
+	}
+
+	function gs_teca_search_by_has_active_terms( terms ) {
+		return [ 'search_title', 'search_venue', 'search_organizer', 'search_city' ].some( function( key ) {
+			return String( terms[ key ] || '' ).length >= 2;
+		} );
+	}
+
+	function gs_teca_set_search_by_loading( $wrapper, isLoading ) {
+		$wrapper.toggleClass( 'teca-is-searching', !! isLoading );
+		$wrapper.find( '.teca-search-loading' ).first().prop( 'hidden', ! isLoading );
+	}
+
+	function gs_teca_set_search_by_empty_message( $wrapper, shouldShow ) {
+		var $message = $wrapper.find( '.teca-search-by-empty-message' ).first();
+
+		if ( ! $message.length ) {
+			return;
+		}
+
+		$message.prop( 'hidden', ! shouldShow );
+		$message.css( 'display', shouldShow ? '' : 'none' );
+	}
+
+	function gs_teca_toggle_search_by_pagination( $wrapper, shouldShow ) {
+		$wrapper.find( '.gs-teca-ajax-pagination-wrapper, .gs-teca-load-more-wrapper, .gs-teca-load-more-scroll' ).toggle( !! shouldShow );
+	}
+
+	function gs_teca_get_search_by_view_type( $wrapper ) {
+		if ( $wrapper.hasClass( 'view_type_masonry' ) ) {
+			return 'masonry';
+		}
+
+		if ( $wrapper.hasClass( 'view_type_filter' ) ) {
+			return 'filter';
+		}
+
+		return 'grid';
+	}
+
+	function gs_teca_refresh_search_by_layout( $wrapper ) {
+		var $target = gs_teca_get_events_list_target( $wrapper );
+
+		if ( $wrapper.hasClass( 'view_type_masonry' ) && $target.length && gs_teca_can_use_isotope() ) {
+			if ( $target.data( 'gs_isotope' ) ) {
+				try {
+					$target.gs_isotope( 'destroy' );
+				} catch ( error ) {}
+			}
+
+			gs_teca_do_masonry( $wrapper );
+		} else if ( $wrapper.hasClass( 'view_type_filter' ) && $target.length ) {
+			if ( gs_teca_uses_filter_dom_layout( $wrapper ) ) {
+				var filterInstance = $wrapper.data( 'tecaFilterByInstance' );
+
+				if ( filterInstance && typeof filterInstance.applyListFilter === 'function' ) {
+					filterInstance.applyListFilter();
+				}
+			} else if ( gs_teca_can_use_isotope() && $target.data( 'gs_isotope' ) ) {
+				$target.gs_isotope( 'reloadItems' );
+				$target.gs_isotope( 'layout' );
+				setTimeout( function() {
+					$target.gs_isotope( 'arrange' );
+				}, 120 );
+			}
+		}
+
+		do_popup( $wrapper.find( '.single-member-pop' ), $wrapper );
+		gs_teca_reapply_filters_by_name( $wrapper );
+	}
+
+	function gs_teca_restore_search_by_results( $wrapper ) {
+		var state = gs_teca_get_search_by_state( $wrapper );
+		var $target = gs_teca_get_events_list_target( $wrapper );
+
+		if ( ! $target.length || ! state.originalResultsHtml ) {
+			return;
+		}
+
+		if ( state.xhr && state.xhr.abort ) {
+			state.xhr.abort();
+			state.xhr = null;
+		}
+
+		$target.html( state.originalResultsHtml );
+		state.isSearchActive = false;
+		gs_teca_set_search_by_loading( $wrapper, false );
+		gs_teca_set_search_by_empty_message( $wrapper, false );
+		gs_teca_toggle_search_by_pagination( $wrapper, true );
+		gs_teca_refresh_search_by_layout( $wrapper );
+	}
+
+	function gs_teca_run_search_by_ajax( $wrapper ) {
+		var $bar = $wrapper.find( '.teca-search-by-bar' ).first();
+
+		if ( ! $bar.length ) {
+			return;
+		}
+
+		var terms = gs_teca_search_by_collect_terms( $bar );
+		var state = gs_teca_get_search_by_state( $wrapper );
+		var $target = gs_teca_get_events_list_target( $wrapper );
+
+		if ( ! gs_teca_search_by_has_active_terms( terms ) ) {
+			if ( state.isSearchActive ) {
+				gs_teca_restore_search_by_results( $wrapper );
+			}
+
+			return;
+		}
+
+		state.isSearchActive = true;
+		gs_teca_toggle_search_by_pagination( $wrapper, false );
+
+		if ( state.xhr && state.xhr.abort ) {
+			state.xhr.abort();
+		}
+
+		state.requestId++;
+		var requestId = state.requestId;
+		var resultLimit = parseInt( $bar.data( 'result-limit' ), 10 );
+
+		if ( isNaN( resultLimit ) || resultLimit < 1 ) {
+			resultLimit = 10;
+		}
+
+		if ( resultLimit > 100 ) {
+			resultLimit = 100;
+		}
+
+		gs_teca_set_search_by_loading( $wrapper, true );
+		gs_teca_set_search_by_empty_message( $wrapper, false );
+
+		state.xhr = $.ajax( {
+			url: GSTecaData.ajaxUrl,
+			type: 'POST',
+			data: {
+				action: 'teca_ajax_search_events',
+				_ajax_nonce: GSTecaData.nonce,
+				instance_id: $wrapper.data( 'shortcode-id' ),
+				view_type: gs_teca_get_search_by_view_type( $wrapper ),
+				search_title: terms.search_title,
+				search_venue: terms.search_venue,
+				search_organizer: terms.search_organizer,
+				search_city: terms.search_city,
+				result_limit: resultLimit
+			},
+			success: function( response ) {
+				if ( requestId !== state.requestId ) {
+					return;
+				}
+
+				gs_teca_set_search_by_loading( $wrapper, false );
+
+				if ( ! response || ! response.success ) {
+					return;
+				}
+
+				var data = response.data || {};
+
+				if ( data.cleared ) {
+					gs_teca_restore_search_by_results( $wrapper );
+					return;
+				}
+
+				$target.html( data.html || '' );
+				gs_teca_set_search_by_empty_message( $wrapper, ! data.count );
+				gs_teca_refresh_search_by_layout( $wrapper );
+			},
+			error: function( xhr, status ) {
+				if ( requestId !== state.requestId || status === 'abort' ) {
+					return;
+				}
+
+				gs_teca_set_search_by_loading( $wrapper, false );
+			}
+		} );
+	}
+
+	function gs_teca_init_search_by( $wrapper ) {
+		var $bar = $wrapper.find( '.teca-search-by-bar' ).first();
+
+		if ( ! $bar.length ) {
+			return;
+		}
+
+		var state = gs_teca_get_search_by_state( $wrapper );
+		var $target = gs_teca_get_events_list_target( $wrapper );
+
+		if ( $target.length && ! state.originalResultsHtml ) {
+			state.originalResultsHtml = $target.html();
+		}
+
+		$bar.find( '.teca-search-input' ).off( 'input.tecaSearchBy change.tecaSearchBy' ).on( 'input.tecaSearchBy change.tecaSearchBy', function() {
+			clearTimeout( state.debounceTimer );
+			state.debounceTimer = setTimeout( function() {
+				gs_teca_run_search_by_ajax( $wrapper );
+			}, 400 );
+		} );
+	}
+
+	function gs_teca_init_filters_by_name( $wrapper ) {
+		var $bar = $wrapper.find( '.teca-filters-by-name-bar' ).first();
+
+		if ( ! $bar.length ) {
+			return;
+		}
+
+		var $dateInput = $bar.find( '.teca-filter-date-input' ).first();
+		var $daySelect = $bar.find( '.teca-filter-day-select' ).first();
+		var $clearBtn = $bar.find( '.teca-filters-clear' ).first();
+		var $categorySelect = $bar.find( '.teca-filter-category-select' ).first();
+		var $tagSelect = $bar.find( '.teca-filter-tag-select' ).first();
+		var $venueSelect = $bar.find( '.teca-filter-venue-select' ).first();
+		var $citySelect = $bar.find( '.teca-filter-city-select' ).first();
+		var $stateSelect = $bar.find( '.teca-filter-state-select' ).first();
+		var $countrySelect = $bar.find( '.teca-filter-country-select' ).first();
+		var $organizerSelect = $bar.find( '.teca-filter-organizer-select' ).first();
+		var $costSelect = $bar.find( '.teca-filter-cost-select' ).first();
+		var $timeSelect = $bar.find( '.teca-filter-time-select' ).first();
+		var $featuredSelect = $bar.find( '.teca-filter-featured-select' ).first();
+		var $statusSelect = $bar.find( '.teca-filter-status-select' ).first();
+
+		$dateInput.off( 'change.tecaFilterByDate input.tecaFilterByDate' ).on( 'change.tecaFilterByDate input.tecaFilterByDate', function() {
+			gs_teca_apply_filters_by_name_date( $wrapper, $( this ).val() );
+		} );
+
+		$daySelect.off( 'change.tecaFilterByDay' ).on( 'change.tecaFilterByDay', function() {
+			gs_teca_apply_filters_by_name_day( $wrapper, $( this ).val() );
+		} );
+
+		$clearBtn.off( 'click.tecaFiltersClear' ).on( 'click.tecaFiltersClear', function( event ) {
+			event.preventDefault();
+			gs_teca_clear_filters_by_name( $wrapper );
+		} );
+
+		$categorySelect.off( 'change.tecaFilterByCategory' ).on( 'change.tecaFilterByCategory', function() {
+			gs_teca_apply_filters_by_name_category( $wrapper, $( this ).val() );
+		} );
+
+		$tagSelect.off( 'change.tecaFilterByTag' ).on( 'change.tecaFilterByTag', function() {
+			gs_teca_apply_filters_by_name_tag( $wrapper, $( this ).val() );
+		} );
+
+		$venueSelect.off( 'change.tecaFilterByVenue' ).on( 'change.tecaFilterByVenue', function() {
+			gs_teca_apply_filters_by_name_venue( $wrapper, $( this ).val() );
+		} );
+
+		$citySelect.off( 'change.tecaFilterByCity' ).on( 'change.tecaFilterByCity', function() {
+			gs_teca_apply_filters_by_name_city( $wrapper, $( this ).val() );
+		} );
+
+		$stateSelect.off( 'change.tecaFilterByState' ).on( 'change.tecaFilterByState', function() {
+			gs_teca_apply_filters_by_name_state( $wrapper, $( this ).val() );
+		} );
+
+		$countrySelect.off( 'change.tecaFilterByCountry' ).on( 'change.tecaFilterByCountry', function() {
+			gs_teca_apply_filters_by_name_country( $wrapper, $( this ).val() );
+		} );
+
+		$organizerSelect.off( 'change.tecaFilterByOrganizer' ).on( 'change.tecaFilterByOrganizer', function() {
+			gs_teca_apply_filters_by_name_organizer( $wrapper, $( this ).val() );
+		} );
+
+		$costSelect.off( 'change.tecaFilterByCost' ).on( 'change.tecaFilterByCost', function() {
+			gs_teca_apply_filters_by_name_cost( $wrapper, $( this ).val() );
+		} );
+
+		$timeSelect.off( 'change.tecaFilterByTime' ).on( 'change.tecaFilterByTime', function() {
+			gs_teca_apply_filters_by_name_time( $wrapper, $( this ).val() );
+		} );
+
+		$featuredSelect.off( 'change.tecaFilterByFeatured' ).on( 'change.tecaFilterByFeatured', function() {
+			gs_teca_apply_filters_by_name_featured( $wrapper, $( this ).val() );
+		} );
+
+		$statusSelect.off( 'change.tecaFilterByEventStatus' ).on( 'change.tecaFilterByEventStatus', function() {
+			gs_teca_apply_filters_by_name_event_status( $wrapper, $( this ).val() );
+		} );
+	}
+
+	function gs_teca_do_masonry( $gs_masonry_wrapper ) {
+
+		if ( ! $gs_masonry_wrapper.length ) return;
+
+		setTimeout(function () {
+
+			$gs_masonry_wrapper.each(function () {
+
+				var $area = $(this);
+				var $grid = $area.find('.gs-roow');
+				if ( ! $grid.length ) return;
+				if ( ! gs_teca_can_use_isotope() ) return;
+
+				var isotopeOptions = {
+					itemSelector: '.gs-teca-single',
+					layoutMode: 'masonry',
+					originLeft: !is_rtl
+				};
+
+				if ( $area.hasClass( 'gs-teca-style-4' ) ) {
+					isotopeOptions.percentPosition = true;
+				}
+
+				$grid.gs_isotope( isotopeOptions );
+
+				setTimeout(function () {
+					$grid.gs_isotope('layout');
+				}, 100);
+
+			});
+
+		}, 300); 
+	}
+
+
+	function gs_teca_can_use_isotope() {
+		return typeof $.fn.gs_isotope === 'function';
+	}
+
+	function gs_teca_can_use_carousel_ticker() {
+		return typeof $.fn.carouselTicker === 'function';
+	}
+
+	function gs_teca_is_filter_list_theme( $wrapper ) {
+		return $wrapper.hasClass( 'gs-teca-list-style-1' )
+			|| $wrapper.hasClass( 'gs-teca-list-style-2' )
+			|| $wrapper.hasClass( 'gs-teca-list-style-4' )
+			|| $wrapper.hasClass( 'gs-teca-list-style-5' );
+	}
+
+	function gs_teca_is_filter_table_theme( $wrapper ) {
+		return $wrapper.hasClass( 'gs-teca-table-style-1' )
+			|| $wrapper.hasClass( 'gs-teca-table-style-2' )
+			|| $wrapper.hasClass( 'gs-teca-table-style-3' )
+			|| $wrapper.hasClass( 'gs-teca-table-style-4' )
+			|| $wrapper.hasClass( 'gs-teca-table-style-5' );
+	}
+
+	function gs_teca_uses_filter_dom_layout( $wrapper ) {
+		return gs_teca_is_filter_list_theme( $wrapper ) || gs_teca_is_filter_table_theme( $wrapper );
+	}
+
+	function load_filter_by_class() {
+		function GS_Teca_filter_by($wrapper) {
+			this.$wrapper   = $wrapper;                              
+			this.shortcodeId = this.$wrapper.data('shortcode-id');
+			this.filter_by  = this.$wrapper.hasClass('gs-filter-by-gs-teca-category') ? 'category' : 'tag';
+
+			this.options = $.extend( { search_through_all_fields: 'off' }, this.$wrapper.data('options') || {} );
+
+			// dynamic UL like <ul class="gspg-filter-...">
+			this.$filterUl = this.$wrapper.find('ul[class*="gsteca-filter-"]').first();
+
+			// grid container: nearest wrapper that contains .gs-post-single
+			this.$grid = this.$wrapper.find('.gs-teca-filter-wrapper');
+
+			this.filters = { group: '*' };
+
+			this.$wrapper.data( 'tecaFilterByInstance', this );
+
+			// ajax or client-side
+			this.isAjaxFilter =
+				(this.options && this.options.filter_type === 'ajax-filter') ||
+				!!this.$wrapper.find('.search-filter.search-filter-ajax').length;
+
+			if (this.isAjaxFilter) {
+				this.setFilterEventsAjax();
+			} else {
+				if ( ! this.initIsotope() ) return this;
+				this.setFilterEvents();
+			}
+			return this;
+		}
+
+		GS_Teca_filter_by.prototype.setInitialFilterGroup = function () {
+			if ( ! this.$filterUl.length ) {
+				return;
+			}
+
+			const $firstLi = this.$filterUl.find('> li.filter').first();
+
+			if ( $firstLi.length ) {
+				$firstLi.addClass('active');
+				const val = $firstLi.children('a').data('filter-' + this.filter_by) || $firstLi.data('filter') || '*';
+				this.filters.group = val || '*';
+			}
+		};
+
+		GS_Teca_filter_by.prototype.getFilterItems = function () {
+			if ( gs_teca_is_filter_table_theme( this.$wrapper ) ) {
+				return this.$grid.find( '[class*="teca-table-style-"][class*="-body"] > .gs-teca-single' );
+			}
+
+			return this.$grid.children( '.gs-teca-single' );
+		};
+
+		GS_Teca_filter_by.prototype.initListFilter = function () {
+			if ( ! this.$grid.length ) {
+				return false;
+			}
+
+			this.$wrapper.addClass(
+				gs_teca_is_filter_table_theme( this.$wrapper )
+					? 'teca-filter-table-layout'
+					: 'teca-filter-list-layout'
+			);
+			this.setInitialFilterGroup();
+			this.applyListFilter();
+
+			$(window).on('load', () => this.applyListFilter());
+
+			return true;
+		};
+
+		GS_Teca_filter_by.prototype.applyListFilter = function () {
+			if ( ! this.$grid.length ) {
+				return 0;
+			}
+
+			var visibleCount = 0;
+			var self = this;
+
+			gs_teca_sync_filters_by_name_state_from_controls( this.$wrapper );
+
+			this.getFilterItems().each( function() {
+				var show = self.isotopeFilter( 0, this );
+				var $item = $( this );
+
+				$item.toggleClass( 'teca-filter-list-hidden', ! show );
+
+				if ( show ) {
+					this.style.display = '';
+					this.style.position = '';
+					this.style.left = '';
+					this.style.top = '';
+					this.style.right = '';
+					this.style.bottom = '';
+					this.style.transform = '';
+					this.style.opacity = '';
+					visibleCount++;
+				} else {
+					this.style.display = 'none';
+				}
+			} );
+
+			if ( this.$grid[0] ) {
+				this.$grid[0].style.height = '';
+			}
+
+			gs_teca_sync_filters_by_name_empty_message( this.$wrapper, visibleCount );
+
+			return visibleCount;
+		};
+
+		GS_Teca_filter_by.prototype.initIsotope = function () {
+			if (!this.$grid.length) return false;
+
+			if ( gs_teca_uses_filter_dom_layout( this.$wrapper ) ) {
+				return this.initListFilter();
+			}
+
+			if ( ! gs_teca_can_use_isotope() ) return false;
+
+			this.setInitialFilterGroup();
+
+			this.$grid.gs_isotope({
+				itemSelector: '.gs-teca-single',
+				layoutMode: 'fitRows',
+				originLeft: (typeof is_rtl !== 'undefined') ? !is_rtl : true,
+				filter: this.isotopeFilter.bind(this)
+			});
+
+			$(window).on('load', () => this.refreshIsotope());
+			return true;
+		};
+
+		GS_Teca_filter_by.prototype.isotopeFilter = function (index, item) {
+			gs_teca_sync_filters_by_name_state_from_controls( this.$wrapper );
+
+			const $item = $(item);
+			const selector = this.filters.group || '*';
+			const groupMatch = selector === '*' ? true : $item.is(selector);
+			const state = gs_teca_get_filters_by_name_state( this.$wrapper );
+			const nameMatch = gs_teca_event_matches_filters_by_name( $item, state );
+
+			return groupMatch && nameMatch;
+		};
+
+		GS_Teca_filter_by.prototype.refreshIsotope = function () {
+			if (!this.$grid.length) return;
+
+			if ( gs_teca_uses_filter_dom_layout( this.$wrapper ) ) {
+				this.applyListFilter();
+				return;
+			}
+
+			if (!gs_teca_can_use_isotope()) return;
+
+			var self = this;
+			this.$grid.gs_isotope('arrange');
+			setTimeout(function () {
+				self.$grid.gs_isotope('arrange');
+			}, 120);
+		};
+
+		GS_Teca_filter_by.prototype.setFilterEvents = function () {
+			if (!this.$filterUl.length) return;
+			const find_by = '> li.filter';
+			const dataKey = 'filter-' + this.filter_by;
+
+			this.$filterUl.on('click', `${find_by} > a, ${find_by}`, (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+
+				const $li = $(e.currentTarget).closest('li.filter');
+				let val = $li.children('a').data(dataKey) || $li.data('filter') || '*';
+
+				this.filters.group = val || '*';
+
+				$li.addClass('active').siblings().removeClass('active');
+				const $parent = $li.closest('.has-submenu');
+				if ($parent.length) $parent.addClass('active').siblings().removeClass('active');
+
+				this.refreshIsotope();
+			});
+		};
+
+		GS_Teca_filter_by.prototype.renderAjaxTemplate = function () {
+			const $loader = this.$wrapper.find('.gs-teca-filter-loader-spinner');
+			let $paginationWrapper = this.$wrapper.find('.gs-teca-ajax-pagination-wrapper');
+			let $pagination = $paginationWrapper.children().first();
+
+			const isAjaxPagination = this.$wrapper.hasClass('gs-teca-has-ajax-pagination');
+
+			// Reset the loading and no-more-data states
+			this.$wrapper.data('is-loading', false);
+			this.$wrapper.data('no-more-data', false);
+
+			let posts_per_page = this.options.posts_per_page || -1;
+
+			// server expects group without dot, keep '*' as '*'
+			const groupClean = (this.filters.group === '*') ? '*' : String(this.filters.group).replace(/^\./, '');
+			const filters = { [this.filter_by]: groupClean };
+			this.$wrapper.data('current-filters', filters);
+			$.ajax({
+				url: GSTecaData.ajaxUrl,
+				type: 'POST',
+				data: {
+					action: 'gs_teca_filter',
+					_ajax_nonce: GSTecaData.nonce,
+					shortcode_id: this.shortcodeId,
+					posts_per_page: posts_per_page,
+					filters: filters
+				},
+				beforeSend: () => {
+					this.$wrapper.find('.gs-teca').hide();
+					$paginationWrapper.hide();
+					if ($loader.length) $loader.show();
+				}
+			})
+			.done((response) => {
+				const html = $.parseHTML(response?.data?.posts || '');
+				let $newPosts = $(html).find('.gs-teca').children();
+
+				if ($newPosts.length) {
+					this.$grid.html($newPosts).show();
+				}
+				if ($loader.length) $loader.hide();
+
+				gs_teca_reapply_filters_by_name( this.$wrapper );
+
+				const posts_per_page = Number(this.options.posts_per_page || 0);
+				const found = Number(response?.data?.foundPosts || 0);
+
+				if (found <= posts_per_page) {
+					$paginationWrapper.hide();
+				} else {
+					if (isAjaxPagination && response?.data?.pagination) {
+						$pagination.html(response.data.pagination);
+					}
+					$paginationWrapper.show();
+				}
+			})
+			.fail((err) => {
+				if ($loader.length) $loader.hide();
+				console.error('Filter error:', err);
+			});
+		};
+
+		GS_Teca_filter_by.prototype.setFilterEventsAjax = function () {
+			if (!this.$filterUl.length) return;
+			const find_by = '> li.filter';
+			const dataKey = 'filter-' + this.filter_by;
+
+			// set first active
+			const $first = this.$filterUl.find(find_by).first();
+			if ($first.length) {
+				$first.addClass('active');
+				const v = $first.children('a').data(dataKey) || $first.data('filter') || '*';
+				this.filters.group = v || '*';
+			}
+
+			this.$filterUl.on('click', `${find_by} > a, ${find_by}`, (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+
+				const $li = $(e.currentTarget).closest('li.filter');
+				let raw = $li.children('a').data(dataKey) || $li.data('filter') || '*'; // ".slug" or "*"
+				this.filters.group = raw || '*'; // keep dot for client
+				console.log(this.filters.group);
+
+				$li.addClass('active').siblings().removeClass('active');
+				const $parent = $li.closest('.has-submenu');
+				if ($parent.length) $parent.addClass('active').siblings().removeClass('active');
+				this.renderAjaxTemplate();
+			})
+		};
+
+		// jQuery plugin
+		$.fn.gs_teca_filter_by = function (filterBy) {
+			return new GS_Teca_filter_by($(this).first(), filterBy);
+		};
+
+		return GS_Teca_filter_by;
+	}
+
+	function do_filter( $widget_box ) {
+		if ( ! ('gs_teca_filter_by' in $.fn) ) load_filter_by_class();
+		$widget_box.gs_teca_filter_by();
+	}
+
+	function gs_teca_do_ajax_pagination( $widget_box ) {
+		$widget_box.on('click', '.gs-teca-ajax-pagination-link a', function(e){
+			e.preventDefault();
+			const link = $(this).attr('href');
+			const urlParams = new URLSearchParams(link.split('?')[1]);
+			const shortcodeId = $widget_box.data('shortcode-id');
+			const paged = urlParams.get(
+				'paged' + shortcodeId
+			);
+			const container = $widget_box.find('.gs-teca-ajax-pagination-wrapper');
+			const posts_per_page = $widget_box.data('options').posts_per_page;
+			const postsParent = $widget_box.find('.gs-teca');
+			
+			$.ajax({
+				url: GSTecaData.ajaxUrl,
+				type: 'POST',
+				data: {
+					action: 'gs_teca_ajax_pagination',
+					_ajax_nonce: GSTecaData.nonce,
+					shortcode_id: shortcodeId,
+					filters: $widget_box.data('current-filters') || {},
+					paged: paged,
+					posts_per_page: posts_per_page
+				},
+				beforeSend: function() {
+					container.css('opacity', '0.5');
+				}
+			})
+			.done( response => {
+				let dataPosts = $.parseHTML( response.data.posts );
+				let postsDivs = $(dataPosts).find('.gs-teca-single');
+				
+				if ( $widget_box.hasClass('view_type_masonry') && gs_teca_can_use_isotope() ) {
+					// remove the children of isotope
+					postsParent.gs_isotope('remove', postsParent.children());
+					postsParent.append( postsDivs ).gs_isotope( 'appended', postsDivs )
+					postsParent.gs_isotope('layout');
+				} else {
+					postsParent.html(postsDivs);
+				}
+
+				gs_teca_reapply_filters_by_name( $widget_box );
+				
+				container.html( response.data.pagination );
+				container.css('opacity', '1');
+			});
+			
+		});
+	}
+
+	function gs_teca_load_more_btn( $widget_box ) {
+		$widget_box.on('click', '.gs-teca-load-more-btn', function(e) {
+			e.preventDefault();
+			const $paginationWrapper = $widget_box.find('.gs-teca-load-more-wrapper');
+			const shortcodeId = $widget_box.data('shortcode-id');
+			const postsParent = $widget_box.find('.gs-teca');
+
+			const currentPostsQuantity = postsParent.children().length;
+			const dataOptions = $widget_box.attr('data-options');
+			const fixedDataOptions = dataOptions.replace(/'/g, '"');
+			const parsedData = JSON.parse(fixedDataOptions);
+			const posts_per_load = parseInt(parsedData.posts_per_load);
+			
+			$.ajax({
+				url: GSTecaData.ajaxUrl,
+				type: 'POST',
+				data: {
+					action: 'gs_teca_load_more',
+					_ajax_nonce: GSTecaData.nonce,
+					shortcode_id: shortcodeId,
+					filters: $widget_box.data('current-filters') || {},
+					posts_per_page: posts_per_load,
+					offset: currentPostsQuantity
+				},
+				beforeSend: function() {
+					$paginationWrapper.css('opacity', '0.5');
+				}
+			})
+			.done( response => {
+				let dataPosts = $.parseHTML( response.data.posts );
+				let postsDivs = $(dataPosts).find('.gs-teca-single');
+			
+				if ( $widget_box.hasClass('view_type_masonry') && gs_teca_can_use_isotope() ) {
+					postsParent.append( postsDivs ).gs_isotope( 'appended', postsDivs )
+					postsParent.gs_isotope('layout');
+				} else {
+					postsParent.append( postsDivs );
+				}
+
+				let totalAppended = postsParent.children().length;
+					console.log(totalAppended)
+				
+				if ( totalAppended >= response.data.foundPosts ) {
+					$paginationWrapper.css('opacity', '1').hide();
+				} else {
+					$paginationWrapper.css('opacity', '1');
+				}
+
+				gs_teca_reapply_filters_by_name( $widget_box );
+
+			});
+			
+		});
+	}
+
+	function gs_teca_load_more_by_scroll( $widget_box ) {
+		const shortcodeId = $widget_box.data('shortcode-id');
+		const scrollWrapper = $widget_box.find('.gs-teca-load-more-scroll');
+		const dataOptions = $widget_box.data('options'); 
+
+		if (!shortcodeId || !dataOptions) return;
+		const posts_per_load = parseInt(dataOptions.posts_per_load); 
+		const postsParent = $widget_box.find('.gs-teca'); 
+
+		function loadMorePosts () {
+
+			let isLoading = $widget_box.data('is-loading') || false;
+			let noMoreData = $widget_box.data('no-more-data') || false;
+		
+			if ( isLoading || noMoreData ) return;
+			
+			isLoading = true;
+			$widget_box.data('is-loading', true);
+
+			const currentPostsQuantity = parseInt(postsParent.children().length);
+			scrollWrapper.find('.gs-teca-loader-spinner').show();
+
+			$.ajax({
+				url: GSTecaData.ajaxUrl,
+				type: 'POST',
+				data: {
+					action: 'gs_teca_load_more',
+					_ajax_nonce: GSTecaData.nonce,
+					shortcode_id: shortcodeId,
+					filters: $widget_box.data('current-filters') || {},
+					posts_per_page: posts_per_load,
+					offset: currentPostsQuantity
+				}
+			})
+			.done(response =>
+				{ setTimeout(function() {
+					scrollWrapper.find('.gs-teca-loader-spinner').fadeOut();
+					
+					isLoading = false;
+					$widget_box.data('is-loading', false);
+
+					if (response.success) {
+						let dataEls = $.parseHTML(response.data.posts);
+						let postsDivs = $(dataEls).find('.gs-teca-single');
+
+						if ( $widget_box.hasClass('view_type_masonry') && gs_teca_can_use_isotope() ) {
+							postsParent.append( postsDivs ).gs_isotope( 'appended', postsDivs )
+							postsParent.gs_isotope('layout');
+						} else {
+							postsParent.append(postsDivs);
+						}
+
+						gs_teca_reapply_filters_by_name( $widget_box );
+						
+					}
+				}, 600);
+				
+				if (response.data.foundPosts <= (currentPostsQuantity + posts_per_load)) {
+					noMoreData = true;
+					$widget_box.data('no-more-data', true);
+				}
+				
+			});
+			
+		}
+
+		$(window).on('scroll', function() {
+			const scrollTop = $(window).scrollTop();
+			const windowHeight = $(window).height();
+			const postsAreaBottom = $widget_box.offset().top + $widget_box.outerHeight();
+
+			if (scrollTop + windowHeight >= postsAreaBottom - 100) {
+				loadMorePosts();
+			}
+		});
+    }
+
+	function do_popup($single_member_pop, $gs_teca_container) {
+		if (!$single_member_pop.length) return;
+
+		$gs_teca_container.each(function () {
+			if ($.fn.magnificPopup) {
+				$(this).magnificPopup({
+					type: 'inline',
+					midClick: true,
+					gallery: {
+						enabled: true
+					},
+					delegate: '.single-member-pop a.gs_teca_pop:visible',
+
+					closeMarkup:
+						'<button title="%title%" type="button" class="mfp-close"><svg xmlns="http://www.w3.org/2000/svg" width="22.62" height="22.62" viewBox="0 0 22.62 22.62"><path fill="#c1c1c7" d="M1474.1,7297.69l21.21,21.21-1.41,1.41-21.21-21.21Zm-1.41,21.21,21.21-21.21,1.41,1.41-21.21,21.21Z" transform="translate(-1472.69 -7297.69)"/></svg></button>',
+
+					removalDelay: 500,
+					callbacks: {
+						beforeOpen: function () {
+							const el = this.st.el || {};
+							const extraClasses = ['mfp-gsteca'];
+
+							extraClasses.push(el.attr('data-effect') ?  el.attr('data-effect') : 'mfp-fade' );
+							extraClasses.push(el.attr('data-theme') ? el.attr('data-theme') : 'gs-teca-popup-default' );
+							console.log(el.attr('data-theme'));
+							this.st.mainClass = (this.st.mainClass || '') + ' ' + extraClasses.join(' ');
+						},
+
+						open: function () {
+							if (!popupEventsAdded) {
+								setupPopupNavigation(this);
+								popupEventsAdded = true;
+							}
+						}
+					}
+				});
+			} else {
+				console.warn('Magnific Popup is not loaded!');
+			}
+		});
+
+		function setupPopupNavigation(popup) {
+			$('body').on('click', '.mfp-close', function (e) {
+				e.preventDefault();
+				if ($.magnificPopup.instance) {
+					$.magnificPopup.instance.close();
+				}
+			});
+
+			$('body').on('click', '.gs_teca_popup .popup-navigation .popup-nav', function (e) {
+				e.preventDefault();
+
+				if (!$.magnificPopup.instance) return;
+
+				const action = $(this).hasClass('next') ? 'next' : 'prev';
+
+				const newIndex = popup_get_unique_index(
+					action,
+					$.magnificPopup.instance,
+					$.magnificPopup.instance.currItem.src,
+					$.magnificPopup.instance.index
+				);
+
+				$.magnificPopup.instance.goTo(newIndex);
+			});
+		}
+
+		function popup_get_unique_index(action, popup, currentSrc, currentIndex) {
+			let newIndex = action === 'next' ? currentIndex + 1 : currentIndex - 1;
+
+			if (newIndex < 0) newIndex = popup.items.length - 1;
+			if (newIndex >= popup.items.length) newIndex = 0;
+
+			const newItem = popup.items[newIndex];
+			const newSrc = newItem.src || $(newItem).data('mfp-src');
+
+			if (currentSrc !== newSrc) return newIndex;
+
+			// Recursive call to find truly unique one
+			return popup_get_unique_index(action, popup, newSrc, newIndex);
+		}
+    }
+
+
+	function gs_teca_parse_date( value ) {
+		var parts = String( value || '' ).split( '-' );
+
+		if ( parts.length !== 3 ) {
+			return null;
+		}
+
+		return new Date( parseInt( parts[0], 10 ), parseInt( parts[1], 10 ) - 1, parseInt( parts[2], 10 ) );
+	}
+
+	function gs_teca_formatDateKey( date ) {
+		var month = String( date.getMonth() + 1 );
+		var day = String( date.getDate() );
+
+		if ( month.length < 2 ) {
+			month = '0' + month;
+		}
+
+		if ( day.length < 2 ) {
+			day = '0' + day;
+		}
+
+		return date.getFullYear() + '-' + month + '-' + day;
+	}
+
+	function gs_teca_parseDate( value ) {
+		return gs_teca_parse_date( value );
+	}
+
+	function gs_teca_formatDailyLabel( date ) {
+		var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+
+		return months[ date.getMonth() ] + ' ' + date.getDate() + ', ' + date.getFullYear();
+	}
+
+	function gs_teca_get_daily_layout_2_root( $context ) {
+		var $root = $context.find( '.teca-calendar-layout > .teca-daily-layout-2, .teca-calendar-layout-inner > .teca-daily-layout-2' ).first();
+
+		if ( ! $root.length ) {
+			$root = $context.find( '.teca-daily-layout-2' ).not( '.teca-calendar-layout' ).first();
+		}
+
+		return $root;
+	}
+
+	function gs_teca_get_calendar_event_selector() {
+		return '.teca-calendar-event, .teca-calendar-filterable-event';
+	}
+
+	function gs_teca_get_calendar_category_filter_value( $scope ) {
+		var $context = $scope.jquery ? $scope : $( $scope );
+		var $select = $context.find( '.teca-calendar-event-type-filter' ).first();
+
+		if ( ! $select.length ) {
+			$select = $context.find(
+				'.teca-daily-layout-3-type-select, .teca-weekly-layout-1-type-select, .teca-weekly-layout-2-type-select, .teca-weekly-layout-3-type-select, .teca-monthly-layout-1-type-select'
+			).first();
+		}
+
+		return String( $select.val() || 'all' );
+	}
+
+	function gs_teca_event_matches_category_filter( $event, filterValue ) {
+		if ( ! filterValue || filterValue === 'all' ) {
+			return true;
+		}
+
+		var $item = $event.jquery ? $event : $( $event );
+		var slugValues = String( $item.attr( 'data-event-categories' ) || $item.attr( 'data-category-slugs' ) || '' )
+			.split( ',' )
+			.map( function( value ) {
+				return String( value || '' ).trim();
+			} )
+			.filter( Boolean );
+		var idValues = String( $item.attr( 'data-event-category-ids' ) || $item.attr( 'data-categories' ) || '' )
+			.split( ',' )
+			.map( function( value ) {
+				return String( value || '' ).trim();
+			} )
+			.filter( Boolean );
+
+		return slugValues.indexOf( filterValue ) !== -1 || idValues.indexOf( filterValue ) !== -1;
+	}
+
+	function gs_teca_is_calendar_event_visible( $event ) {
+		var $item = $event.jquery ? $event : $( $event );
+
+		return ! $item.hasClass( 'is-filter-hidden' ) &&
+			! $item.hasClass( 'is-hidden' ) &&
+			! $item.hasClass( 'is-search-hidden' );
+	}
+
+	function gs_teca_get_calendar_group_selectors() {
+		return [
+			'.teca-calendar-group',
+			'.teca-daily-layout-1-group',
+			'.teca-daily-layout-2-group',
+			'.teca-daily-layout-2-day-row',
+			'.teca-daily-layout-3-group',
+			'.teca-weekly-layout-1-week',
+			'.teca-weekly-layout-2-week',
+			'.teca-weekly-layout-3-week',
+			'.teca-weekly-layout-3-group',
+			'.teca-monthly-layout-1-month',
+			'.teca-monthly-layout-2-section',
+			'.teca-monthly-layout-3-section',
+			'.teca-quarterly-layout-1-quarter',
+			'.teca-quarterly-layout-2-quarter',
+			'.teca-quarterly-layout-3-quarter'
+		].join( ', ' );
+	}
+
+	function gs_teca_get_calendar_year_selectors() {
+		return [
+			'.teca-yearly-year-section[data-year]',
+			'section.teca-yearly-layout-1-year[data-year]',
+			'section.teca-yearly-layout-2-year[data-year]',
+			'section.teca-yearly-layout-3-year[data-year]',
+			'.teca-yearly-layout-1-year[data-year]',
+			'.teca-yearly-layout-2-year[data-year]',
+			'.teca-yearly-layout-3-year[data-year]'
+		].join( ',' );
+	}
+
+	function gs_teca_quarter_filter_matches( selectedValue, itemValue, itemQuarterKey ) {
+		if ( ! selectedValue || selectedValue === 'all' ) {
+			return true;
+		}
+
+		if ( itemValue === selectedValue ) {
+			return true;
+		}
+
+		if ( /^Q[1-4]$/.test( selectedValue ) && itemQuarterKey === selectedValue ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	function gs_teca_set_calendar_section_visible( $section, shouldShow ) {
+		$section.toggleClass( 'is-filter-hidden', ! shouldShow );
+		$section.toggleClass( 'is-filter-empty', ! shouldShow );
+		$section.prop( 'hidden', ! shouldShow );
+		$section.attr( 'aria-hidden', shouldShow ? 'false' : 'true' );
+		$section.css( 'display', shouldShow ? '' : 'none' );
+	}
+
+	function gs_teca_sync_daily_layout_2_groups( $context ) {
+		var $dailyRoot = gs_teca_get_daily_layout_2_root( $context );
+
+		if ( ! $dailyRoot.length ) {
+			return;
+		}
+
+		var visibleMainSelector = '.teca-daily-layout-2-main-item:not(.is-hidden):not(.is-filter-hidden):not(.is-search-hidden)';
+
+		$dailyRoot.find( '.teca-daily-layout-2-day-row' ).each( function() {
+			var $row = $( this );
+			var hasVisible = $row.find( visibleMainSelector ).length > 0;
+
+			gs_teca_set_calendar_section_visible( $row, hasVisible );
+		} );
+
+		$dailyRoot.find( '.teca-daily-layout-2-group' ).each( function() {
+			var $group = $( this );
+			var hasVisible = $group.find( visibleMainSelector ).length > 0;
+
+			gs_teca_set_calendar_section_visible( $group, hasVisible );
+		} );
+
+		var hasVisibleMain = $dailyRoot.find( visibleMainSelector ).length > 0;
+
+		$dailyRoot.find( '.teca-daily-layout-2-content, .teca-daily-layout-2-glass-panel' ).each( function() {
+			gs_teca_set_calendar_section_visible( $( this ), hasVisibleMain );
+		} );
+	}
+
+	function gs_teca_update_calendar_group_visibility( $wrapper, mode, value ) {
+		var showAll = ! value || value === 'all';
+		var eventSelector = gs_teca_get_calendar_event_selector();
+		var sectionSelectors = gs_teca_get_calendar_group_selectors();
+		var yearSelector = gs_teca_get_calendar_year_selectors();
+
+		if ( mode === 'yearly' ) {
+			$wrapper.find( yearSelector ).each( function() {
+				var $section = $( this );
+				var sectionYear = String( $section.attr( 'data-year' ) || '' ).trim();
+				var matchesSelection = showAll || sectionYear === value;
+				var hasVisible = $section.find( eventSelector + ':not(.is-filter-hidden)' ).length > 0;
+
+				gs_teca_set_calendar_section_visible( $section, matchesSelection && ( showAll || hasVisible ) );
+			} );
+			return;
+		}
+
+		if ( mode === 'quarterly' ) {
+			$wrapper.find( '.teca-quarterly-layout-1-quarter, .teca-quarterly-layout-2-quarter, .teca-quarterly-layout-3-quarter' ).each( function() {
+				var $quarter = $( this );
+				var sectionValue = String( $quarter.attr( 'data-quarter' ) || '' );
+				var sectionQuarterKey = String( $quarter.attr( 'data-quarter-key' ) || '' );
+				var matchesSelection = gs_teca_quarter_filter_matches( value, sectionValue, sectionQuarterKey );
+				var hasVisible = $quarter.find( eventSelector + ':not(.is-filter-hidden)' ).length > 0;
+
+				gs_teca_set_calendar_section_visible( $quarter, matchesSelection && ( showAll || hasVisible ) );
+			} );
+			return;
+		}
+
+		$wrapper.find( sectionSelectors ).each( function() {
+			var $section = $( this );
+			var hasVisible = $section.find( eventSelector + ':not(.is-filter-hidden)' ).length > 0;
+
+			gs_teca_set_calendar_section_visible( $section, showAll || hasVisible );
+		} );
+	}
+
+	function gs_teca_get_event_date_from_item( $item ) {
+		var $item = $item.jquery ? $item : $( $item );
+		var itemDate = String( $item.attr( 'data-event-date' ) || '' ).trim();
+
+		if ( itemDate ) {
+			return itemDate;
+		}
+
+		itemDate = String( $item.attr( 'data-day' ) || '' ).trim();
+
+		if ( itemDate ) {
+			return itemDate;
+		}
+
+		var startDate = String( $item.attr( 'data-start-date' ) || '' ).trim();
+
+		if ( startDate.length >= 10 ) {
+			return startDate.substring( 0, 10 );
+		}
+
+		return '';
+	}
+
+	function gs_teca_daily_layout_2_item_matches_search( $item, searchTerm ) {
+		if ( ! searchTerm ) {
+			return true;
+		}
+
+		var cardSearch = String( $item.attr( 'data-search' ) || $item.data( 'search' ) || '' ).toLowerCase();
+
+		if ( cardSearch && cardSearch.indexOf( searchTerm ) !== -1 ) {
+			return true;
+		}
+
+		if ( $item.hasClass( 'teca-daily-layout-2-sidebar-item' ) ) {
+			var sidebarText = $.trim( $item.find( '.teca-daily-layout-2-event-title' ).text() ).toLowerCase();
+
+			return sidebarText.indexOf( searchTerm ) !== -1;
+		}
+
+		return false;
+	}
+
+	function gs_teca_sync_daily_layout_2_active_state( $dailyRoot ) {
+		var $firstVisibleSidebar = $dailyRoot.find( '.teca-daily-layout-2-sidebar-item:not(.is-hidden):not(.is-filter-hidden)' ).first();
+		var $firstVisibleMain = $dailyRoot.find( '.teca-daily-layout-2-main-item:not(.is-hidden):not(.is-filter-hidden)' ).first();
+		var activeEventId = '';
+
+		if ( $firstVisibleMain.length ) {
+			activeEventId = String( $firstVisibleMain.attr( 'data-event-id' ) || $firstVisibleMain.data( 'eventId' ) || '' );
+		} else if ( $firstVisibleSidebar.length ) {
+			activeEventId = String( $firstVisibleSidebar.attr( 'data-event-id' ) || $firstVisibleSidebar.data( 'eventId' ) || '' );
+		}
+
+		$dailyRoot.find( '.teca-daily-layout-2-event-item' ).removeClass( 'teca-daily-layout-2-event-item-active' );
+		$dailyRoot.find( '.teca-daily-layout-2-card' ).removeClass( 'is-highlighted' );
+
+		if ( activeEventId ) {
+			$dailyRoot.find( '.teca-daily-layout-2-sidebar-item[data-event-id="' + activeEventId + '"]:not(.is-hidden)' ).addClass( 'teca-daily-layout-2-event-item-active' );
+			$dailyRoot.find( '.teca-daily-layout-2-main-item[data-event-id="' + activeEventId + '"]:not(.is-hidden)' ).addClass( 'is-highlighted' );
+		}
+	}
+
+	function gs_teca_apply_daily_layout_2_date_filter( $wrapper, selectedDate, options ) {
+		options = options || {};
+		var searchTerm = String( options.searchTerm || '' ).toLowerCase().trim();
+		var normalizedDate = String( selectedDate || 'all' ).trim();
+		var showAll = normalizedDate === 'all' || normalizedDate === '';
+		var $scope = $wrapper.closest( '.teca-calendar-layout' );
+
+		if ( ! $scope.length ) {
+			$scope = $wrapper;
+		}
+
+		var $dailyRoot = gs_teca_get_daily_layout_2_root( $scope );
+
+		if ( ! $dailyRoot.length ) {
+			return 0;
+		}
+
+		var filterableSelector = '.teca-daily-layout-2-filterable';
+		var mainSelector = '.teca-daily-layout-2-main-item';
+		var parentSelector = '.teca-daily-layout-2-content, .teca-daily-layout-2-glass-panel, .teca-daily-layout-2-grid, .teca-daily-layout-2-group, .teca-daily-layout-2-day-row';
+		var visibleMainCount = 0;
+
+		if ( showAll ) {
+			$dailyRoot.find( parentSelector ).each( function() {
+				var $parent = $( this );
+
+				$parent.removeClass( 'is-hidden is-filter-hidden' );
+				$parent.prop( 'hidden', false );
+				$parent.css( 'display', '' );
+			} );
+		}
+
+		$dailyRoot.find( filterableSelector ).each( function() {
+			var $item = $( this );
+			var itemDate = gs_teca_get_event_date_from_item( $item );
+			var matchesDate = showAll || itemDate === normalizedDate;
+			var matchesSearch = gs_teca_daily_layout_2_item_matches_search( $item, searchTerm );
+			var categoryValue = gs_teca_get_calendar_category_filter_value( $dailyRoot );
+			var matchesCategory = gs_teca_event_matches_category_filter( $item, categoryValue );
+			var shouldShow = matchesDate && matchesSearch && matchesCategory;
+
+			$item.toggleClass( 'is-hidden', ! shouldShow );
+			$item.toggleClass( 'is-filter-hidden', ! shouldShow );
+			$item.prop( 'hidden', ! shouldShow );
+
+			if ( shouldShow ) {
+				$item.css( 'display', '' );
+
+				if ( $item.hasClass( 'teca-daily-layout-2-main-item' ) ) {
+					visibleMainCount++;
+				}
+			} else {
+				$item.css( 'display', 'none' );
+			}
+		} );
+
+		gs_teca_sync_daily_layout_2_groups( $dailyRoot );
+		gs_teca_sync_daily_layout_2_active_state( $dailyRoot );
+
+		var $message = $scope.find( '.teca-daily-empty-message, .teca-calendar-filter-message' ).first();
+		var defaultMessage = $message.data( 'defaultMessage' );
+
+		if ( ! defaultMessage && $message.length ) {
+			defaultMessage = $.trim( $message.text() );
+			$message.data( 'defaultMessage', defaultMessage );
+		}
+
+		if ( $message.length ) {
+			if ( showAll || visibleMainCount > 0 ) {
+				$message.prop( 'hidden', true ).css( 'display', 'none' );
+
+				if ( defaultMessage ) {
+					$message.text( defaultMessage );
+				}
+			} else {
+				var $select = $scope.find( '.teca-daily-date-filter .teca-calendar-filter-select, .teca-calendar-filter-select' ).first();
+				var selectedLabel = $.trim( $select.find( 'option:selected' ).text() );
+				var emptyTemplate = String( $message.attr( 'data-empty-template' ) || '' );
+
+				if ( emptyTemplate && selectedLabel ) {
+					$message.text( emptyTemplate.replace( '%s', selectedLabel ) );
+				} else if ( defaultMessage ) {
+					$message.text( defaultMessage );
+				}
+
+				$message.prop( 'hidden', false ).css( 'display', '' );
+			}
+		}
+
+		return visibleMainCount;
+	}
+
+	function gs_teca_do_daily_layout_2( $widget_box ) {
+		var $layout = gs_teca_get_daily_layout_2_root( $widget_box );
+
+		if ( ! $layout.length || $layout.data( 'teca-daily-layout-2-init' ) ) {
+			return;
+		}
+
+		$layout.data( 'teca-daily-layout-2-init', 1 );
+
+		var weekStart = gs_teca_parseDate( $layout.data( 'week-start' ) );
+		var weekEnd = gs_teca_parseDate( $layout.data( 'week-end' ) );
+		var todayKey = String( $layout.data( 'today' ) || '' );
+		var startOfWeek = parseInt( $layout.data( 'start-of-week' ), 10 );
+		var searchTerm = '';
+		var $calendarLayout = $layout.closest( '.teca-calendar-layout' );
+		var hasUnifiedFilter = $calendarLayout.find( '.teca-calendar-filter-bar' ).length > 0;
+
+		if ( isNaN( startOfWeek ) ) {
+			startOfWeek = 0;
+		}
+
+		function getDateFilterSelect() {
+			return $layout.find( '.teca-daily-layout-2-filter .teca-calendar-filter-select' ).first();
+		}
+
+		function getDateFilterValue() {
+			var $select = getDateFilterSelect();
+
+			return String( $select.val() || 'all' );
+		}
+
+		function getWeekRangeForDate( date ) {
+			var dayOfWeek = date.getDay();
+			var diff = ( dayOfWeek - startOfWeek + 7 ) % 7;
+			var rangeStart = new Date( date.getFullYear(), date.getMonth(), date.getDate() - diff );
+			var rangeEnd = new Date( rangeStart.getFullYear(), rangeStart.getMonth(), rangeStart.getDate() + 6 );
+
+			return {
+				start: rangeStart,
+				end: rangeEnd
+			};
+		}
+
+		function updateDateLabel() {
+			var $label = $layout.find( '.teca-daily-layout-2-date-label, .teca-daily-layout-2-week-label' ).first();
+
+			if ( ! $label.length ) {
+				return;
+			}
+
+			var $select = getDateFilterSelect();
+			var dateFilter = getDateFilterValue();
+
+			if ( dateFilter === 'all' ) {
+				var allLabel = $.trim( $select.find( 'option[value="all"]' ).text() );
+
+				$label.text( allLabel || 'All Events' );
+				return;
+			}
+
+			var selectedLabel = $.trim( $select.find( 'option:selected' ).text() );
+
+			if ( selectedLabel ) {
+				$label.text( selectedLabel );
+				return;
+			}
+
+			var filterDate = gs_teca_parseDate( dateFilter );
+
+			if ( filterDate ) {
+				$label.text( gs_teca_formatDailyLabel( filterDate ) );
+			}
+		}
+
+		function applyLayout2SearchOverlay() {
+			$layout.find( '.teca-daily-layout-2-filterable' ).each( function() {
+				var $item = $( this );
+				var matchesSearch = ! searchTerm || gs_teca_daily_layout_2_item_matches_search( $item, searchTerm );
+				var hiddenByUnified = $item.hasClass( 'is-filter-hidden' );
+
+				$item.toggleClass( 'is-search-hidden', !! searchTerm && ! matchesSearch );
+
+				var shouldShow = ! hiddenByUnified && ( ! searchTerm || matchesSearch );
+
+				$item.prop( 'hidden', ! shouldShow );
+				$item.css( 'display', shouldShow ? '' : 'none' );
+			} );
+		}
+
+		function applyFilters() {
+			if ( hasUnifiedFilter ) {
+				applyLayout2SearchOverlay();
+				gs_teca_sync_daily_layout_2_groups( $calendarLayout.length ? $calendarLayout : $layout );
+				gs_teca_sync_daily_layout_2_active_state( $layout );
+				return;
+			}
+
+			var $scope = $calendarLayout.length ? $calendarLayout : $layout.parent();
+
+			gs_teca_apply_daily_layout_2_date_filter( $scope.length ? $scope : $layout, getDateFilterValue(), {
+				searchTerm: searchTerm
+			} );
+			updateDateLabel();
+		}
+
+		function scrollToWeek( direction ) {
+			if ( ! weekStart || ! weekEnd ) {
+				return;
+			}
+
+			weekStart.setDate( weekStart.getDate() + ( direction * 7 ) );
+			weekEnd.setDate( weekEnd.getDate() + ( direction * 7 ) );
+			$layout.data( 'week-start', gs_teca_formatDateKey( weekStart ) );
+			$layout.data( 'week-end', gs_teca_formatDateKey( weekEnd ) );
+
+			var $targetRow = $layout.find( '.teca-daily-layout-2-day-row[data-day="' + gs_teca_formatDateKey( weekStart ) + '"]' ).first();
+
+			if ( ! $targetRow.length ) {
+				$targetRow = $layout.find( '.teca-daily-layout-2-day-row:not(.is-hidden)' ).first();
+			}
+
+			var $content = $layout.find( '.teca-daily-layout-2-content' );
+
+			if ( $targetRow.length && $content.length ) {
+				var offset = $targetRow.offset().top - $content.offset().top + $content.scrollTop() - 24;
+				$content.animate( { scrollTop: Math.max( 0, offset ) }, 280 );
+			}
+		}
+
+		function goToToday() {
+			var todayDate = gs_teca_parseDate( todayKey );
+
+			if ( ! todayDate ) {
+				return;
+			}
+
+			var range = getWeekRangeForDate( todayDate );
+			weekStart = range.start;
+			weekEnd = range.end;
+			$layout.data( 'week-start', gs_teca_formatDateKey( weekStart ) );
+			$layout.data( 'week-end', gs_teca_formatDateKey( weekEnd ) );
+
+			var $targetRow = $layout.find( '.teca-daily-layout-2-day-row[data-day="' + todayKey + '"]' ).first();
+			var $content = $layout.find( '.teca-daily-layout-2-content' );
+
+			if ( $targetRow.length && $content.length ) {
+				var offset = $targetRow.offset().top - $content.offset().top + $content.scrollTop() - 24;
+				$content.animate( { scrollTop: Math.max( 0, offset ) }, 280 );
+			}
+		}
+
+		$layout.on( 'click', '.teca-daily-layout-2-event-trigger', function() {
+			var $item = $( this ).closest( '.teca-daily-layout-2-event-item' );
+			var eventId = $item.data( 'event-id' );
+			var $card = $layout.find( '.teca-daily-layout-2-card[data-event-id="' + eventId + '"]' );
+
+			$layout.find( '.teca-daily-layout-2-event-item' ).removeClass( 'teca-daily-layout-2-event-item-active' );
+			$item.addClass( 'teca-daily-layout-2-event-item-active' );
+			$layout.find( '.teca-daily-layout-2-card' ).removeClass( 'is-highlighted' );
+
+			if ( $card.length ) {
+				$card.addClass( 'is-highlighted' );
+
+				var $content = $layout.find( '.teca-daily-layout-2-content' );
+
+				if ( $content.length ) {
+					var offset = $card.offset().top - $content.offset().top + $content.scrollTop() - 24;
+					$content.animate( { scrollTop: Math.max( 0, offset ) }, 280 );
+				}
+			}
+		} );
+
+		$layout.on( 'click', '.teca-daily-layout-2-find-btn', function() {
+			searchTerm = String( $layout.find( '.teca-daily-layout-2-search-input' ).val() || '' ).toLowerCase().trim();
+			applyFilters();
+		} );
+
+		$layout.on( 'keydown', '.teca-daily-layout-2-search-input', function( event ) {
+			if ( event.key === 'Enter' ) {
+				event.preventDefault();
+				searchTerm = String( $( this ).val() || '' ).toLowerCase().trim();
+				applyFilters();
+			}
+		} );
+
+		$layout.data( 'tecaDailyLayout2ApplyFilters', applyFilters );
+		$layout.data( 'tecaDailyLayout2ApplySearch', applyLayout2SearchOverlay );
+
+		if ( ! hasUnifiedFilter ) {
+			$layout.on( 'change.tecaDailyLayout2Filter', '.teca-daily-layout-2-filter .teca-calendar-filter-select', applyFilters );
+		}
+
+		$layout.on( 'change.tecaDailyLayout2Filter', '.teca-calendar-event-type-filter, .teca-daily-layout-2-type-select', applyFilters );
+
+		$layout.on( 'click', '.teca-daily-layout-2-nav-prev', function() {
+			scrollToWeek( -1 );
+		} );
+
+		$layout.on( 'click', '.teca-daily-layout-2-nav-next', function() {
+			scrollToWeek( 1 );
+		} );
+
+		$layout.on( 'click', '.teca-daily-layout-2-today-btn', function() {
+			goToToday();
+		} );
+
+		updateDateLabel();
+
+		if ( ! hasUnifiedFilter ) {
+			applyFilters();
+		}
+	}
+
+	function gs_teca_do_daily_layout_3( $widget_box ) {
+		var $layout = $widget_box.find( '.teca-daily-layout-3' );
+
+		if ( ! $layout.length || $layout.data( 'teca-daily-layout-3-init' ) ) {
+			return;
+		}
+
+		$layout.data( 'teca-daily-layout-3-init', 1 );
+
+		function applyCategoryFilter() {
+			var value = String( $layout.find( '.teca-daily-layout-3-type-select' ).val() || 'all' );
+
+			$layout.find( '.teca-daily-layout-3-card' ).each( function() {
+				var $card = $( this );
+				var categories = String( $card.attr( 'data-categories' ) || '' ).split( ',' ).filter( Boolean );
+				var matches = value === 'all' || categories.indexOf( value ) !== -1;
+
+				$card.toggleClass( 'is-hidden', ! matches );
+			} );
+
+			$layout.find( '.teca-daily-layout-3-group' ).each( function() {
+				var $group = $( this );
+				var visibleCards = $group.find( '.teca-daily-layout-3-card:not(.is-hidden)' ).length;
+
+				$group.toggleClass( 'is-hidden', visibleCards === 0 );
+			} );
+		}
+
+		function initHeroSlideshow() {
+			var $hero = $layout.find( '.teca-daily-layout-3-hero' );
+			var $slides = $hero.find( '.teca-daily-layout-3-hero-slide' );
+			var slideCount = $slides.length;
+			var currentIndex = 0;
+			var timer = null;
+			var interval = parseInt( $hero.data( 'interval' ), 10 );
+
+			if ( ! $hero.length || slideCount < 2 ) {
+				return;
+			}
+
+			if ( isNaN( interval ) || interval < 2000 ) {
+				interval = 5000;
+			}
+
+			function showSlide( nextIndex ) {
+				$slides.removeClass( 'is-active' );
+				$slides.eq( nextIndex ).addClass( 'is-active' );
+				currentIndex = nextIndex;
+			}
+
+			function startSlideshow() {
+				if ( timer ) {
+					clearInterval( timer );
+				}
+
+				timer = window.setInterval( function() {
+					var nextIndex = ( currentIndex + 1 ) % slideCount;
+					showSlide( nextIndex );
+				}, interval );
+			}
+
+			showSlide( 0 );
+			startSlideshow();
+
+			$layout.data( 'teca-daily-layout-3-hero-timer', timer );
+		}
+
+		$layout.on( 'change', '.teca-daily-layout-3-type-select', function() {
+			applyCategoryFilter();
+		} );
+
+		initHeroSlideshow();
+		applyCategoryFilter();
+	}
+
+	function gs_teca_do_weekly_layout_1( $widget_box ) {
+		var $layout = $widget_box.find( '.teca-weekly-layout-1' );
+
+		if ( ! $layout.length || $layout.data( 'teca-weekly-layout-1-init' ) ) {
+			return;
+		}
+
+		$layout.data( 'teca-weekly-layout-1-init', 1 );
+
+		function getEventIdFromNode( $node ) {
+			return String( $node.attr( 'data-event-id' ) || $node.data( 'eventId' ) || '' );
+		}
+
+		function applyCategoryFilter() {
+			var value = String( $layout.find( '.teca-weekly-layout-1-type-select' ).val() || 'all' );
+
+			$layout.find( '.teca-weekly-layout-1-card' ).each( function() {
+				var $card = $( this );
+				var categories = String( $card.attr( 'data-categories' ) || '' ).split( ',' ).filter( Boolean );
+				var matches = value === 'all' || categories.indexOf( value ) !== -1;
+				var hasEvent = !! getEventIdFromNode( $card );
+
+				if ( ! hasEvent ) {
+					return;
+				}
+
+				$card.toggleClass( 'is-hidden', ! matches );
+			} );
+
+			$layout.find( '.teca-weekly-layout-1-week' ).each( function() {
+				var $week = $( this );
+				var visibleCards = $week.find( '.teca-weekly-layout-1-card:not(.is-hidden):not(.teca-weekly-layout-1-card-empty)' ).length;
+
+				$week.toggleClass( 'is-hidden', visibleCards === 0 );
+			} );
+		}
+
+		function focusSidebarEvent( eventId ) {
+			eventId = String( eventId || '' );
+
+			if ( ! eventId ) {
+				return;
+			}
+
+			var $card = $layout.find( '.teca-weekly-layout-1-card[data-event-id="' + eventId + '"]' );
+
+			$layout.find( '.teca-weekly-layout-1-event-item' ).removeClass( 'teca-weekly-layout-1-event-item-active' );
+			$layout.find( '.teca-weekly-layout-1-event-item[data-event-id="' + eventId + '"]' ).addClass( 'teca-weekly-layout-1-event-item-active' );
+			$layout.find( '.teca-weekly-layout-1-card' ).removeClass( 'is-highlighted' );
+
+			if ( $card.length ) {
+				$card.removeClass( 'is-hidden' ).addClass( 'is-highlighted' );
+				$card.closest( '.teca-weekly-layout-1-week' ).removeClass( 'is-hidden' );
+
+				var $content = $layout.find( '.teca-weekly-layout-1-content' );
+
+				if ( $content.length ) {
+					window.requestAnimationFrame( function() {
+						var offset = $card.offset().top - $content.offset().top + $content.scrollTop() - 24;
+						$content.animate( { scrollTop: Math.max( 0, offset ) }, 280 );
+					} );
+				}
+			}
+		}
+
+		$layout.on( 'click', '.teca-weekly-layout-1-event-trigger', function( event ) {
+			event.preventDefault();
+			var $item = $( this ).closest( '.teca-weekly-layout-1-event-item' );
+			focusSidebarEvent( getEventIdFromNode( $item ) );
+		} );
+
+		$layout.on( 'change', '.teca-weekly-layout-1-type-select', function() {
+			$layout.find( '.teca-weekly-layout-1-event-item' ).removeClass( 'teca-weekly-layout-1-event-item-active' );
+			$layout.find( '.teca-weekly-layout-1-card' ).removeClass( 'is-highlighted' );
+			applyCategoryFilter();
+		} );
+
+		applyCategoryFilter();
+	}
+
+	function gs_teca_do_weekly_layout_2( $widget_box ) {
+		var $layout = $widget_box.find( '.teca-weekly-layout-2' );
+
+		if ( ! $layout.length || $layout.data( 'teca-weekly-layout-2-init' ) ) {
+			return;
+		}
+
+		$layout.data( 'teca-weekly-layout-2-init', 1 );
+
+		function getEventIdFromNode( $node ) {
+			return String( $node.attr( 'data-event-id' ) || $node.data( 'eventId' ) || '' );
+		}
+
+		function applyCategoryFilter() {
+			var value = String( $layout.find( '.teca-weekly-layout-2-type-select' ).val() || 'all' );
+
+			$layout.find( '.teca-weekly-layout-2-card' ).each( function() {
+				var $card = $( this );
+				var categories = String( $card.attr( 'data-categories' ) || '' ).split( ',' ).filter( Boolean );
+				var matches = value === 'all' || categories.indexOf( value ) !== -1;
+
+				$card.toggleClass( 'is-hidden', ! matches );
+			} );
+
+			$layout.find( '.teca-weekly-layout-2-week' ).each( function() {
+				var $week = $( this );
+				var visibleCards = $week.find( '.teca-weekly-layout-2-card:not(.is-hidden)' ).length;
+
+				$week.toggleClass( 'is-hidden', visibleCards === 0 );
+			} );
+		}
+
+		function focusSidebarEvent( eventId ) {
+			eventId = String( eventId || '' );
+
+			if ( ! eventId ) {
+				return;
+			}
+
+			var $card = $layout.find( '.teca-weekly-layout-2-card[data-event-id="' + eventId + '"]' );
+
+			$layout.find( '.teca-weekly-layout-2-event-item' ).removeClass( 'teca-weekly-layout-2-event-item-active' );
+			$layout.find( '.teca-weekly-layout-2-event-item[data-event-id="' + eventId + '"]' ).addClass( 'teca-weekly-layout-2-event-item-active' );
+			$layout.find( '.teca-weekly-layout-2-card' ).removeClass( 'is-highlighted' );
+
+			if ( $card.length ) {
+				$card.removeClass( 'is-hidden' ).addClass( 'is-highlighted' );
+				$card.closest( '.teca-weekly-layout-2-week' ).removeClass( 'is-hidden' );
+
+				var $content = $layout.find( '.teca-weekly-layout-2-content' );
+
+				if ( $content.length ) {
+					window.requestAnimationFrame( function() {
+						var offset = $card.offset().top - $content.offset().top + $content.scrollTop() - 24;
+						$content.animate( { scrollTop: Math.max( 0, offset ) }, 280 );
+					} );
+				}
+			}
+		}
+
+		$layout.on( 'click', '.teca-weekly-layout-2-event-trigger', function( event ) {
+			event.preventDefault();
+			var $item = $( this ).closest( '.teca-weekly-layout-2-event-item' );
+			focusSidebarEvent( getEventIdFromNode( $item ) );
+		} );
+
+		$layout.on( 'change', '.teca-weekly-layout-2-type-select', function() {
+			$layout.find( '.teca-weekly-layout-2-event-item' ).removeClass( 'teca-weekly-layout-2-event-item-active' );
+			$layout.find( '.teca-weekly-layout-2-card' ).removeClass( 'is-highlighted' );
+			applyCategoryFilter();
+		} );
+
+		applyCategoryFilter();
+	}
+
+	function gs_teca_do_weekly_layout_3( $widget_box ) {
+		var $layout = $widget_box.find( '.teca-weekly-layout-3' );
+
+		if ( ! $layout.length || $layout.data( 'teca-weekly-layout-3-init' ) ) {
+			return;
+		}
+
+		$layout.data( 'teca-weekly-layout-3-init', 1 );
+
+		function getEventIdFromNode( $node ) {
+			return String( $node.attr( 'data-event-id' ) || $node.data( 'eventId' ) || '' );
+		}
+
+		function applyCategoryFilter() {
+			var value = String( $layout.find( '.teca-weekly-layout-3-type-select' ).val() || 'all' );
+
+			$layout.find( '.teca-weekly-layout-3-card' ).each( function() {
+				var $card = $( this );
+				var categories = String( $card.attr( 'data-categories' ) || '' ).split( ',' ).filter( Boolean );
+				var matches = value === 'all' || categories.indexOf( value ) !== -1;
+
+				$card.toggleClass( 'is-hidden', ! matches );
+			} );
+
+			$layout.find( '.teca-weekly-layout-3-group' ).each( function() {
+				var $group = $( this );
+				var visibleCards = $group.find( '.teca-weekly-layout-3-card:not(.is-hidden)' ).length;
+
+				$group.toggleClass( 'is-hidden', visibleCards === 0 );
+			} );
+
+			$layout.find( '.teca-weekly-layout-3-week' ).each( function() {
+				var $week = $( this );
+				var visibleGroups = $week.find( '.teca-weekly-layout-3-group:not(.is-hidden)' ).length;
+
+				$week.toggleClass( 'is-hidden', visibleGroups === 0 );
+			} );
+		}
+
+		function focusSidebarEvent( eventId ) {
+			eventId = String( eventId || '' );
+
+			if ( ! eventId ) {
+				return;
+			}
+
+			var $card = $layout.find( '.teca-weekly-layout-3-card[data-event-id="' + eventId + '"]' );
+
+			$layout.find( '.teca-weekly-layout-3-event-item' ).removeClass( 'teca-weekly-layout-3-event-item-active' );
+			$layout.find( '.teca-weekly-layout-3-event-item[data-event-id="' + eventId + '"]' ).addClass( 'teca-weekly-layout-3-event-item-active' );
+			$layout.find( '.teca-weekly-layout-3-card' ).removeClass( 'is-highlighted' );
+
+			if ( $card.length ) {
+				$card.removeClass( 'is-hidden' ).addClass( 'is-highlighted' );
+				$card.closest( '.teca-weekly-layout-3-group' ).removeClass( 'is-hidden' );
+				$card.closest( '.teca-weekly-layout-3-week' ).removeClass( 'is-hidden' );
+
+				var $content = $layout.find( '.teca-weekly-layout-3-content' );
+
+				if ( $content.length ) {
+					window.requestAnimationFrame( function() {
+						var offset = $card.offset().top - $content.offset().top + $content.scrollTop() - 24;
+						$content.animate( { scrollTop: Math.max( 0, offset ) }, 280 );
+					} );
+				}
+			}
+		}
+
+		$layout.on( 'click', '.teca-weekly-layout-3-event-trigger', function( event ) {
+			event.preventDefault();
+			var $item = $( this ).closest( '.teca-weekly-layout-3-event-item' );
+			focusSidebarEvent( getEventIdFromNode( $item ) );
+		} );
+
+		$layout.on( 'change', '.teca-weekly-layout-3-type-select', function() {
+			$layout.find( '.teca-weekly-layout-3-event-item' ).removeClass( 'teca-weekly-layout-3-event-item-active' );
+			$layout.find( '.teca-weekly-layout-3-card' ).removeClass( 'is-highlighted' );
+			applyCategoryFilter();
+		} );
+
+		applyCategoryFilter();
+	}
+
+	function gs_teca_do_monthly_layout_2( $widget_box ) {
+		var $layout = $widget_box.find( '.teca-monthly-layout-2' );
+
+		if ( ! $layout.length || $layout.data( 'teca-monthly-layout-2-init' ) ) {
+			return;
+		}
+
+		$layout.data( 'teca-monthly-layout-2-init', 1 );
+
+		$layout.find( '.teca-monthly-layout-2-section' ).each( function() {
+			var $month = $( this );
+			var $slider = $month.find( '.teca-monthly-layout-2-feature-image-slider' );
+			var $slides = $slider.find( '.teca-monthly-layout-2-feature-image-slide' );
+			var slideCount = $slides.length;
+			var currentIndex = 0;
+			var timer = null;
+			var interval = parseInt( $slider.data( 'interval' ), 10 );
+
+			if ( isNaN( interval ) || interval < 2000 ) {
+				interval = 5000;
+			}
+
+			function showSlide( nextIndex ) {
+				if ( ! slideCount ) {
+					return;
+				}
+
+				if ( nextIndex < 0 || nextIndex >= slideCount ) {
+					nextIndex = 0;
+				}
+
+				$slides.removeClass( 'is-active' );
+				$slides.eq( nextIndex ).addClass( 'is-active' );
+				currentIndex = nextIndex;
+			}
+
+			function startSlideshow() {
+				if ( slideCount < 2 ) {
+					return;
+				}
+
+				if ( timer ) {
+					clearInterval( timer );
+				}
+
+				timer = window.setInterval( function() {
+					showSlide( ( currentIndex + 1 ) % slideCount );
+				}, interval );
+			}
+
+			function setActiveEvent( eventId ) {
+				var id = String( eventId || '' );
+
+				if ( ! id ) {
+					return;
+				}
+
+				$month.find( '.teca-monthly-layout-2-feature-event-item' ).removeClass( 'teca-monthly-layout-2-feature-event-item-active' );
+				$month.find( '.teca-monthly-layout-2-card' ).removeClass( 'teca-monthly-layout-2-card-active' );
+
+				var $item = $month.find( '.teca-monthly-layout-2-feature-event-item[data-event-id="' + id + '"]' );
+				var $card = $month.find( '.teca-monthly-layout-2-card[data-event-id="' + id + '"]' );
+
+				if ( $item.length ) {
+					$item.addClass( 'teca-monthly-layout-2-feature-event-item-active' );
+				}
+
+				if ( $card.length ) {
+					$card.addClass( 'teca-monthly-layout-2-card-active' );
+
+					if ( typeof $card[0].scrollIntoView === 'function' ) {
+						$card[0].scrollIntoView( {
+							behavior: 'smooth',
+							block: 'nearest',
+							inline: 'nearest'
+						} );
+					}
+				}
+
+				var slideIndex = $item.attr( 'data-slide-index' );
+
+				if ( typeof slideIndex !== 'undefined' && slideIndex !== '' ) {
+					showSlide( parseInt( slideIndex, 10 ) );
+				}
+			}
+
+			showSlide( 0 );
+			startSlideshow();
+
+			$month.on( 'click', '.teca-monthly-layout-2-feature-event-item', function() {
+				var eventId = $( this ).data( 'event-id' );
+				setActiveEvent( eventId );
+				startSlideshow();
+			} );
+
+			$month.data( 'teca-monthly-layout-2-timer', timer );
+		} );
+	}
+
+	function gs_teca_do_monthly_layout_3( $widget_box ) {
+		var $layout = $widget_box.find( '.teca-monthly-layout-3' );
+
+		if ( ! $layout.length || $layout.data( 'teca-monthly-layout-3-init' ) ) {
+			return;
+		}
+
+		$layout.data( 'teca-monthly-layout-3-init', 1 );
+
+		$layout.find( '.teca-monthly-layout-3-section' ).each( function() {
+			var $section = $( this );
+			var $media = $section.find( '.teca-monthly-layout-3-feature-media' );
+			var $slides = $media.find( '.teca-monthly-layout-3-feature-image' );
+			var slideCount = $slides.length;
+			var currentIndex = 0;
+			var timer = null;
+			var interval = parseInt( $media.data( 'interval' ), 10 );
+
+			if ( isNaN( interval ) || interval < 2000 ) {
+				interval = 5000;
+			}
+
+			function showSlide( nextIndex ) {
+				if ( ! slideCount ) {
+					return;
+				}
+
+				if ( nextIndex < 0 || nextIndex >= slideCount ) {
+					nextIndex = 0;
+				}
+
+				$slides.removeClass( 'is-active' );
+				$slides.eq( nextIndex ).addClass( 'is-active' );
+				currentIndex = nextIndex;
+			}
+
+			function startSlideshow() {
+				if ( slideCount < 2 ) {
+					return;
+				}
+
+				if ( timer ) {
+					clearInterval( timer );
+				}
+
+				timer = window.setInterval( function() {
+					showSlide( ( currentIndex + 1 ) % slideCount );
+				}, interval );
+			}
+
+			showSlide( 0 );
+			startSlideshow();
+
+			$section.data( 'teca-monthly-layout-3-timer', timer );
+		} );
+	}
+
+	function gs_teca_do_monthly_layout_1( $widget_box ) {
+		var $layout = $widget_box.find( '.teca-monthly-layout-1' );
+
+		if ( ! $layout.length || $layout.data( 'teca-monthly-layout-1-init' ) ) {
+			return;
+		}
+
+		$layout.data( 'teca-monthly-layout-1-init', 1 );
+
+		function applyCategoryFilter() {
+			$layout.find( '.teca-monthly-layout-1-month' ).each( function() {
+				var $month = $( this );
+				var value = String( $month.find( '.teca-monthly-layout-1-type-select' ).val() || 'all' );
+
+				$month.find( '.teca-monthly-layout-1-timeline-item' ).each( function() {
+					var $item = $( this );
+					var categories = String( $item.attr( 'data-categories' ) || '' ).split( ',' ).filter( Boolean );
+					var matches = value === 'all' || categories.indexOf( value ) !== -1;
+
+					$item.toggleClass( 'is-hidden', ! matches );
+				} );
+
+				var visibleItems = $month.find( '.teca-monthly-layout-1-timeline-item:not(.is-hidden)' ).length;
+
+				$month.toggleClass( 'is-hidden', visibleItems === 0 );
+			} );
+		}
+
+		$layout.on( 'change', '.teca-monthly-layout-1-type-select', function() {
+			applyCategoryFilter();
+		} );
+
+		applyCategoryFilter();
+	}
+
+	function gs_teca_do_daily_layout_1( $widget_box ) {
+		var $layout = $widget_box.find( '.teca-daily-layout-1' );
+
+		if ( ! $layout.length || $layout.data( 'teca-daily-layout-1-init' ) ) {
+			return;
+		}
+
+		$layout.data( 'teca-daily-layout-1-init', 1 );
+
+		var $wrapper = $layout.closest( '.teca-calendar-wrapper' );
+		var hasUnifiedFilter = $wrapper.find( '.teca-calendar-filter-bar' ).length > 0;
+
+		function syncLayout1Groups() {
+			$layout.find( '.teca-daily-layout-1-group' ).each( function() {
+				var $group = $( this );
+				var hasVisible = $group.find( '.teca-calendar-filterable-event:not(.is-filter-hidden):not(.is-hidden)' ).length > 0;
+
+				gs_teca_set_calendar_section_visible( $group, hasVisible );
+			} );
+		}
+
+		function applyLayout1CategoryFilter() {
+			if ( hasUnifiedFilter ) {
+				return;
+			}
+
+			var categoryValue = gs_teca_get_calendar_category_filter_value( $layout );
+
+			$layout.find( '.teca-calendar-event, .teca-calendar-filterable-event' ).each( function() {
+				var $item = $( this );
+				var matches = gs_teca_event_matches_category_filter( $item, categoryValue );
+
+				$item.toggleClass( 'is-filter-hidden', ! matches );
+				$item.prop( 'hidden', ! matches );
+				$item.css( 'display', matches ? '' : 'none' );
+			} );
+
+			syncLayout1Groups();
+		}
+
+		$layout.on( 'click', '.teca-daily-layout-1-event-trigger', function() {
+			var $item = $( this ).closest( '.teca-daily-layout-1-event-item' );
+			var eventId = $item.data( 'event-id' );
+			var $card = $layout.find( '.teca-daily-layout-1-card[data-event-id="' + eventId + '"]' );
+
+			$layout.find( '.teca-daily-layout-1-event-item' ).removeClass( 'teca-daily-layout-1-event-item-active' );
+			$item.addClass( 'teca-daily-layout-1-event-item-active' );
+
+			$layout.find( '.teca-daily-layout-1-card' ).removeClass( 'is-highlighted' );
+
+			if ( $card.length ) {
+				$card.addClass( 'is-highlighted' );
+
+				var $content = $layout.find( '.teca-daily-layout-1-content' );
+
+				if ( $content.length ) {
+					var offset = $card.offset().top - $content.offset().top + $content.scrollTop() - 24;
+					$content.animate( { scrollTop: offset }, 280 );
+				}
+			}
+		} );
+
+		$layout.on( 'change', '.teca-daily-layout-1-dates-select', function() {
+			var value = $( this ).val();
+
+			$layout.find( '.teca-daily-layout-1-group' ).each( function() {
+				var $group = $( this );
+				var month = String( $group.data( 'month' ) );
+				$group.toggle( value === 'all' || month === value );
+			} );
+		} );
+
+		$layout.on( 'change', '.teca-calendar-event-type-filter, .teca-daily-layout-1-type-select', function() {
+			if ( hasUnifiedFilter ) {
+				return;
+			}
+
+			applyLayout1CategoryFilter();
+		} );
+
+		if ( ! hasUnifiedFilter ) {
+			applyLayout1CategoryFilter();
+		}
+	}
+
+	function gs_teca_init_unified_calendar_filter( $widget_box ) {
+		$widget_box.find( '.teca-calendar-wrapper' ).each( function() {
+			var $wrapper = $( this );
+
+			if ( $wrapper.data( 'teca-unified-filter-init' ) ) {
+				return;
+			}
+
+			var $filterBar = $wrapper.find( '.teca-calendar-filter-bar' ).first();
+
+			if ( ! $filterBar.length ) {
+				return;
+			}
+
+			$wrapper.data( 'teca-unified-filter-init', 1 );
+			$wrapper.find( '.teca-calendar-filterable-event' ).addClass( 'teca-calendar-event' );
+			$wrapper.find( gs_teca_get_calendar_group_selectors() ).addClass( 'teca-calendar-group' );
+
+			var attrMap = {
+				daily: 'eventDate',
+				weekly: 'eventWeek',
+				monthly: 'eventMonth',
+				quarterly: 'eventQuarter',
+				yearly: 'eventYear'
+			};
+
+			function getEventSelector() {
+				return gs_teca_get_calendar_event_selector();
+			}
+
+			function getItemValue( $item, mode ) {
+				var dataKey = attrMap[ mode ] || 'eventDate';
+				var value = $item.data( dataKey );
+
+				if ( typeof value === 'undefined' || value === null || value === '' ) {
+					var attrNames = {
+						daily: 'data-event-date',
+						weekly: 'data-event-week',
+						monthly: 'data-event-month',
+						quarterly: 'data-event-quarter',
+						yearly: 'data-event-year'
+					};
+					value = $item.attr( attrNames[ mode ] || 'data-event-date' );
+
+					if ( mode === 'quarterly' && ( typeof value === 'undefined' || value === null || value === '' ) ) {
+						value = $item.attr( 'data-event-year-quarter' );
+					}
+				}
+
+				return String( value || '' );
+			}
+
+			function quarterValueMatches( selectedValue, itemValue, itemQuarterKey ) {
+				return gs_teca_quarter_filter_matches( selectedValue, itemValue, itemQuarterKey );
+			}
+
+			function getSelectedValueForMode( mode ) {
+				var $select = $filterBar.find( '.teca-calendar-filter-value[data-filter-mode="' + mode + '"]' ).first();
+				return String( $select.val() || 'all' );
+			}
+
+			function toggleFieldVisibility( mode ) {
+				$filterBar.find( '.teca-calendar-filter-field' ).not( '.teca-calendar-filter-mode-field' ).each( function() {
+					var $field = $( this );
+					var fieldMode = '';
+
+					$.each( [ 'daily', 'weekly', 'monthly', 'quarterly', 'yearly' ], function( _index, candidate ) {
+						if ( $field.hasClass( 'teca-calendar-' + candidate + '-field' ) ) {
+							fieldMode = candidate;
+							return false;
+						}
+					} );
+
+					$field.prop( 'hidden', fieldMode !== mode );
+				} );
+			}
+
+			function updateSectionVisibility( mode, value ) {
+				gs_teca_update_calendar_group_visibility( $wrapper, mode, value );
+			}
+
+			function updateEmptyState( mode, value, visibleCount ) {
+				var $message = $filterBar.find( '.teca-calendar-filter-empty-message' ).first();
+
+				if ( ! $message.length ) {
+					return;
+				}
+
+				var categoryValue = gs_teca_get_calendar_category_filter_value( $wrapper );
+				var filterMessage = String( $message.data( 'emptyFilterMessage' ) || $.trim( $message.text() ) );
+				var allMessage = String( $message.data( 'emptyAllMessage' ) || 'No events found.' );
+				var totalEvents = $wrapper.find( getEventSelector() ).length;
+				var dateShowsAll = showAllValue( value );
+				var categoryShowsAll = showAllValue( categoryValue );
+
+				if ( totalEvents === 0 ) {
+					$message.text( allMessage ).prop( 'hidden', false );
+					return;
+				}
+
+				if ( visibleCount > 0 ) {
+					$message.prop( 'hidden', true );
+					return;
+				}
+
+				$message.text( dateShowsAll && categoryShowsAll ? allMessage : filterMessage ).prop( 'hidden', false );
+			}
+
+			function showAllValue( value ) {
+				return ! value || value === 'all';
+			}
+
+			function applyCalendarFilter() {
+				var mode = String( $filterBar.find( '.teca-calendar-filter-mode' ).val() || $wrapper.attr( 'data-filter-mode' ) || 'daily' );
+				var value = getSelectedValueForMode( mode );
+				var categoryValue = gs_teca_get_calendar_category_filter_value( $wrapper );
+				var visibleCount = 0;
+
+				$wrapper.find( getEventSelector() ).each( function() {
+					var $event = $( this );
+					var eventValue = getItemValue( $event, mode );
+					var itemQuarterKey = String( $event.attr( 'data-event-quarter-key' ) || '' );
+					var matches = showAllValue( value );
+
+					if ( ! matches ) {
+						if ( mode === 'quarterly' ) {
+							matches = quarterValueMatches( value, eventValue, itemQuarterKey );
+						} else {
+							matches = eventValue === value;
+						}
+					}
+
+					if ( matches ) {
+						matches = gs_teca_event_matches_category_filter( $event, categoryValue );
+					}
+
+					$event.toggleClass( 'is-filter-hidden', ! matches );
+					$event.prop( 'hidden', ! matches );
+					$event.css( 'display', matches ? '' : 'none' );
+
+					if ( matches ) {
+						visibleCount++;
+					}
+				} );
+
+				updateSectionVisibility( mode, value );
+				updateEmptyState( mode, value, visibleCount );
+
+				var $dailyRoot = gs_teca_get_daily_layout_2_root( $wrapper );
+
+				if ( $dailyRoot.length ) {
+					var applySearch = $dailyRoot.data( 'tecaDailyLayout2ApplySearch' );
+
+					if ( typeof applySearch === 'function' ) {
+						applySearch();
+					}
+
+					gs_teca_sync_daily_layout_2_groups( $wrapper );
+					gs_teca_sync_daily_layout_2_active_state( $dailyRoot );
+				}
+			}
+
+			function onFilterModeChange() {
+				var mode = String( $filterBar.find( '.teca-calendar-filter-mode' ).val() || 'daily' );
+
+				$wrapper.attr( 'data-filter-mode', mode );
+				$filterBar.attr( 'data-filter-mode', mode );
+				toggleFieldVisibility( mode );
+
+				var $activeSelect = $filterBar.find( '.teca-calendar-filter-value[data-filter-mode="' + mode + '"]' ).first();
+
+				if ( $activeSelect.length ) {
+					$activeSelect.prop( 'selectedIndex', 0 );
+				}
+
+				applyCalendarFilter();
+			}
+
+			toggleFieldVisibility( String( $filterBar.attr( 'data-filter-mode' ) || 'daily' ) );
+			$filterBar.on( 'change.tecaUnifiedCalendarFilter', '.teca-calendar-filter-mode', onFilterModeChange );
+			$filterBar.on( 'change.tecaUnifiedCalendarFilter', '.teca-calendar-filter-value', applyCalendarFilter );
+			$wrapper.on( 'change.tecaUnifiedCalendarFilter', '.teca-calendar-event-type-filter', applyCalendarFilter );
+			applyCalendarFilter();
+		} );
+	}
+
+	function gs_teca_is_calendar_widget( $widget_box ) {
+		return $widget_box.hasClass( 'view_type_calendar' ) ||
+			$widget_box.hasClass( 'view_type_daily-calendar' ) ||
+			$widget_box.hasClass( 'view_type_weekly-calendar' ) ||
+			$widget_box.hasClass( 'view_type_monthly-calendar' ) ||
+			$widget_box.hasClass( 'view_type_quarterly-calendar' ) ||
+			$widget_box.hasClass( 'view_type_yearly-calendar' ) ||
+			$widget_box.find( '.teca-calendar-wrapper' ).length > 0;
+	}
+
+	function gs_teca_do_calendar_date_filter( $widget_box ) {
+		$widget_box.find( '.teca-calendar-layout' ).each( function() {
+			var $layout = $( this );
+
+			if ( $layout.data( 'teca-calendar-filter-init' ) ) {
+				return;
+			}
+
+			if ( $layout.find( '.teca-calendar-filter-bar' ).length ) {
+				return;
+			}
+
+			var $filter = $layout.find( '.teca-calendar-filter' ).first();
+
+			if ( ! $filter.length ) {
+				return;
+			}
+
+			$layout.data( 'teca-calendar-filter-init', 1 );
+
+			var filterType = String( $filter.attr( 'data-filter-type' ) || '' ).trim().toLowerCase();
+
+			if ( ! filterType && $filter.hasClass( 'teca-yearly-date-filter' ) ) {
+				filterType = 'yearly';
+			}
+
+			if ( ! filterType && $filter.hasClass( 'teca-daily-date-filter' ) ) {
+				filterType = 'daily';
+			}
+
+			if ( ! filterType && $filter.hasClass( 'teca-weekly-date-filter' ) ) {
+				filterType = 'weekly';
+			}
+
+			if ( ! filterType && $filter.hasClass( 'teca-monthly-date-filter' ) ) {
+				filterType = 'monthly';
+			}
+
+			if ( ! filterType && $filter.hasClass( 'teca-quarterly-date-filter' ) ) {
+				filterType = 'quarterly';
+			}
+
+			if ( ! filterType && ( $layout.is( '[data-view="yearly"]' ) || $layout.hasClass( 'teca-calendar-yearly' ) ) ) {
+				filterType = 'yearly';
+			}
+
+			if ( ! filterType ) {
+				filterType = 'daily';
+			}
+			var dataKeyMap = {
+				daily: 'eventDate',
+				weekly: 'eventWeek',
+				monthly: 'eventMonth',
+				quarterly: 'eventYearQuarter',
+				yearly: 'eventYear'
+			};
+			var dataKey = dataKeyMap[ filterType ] || 'eventDate';
+			var sectionSelectors = [
+				'.teca-daily-layout-1-group',
+				'.teca-daily-layout-2-group',
+				'.teca-daily-layout-2-day-row',
+				'.teca-daily-layout-3-group',
+				'.teca-weekly-layout-1-week',
+				'.teca-weekly-layout-2-week',
+				'.teca-weekly-layout-3-week',
+				'.teca-weekly-layout-3-group',
+				'.teca-monthly-layout-1-month',
+				'.teca-monthly-layout-2-section',
+				'.teca-monthly-layout-3-section',
+				'.teca-quarterly-layout-1-quarter',
+				'.teca-quarterly-layout-2-quarter',
+				'.teca-quarterly-layout-3-quarter'
+			].join( ', ' );
+
+			function getItemValue( $item ) {
+				var value = $item.data( dataKey );
+
+				if ( typeof value === 'undefined' || value === null || value === '' ) {
+					var attrMap = {
+						daily: 'data-event-date',
+						weekly: 'data-event-week',
+						monthly: 'data-event-month',
+						quarterly: 'data-event-year-quarter',
+						yearly: 'data-event-year'
+					};
+					value = $item.attr( attrMap[ filterType ] || 'data-event-date' );
+
+					if ( filterType === 'quarterly' && ( typeof value === 'undefined' || value === null || value === '' ) ) {
+						value = $item.attr( 'data-event-quarter' );
+					}
+				}
+
+				return String( value || '' );
+			}
+
+			function quarterValueMatches( selectedValue, sectionValue, sectionQuarterKey ) {
+				if ( selectedValue === 'all' ) {
+					return true;
+				}
+
+				if ( sectionValue === selectedValue ) {
+					return true;
+				}
+
+				if ( /^Q[1-4]$/.test( selectedValue ) && sectionQuarterKey === selectedValue ) {
+					return true;
+				}
+
+				return false;
+			}
+
+			function applyQuarterlyFilter( selectedValue ) {
+				var quarterSelector = '.teca-quarterly-layout-1-quarter, .teca-quarterly-layout-2-quarter, .teca-quarterly-layout-3-quarter';
+				var $message = $layout.find( '.teca-calendar-filter-message' );
+				var defaultMessage = $message.data( 'defaultMessage' );
+
+				if ( ! defaultMessage ) {
+					defaultMessage = $.trim( $message.text() );
+					$message.data( 'defaultMessage', defaultMessage );
+				}
+
+				var visibleEventCount = 0;
+
+				$layout.find( quarterSelector ).each( function() {
+					var $quarter = $( this );
+					var sectionValue = String( $quarter.attr( 'data-quarter' ) || '' );
+					var sectionQuarterKey = String( $quarter.attr( 'data-quarter-key' ) || '' );
+					var show = quarterValueMatches( selectedValue, sectionValue, sectionQuarterKey );
+
+					gs_teca_set_calendar_section_visible( $quarter, show );
+
+					if ( show ) {
+						visibleEventCount += $quarter.find( '.teca-calendar-filterable-event' ).length;
+					}
+				} );
+
+				$layout.find( '.teca-calendar-filterable-event' ).each( function() {
+					var $item = $( this );
+					var itemValue = getItemValue( $item );
+					var itemQuarterKey = String( $item.attr( 'data-event-quarter-key' ) || '' );
+					var matches = quarterValueMatches( selectedValue, itemValue, itemQuarterKey );
+
+					$item.toggleClass( 'is-filter-hidden', selectedValue !== 'all' && ! matches );
+				} );
+
+				gs_teca_update_calendar_group_visibility( $layout, 'quarterly', selectedValue );
+
+				if ( selectedValue === 'all' || visibleEventCount > 0 ) {
+					$message.prop( 'hidden', true ).text( defaultMessage );
+					return;
+				}
+
+				var selectedLabel = $.trim( $layout.find( '.teca-calendar-filter-select option:selected' ).text() );
+				var emptyTemplate = String( $message.attr( 'data-empty-template' ) || '' );
+
+				if ( emptyTemplate && selectedLabel ) {
+					$message.text( emptyTemplate.replace( '%s', selectedLabel ) );
+				} else if ( selectedLabel ) {
+					$message.text( 'No events found for ' + selectedLabel + '.' );
+				} else {
+					$message.text( defaultMessage );
+				}
+
+				$message.prop( 'hidden', false );
+			}
+
+			function applyYearlyFilter( selectedValue ) {
+				selectedValue = String( selectedValue || 'all' ).trim();
+
+				var showAll = selectedValue === 'all' || selectedValue === '';
+
+				var yearSelector = [
+					'.teca-yearly-year-section[data-year]',
+					'section.teca-yearly-layout-1-year[data-year]',
+					'section.teca-yearly-layout-2-year[data-year]',
+					'section.teca-yearly-layout-3-year[data-year]',
+					'.teca-yearly-layout-1-year[data-year]',
+					'.teca-yearly-layout-2-year[data-year]',
+					'.teca-yearly-layout-3-year[data-year]'
+				].join( ',' );
+
+				var $yearSections = $layout.find( yearSelector );
+				var $message = $layout.find( '.teca-calendar-filter-message, .teca-yearly-empty-message' ).first();
+				var defaultMessage = $message.data( 'defaultMessage' );
+				var visibleSectionCount = 0;
+				var visibleEventCount = 0;
+
+				if ( $message.length && ! defaultMessage ) {
+					defaultMessage = $.trim( $message.text() );
+					$message.data( 'defaultMessage', defaultMessage );
+				}
+
+				$yearSections.each( function() {
+					var $section = $( this );
+					var sectionYear = String( $section.attr( 'data-year' ) || '' ).trim();
+					var shouldShow = showAll || sectionYear === selectedValue;
+
+					if ( shouldShow ) {
+						visibleSectionCount++;
+						visibleEventCount += $section.find( '.teca-calendar-filterable-event' ).length;
+					}
+
+					$section.toggleClass( 'is-filter-hidden', ! shouldShow );
+					$section.attr( 'aria-hidden', shouldShow ? 'false' : 'true' );
+					$section.prop( 'hidden', ! shouldShow );
+					$section.css( {
+						display: shouldShow ? '' : 'none'
+					} );
+
+					if ( shouldShow ) {
+						$section.find( '.teca-calendar-filterable-event' ).each( function() {
+							$( this )
+								.removeClass( 'is-filter-hidden' )
+								.prop( 'hidden', false )
+								.css( 'display', '' );
+						} );
+					}
+				} );
+
+				if ( $message.length ) {
+					if ( showAll || visibleSectionCount > 0 || visibleEventCount > 0 ) {
+						$message.prop( 'hidden', true ).css( 'display', 'none' );
+
+						if ( defaultMessage ) {
+							$message.text( defaultMessage );
+						}
+					} else {
+						var selectedLabel = $.trim( $layout.find( '.teca-calendar-filter-select option:selected' ).text() );
+						var emptyTemplate = String( $message.attr( 'data-empty-template' ) || '' );
+
+						if ( emptyTemplate && selectedLabel ) {
+							$message.text( emptyTemplate.replace( '%s', selectedLabel ) );
+						} else if ( selectedLabel ) {
+							$message.text( 'No events found for ' + selectedLabel + '.' );
+						} else if ( defaultMessage ) {
+							$message.text( defaultMessage );
+						}
+
+						$message.prop( 'hidden', false ).css( 'display', '' );
+					}
+				}
+			}
+
+			function isDailyLayout2Calendar() {
+				return gs_teca_get_daily_layout_2_root( $layout ).length > 0;
+			}
+
+			function isDailyCalendarFilter() {
+				return filterType === 'daily' ||
+					$filter.hasClass( 'teca-daily-date-filter' ) ||
+					$layout.is( '[data-view="daily"]' ) ||
+					$layout.hasClass( 'teca-calendar-daily' );
+			}
+
+			function applyDailyLayout2Filter( selectedValue ) {
+				var $dailyLayout = gs_teca_get_daily_layout_2_root( $layout );
+				var applyFn = $dailyLayout.data( 'tecaDailyLayout2ApplyFilters' );
+
+				if ( typeof applyFn === 'function' ) {
+					applyFn();
+					return;
+				}
+
+				gs_teca_apply_daily_layout_2_date_filter( $layout, selectedValue );
+			}
+
+			function applyFilter() {
+				var value = String( $layout.find( '.teca-calendar-filter-select' ).first().val() || 'all' );
+				var categoryValue = gs_teca_get_calendar_category_filter_value( $layout );
+
+				if ( isDailyLayout2Calendar() && isDailyCalendarFilter() ) {
+					applyDailyLayout2Filter( value );
+					return;
+				}
+
+				if ( filterType === 'yearly' ) {
+					applyYearlyFilter( value );
+					return;
+				}
+
+				var $quarterlyLayout = $layout.find( '.teca-quarterly-layout-1, .teca-quarterly-layout-2, .teca-quarterly-layout-3' ).first();
+
+				if ( $quarterlyLayout.length && filterType === 'quarterly' ) {
+					applyQuarterlyFilter( value );
+					return;
+				}
+
+				var $items = $layout.find( '.teca-calendar-filterable-event' );
+				var visibleCount = 0;
+
+				$items.each( function() {
+					var $item = $( this );
+					var matches = value === 'all' || getItemValue( $item ) === value;
+
+					if ( matches ) {
+						matches = gs_teca_event_matches_category_filter( $item, categoryValue );
+					}
+
+					$item.toggleClass( 'is-filter-hidden', ! matches );
+					$item.prop( 'hidden', ! matches );
+					$item.css( 'display', matches ? '' : 'none' );
+
+					if ( matches ) {
+						visibleCount++;
+					}
+				} );
+
+				$layout.find( sectionSelectors ).each( function() {
+					var $section = $( this );
+					var hasVisible = $section.find( '.teca-calendar-filterable-event:not(.is-filter-hidden)' ).length > 0;
+
+					gs_teca_set_calendar_section_visible( $section, value === 'all' || hasVisible );
+				} );
+
+				if ( value !== 'all' && filterType === 'monthly' ) {
+					$layout.find( '[data-month]' ).each( function() {
+						var $section = $( this );
+						var month = String( $section.attr( 'data-month' ) || '' );
+
+						if ( month ) {
+							$section.toggleClass( 'is-filter-hidden', month !== value );
+						}
+					} );
+				}
+
+				if ( value !== 'all' && filterType === 'weekly' ) {
+					$layout.find( '[data-week-start]' ).each( function() {
+						var $section = $( this );
+						var week = String( $section.attr( 'data-week-start' ) || '' );
+
+						if ( week ) {
+							$section.toggleClass( 'is-filter-hidden', week !== value );
+						}
+					} );
+				}
+
+				if ( value !== 'all' && filterType === 'quarterly' ) {
+					$layout.find( '[data-quarter]' ).each( function() {
+						var $section = $( this );
+						var quarter = String( $section.attr( 'data-quarter' ) || '' );
+
+						if ( quarter ) {
+							$section.toggleClass( 'is-filter-hidden', quarter !== value );
+						}
+					} );
+				}
+
+				$layout.find( '.teca-calendar-filter-message' ).prop( 'hidden', value === 'all' || visibleCount > 0 );
+			}
+
+			$layout.on( 'change', '.teca-calendar-filter-select', applyFilter );
+			$layout.on( 'change', '.teca-calendar-event-type-filter', applyFilter );
+			applyFilter();
+		} );
+	}
+
+	function gs_teca_do_events_layout_1( $widget_box ) {
+		$widget_box.find( '.teca-events-layout-1' ).each( function() {
+			var $layout = $( this );
+
+			if ( $layout.data( 'tecaEventsLayout1Init' ) ) {
+				return;
+			}
+
+			$layout.data( 'tecaEventsLayout1Init', 1 );
+
+			var slideInterval = null;
+			var slideDuration = 5000;
+
+			function clearSlideInterval() {
+				if ( slideInterval ) {
+					clearInterval( slideInterval );
+					slideInterval = null;
+				}
+			}
+
+			function startHeroSlider( $slider ) {
+				clearSlideInterval();
+
+				if ( ! $slider || ! $slider.length ) {
+					return;
+				}
+
+				var $slides = $slider.find( '.teca-events-layout-1-slide' ).not( '.teca-events-layout-1-slide--fallback' );
+
+				if ( $slides.length <= 1 ) {
+					return;
+				}
+
+				var current = 0;
+
+				$slides.removeClass( 'is-active' ).eq( 0 ).addClass( 'is-active' );
+
+				slideInterval = setInterval( function() {
+					$slides.eq( current ).removeClass( 'is-active' );
+					current = ( current + 1 ) % $slides.length;
+					$slides.eq( current ).addClass( 'is-active' );
+				}, slideDuration );
+			}
+
+			function activateTab( group ) {
+				if ( ! group ) {
+					return;
+				}
+
+				$layout.find( '.teca-events-layout-1-tab' ).removeClass( 'is-active' ).attr( 'aria-selected', 'false' );
+				$layout.find( '.teca-events-layout-1-tab[data-event-group="' + group + '"]' )
+					.addClass( 'is-active' )
+					.attr( 'aria-selected', 'true' );
+
+				$layout.find( '.teca-events-layout-1-panel' ).removeClass( 'is-active' ).attr( 'hidden', true );
+				$layout.find( '.teca-events-layout-1-panel[data-event-group-panel="' + group + '"]' )
+					.addClass( 'is-active' )
+					.removeAttr( 'hidden' );
+
+				$layout.find( '.teca-events-layout-1-hero-slider' ).removeClass( 'is-active' ).attr( 'hidden', true );
+				var $activeSlider = $layout.find( '.teca-events-layout-1-hero-slider[data-event-group-slide="' + group + '"]' )
+					.addClass( 'is-active' )
+					.removeAttr( 'hidden' );
+
+				startHeroSlider( $activeSlider );
+			}
+
+			$layout.on( 'click.tecaEventsLayout1', '.teca-events-layout-1-tab', function( event ) {
+				event.preventDefault();
+
+				var group = String( $( this ).data( 'event-group' ) || '' );
+
+				if ( ! group || $( this ).hasClass( 'is-active' ) ) {
+					return;
+				}
+
+				activateTab( group );
+			} );
+
+			activateTab( String( $layout.data( 'default-tab' ) || 'upcoming' ) );
+		} );
+	}
+
+	function gs_teca_do_events_layout_2( $widget_box ) {
+		$widget_box.find( '.teca-events-layout-2' ).each( function() {
+			var $layout = $( this );
+
+			if ( $layout.data( 'tecaEventsLayout2Init' ) ) {
+				return;
+			}
+
+			$layout.data( 'tecaEventsLayout2Init', 1 );
+
+			function activateTab( group ) {
+				if ( ! group ) {
+					return;
+				}
+
+				$layout.find( '.teca-events-layout-2-tab' ).removeClass( 'is-active' ).attr( 'aria-selected', 'false' );
+				$layout.find( '.teca-events-layout-2-tab[data-event-group="' + group + '"]' )
+					.addClass( 'is-active' )
+					.attr( 'aria-selected', 'true' );
+
+				$layout.find( '.teca-events-layout-2-panel' ).removeClass( 'is-active' ).attr( 'hidden', true );
+				$layout.find( '.teca-events-layout-2-panel[data-event-group-panel="' + group + '"]' )
+					.addClass( 'is-active' )
+					.removeAttr( 'hidden' );
+			}
+
+			$layout.on( 'click.tecaEventsLayout2', '.teca-events-layout-2-tab', function( event ) {
+				event.preventDefault();
+
+				var group = String( $( this ).data( 'event-group' ) || '' );
+
+				if ( ! group || $( this ).hasClass( 'is-active' ) ) {
+					return;
+				}
+
+				activateTab( group );
+			} );
+
+			activateTab( String( $layout.data( 'default-tab' ) || 'upcoming' ) );
+		} );
+	}
+
+	function gs_teca_do_events_layout_3( $widget_box ) {
+		$widget_box.find( '.teca-events-layout-3' ).each( function() {
+			var $layout = $( this );
+
+			if ( $layout.data( 'tecaEventsLayout3Init' ) ) {
+				return;
+			}
+
+			$layout.data( 'tecaEventsLayout3Init', 1 );
+
+			var slideInterval = null;
+			var slideDuration = 5000;
+
+			function clearSlideInterval() {
+				if ( slideInterval ) {
+					clearInterval( slideInterval );
+					slideInterval = null;
+				}
+			}
+
+			function updateHeroTitle( $slider, groupLabel ) {
+				var $activeSlide = $slider.find( '.teca-events-layout-3-slide.is-active' ).first();
+				var slideTitle = String( $activeSlide.data( 'slide-title' ) || '' ).trim();
+				var title = slideTitle || groupLabel || '';
+
+				if ( title ) {
+					$layout.find( '[data-hero-title]' ).text( title );
+				}
+			}
+
+			function startHeroSlider( $slider, groupLabel ) {
+				clearSlideInterval();
+
+				if ( ! $slider || ! $slider.length ) {
+					return;
+				}
+
+				var $slides = $slider.find( '.teca-events-layout-3-slide' ).not( '.teca-events-layout-3-slide--fallback' );
+
+				updateHeroTitle( $slider, groupLabel );
+
+				if ( $slides.length <= 1 ) {
+					return;
+				}
+
+				var current = 0;
+
+				$slides.removeClass( 'is-active' ).eq( 0 ).addClass( 'is-active' );
+				updateHeroTitle( $slider, groupLabel );
+
+				slideInterval = setInterval( function() {
+					$slides.eq( current ).removeClass( 'is-active' );
+					current = ( current + 1 ) % $slides.length;
+					$slides.eq( current ).addClass( 'is-active' );
+					updateHeroTitle( $slider, groupLabel );
+				}, slideDuration );
+			}
+
+			function activateTab( group ) {
+				if ( ! group ) {
+					return;
+				}
+
+				var $tab = $layout.find( '.teca-events-layout-3-tab[data-event-group="' + group + '"]' );
+				var groupLabel = String( $tab.data( 'group-label' ) || $layout.find( '.teca-events-layout-3-panel[data-event-group-panel="' + group + '"]' ).data( 'group-label' ) || '' );
+
+				$layout.find( '.teca-events-layout-3-tab' ).removeClass( 'is-active' ).attr( 'aria-selected', 'false' );
+				$tab.addClass( 'is-active' ).attr( 'aria-selected', 'true' );
+
+				$layout.find( '.teca-events-layout-3-panel' ).removeClass( 'is-active' ).attr( 'hidden', true );
+				$layout.find( '.teca-events-layout-3-panel[data-event-group-panel="' + group + '"]' )
+					.addClass( 'is-active' )
+					.removeAttr( 'hidden' );
+
+				if ( groupLabel ) {
+					$layout.find( '[data-events-title]' ).text( groupLabel );
+				}
+
+				$layout.find( '.teca-events-layout-3-hero-slider' ).removeClass( 'is-active' ).attr( 'hidden', true );
+				var $activeSlider = $layout.find( '.teca-events-layout-3-hero-slider[data-event-group-slide="' + group + '"]' )
+					.addClass( 'is-active' )
+					.removeAttr( 'hidden' );
+
+				startHeroSlider( $activeSlider, groupLabel );
+			}
+
+			$layout.on( 'click.tecaEventsLayout3', '.teca-events-layout-3-tab', function( event ) {
+				event.preventDefault();
+
+				var group = String( $( this ).data( 'event-group' ) || '' );
+
+				if ( ! group || $( this ).hasClass( 'is-active' ) ) {
+					return;
+				}
+
+				activateTab( group );
+			} );
+
+			activateTab( String( $layout.data( 'default-tab' ) || 'upcoming' ) );
+		} );
+	}
+
+	function gs_teca_do_accordion( $widget_box ) {
+		$widget_box.find( '.teca-accordion' ).each( function() {
+			var $accordion = $( this );
+
+			$accordion.find( '.teca-accordion-item' ).each( function( index ) {
+				var $item = $( this );
+				var $trigger = $item.find( '.teca-accordion-trigger' ).first();
+				var $panel = $item.find( '.teca-accordion-panel' ).first();
+				var shouldOpen = index === 0 && $item.hasClass( 'is-active' );
+
+				if ( shouldOpen ) {
+					$item.addClass( 'is-active' );
+					$trigger.attr( 'aria-expanded', 'true' );
+					$panel.prop( 'hidden', false ).css( 'display', '' );
+				} else {
+					$item.removeClass( 'is-active' );
+					$trigger.attr( 'aria-expanded', 'false' );
+					$panel.prop( 'hidden', true ).css( 'display', 'none' );
+				}
+			} );
+		} );
+	}
+
+	$( document ).on( 'click', '.teca-accordion .teca-accordion-trigger', function( e ) {
+		e.preventDefault();
+
+		var $trigger = $( this );
+		var $item = $trigger.closest( '.teca-accordion-item' );
+		var $accordion = $trigger.closest( '.teca-accordion' );
+		var isOpen = $item.hasClass( 'is-active' );
+
+		$accordion.find( '.teca-accordion-item' )
+			.removeClass( 'is-active' )
+			.find( '.teca-accordion-trigger' )
+			.attr( 'aria-expanded', 'false' );
+
+		$accordion.find( '.teca-accordion-panel' )
+			.prop( 'hidden', true )
+			.css( 'display', 'none' );
+
+		if ( ! isOpen ) {
+			$item.addClass( 'is-active' );
+			$trigger.attr( 'aria-expanded', 'true' );
+			$item.find( '.teca-accordion-panel' )
+				.prop( 'hidden', false )
+				.css( 'display', '' );
+		}
+	} );
+
+    function gs_teca_widget_single_init( $widget_box ) {
+		do_popup( $('.single-member-pop', $widget_box ), $widget_box );
+
+		if ( $widget_box.hasClass('view_type_carousel') ) {
+			if ( $widget_box.data( 'gs-teca-carousel-ready' ) ) {
+				var carouselSwiper = $widget_box.data( 'gs-teca-carousel-swiper' );
+
+				if ( carouselSwiper && carouselSwiper.update ) {
+					carouselSwiper.update();
+				}
+			} else {
+				gs_teca_do_carousel( $widget_box );
+			}
+		}
+
+		if ( $widget_box.hasClass('view_type_ticker') ) {
+			if ( ! $widget_box.data( 'gs-teca-ticker-ready' ) ) {
+				gs_teca_do_ticker( $widget_box );
+			}
+		}
+
+		if ( $widget_box.hasClass('view_type_masonry') ) {
+			gs_teca_do_masonry( $widget_box );
+		}
+		
+		if ( $widget_box.hasClass('view_type_filter') ) {
+			do_filter( $widget_box );
+		}
+
+		gs_teca_init_filters_by_name( $widget_box );
+		gs_teca_init_search_by( $widget_box );
+
+		if ( gs_teca_is_calendar_widget( $widget_box ) ) {
+			gs_teca_do_daily_layout_2( $widget_box );
+			gs_teca_init_unified_calendar_filter( $widget_box );
+			gs_teca_do_daily_layout_1( $widget_box );
+			gs_teca_do_daily_layout_3( $widget_box );
+			gs_teca_do_calendar_date_filter( $widget_box );
+			gs_teca_do_weekly_layout_1( $widget_box );
+			gs_teca_do_weekly_layout_2( $widget_box );
+			gs_teca_do_weekly_layout_3( $widget_box );
+			gs_teca_do_monthly_layout_1( $widget_box );
+			gs_teca_do_monthly_layout_2( $widget_box );
+			gs_teca_do_monthly_layout_3( $widget_box );
+		}
+
+		if ( $widget_box.hasClass('view_type_events-section') ) {
+			gs_teca_do_events_layout_1( $widget_box );
+			gs_teca_do_events_layout_2( $widget_box );
+			gs_teca_do_events_layout_3( $widget_box );
+		}
+
+		if ( $widget_box.find( '.teca-accordion' ).length ) {
+			gs_teca_do_accordion( $widget_box );
+		}
+
+		if ( $widget_box.hasClass('gs-teca-has-ajax-pagination') ) {
+			gs_teca_do_ajax_pagination($widget_box);
+		}
+
+		if ( $widget_box.hasClass('gs-teca-has-load-more') ) {
+			gs_teca_load_more_btn($widget_box);
+		}
+
+		if ( $widget_box.hasClass('gs-teca-has-load-more-scroll') ) {
+			gs_teca_load_more_by_scroll($widget_box);
+		}
+		
+		$widget_box.addClass('gs_teca__loaded');
+		
+	}
+
+    function gs_teca_queue_widget_init( $widget ) {
+		if ( $widget.data( 'et-js-processed' ) || $widget.hasClass( 'gs_teca__loaded' ) ) {
+			return;
+		}
+
+		function processWidget() {
+			if ( $widget.data( 'et-js-processed' ) || $widget.hasClass( 'gs_teca__loaded' ) ) {
+				return;
+			}
+
+			$widget.data( 'et-js-processed', 1 );
+			gs_teca_widget_single_init( $widget );
+
+			gs_debounce( function() {
+				jQuery( window ).trigger( 'resize' );
+			}, 30 )();
+		}
+
+		if ( $widget.is( ':visible' ) && window.gs_teca_get_layout_width( $widget ) > 0 ) {
+			processWidget();
+			return;
+		}
+
+		window.gs_teca_when_carousel_ready( $widget, processWidget );
+	}
+
+    window.gs_teca_init = function() {
+
+		var $gs_teca_container = $('.gs_teca_area');
+		
+		if ( ! $gs_teca_container.length ) return;
+
+		$gs_teca_container.each(function() {
+			gs_teca_queue_widget_init( $( this ) );
+		});
+	}
+
+	$( document ).on( 'change.tecaDailyLayout2CalendarFilter', '.teca-daily-date-filter .teca-calendar-filter-select', function() {
+		var $select = $( this );
+		var $filter = $select.closest( '.teca-calendar-filter' );
+		var filterType = String( $filter.attr( 'data-filter-type' ) || '' ).trim();
+
+		if ( filterType && filterType !== 'daily' ) {
+			return;
+		}
+
+		var $wrapper = $select.closest( '.teca-calendar-layout' );
+
+		if ( ! $wrapper.length || ! gs_teca_get_daily_layout_2_root( $wrapper ).length ) {
+			return;
+		}
+
+		var $dailyLayout = gs_teca_get_daily_layout_2_root( $wrapper );
+		var applyFn = $dailyLayout.data( 'tecaDailyLayout2ApplyFilters' );
+
+		if ( typeof applyFn === 'function' ) {
+			applyFn();
+			return;
+		}
+
+		gs_teca_apply_daily_layout_2_date_filter( $wrapper, String( $select.val() || 'all' ) );
+	} );
+
+	gs_teca_init();
+
+	// Init on Editor
+	$(window).on('gsteca:scripts:reprocess', function() {
+		gs_teca_init();
+	});
+
+	// Init on Load
+	$(window).on('load', function() {
+		gs_teca_init();
+        
+	});
+
+});
+
+jQuery('body').on( 'click', function() {
+    gs_teca_init();
+    setTimeout(() => {
+        gs_teca_init();
+    }, 200);
+});

@@ -1,0 +1,20 @@
+( function( $ ) {
+	'use strict';
+
+	function reprocessTecaLayouts() {
+		$( document ).trigger( 'gsteca:scripts:reprocess' );
+	}
+
+	var count = 0;
+	var interval = setInterval( function() {
+		reprocessTecaLayouts();
+
+		if ( count > 40 ) {
+			clearInterval( interval );
+		}
+
+		count++;
+	}, 300 );
+
+	$( window ).on( 'load', reprocessTecaLayouts );
+}( jQuery ) );

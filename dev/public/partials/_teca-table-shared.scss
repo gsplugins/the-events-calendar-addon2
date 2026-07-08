@@ -1,0 +1,64 @@
+.gs-teca-table-style-1,
+.teca-table-style-1,
+.gs-teca-table-style-2,
+.teca-table-style-2,
+.gs-teca-table-style-3,
+.teca-table-style-3,
+.gs-teca-table-style-4,
+.teca-table-style-4,
+.gs-teca-table-style-5,
+.teca-table-style-5 {
+	.teca-table-event-venue {
+		max-width: 220px;
+		white-space: normal;
+	}
+
+	.teca-table-event-links {
+		width: 140px;
+		max-width: 150px;
+		white-space: nowrap;
+	}
+
+	.teca-table-venue {
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+		max-width: 220px;
+		min-width: 0;
+	}
+
+	.teca-table-venue-name {
+		display: block;
+		font-size: 14px;
+		line-height: 1.35;
+		font-weight: 700;
+	}
+
+	.teca-table-venue-meta,
+	.teca-table-venue-empty {
+		display: block;
+		font-size: 12px;
+		line-height: 1.35;
+	}
+
+	.teca-table-venue-meta {
+		opacity: 0.75;
+	}
+
+	.teca-table-venue-empty {
+		font-size: 14px;
+		opacity: 0.65;
+	}
+
+	.teca-google-calendar-btn--table {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		white-space: nowrap;
+		max-width: 100%;
+		padding: 8px 12px;
+		font-size: 12px;
+		line-height: 1;
+		border-radius: 999px;
+	}
+}
