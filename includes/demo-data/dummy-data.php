@@ -663,12 +663,12 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
             $attachment_files = [
-                'gs-teca-1.png',
-                'gs-teca-2.png',
-                'gs-teca-3.png',
-                'gs-teca-4.png',
-                'gs-teca-5.png',
-                'gs-teca-6.png',
+                'gs-teca-1.webp',
+                'gs-teca-2.webp',
+                'gs-teca-3.webp',
+                'gs-teca-4.webp',
+                'gs-teca-5.webp',
+                'gs-teca-6.webp',
             ];
 
             add_filter( 'http_request_args', [ $this, 'http_request_args' ] );
