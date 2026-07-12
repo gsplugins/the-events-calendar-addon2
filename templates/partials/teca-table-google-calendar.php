@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $event               = $event ?? array();
 $visibility_settings = $visibility_settings ?? ( $teca_card_args['visibility_settings'] ?? null );
@@ -20,3 +23,5 @@ teca_echo_google_calendar_button_actions(
 	'',
 	$gcal_args
 );
+
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

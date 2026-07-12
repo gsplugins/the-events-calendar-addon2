@@ -172,11 +172,11 @@ import './editor.scss';
 	}
 
 	registerBlockType( 'teca/events', {
-		title: __( 'TECA Events', 'the-events-calendar-addon' ),
-		description: __( 'Insert and display TECA event layouts.', 'the-events-calendar-addon' ),
+		title: __( 'TECA Events', 'the-events-calendar-addon2' ),
+		description: __( 'Insert and display TECA event layouts.', 'the-events-calendar-addon2' ),
 		icon: BlockIcon,
 		category: 'widgets',
-		keywords: [ __( 'events', 'the-events-calendar-addon' ), __( 'calendar', 'the-events-calendar-addon' ), 'teca' ],
+		keywords: [ __( 'events', 'the-events-calendar-addon2' ), __( 'calendar', 'the-events-calendar-addon2' ), 'teca' ],
 		supports: {
 			align: [ 'wide', 'full' ],
 		},

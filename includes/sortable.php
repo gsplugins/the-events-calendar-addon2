@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -57,15 +58,17 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 
 		public function dhf_sort() {
 
-			$object_type = isset( $_GET['object_type'] ) ? $_GET['object_type'] : 'gs_teca';
+			$object_type = isset( $_GET['object_type'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin sort page tab parameter.
+				? sanitize_key( wp_unslash( $_GET['object_type'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				: 'gs_teca';
 
 			?>
 			<div class="gs-plugins--sort-page">
 				<div class="gs-plugins--sort-links">
-					<a class="<?php echo $object_type === 'gs_teca' ? 'gs-sort-active' : ''; ?>" href="<?php echo esc_url( $this->get_url_with_object_type( 'gs_teca' ) ); ?>"><?php echo esc_html( 'Events', 'the-events-calendar-addon' ); ?></a>
-					<a class="<?php echo $object_type === 'gs_teca_fields_visibility' ? 'gs-sort-active' : ''; ?>" href="<?php echo esc_url( $this->get_url_with_object_type( 'gs_teca_fields_visibility' ) ); ?>"><?php echo esc_html( 'Single Post Info', 'the-events-calendar-addon' ); ?></a>
-					<a class="<?php echo $object_type === 'gs_teca_cat_order' ? 'gs-sort-active' : ''; ?>" href="<?php echo esc_url( $this->get_url_with_object_type( 'gs_teca_cat_order' ) ); ?>"><?php echo esc_html( 'Categories', 'the-events-calendar-addon' ); ?></a>
-					<a class="<?php echo $object_type === 'gs_teca_tag_order' ? 'gs-sort-active' : ''; ?>" href="<?php echo esc_url( $this->get_url_with_object_type( 'gs_teca_tag_order' ) ); ?>"><?php echo esc_html( 'Tags', 'the-events-calendar-addon' ); ?></a>
+					<a class="<?php echo $object_type === 'gs_teca' ? 'gs-sort-active' : ''; ?>" href="<?php echo esc_url( $this->get_url_with_object_type( 'gs_teca' ) ); ?>"><?php echo esc_html__( 'Events', 'the-events-calendar-addon2' ); ?></a>
+					<a class="<?php echo $object_type === 'gs_teca_fields_visibility' ? 'gs-sort-active' : ''; ?>" href="<?php echo esc_url( $this->get_url_with_object_type( 'gs_teca_fields_visibility' ) ); ?>"><?php echo esc_html__( 'Single Post Info', 'the-events-calendar-addon2' ); ?></a>
+					<a class="<?php echo $object_type === 'gs_teca_cat_order' ? 'gs-sort-active' : ''; ?>" href="<?php echo esc_url( $this->get_url_with_object_type( 'gs_teca_cat_order' ) ); ?>"><?php echo esc_html__( 'Categories', 'the-events-calendar-addon2' ); ?></a>
+					<a class="<?php echo $object_type === 'gs_teca_tag_order' ? 'gs-sort-active' : ''; ?>" href="<?php echo esc_url( $this->get_url_with_object_type( 'gs_teca_tag_order' ) ); ?>"><?php echo esc_html__( 'Tags', 'the-events-calendar-addon2' ); ?></a>
 				</div>
 
 				<div class="gs-plugins--sort-content">				
@@ -111,7 +114,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 
 						<div class="gsteca-sort--left-area" style="flex: 1 0 auto;">
 
-							<h3><?php esc_html_e('Step 1: Drag & Drop to rearrange events', 'the-events-calendar-addon'); ?><img src="<?php esc_url(GS_TECA_PLUGIN_URI . 'assets/img/loader.svg'); ?>" id="loading-animation" /></h3>
+							<h3><?php esc_html_e('Step 1: Drag & Drop to rearrange events', 'the-events-calendar-addon2'); ?><img src="<?php esc_url(GS_TECA_PLUGIN_URI . 'assets/img/loader.svg'); ?>" id="loading-animation" /></h3>
 
 							<?php if ($sortable->have_posts()) : ?>
 
@@ -156,9 +159,9 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 							<?php else : ?>
 
 								<div class="notice notice-warning" style="margin-top: 30px;">
-									<h3><?php echo esc_html(_e('No Events Found!', 'the-events-calendar-addon')); ?></h3>
-									<p style="font-size: 14px;"><?php echo esc_html(_e('We didn\'t find any event.</br>Please add some events to sort them.', 'the-events-calendar-addon')); ?></p>
-									<a href="<?php echo esc_url(admin_url('post-new.php?post_type=tribe_events')); ?>" style="margin-top: 10px; margin-bottom: 20px;" class="button button-primary button-large"><?php echo esc_html(_e('Add Event', 'the-events-calendar-addon')); ?></a>
+									<h3><?php echo esc_html(_e('No Events Found!', 'the-events-calendar-addon2')); ?></h3>
+									<p style="font-size: 14px;"><?php echo esc_html(_e('We didn\'t find any event.</br>Please add some events to sort them.', 'the-events-calendar-addon2')); ?></p>
+									<a href="<?php echo esc_url(admin_url('post-new.php?post_type=tribe_events')); ?>" style="margin-top: 10px; margin-bottom: 20px;" class="button button-primary button-large"><?php echo esc_html(_e('Add Event', 'the-events-calendar-addon2')); ?></a>
 								</div>
 
 							<?php endif; ?>
@@ -167,7 +170,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 
 						<div class="gsteca-sort--right-area">
 							
-							<h3><?php esc_html_e('Step 2: Query Settings for The Events Calendar Addon', 'the-events-calendar-addon'); ?></h3>
+							<h3><?php esc_html_e('Step 2: Query Settings for The Events Calendar Addon', 'the-events-calendar-addon2'); ?></h3>
 
 							<div style="background: #fff; width:400px; border-radius: 6px; padding: 30px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.12); font-size: 1.3em; line-height: 1.6; margin-top: 30px">
 								
@@ -208,7 +211,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 					<div style="display: flex; width: 100%; max-width: 1280px; gap: 40px; flex-wrap: wrap;">
 						<div class="gsteca-sort--left-area" style="flex: 1 0 auto; width: 570px;">
 
-							<h3><?php esc_html_e( 'Single Events Sorting & Visibility', 'the-events-calendar-addon' ); ?><img src="<?php esc_url(GS_TECA_PLUGIN_URI . 'assets/img/loader.svg'); ?>" id="loading-animation" /></h3>
+							<h3><?php esc_html_e( 'Single Events Sorting & Visibility', 'the-events-calendar-addon2' ); ?><img src="<?php esc_url(GS_TECA_PLUGIN_URI . 'assets/img/loader.svg'); ?>" id="loading-animation" /></h3>
 
 							<?php if ( ! empty( $fields_visibility ) ) : ?>
 								<div class="table table-striped table-visibility">
@@ -293,13 +296,15 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 
 			global $wpdb;
 
-			//check if the menu_order column exists;
-			$query = "SHOW COLUMNS FROM $wpdb->terms LIKE 'term_order'";
-			$result = $wpdb->query($query);
+		// Schema inspection; table name is from $wpdb.
+		$query = "SHOW COLUMNS FROM $wpdb->terms LIKE 'term_order'";
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- One-time schema check for custom term_order column; core table name from $wpdb.
+		$result = $wpdb->query($query);
 
-			if ($result == 0) {
-				$query = "ALTER TABLE $wpdb->terms ADD `term_order` INT( 4 ) NULL DEFAULT '0'";
-				$result = $wpdb->query($query);
+		if ($result == 0) {
+			$query = "ALTER TABLE $wpdb->terms ADD `term_order` INT( 4 ) NULL DEFAULT '0'";
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- One-time schema migration for custom term_order column; core table name from $wpdb.
+			$result = $wpdb->query($query);
 
 				update_site_option('gsteca_terms_table_altered', true);
 			}
@@ -307,19 +312,31 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 
 		public function update_gsteca_taxonomy_order() {
 
-			// if (!is_pro_active_and_valid()) wp_send_json_error();
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( esc_html__( 'Unauthorised Request', 'the-events-calendar-addon2' ), 401 );
+			}
 
-			if (empty($_POST['_nonce']) || !wp_verify_nonce($_POST['_nonce'], '_gsteca_update_order_')) {
-				wp_send_json_error(__('Unauthorised Request', 'the-events-calendar-addon'), 401);
+			$nonce = isset( $_POST['_nonce'] )
+				? sanitize_text_field( wp_unslash( $_POST['_nonce'] ) )
+				: '';
+
+			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, '_gsteca_update_order_' ) ) {
+				wp_send_json_error( esc_html__( 'Unauthorised Request', 'the-events-calendar-addon2' ), 401 );
 			}
 
 			global $wpdb;
 
-			$order = explode(',', sanitize_text_field($_POST['order']));
-			$counter = 0;
-			$taxonomy = sanitize_text_field($_POST['taxonomy'] ?? '');
+			$order_raw = isset( $_POST['order'] )
+				? sanitize_text_field( wp_unslash( $_POST['order'] ) )
+				: '';
+			$order     = array_filter( array_map( 'absint', explode( ',', $order_raw ) ) );
+			$counter   = 0;
+			$taxonomy  = isset( $_POST['taxonomy'] )
+				? sanitize_key( wp_unslash( $_POST['taxonomy'] ) )
+				: '';
 			
 			foreach ($order as $term_id) {
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom sortable order write; values are sanitized/prepared.
 				 $wpdb->update(
 					$wpdb->term_taxonomy,
 					[ 'order' => $counter ],
@@ -358,32 +375,26 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 		}
 
 		public function get_full_url() {
-			// Get the protocol
-			$protocol = ( ! empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
-
-			// Get the host
-			$host = $_SERVER['HTTP_HOST'];
-
-			// Get the request URI
-			$uri = $_SERVER['REQUEST_URI'];
-
-			// Combine them to get the full URL
-			$full_url = $protocol . $host . $uri;
-
-			return $full_url;
+			return esc_url_raw( home_url( add_query_arg( array() ) ) );
 		}
 
 		/**
 		 * Add JS and CSS to admin
 		 */
 		public function gs_teca_sort_scripts( $hook ) {
-			if ( $hook != 'events_page_sort_tribe_events' ) return;
+			if ( $hook != 'events_page_sort_tribe_events' ) {
+				return;
+			}
 
-			if ( empty( $_GET['object_type'] ) || $_GET['object_type'] == 'gs_teca' ) {
+			$object_type = isset( $_GET['object_type'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin sort page tab parameter.
+				? sanitize_key( wp_unslash( $_GET['object_type'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				: 'gs_teca';
+
+			if ( 'gs_teca' === $object_type ) {
 				$action = 'update_event_order';
-			}elseif ( empty( $_GET['object_type'] ) || $_GET['object_type'] == 'gs_teca_fields_visibility' ) {
+			} elseif ( 'gs_teca_fields_visibility' === $object_type ) {
 				$action = 'update_event_visibility_order';
-			}else {
+			} else {
 				$action = 'update_gsteca_taxonomy_order';
 			}
 			
@@ -408,13 +419,20 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 
 			check_ajax_referer( '_gsteca_update_order_', '_nonce' );
 
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( esc_html__( 'Unauthorised Request', 'the-events-calendar-addon2' ), 401 );
+			}
+
 			global $wpdb;
-			$order   = explode( ',', $_POST['order'] );
-			$counter = 0;
+			$order_raw = isset( $_POST['order'] )
+				? sanitize_text_field( wp_unslash( $_POST['order'] ) )
+				: '';
+			$order     = array_filter( array_map( 'absint', explode( ',', $order_raw ) ) );
+			$counter   = 0;
 
 			foreach ( $order as $post_id ) {
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-				$wpdb->update( $wpdb->posts, array( 'menu_order' => $counter ), array( 'ID' => $post_id ) );
+				$wpdb->update( $wpdb->posts, array( 'menu_order' => $counter ), array( 'ID' => absint( $post_id ) ) );
 				++$counter;
 			}
 
@@ -423,13 +441,21 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 		
 		public function update_event_visibility_order() {
 
-			check_ajax_referer( '_gsteca_update_order_' , '_wpnonce' );
+			check_ajax_referer( '_gsteca_update_order_', '_wpnonce' );
 
-			if ( isset( $_POST['data'] ) && is_array( $_POST['data'] ) ) {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( esc_html__( 'Unauthorised Request', 'the-events-calendar-addon2' ), 401 );
+			}
+
+			$data = isset( $_POST['data'] ) && is_array( $_POST['data'] )
+				? map_deep( wp_unslash( $_POST['data'] ), 'sanitize_text_field' )
+				: array();
+
+			if ( ! empty( $data ) ) {
 
 				$sanitized_data = array();
 
-				foreach ( $_POST['data'] as $item ) {
+				foreach ( $data as $item ) {
 
 					if ( ! is_array( $item ) ) continue;
 
@@ -462,7 +488,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 			$this->print_pro_message();
 			?>
 
-			<h2><?php esc_html_e('Custom order for Categories', 'the-events-calendar-addon'); ?><img src="<?php bloginfo('url'); ?>/wp-admin/images/loading.gif" id="loading-animation" /></h2>
+			<h2><?php esc_html_e('Custom order for Categories', 'the-events-calendar-addon2'); ?><img src="<?php bloginfo('url'); ?>/wp-admin/images/loading.gif" id="loading-animation" /></h2>
 
 			<div class="gs-teca--sort-wrap <?php echo is_pro_active_and_valid() ? 'sort--wrap-active' : ''; ?>">
 
@@ -479,7 +505,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 								
 								<li id="<?php echo esc_attr( $id ); ?>">
 									<div class="sortable-content sortable-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="28" height="28" viewBox="0 0 28 28"><path d="M28 14c0 0.266-0.109 0.516-0.297 0.703l-4 4c-0.187 0.187-0.438 0.297-0.703 0.297-0.547 0-1-0.453-1-1v-2h-6v6h2c0.547 0 1 0.453 1 1 0 0.266-0.109 0.516-0.297 0.703l-4 4c-0.187 0.187-0.438 0.297-0.703 0.297s-0.516-0.109-0.703-0.297l-4-4c-0.187-0.187-0.297-0.438-0.297-0.703 0-0.547 0.453-1 1-1h2v-6h-6v2c0 0.547-0.453 1-1 1-0.266 0-0.516-0.109-0.703-0.297l-4-4c-0.187-0.187-0.297-0.438-0.297-0.703s0.109-0.516 0.297-0.703l4-4c0.187-0.187 0.438-0.297 0.703-0.297 0.547 0 1 0.453 1 1v2h6v-6h-2c-0.547 0-1-0.453-1-1 0-0.266 0.109-0.516 0.297-0.703l4-4c0.187-0.187 0.438-0.297 0.703-0.297s0.516 0.109 0.703 0.297l4 4c0.187 0.187 0.297 0.438 0.297 0.703 0 0.547-0.453 1-1 1h-2v6h6v-2c0-0.547 0.453-1 1-1 0.266 0 0.516 0.109 0.703 0.297l4 4c0.187 0.187 0.297 0.438 0.297 0.703z"/></svg></div>
-									<div class="sortable-content sortable-title"><?php esc_html_e( $name ); ?></div>
+									<div class="sortable-content sortable-title"><?php echo esc_html( $name ); ?></div>
 									<div class="sortable-content sortable-group"><?php echo '<span>' . esc_html($count) . ' Events</span>'; ?></div>
 								</li>
 					
@@ -489,9 +515,9 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 					<?php else: ?>
 						
 						<div class="notice notice-warning">
-							<h3><?php _e( 'No Category Found!', 'the-events-calendar-addon' ); ?></h3>
-							<p><?php _e( 'We didn\'t find any Category.</br>Please add some categories to sort them.', 'the-events-calendar-addon' ); ?></p>
-							<a href="<?php echo admin_url('edit-tags.php?taxonomy=tribe_events_cat&post_type=tribe_events'); ?>" class="button button-primary button-large"><?php _e( 'Add Category', 'the-events-calendar-addon' ); ?></a>
+							<h3><?php esc_html_e( 'No Category Found!', 'the-events-calendar-addon2' ); ?></h3>
+							<p><?php esc_html_e( 'We didn\'t find any Category.</br>Please add some categories to sort them.', 'the-events-calendar-addon2' ); ?></p>
+							<a href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=tribe_events_cat&post_type=tribe_events' ) ); ?>" class="button button-primary button-large"><?php esc_html_e( 'Add Category', 'the-events-calendar-addon2' ); ?></a>
 						</div>
 		
 					<?php endif; ?>
@@ -499,7 +525,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 				</div>
 
 				<div class="gs-teca--docs-area">
-					<h3><?php esc_html_e('Query Settings for Categories', 'the-events-calendar-addon'); ?></h3>
+					<h3><?php esc_html_e('Query Settings for Categories', 'the-events-calendar-addon2'); ?></h3>
 
 					<div class="gs-teca--docs-area-content">
 						
@@ -532,7 +558,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 			$this->print_pro_message();
 			?>
 
-			<h2><?php esc_html_e('Custom order for Tags', 'the-events-calendar-addon'); ?><img src="<?php bloginfo('url'); ?>/wp-admin/images/loading.gif" id="loading-animation" /></h2>
+			<h2><?php esc_html_e('Custom order for Tags', 'the-events-calendar-addon2'); ?><img src="<?php bloginfo('url'); ?>/wp-admin/images/loading.gif" id="loading-animation" /></h2>
 
 			<div class="gs-teca--sort-wrap <?php echo is_pro_active_and_valid() ? 'sort--wrap-active' : ''; ?>">
 
@@ -549,7 +575,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 								
 								<li id="<?php echo esc_attr( $id ); ?>">
 									<div class="sortable-content sortable-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="28" height="28" viewBox="0 0 28 28"><path d="M28 14c0 0.266-0.109 0.516-0.297 0.703l-4 4c-0.187 0.187-0.438 0.297-0.703 0.297-0.547 0-1-0.453-1-1v-2h-6v6h2c0.547 0 1 0.453 1 1 0 0.266-0.109 0.516-0.297 0.703l-4 4c-0.187 0.187-0.438 0.297-0.703 0.297s-0.516-0.109-0.703-0.297l-4-4c-0.187-0.187-0.297-0.438-0.297-0.703 0-0.547 0.453-1 1-1h2v-6h-6v2c0 0.547-0.453 1-1 1-0.266 0-0.516-0.109-0.703-0.297l-4-4c-0.187-0.187-0.297-0.438-0.297-0.703s0.109-0.516 0.297-0.703l4-4c0.187-0.187 0.438-0.297 0.703-0.297 0.547 0 1 0.453 1 1v2h6v-6h-2c-0.547 0-1-0.453-1-1 0-0.266 0.109-0.516 0.297-0.703l4-4c0.187-0.187 0.438-0.297 0.703-0.297s0.516 0.109 0.703 0.297l4 4c0.187 0.187 0.297 0.438 0.297 0.703 0 0.547-0.453 1-1 1h-2v6h6v-2c0-0.547 0.453-1 1-1 0.266 0 0.516 0.109 0.703 0.297l4 4c0.187 0.187 0.297 0.438 0.297 0.703z"/></svg></div>
-									<div class="sortable-content sortable-title"><?php esc_html_e( $name ); ?></div>
+									<div class="sortable-content sortable-title"><?php echo esc_html( $name ); ?></div>
 									<div class="sortable-content sortable-group"><?php echo '<span>' . esc_html($count) . ' Events</span>'; ?></div>
 								</li>
 					
@@ -559,9 +585,9 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 					<?php else: ?>
 						
 						<div class="notice notice-warning">
-							<h3><?php _e( 'No Tag Found!', 'the-events-calendar-addon' ); ?></h3>
-							<p><?php _e( 'We didn\'t find any Tag.</br>Please add some Tags to sort them.', 'the-events-calendar-addon' ); ?></p>
-							<a href="<?php echo admin_url('edit-tags.php?taxonomy=post_tag&post_type=tribe_events'); ?>" class="button button-primary button-large"><?php _e( 'Add Category', 'the-events-calendar-addon' ); ?></a>
+							<h3><?php esc_html_e( 'No Tag Found!', 'the-events-calendar-addon2' ); ?></h3>
+							<p><?php esc_html_e( 'We didn\'t find any Tag.</br>Please add some Tags to sort them.', 'the-events-calendar-addon2' ); ?></p>
+							<a href="<?php echo esc_url( admin_url( 'edit-tags.php?taxonomy=post_tag&post_type=tribe_events' ) ); ?>" class="button button-primary button-large"><?php esc_html_e( 'Add Category', 'the-events-calendar-addon2' ); ?></a>
 						</div>
 		
 					<?php endif; ?>
@@ -569,7 +595,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 				</div>
 
 				<div class="gs-teca--docs-area">
-					<h3><?php esc_html_e('Query Settings for Tags', 'the-events-calendar-addon'); ?></h3>
+					<h3><?php esc_html_e('Query Settings for Tags', 'the-events-calendar-addon2'); ?></h3>
 
 					<div class="gs-teca--docs-area-content">
 						
@@ -596,4 +622,5 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 	}
 }
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Existing global variable is kept for backward compatibility.
 $gs_teca_custom_order = new GS_Teca_Sortable( 'tribe_events', 'The Events Calendar Addon' );

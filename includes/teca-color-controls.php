@@ -81,6 +81,7 @@ function teca_get_color_typography_field_keys() {
  */
 function teca_get_free_color_typography_field_keys() {
 	return apply_filters(
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		'gs_teca_free_color_typography_field_keys',
 		array(
 			'title_color',

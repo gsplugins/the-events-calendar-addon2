@@ -1,4 +1,5 @@
 <?php 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -8,6 +9,7 @@ class Shortcode {
 	public function __construct() {
 		
 		add_shortcode( 'gs-teca', [ $this, 'shortcode' ] );
+		add_shortcode( 'the-events-calendar-addon2', [ $this, 'shortcode' ] );
 
 		add_action('wp_ajax_gs_teca_filter', [ $this, 'filter_teca' ]);
 		add_action('wp_ajax_nopriv_gs_teca_filter', [ $this, 'filter_teca' ]);
@@ -66,8 +68,9 @@ class Shortcode {
 
         if ( isset( $ajax_datas['paged'] ) ) {
             $paged = max( 1, intval( $ajax_datas['paged'] ) );
-        } elseif ( isset( $_GET[$param_name] ) ) {
-            $paged = max( 1, intval( $_GET[$param_name] ) );
+        } elseif ( isset( $_GET[ $param_name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public pagination query var for frontend shortcodes.
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $paged = max( 1, absint( wp_unslash( $_GET[ $param_name ] ) ) );
         } else {
             $paged = 1;
         }
@@ -178,6 +181,7 @@ class Shortcode {
 				$tax_query = array_merge(['relation'=>'AND'], $tax_query);
 			}
 
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Required for shortcode event taxonomy filtering.
 			$args['tax_query'] = $tax_query;
 
 		}
@@ -193,6 +197,7 @@ class Shortcode {
 		}
 
 		if ( ! empty($exclude_cat) ) {
+			// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required to exclude selected categories from shortcode filter options.
 			$cat_options['exclude'] = $exclude_cat;
 		}
 
@@ -215,6 +220,7 @@ class Shortcode {
 		}
 
 		if ( ! empty($exclude_tags) ) {
+			// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Required to exclude selected tags from shortcode filter options.
 			$tag_options['exclude'] = $exclude_tags;
 		}
 
@@ -278,19 +284,43 @@ class Shortcode {
 		return $tax_query;
 	}
 
-	public function ajax_pagination() {
-		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'posts-grid'), 401 );
+	private function get_post_filters() {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Caller verifies nonce before invoking this helper.
+		if ( ! isset( $_POST['filters'] ) || ! is_array( $_POST['filters'] ) ) {
+			return array();
+		}
 
-		$shortcode_id   = sanitize_text_field( $_POST['shortcode_id'] );
-		$posts_per_page = isset($_POST['posts_per_page'])
-			? intval($_POST['posts_per_page'])
+		$filters   = wp_unslash( $_POST['filters'] );
+		// phpcs:enable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$sanitized = array();
+
+		foreach ( $filters as $taxonomy => $terms ) {
+			$taxonomy = sanitize_key( $taxonomy );
+
+			if ( is_array( $terms ) ) {
+				$sanitized[ $taxonomy ] = array_map( 'sanitize_text_field', $terms );
+			} else {
+				$sanitized[ $taxonomy ] = sanitize_text_field( (string) $terms );
+			}
+		}
+
+		return $sanitized;
+	}
+
+	public function ajax_pagination() {
+		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
+
+		$shortcode_id   = isset( $_POST['shortcode_id'] ) ? sanitize_text_field( wp_unslash( $_POST['shortcode_id'] ) ) : '';
+		$posts_per_page = isset( $_POST['posts_per_page'] )
+			? absint( wp_unslash( $_POST['posts_per_page'] ) )
 			: -1;
 
 		if ( $posts_per_page === 0 ) {
 			$posts_per_page = -1;
 		}
 
-		$filters = $_POST['filters'] ?? [];
+		$filters = $this->get_post_filters();
+		$paged   = isset( $_POST['paged'] ) ? absint( wp_unslash( $_POST['paged'] ) ) : 1;
 
 		$is_preview = ! is_numeric( $shortcode_id );
 
@@ -299,7 +329,7 @@ class Shortcode {
 		$data = $this->get_events( $settings, [
 			'filters'        => $filters,
 			'posts_per_page' => $posts_per_page,
-            'paged'          => intval($_POST['paged']),
+            'paged'          => $paged,
 		]);
 
 
@@ -308,10 +338,8 @@ class Shortcode {
 			'posts_per_page' => $posts_per_page,
 			'events'         => $data['events'], 
 			'found'          => $data['found'],
-			'paged'          => intval( $_POST['paged'] ),
+			'paged'          => $paged,
 		]);
-
-		$paged = $_POST['paged'];
 
 		$pagination = get_ajax_pagination( $shortcode_id, $posts_per_page, $paged, $data['found'] );
 
@@ -320,18 +348,19 @@ class Shortcode {
 	}
 
 	public function load_more_posts() {
-		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'posts-grid'), 401 );
+		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
 
-		$shortcode_id   = sanitize_text_field( $_POST['shortcode_id'] );
-		$posts_per_page = isset($_POST['posts_per_page'])
-			? intval($_POST['posts_per_page'])
+		$shortcode_id   = isset( $_POST['shortcode_id'] ) ? sanitize_text_field( wp_unslash( $_POST['shortcode_id'] ) ) : '';
+		$posts_per_page = isset( $_POST['posts_per_page'] )
+			? absint( wp_unslash( $_POST['posts_per_page'] ) )
 			: -1;
 
 		if ( $posts_per_page === 0 ) {
 			$posts_per_page = -1;
 		}
 
-		$filters = $_POST['filters'] ?? [];
+		$filters = $this->get_post_filters();
+		$offset  = isset( $_POST['offset'] ) ? absint( wp_unslash( $_POST['offset'] ) ) : 0;
 
 		$is_preview = ! is_numeric( $shortcode_id );
 
@@ -340,7 +369,7 @@ class Shortcode {
 		$data = $this->get_events( $settings, [
 			'filters'        => $filters,
 			'posts_per_page' => $posts_per_page,
-            'offset'         => intval( $_POST['offset'] )
+            'offset'         => $offset,
 		]);
 
 
@@ -349,7 +378,7 @@ class Shortcode {
 			'posts_per_page' => $posts_per_page,
 			'events'         => $data['events'], 
 			'found'          => $data['found'],
-			'offset'         => intval( $_POST['offset'] )
+			'offset'         => $offset,
 		]);
 
 
@@ -359,18 +388,18 @@ class Shortcode {
 
 	public function filter_teca() {
 
-		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'posts-grid'), 401 );
+		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
 
-		$shortcode_id   = sanitize_text_field( $_POST['shortcode_id'] );
-		$posts_per_page = isset($_POST['posts_per_page'])
-			? intval($_POST['posts_per_page'])
+		$shortcode_id   = isset( $_POST['shortcode_id'] ) ? sanitize_text_field( wp_unslash( $_POST['shortcode_id'] ) ) : '';
+		$posts_per_page = isset( $_POST['posts_per_page'] )
+			? absint( wp_unslash( $_POST['posts_per_page'] ) )
 			: -1;
 
 		if ( $posts_per_page === 0 ) {
 			$posts_per_page = -1;
 		}
 
-		$filters = $_POST['filters'] ?? [];
+		$filters = $this->get_post_filters();
 
 		$is_preview = ! is_numeric( $shortcode_id );
 
@@ -408,7 +437,7 @@ class Shortcode {
 		if ( ! check_ajax_referer( 'gs_teca_user_action' ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Unauthorised Request', 'the-events-calendar-addon' ),
+					'message' => __( 'Unauthorised Request', 'the-events-calendar-addon2' ),
 				),
 				401
 			);
@@ -420,7 +449,7 @@ class Shortcode {
 		if ( '' === $shortcode_id ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Missing shortcode instance.', 'the-events-calendar-addon' ),
+					'message' => __( 'Missing shortcode instance.', 'the-events-calendar-addon2' ),
 				),
 				400
 			);
@@ -429,7 +458,7 @@ class Shortcode {
 		if ( ! in_array( $view_type, array( 'grid', 'masonry', 'filter' ), true ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Unsupported view type.', 'the-events-calendar-addon' ),
+					'message' => __( 'Unsupported view type.', 'the-events-calendar-addon2' ),
 				),
 				400
 			);
@@ -441,7 +470,7 @@ class Shortcode {
 		if ( empty( $settings ) || ! teca_should_render_search_by_bar( $settings ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Search is not enabled for this instance.', 'the-events-calendar-addon' ),
+					'message' => __( 'Search is not enabled for this instance.', 'the-events-calendar-addon2' ),
 				),
 				400
 			);
@@ -470,7 +499,7 @@ class Shortcode {
 		$matched_events = teca_filter_events_by_search_query( $data['events'] ?? array(), $settings, $search_params );
 		$html           = $this->render_event_items_html( $settings, $matched_events );
 		$count          = count( $matched_events );
-		$message        = $count ? '' : __( 'No events found.', 'the-events-calendar-addon' );
+		$message        = $count ? '' : __( 'No events found.', 'the-events-calendar-addon2' );
 
 		wp_send_json_success(
 			array(
@@ -737,7 +766,7 @@ class Shortcode {
             $theme_area_style .= teca_get_style_10_column_css_vars( $settings );
         }
 
-        $gs_row_classes = ['gs-roow', 'gs-teca'];
+        $gs_row_classes = ['gs-roow', 'the-events-calendar-addon2'];
         if ( 'gs-teca-style-1' === $theme ) {
             $gs_row_classes[] = 'teca-grid-style-1-wrapper';
         }
@@ -950,7 +979,7 @@ class Shortcode {
 
 								<li class="filter active" data-filter="*">
 									<a href="javascript:void(0)">
-										<span><?php esc_html_e( 'All', 'gs-teca' ); ?></span>
+										<span><?php esc_html_e( 'All', 'the-events-calendar-addon2' ); ?></span>
 									</a>
 								</li>
 
@@ -1102,7 +1131,7 @@ class Shortcode {
 	public function shortcode( $atts, $ajax_datas = array()) {
 	
         if ( empty( $atts['id'] ) ) {
-            return __( 'No shortcode ID found', 'gs-teca' );
+            return __( 'No shortcode ID found', 'the-events-calendar-addon2' );
         }
 
 		
@@ -1146,11 +1175,23 @@ class Shortcode {
 
 			// Shortcode Custom CSS
 			$css = gsTecaAssetGenerator()->get_shortcode_custom_css( $settings );
-			if ( !empty($css) ) $html .= sprintf( "<style>%s</style>" , wp_kses_post(minimize_css_simple($css) ));
-			
+			if ( ! empty( $css ) ) {
+				$html .= sprintf(
+					'<style id="%1$s" type="text/css">%2$s</style>',
+					esc_attr( 'gs-teca-dynamic-style-' . sanitize_key( (string) ( $settings['id'] ?? '0' ) ) ),
+					wp_strip_all_tags( minimize_css_simple( $css ) ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Dynamic CSS is generated from sanitized shortcode settings and stripped of HTML tags.
+				);
+			}
+
 			// Prefs Custom CSS
 			$css = gsTecaAssetGenerator()->get_prefs_custom_css();
-			if ( !empty($css) ) $html .= sprintf( "<style>%s</style>" , wp_kses_post(minimize_css_simple($css) ));
+			if ( ! empty( $css ) ) {
+				$html .= sprintf(
+					'<style id="%1$s" type="text/css">%2$s</style>',
+					esc_attr( 'gs-teca-prefs-dynamic-style-' . sanitize_key( (string) ( $settings['id'] ?? '0' ) ) ),
+					wp_strip_all_tags( minimize_css_simple( $css ) ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Dynamic CSS is generated from sanitized shortcode settings and stripped of HTML tags.
+				);
+			}
 	
 		}
 	

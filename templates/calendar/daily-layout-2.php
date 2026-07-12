@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $events           = $events ?? array();
 $month_groups     = $month_groups ?? array();
@@ -26,8 +29,8 @@ $first_event_id = $first_event_id ?? 0;
 		<span class="teca-daily-layout-2-bg-blob teca-daily-layout-2-bg-blob--amber"></span>
 	</div>
 	<div class="teca-daily-layout-2-shell">
-		<aside class="teca-daily-layout-2-sidebar" aria-label="<?php esc_attr_e( 'Events', 'the-events-calendar-addon' ); ?>">
-			<div class="teca-daily-layout-2-sidebar-label"><?php esc_html_e( 'Events', 'the-events-calendar-addon' ); ?></div>
+		<aside class="teca-daily-layout-2-sidebar" aria-label="<?php esc_attr_e( 'Events', 'the-events-calendar-addon2' ); ?>">
+			<div class="teca-daily-layout-2-sidebar-label"><?php esc_html_e( 'Events', 'the-events-calendar-addon2' ); ?></div>
 
 			<?php if ( ! empty( $events ) ) : ?>
 				<ul class="teca-daily-layout-2-event-list">
@@ -54,7 +57,7 @@ $first_event_id = $first_event_id ?? 0;
 					<?php endforeach; ?>
 				</ul>
 			<?php else : ?>
-				<p class="teca-daily-layout-2-empty-sidebar"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></p>
+				<p class="teca-daily-layout-2-empty-sidebar"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></p>
 			<?php endif; ?>
 		</aside>
 
@@ -71,12 +74,12 @@ $first_event_id = $first_event_id ?? 0;
 								type="search"
 								id="teca-daily-layout-2-search-<?php echo esc_attr( $layout_id ); ?>"
 								class="teca-daily-layout-2-search-input"
-								placeholder="<?php esc_attr_e( 'Search for events', 'the-events-calendar-addon' ); ?>"
+								placeholder="<?php esc_attr_e( 'Search for events', 'the-events-calendar-addon2' ); ?>"
 								autocomplete="off"
 							/>
 						</label>
 						<div class="teca-daily-layout-2-header-actions">
-							<button type="button" class="teca-daily-layout-2-find-btn"><?php esc_html_e( 'Find Events', 'the-events-calendar-addon' ); ?></button>
+							<button type="button" class="teca-daily-layout-2-find-btn"><?php esc_html_e( 'Find Events', 'the-events-calendar-addon2' ); ?></button>
 							<?php if ( ! empty( $category_options ) ) : ?>
 								<?php
 								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -110,11 +113,11 @@ $first_event_id = $first_event_id ?? 0;
 
 					<div class="teca-daily-layout-2-nav-row">
 						<div class="teca-daily-layout-2-nav-controls">
-							<button type="button" class="teca-daily-layout-2-nav-btn teca-daily-layout-2-nav-prev" aria-label="<?php esc_attr_e( 'Previous week', 'the-events-calendar-addon' ); ?>">&lsaquo;</button>
-							<button type="button" class="teca-daily-layout-2-nav-btn teca-daily-layout-2-nav-next" aria-label="<?php esc_attr_e( 'Next week', 'the-events-calendar-addon' ); ?>">&rsaquo;</button>
-							<button type="button" class="teca-daily-layout-2-today-btn"><?php esc_html_e( 'Today', 'the-events-calendar-addon' ); ?></button>
+							<button type="button" class="teca-daily-layout-2-nav-btn teca-daily-layout-2-nav-prev" aria-label="<?php esc_attr_e( 'Previous week', 'the-events-calendar-addon2' ); ?>">&lsaquo;</button>
+							<button type="button" class="teca-daily-layout-2-nav-btn teca-daily-layout-2-nav-next" aria-label="<?php esc_attr_e( 'Next week', 'the-events-calendar-addon2' ); ?>">&rsaquo;</button>
+							<button type="button" class="teca-daily-layout-2-today-btn"><?php esc_html_e( 'Today', 'the-events-calendar-addon2' ); ?></button>
 						</div>
-						<h2 class="teca-daily-layout-2-title teca-daily-layout-2-date-label"><?php esc_html_e( 'All Events', 'the-events-calendar-addon' ); ?></h2>
+						<h2 class="teca-daily-layout-2-title teca-daily-layout-2-date-label"><?php esc_html_e( 'All Events', 'the-events-calendar-addon2' ); ?></h2>
 					</div>
 				</div>
 
@@ -154,7 +157,7 @@ $first_event_id = $first_event_id ?? 0;
 														<div class="teca-daily-layout-2-card-time">
 															<span><?php echo esc_html( $datetime ); ?></span>
 															<?php if ( $is_recurring ) : ?>
-																<svg class="teca-daily-layout-2-card-recurring" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" title="<?php esc_attr_e( 'Recurring event', 'the-events-calendar-addon' ); ?>">
+																<svg class="teca-daily-layout-2-card-recurring" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" title="<?php esc_attr_e( 'Recurring event', 'the-events-calendar-addon2' ); ?>">
 																	<path d="M17 2l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
 																	<path d="M3 11v-1a4 4 0 014-4h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
 																	<path d="M7 22l-4-4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -201,9 +204,12 @@ $first_event_id = $first_event_id ?? 0;
 						</section>
 					<?php endforeach; ?>
 				<?php else : ?>
-					<p class="teca-daily-layout-2-empty-content"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></p>
+					<p class="teca-daily-layout-2-empty-content"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></p>
 				<?php endif; ?>
 			</div>
 		</div>
 	</div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

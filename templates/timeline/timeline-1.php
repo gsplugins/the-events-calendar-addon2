@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $card_partial = Template_Loader::locate_template( 'timeline/partials/event-card-content.php' );
 $index        = 0;
@@ -48,3 +51,6 @@ $index        = 0;
 		?>
 	</div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

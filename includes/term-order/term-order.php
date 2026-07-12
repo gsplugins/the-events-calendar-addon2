@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 // Exit if accessed directly
@@ -108,6 +109,7 @@ final class Term_Order {
 		 * @since 1.0.0
 		 * @param bool True to use jQuery sortable. False for numbers only.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Hook name matches wp-term-order plugin compatibility.
 		$this->fancy = apply_filters( 'wp_fancy_term_order', true );
 
 		/**
@@ -119,6 +121,7 @@ final class Term_Order {
 		 * @since 2.0.0
 		 * @param string "modify_tables" by default. Return "meta" to not modify tables.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		$this->db_strategy = apply_filters( 'gs_teca_db_strategy', $this->db_strategy );
 
 		// Queries
@@ -144,7 +147,7 @@ final class Term_Order {
 			// Register "order" meta value
 			register_term_meta( $value, 'order', array(
 				'type'              => 'integer',
-				'description'       => esc_html__( 'Numeric order for terms, useful when sorting', 'the-events-calendar-addon' ),
+				'description'       => esc_html__( 'Numeric order for terms, useful when sorting', 'the-events-calendar-addon2' ),
 				'default'           => 0,
 				'single'            => true,
 				'show_in_rest'      => true,
@@ -164,12 +167,17 @@ final class Term_Order {
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 
 			// Proceed only if taxonomy supported
-			if ( ! empty( $_REQUEST['taxonomy'] ) && $this->taxonomy_supported( $_REQUEST['taxonomy'] ) && ! defined( 'WP_CLI' ) ) {
+			$request_taxonomy = isset( $_REQUEST['taxonomy'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin taxonomy screen parameter.
+				? sanitize_key( wp_unslash( $_REQUEST['taxonomy'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				: '';
+
+			if ( '' !== $request_taxonomy && $this->taxonomy_supported( $request_taxonomy ) && ! defined( 'WP_CLI' ) ) {
 				add_action( 'load-edit-tags.php', array( $this, 'edit_tags' ) );
 			}
 		}
 
 		// Pass this object into an action
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Hook name matches wp-term-order plugin compatibility.
 		do_action_ref_array( 'wp_term_meta_order_init', array( &$this ) );
 	}
 
@@ -226,6 +234,7 @@ final class Term_Order {
 		}
 
 		// Filter & return
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		return (bool) apply_filters( 'gs_teca_taxonomy_supported', $retval, $taxonomy );
 	}
 
@@ -244,6 +253,7 @@ final class Term_Order {
 		$retval = $this->taxonomy_supported( $taxonomy );
 
 		// Filter & return
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		return (bool) apply_filters( 'gs_teca_taxonomy_override_orderby_supported', $retval, $taxonomy );
 	}
 
@@ -258,6 +268,13 @@ final class Term_Order {
 		// Enqueue fancy ordering
 		if ( true === $this->fancy ) {
 			wp_enqueue_script( 'gs-teca-term-order-reorder', $this->url . 'includes/term-order/assets/js/reorder.js', array( 'jquery-ui-sortable' ), $this->db_version, true );
+			wp_localize_script(
+				'gs-teca-term-order-reorder',
+				'gsTecaTermOrder',
+				array(
+					'nonce' => wp_create_nonce( 'gs_teca_reordering_terms' ),
+				)
+			);
 		}
 	}
 
@@ -272,16 +289,16 @@ final class Term_Order {
 		if ( true === $this->fancy ) {
 			get_current_screen()->add_help_tab( array(
 				'id'      => 'gsteca_term_order_help_tab',
-				'title'   => esc_html__( 'Term Order', 'the-events-calendar-addon' ),
-				'content' => '<p>' . esc_html__( 'To reposition an item, drag and drop the row by "clicking and holding" it anywhere and moving it to its new position.', 'the-events-calendar-addon' ) . '</p>',
+				'title'   => esc_html__( 'Term Order', 'the-events-calendar-addon2' ),
+				'content' => '<p>' . esc_html__( 'To reposition an item, drag and drop the row by "clicking and holding" it anywhere and moving it to its new position.', 'the-events-calendar-addon2' ) . '</p>',
 			) );
 
 		// Numbers only
 		} else {
 			get_current_screen()->add_help_tab( array(
 				'id'      => 'gsteca_term_order_help_tab',
-				'title'   => esc_html__( 'Term Order', 'the-events-calendar-addon' ),
-				'content' => '<p>' . esc_html__( 'To position an item, Quick Edit the row and change the order value to a more suitable number.', 'the-events-calendar-addon' ) . '</p>',
+				'title'   => esc_html__( 'Term Order', 'the-events-calendar-addon2' ),
+				'content' => '<p>' . esc_html__( 'To position an item, Quick Edit the row and change the order value to a more suitable number.', 'the-events-calendar-addon2' ) . '</p>',
 			) );
 		}
 	}
@@ -381,6 +398,7 @@ final class Term_Order {
 
 
 		// Filter taxonomies & return
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		return (array) apply_filters( 'gs_teca_get_taxonomies', $taxonomies, $r, $args );
 	}
 
@@ -395,7 +413,7 @@ final class Term_Order {
 	 * @return array
 	 */
 	public function add_column_header( $columns = array() ) {
-		$columns['order'] = esc_html__( 'Order', 'the-events-calendar-addon' );
+		$columns['order'] = esc_html__( 'Order', 'the-events-calendar-addon2' );
 
 		return $columns;
 	}
@@ -413,7 +431,11 @@ final class Term_Order {
 	public function add_column_value( $empty = '', $custom_column = '', $term_id = 0 ) {
 
 		// Bail if no taxonomy passed or not on the `order` column
-		if ( empty( $_REQUEST['taxonomy'] ) || ( 'order' !== $custom_column ) || ! empty( $empty ) ) {
+		$request_taxonomy = isset( $_REQUEST['taxonomy'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin taxonomy list column output.
+			? sanitize_key( wp_unslash( $_REQUEST['taxonomy'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			: '';
+
+		if ( empty( $request_taxonomy ) || ( 'order' !== $custom_column ) || ! empty( $empty ) ) {
 			return;
 		}
 
@@ -467,14 +489,16 @@ final class Term_Order {
 		 * Bail if order info hasn't been POSTed, like when the "Quick Edit"
 		 * form is used to update a term.
 		 */
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce is verified by WordPress core before create_term/edit_term hooks fire.
 		if ( ! isset( $_POST['order'] ) ) {
 			return;
 		}
 
 		// Sanitize the value.
 		$order = ! empty( $_POST['order'] )
-			? (int) $_POST['order']
+			? absint( wp_unslash( $_POST['order'] ) )
 			: 0;
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		// No cache clean required
 		$this->set_term_order( $term_id, $taxonomy, $order, false );
@@ -555,6 +579,7 @@ final class Term_Order {
 		 *
 		 * @since 1.0.0
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		do_action( 'gsteca_term_order_set_term_order', $term_id, $taxonomy, $order );
 	}
 
@@ -573,8 +598,8 @@ final class Term_Order {
 		if ( 'modify_tables' === $this->db_strategy ) {
 
 			// Use taxonomy if available
-			$tax = ! empty( $_REQUEST['taxonomy'] )
-				? sanitize_key( $_REQUEST['taxonomy'] )
+			$tax = isset( $_REQUEST['taxonomy'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin taxonomy list parameter.
+				? sanitize_key( wp_unslash( $_REQUEST['taxonomy'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				: '';
 
 			// Get the term, probably from cache at this point
@@ -616,17 +641,18 @@ final class Term_Order {
 		 *
 		 * @param array $classes
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		$classes = (array) apply_filters( 'gsteca_term_order_add_form_field_classes', $classes, $this );
 
 		?>
 
 		<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 			<label for="order">
-				<?php esc_html_e( 'Order', 'the-events-calendar-addon' ); ?>
+				<?php esc_html_e( 'Order', 'the-events-calendar-addon2' ); ?>
 			</label>
 			<input type="number" pattern="[0-9.]+" name="order" id="order" value="0" size="11">
 			<p class="description">
-				<?php esc_html_e( 'Set a specific order by entering a number (1 for first, etc.) in this field.', 'the-events-calendar-addon' ); ?>
+				<?php esc_html_e( 'Set a specific order by entering a number (1 for first, etc.) in this field.', 'the-events-calendar-addon2' ); ?>
 			</p>
 		</div>
 
@@ -653,6 +679,7 @@ final class Term_Order {
 		 *
 		 * @param array $classes
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		$classes = (array) apply_filters( 'gsteca_term_order_edit_form_field_classes', $classes, $this );
 
 		?>
@@ -660,13 +687,13 @@ final class Term_Order {
 		<tr class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 			<th scope="row" valign="top">
 				<label for="order">
-					<?php esc_html_e( 'Order', 'the-events-calendar-addon' ); ?>
+					<?php esc_html_e( 'Order', 'the-events-calendar-addon2' ); ?>
 				</label>
 			</th>
 			<td>
 				<input name="order" id="order" type="text" value="<?php echo esc_attr($this->get_term_order( $term )); ?>" size="11" />
 				<p class="description">
-					<?php esc_html_e( 'Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field.', 'the-events-calendar-addon' ); ?>
+					<?php esc_html_e( 'Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field.', 'the-events-calendar-addon2' ); ?>
 				</p>
 			</td>
 		</tr>
@@ -701,6 +728,7 @@ final class Term_Order {
 		 *
 		 * @param array $classes
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		$classes = (array) apply_filters( 'gsteca_term_order_quick_edit_field_classes', $classes, $this );
 
 		?>
@@ -708,7 +736,7 @@ final class Term_Order {
 		<fieldset>
 			<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 				<label>
-					<span class="title"><?php esc_html_e( 'Order', 'the-events-calendar-addon' ); ?></span>
+					<span class="title"><?php esc_html_e( 'Order', 'the-events-calendar-addon2' ); ?></span>
 					<span class="input-text-wrap">
 						<input type="number" pattern="[0-9.]+" class="ptitle" name="order" value="" size="11">
 					</span>
@@ -796,8 +824,8 @@ final class Term_Order {
 		if ( is_admin() ) {
 
 			// Look for custom orderby
-			$get_orderby = ! empty( $_GET['orderby'] )
-				? sanitize_key( $_GET['orderby'] )
+			$get_orderby = isset( $_GET['orderby'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only admin taxonomy list sort parameter.
+				? sanitize_key( wp_unslash( $_GET['orderby'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				: $orderby;
 
 			// Override if explicitly sorting the UI by the "order" column
@@ -1006,14 +1034,18 @@ final class Term_Order {
 	 */
 	public function ajax_reordering_terms() {
 
+		check_ajax_referer( 'gs_teca_reordering_terms', 'nonce' );
+
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce verified above.
 		// Bail if required term data is missing
 		if ( empty( $_POST['id'] ) || empty( $_POST['tax'] ) || ( ! isset( $_POST['previd'] ) && ! isset( $_POST['nextid'] ) ) ) {
 			die( -1 );
 		}
 
 		// Sanitize
-		$term_id  = absint( $_POST['id'] );
-		$taxonomy = sanitize_key( $_POST['tax'] );
+		$term_id  = absint( wp_unslash( $_POST['id'] ) );
+		$taxonomy = sanitize_key( wp_unslash( $_POST['tax'] ) );
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		// Attempt to get the taxonomy
 		$tax = get_taxonomy( $taxonomy );
@@ -1035,12 +1067,14 @@ final class Term_Order {
 		}
 
 		// Sanitize positions
-		$previd   = empty( $_POST['previd']   ) ? false : (int) $_POST['previd'];
-		$nextid   = empty( $_POST['nextid']   ) ? false : (int) $_POST['nextid'];
-		$start    = empty( $_POST['start']    ) ? 1     : (int) $_POST['start'];
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce verified at the start of this handler.
+		$previd   = empty( $_POST['previd'] ) ? false : absint( wp_unslash( $_POST['previd'] ) );
+		$nextid   = empty( $_POST['nextid'] ) ? false : absint( wp_unslash( $_POST['nextid'] ) );
+		$start    = empty( $_POST['start'] ) ? 1 : absint( wp_unslash( $_POST['start'] ) );
 		$excluded = empty( $_POST['excluded'] )
 			? array( $term->term_id )
-			: array_filter( (array) $_POST['excluded'], 'intval' );
+			: array_filter( array_map( 'absint', (array) wp_unslash( $_POST['excluded'] ) ) );
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		// Default return values
 		$retval  = new \stdClass;
@@ -1076,8 +1110,8 @@ final class Term_Order {
 		}
 
 		// Get term siblings for relative ordering
-		$siblings = get_terms( $taxonomy, array(
-			'depth'      => 1,
+		$siblings = get_terms( array(
+			'taxonomy'   => $taxonomy,
 			'number'     => 100,
 			'parent'     => $parent_id,
 			'orderby'    => 'order',
@@ -1170,9 +1204,9 @@ final class Term_Order {
 		if ( empty( $retval->next ) ) {
 
 			// If the moved term has children, refresh the page for UI reasons
-			$children = get_terms( $taxonomy, array(
+			$children = get_terms( array(
+				'taxonomy'   => $taxonomy,
 				'number'     => 1,
-				'depth'      => 1,
 				'orderby'    => 'order',
 				'order'      => 'ASC',
 				'parent'     => $term->term_id,

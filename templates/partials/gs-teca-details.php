@@ -1,7 +1,10 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $event_id    = 0;
 $description = '';
@@ -46,3 +49,6 @@ if ( $description ) {
         <?php echo wp_kses_post( wpautop( $description ) ); ?>
     </div>
 <?php endif; ?>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

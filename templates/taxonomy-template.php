@@ -1,5 +1,10 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 /**
  * Custom template for taxonomy archives using GS Posts Grid
  */
@@ -40,3 +45,5 @@ if (!empty($shortcode_id)) {
 }
 
 get_footer();
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+

@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $filter_mode   = sanitize_key( (string) ( $filter_mode ?? 'daily' ) );
 $layout_id     = sanitize_key( (string) ( $layout_id ?? 'teca' ) );
@@ -16,7 +19,7 @@ $bar_id        = 'teca-calendar-filter-bar-' . $layout_id;
 <div class="teca-calendar-filter-bar" data-filter-mode="<?php echo esc_attr( $filter_mode ); ?>" id="<?php echo esc_attr( $bar_id ); ?>">
 	<div class="teca-calendar-filter-field teca-calendar-filter-mode-field">
 		<label class="teca-calendar-filter-label" for="<?php echo esc_attr( $bar_id ); ?>-mode">
-			<?php esc_html_e( 'Select Filter', 'the-events-calendar-addon' ); ?>
+			<?php esc_html_e( 'Select Filter', 'the-events-calendar-addon2' ); ?>
 		</label>
 		<select id="<?php echo esc_attr( $bar_id ); ?>-mode" class="teca-calendar-filter-select teca-calendar-filter-mode">
 			<?php foreach ( $filter_modes as $option ) : ?>
@@ -66,10 +69,13 @@ $bar_id        = 'teca-calendar-filter-bar-' . $layout_id;
 
 	<div
 		class="teca-calendar-filter-message teca-calendar-filter-empty-message"
-		data-empty-filter-message="<?php echo esc_attr__( 'No events found for the selected filter.', 'the-events-calendar-addon' ); ?>"
-		data-empty-all-message="<?php echo esc_attr__( 'No events found.', 'the-events-calendar-addon' ); ?>"
+		data-empty-filter-message="<?php echo esc_attr__( 'No events found for the selected filter.', 'the-events-calendar-addon2' ); ?>"
+		data-empty-all-message="<?php echo esc_attr__( 'No events found.', 'the-events-calendar-addon2' ); ?>"
 		hidden
 	>
-		<?php esc_html_e( 'No events found for the selected filter.', 'the-events-calendar-addon' ); ?>
+		<?php esc_html_e( 'No events found for the selected filter.', 'the-events-calendar-addon2' ); ?>
 	</div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

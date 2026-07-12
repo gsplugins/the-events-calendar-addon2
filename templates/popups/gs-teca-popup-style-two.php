@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $visibility = teca_get_popup_visibility_settings( $popup_visibility_settings ?? null );
 $event_data = isset( $event ) && is_array( $event ) ? $event : array();
@@ -29,6 +32,7 @@ $shortcode['teca_active_popup_style'] = 'style-2';
 					$popup_visibility_order ?? null,
 					$shortcode,
 					array(
+						// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Element visibility exclude list, not a WP_Query exclude parameter.
 						'exclude'        => $exclude,
 						'wrap_meta_grid' => true,
 					)
@@ -38,3 +42,6 @@ $shortcode['teca_active_popup_style'] = 'style-2';
 		</div>
 	</div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

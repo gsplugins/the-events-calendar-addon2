@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -64,6 +65,7 @@ class GS_TECA_Shortcode_Fonts_Loader {
 					break;
 
 				default:
+                    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Elementor font hook name is required for Elementor integration.
                     do_action( "elementor/fonts/print_font_links/{$font_type}", $font );
             }
 
@@ -79,6 +81,7 @@ class GS_TECA_Shortcode_Fonts_Loader {
         
 		static $google_fonts_index = 0;
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Elementor filter name is required for Elementor integration.
 		$print_google_fonts = apply_filters( 'elementor/frontend/print_google_fonts', true );
 
 		if ( ! $print_google_fonts ) return;
@@ -112,6 +115,7 @@ class GS_TECA_Shortcode_Fonts_Loader {
 				'lt_LT' => 'latin-ext',
 			];
 
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Elementor filter name is required for Elementor integration.
 			$subsets = apply_filters( 'elementor/frontend/google_font_subsets', $subsets );
 
 			$locale = get_locale();

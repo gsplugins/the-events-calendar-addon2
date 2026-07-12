@@ -1,15 +1,18 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
+
 $panel_partial = Template_Loader::locate_template( 'accordion/partials/panel-content.php' );
 $index         = 0;
 ?>
 <?php if ( empty( $events ) ) : ?>
-	<div class="teca-accordion-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
+	<div class="teca-accordion-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
 <?php else : ?>
 	<div class="teca-accordion teca-accordion-3">
 		<?php foreach ( $events as $event ) : ?>
@@ -66,7 +69,7 @@ $index         = 0;
 						<?php endif; ?>
 					</span>
 
-					<span class="teca-accordion-3-action"><?php esc_html_e( 'Details', 'the-events-calendar-addon' ); ?></span>
+					<span class="teca-accordion-3-action"><?php esc_html_e( 'Details', 'the-events-calendar-addon2' ); ?></span>
 				</button>
 
 				<div
@@ -87,3 +90,6 @@ $index         = 0;
 		?>
 	</div>
 <?php endif; ?>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

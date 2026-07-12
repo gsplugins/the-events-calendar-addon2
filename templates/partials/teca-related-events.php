@@ -1,12 +1,15 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
+
 $event_ids = isset( $event_ids ) && is_array( $event_ids ) ? $event_ids : array();
-$title     = isset( $title ) ? (string) $title : __( 'Related Events', 'the-events-calendar-addon' );
+$title     = isset( $title ) ? (string) $title : __( 'Related Events', 'the-events-calendar-addon2' );
 $settings  = isset( $settings ) && is_array( $settings ) ? $settings : array();
 $context   = isset( $context ) ? sanitize_key( (string) $context ) : 'single';
 
@@ -26,3 +29,6 @@ $section_class = 'teca-related-events teca-related-events--' . sanitize_html_cla
 		<?php endforeach; ?>
 	</div>
 </section>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

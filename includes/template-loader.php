@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 use WP_Error;
 
@@ -24,7 +25,8 @@ final class Template_Loader {
 
     public function set_theme_template_path() {
 
-        $dir = apply_filters( 'gs_teca_templates_folder', 'the-events-calendar-addon' );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
+        $dir = apply_filters( 'gs_teca_templates_folder', 'the-events-calendar-addon2' );
 
         if ( $dir ) {
             $dir = '/' . trailingslashit( ltrim( $dir, '/\\' ) );
@@ -47,7 +49,7 @@ final class Template_Loader {
             $path = self::$pro_plugin_template_path;
         } else {
             if ( ! file_exists( $path . $template_file ) ) {
-                return new WP_Error( 'gs_teca_template_not_found', __( 'Template file not found - GS Plugins', 'the-events-calendar-addon' ) );
+                return new WP_Error( 'gs_teca_template_not_found', __( 'Template file not found - GS Plugins', 'the-events-calendar-addon2' ) );
             }
         }
 

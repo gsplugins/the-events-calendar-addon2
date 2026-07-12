@@ -14,6 +14,7 @@ if ( ! class_exists( 'td_block' ) ) {
 /**
  * tagDiv Composer block for rendering saved TECA shortcodes.
  */
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- tagDiv block class naming convention is required for tagDiv Composer integration.
 class td_teca_tagdiv_events extends td_block {
 
 	/**
@@ -40,7 +41,7 @@ class td_teca_tagdiv_events extends td_block {
 
 		if ( ! $shortcode_id ) {
 			if ( $allow_placeholder ) {
-				$output .= '<div class="teca-tagdiv-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon' ) . '</div>';
+				$output .= '<div class="teca-tagdiv-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon2' ) . '</div>';
 			}
 
 			$output .= '</div>';
@@ -50,7 +51,7 @@ class td_teca_tagdiv_events extends td_block {
 
 		if ( ! GS_TECA\teca_shortcode_exists( $shortcode_id ) ) {
 			if ( $allow_placeholder ) {
-				$output .= '<div class="teca-tagdiv-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon' ) . '</div>';
+				$output .= '<div class="teca-tagdiv-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon2' ) . '</div>';
 			}
 
 			$output .= '</div>';

@@ -1,13 +1,16 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
+
 $events           = $events ?? array();
 $event_groups     = $event_groups ?? array();
-$schedule_title   = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon' );
+$schedule_title   = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon2' );
 $category_options = $category_options ?? array();
 $hero_images      = $hero_images ?? teca_get_events_hero_images( $events );
 $layout_id        = $layout_id ?? 'teca';
@@ -42,13 +45,13 @@ $card_color_index = 0;
 					<?php if ( ! empty( $category_options ) ) : ?>
 						<div class="teca-daily-layout-3-toolbar">
 							<label class="teca-daily-layout-3-filter-label" for="teca-daily-layout-3-type-<?php echo esc_attr( $layout_id ); ?>">
-								<?php esc_html_e( 'Event Type', 'the-events-calendar-addon' ); ?>
+								<?php esc_html_e( 'Event Type', 'the-events-calendar-addon2' ); ?>
 							</label>
 							<select
 								id="teca-daily-layout-3-type-<?php echo esc_attr( $layout_id ); ?>"
 								class="teca-daily-layout-3-type-select"
 							>
-								<option value="all"><?php esc_html_e( 'All Types', 'the-events-calendar-addon' ); ?></option>
+								<option value="all"><?php esc_html_e( 'All Types', 'the-events-calendar-addon2' ); ?></option>
 								<?php foreach ( $category_options as $term_id => $label ) : ?>
 									<option value="<?php echo esc_attr( (string) $term_id ); ?>"><?php echo esc_html( $label ); ?></option>
 								<?php endforeach; ?>
@@ -125,9 +128,12 @@ $card_color_index = 0;
 						</section>
 					<?php endforeach; ?>
 				<?php else : ?>
-					<p class="teca-daily-layout-3-empty-content"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></p>
+					<p class="teca-daily-layout-3-empty-content"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></p>
 				<?php endif; ?>
 			</div>
 		</div>
 	</div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

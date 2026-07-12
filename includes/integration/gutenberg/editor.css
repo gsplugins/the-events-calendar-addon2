@@ -1,1 +1,11 @@
-.teca--block{width:100%}.teca--block .components-placeholder{min-height:120px}.teca--block .components-server-side-render{overflow:hidden}
+.teca--block {
+  width: 100%;
+}
+
+.teca--block .components-placeholder {
+  min-height: 120px;
+}
+
+.teca--block .components-server-side-render {
+  overflow: hidden;
+}

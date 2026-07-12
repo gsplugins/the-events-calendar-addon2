@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -47,15 +48,15 @@ class Teca_UX_Builder_Events_Element {
 		add_ux_builder_shortcode(
 			self::BASE,
 			[
-				'name'        => esc_html__( 'TECA Events', 'the-events-calendar-addon' ),
-				'category'    => esc_html__( 'GS Plugins', 'the-events-calendar-addon' ),
+				'name'        => esc_html__( 'TECA Events', 'the-events-calendar-addon2' ),
+				'category'    => esc_html__( 'GS Plugins', 'the-events-calendar-addon2' ),
 				'thumbnail'   => esc_url( GS_TECA_PLUGIN_URI . 'assets/img/events.svg' ),
-				'description' => esc_html__( 'Display TECA events/layouts using saved TECA shortcodes.', 'the-events-calendar-addon' ),
+				'description' => esc_html__( 'Display TECA events/layouts using saved TECA shortcodes.', 'the-events-calendar-addon2' ),
 				'wrap'        => false,
 				'options'     => [
 					'shortcode_id' => [
 						'type'        => 'select',
-						'heading'     => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon' ),
+						'heading'     => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon2' ),
 						'default'     => self::get_default_shortcode_value(),
 						'options'     => teca_get_saved_shortcodes_for_ux_builder(),
 						'description' => self::get_field_description(),
@@ -91,13 +92,13 @@ class Teca_UX_Builder_Events_Element {
 
 		if ( ! $shortcode_id ) {
 			return $allow_placeholder
-				? '<div class="teca-ux-builder-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon' ) . '</div>'
+				? '<div class="teca-ux-builder-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon2' ) . '</div>'
 				: '';
 		}
 
 		if ( ! teca_shortcode_exists( $shortcode_id ) ) {
 			return $allow_placeholder
-				? '<div class="teca-ux-builder-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon' ) . '</div>'
+				? '<div class="teca-ux-builder-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon2' ) . '</div>'
 				: '';
 		}
 
@@ -147,16 +148,16 @@ class Teca_UX_Builder_Events_Element {
 	protected static function get_field_description() {
 		$edit_link = sprintf(
 			'%s: <a class="teca-ux-builder-edit-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-			esc_html__( 'Edit this shortcode', 'the-events-calendar-addon' ),
+			esc_html__( 'Edit this shortcode', 'the-events-calendar-addon2' ),
 			esc_url( admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode/' ) ),
-			esc_html__( 'Edit', 'the-events-calendar-addon' )
+			esc_html__( 'Edit', 'the-events-calendar-addon2' )
 		);
 
 		$create_link = sprintf(
 			'%s: <a class="teca-ux-builder-create-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-			esc_html__( 'Create new shortcode', 'the-events-calendar-addon' ),
+			esc_html__( 'Create new shortcode', 'the-events-calendar-addon2' ),
 			esc_url( admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode' ) ),
-			esc_html__( 'Create', 'the-events-calendar-addon' )
+			esc_html__( 'Create', 'the-events-calendar-addon2' )
 		);
 
 		return implode( '<br />', [ $edit_link, $create_link ] );

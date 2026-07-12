@@ -1,11 +1,11 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Shared asset-generator namespace is intentional and kept for backward compatibility.
 namespace GSPLUGINS;
-
 /**
  * Protect direct access
  */
-if ( ! defined( 'ABSPATH' ) ) ;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('GSPLUGINS\GS_Asset_Generator_Base') ) {
 
@@ -94,6 +94,7 @@ if ( ! class_exists('GSPLUGINS\GS_Asset_Generator_Base') ) {
     
         final public function generate( $main_post_id, Array $settings ) {
             if ( !empty($settings) ) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Shared GS Plugins asset hook name is kept for backward compatibility.
                 do_action( 'GS_Plugins/Generate_Assets/' . $this->get_assets_key(),  $main_post_id, $settings );
             }
         }
@@ -171,27 +172,78 @@ if ( ! class_exists('GSPLUGINS\GS_Asset_Generator_Base') ) {
         }
     
         final public function purge_assets_data_from_post_meta( $post_ID = null ) {
-            if ( !empty($post_ID) ) {
-                delete_post_meta( $post_ID, $this->get_assets_key() );
+            if ( ! empty( $post_ID ) ) {
+                delete_post_meta( absint( $post_ID ), $this->get_assets_key() );
                 return;
             }
 
             global $wpdb;
-            $ids = $wpdb->get_results( $wpdb->prepare( "SELECT meta_id FROM {$wpdb->postmeta} WHERE meta_key LIKE %s", '%' . $this->get_assets_key() . '%' ) );
-            if ( empty($ids) ) return;
 
-            $ids = implode( ',', array_map( 'absint', wp_list_pluck( $ids, 'meta_id' ) ) );
-            $wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE meta_id IN($ids)" );
+            $asset_key = $wpdb->esc_like( $this->get_assets_key() );
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Generated asset cleanup lookup; result should not be cached because cleanup must read current DB state.
+            $ids = $wpdb->get_col(
+                $wpdb->prepare(
+                    "SELECT meta_id FROM {$wpdb->postmeta} WHERE meta_key LIKE %s",
+                    '%' . $asset_key . '%'
+                )
+            );
+
+            if ( empty( $ids ) ) {
+                return;
+            }
+
+            $ids = array_filter( array_map( 'absint', $ids ) );
+
+            if ( empty( $ids ) ) {
+                return;
+            }
+
+            $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Generated asset cleanup delete; placeholders are generated internally and IDs are prepared as integers.
+            $wpdb->query(
+                $wpdb->prepare(
+                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Placeholders are generated internally and IDs are prepared as integers.
+                    "DELETE FROM {$wpdb->postmeta} WHERE meta_id IN ({$placeholders})",
+                    ...$ids
+                )
+            );
         }
     
         final public function purge_assets_data_from_options() {
-
             global $wpdb;
-            $ids = $wpdb->get_results( $wpdb->prepare( "SELECT option_id FROM {$wpdb->options} WHERE option_name LIKE %s", '%' . $this->get_assets_key() . '%' ) );
-            if ( empty($ids) ) return;
-
-            $ids = implode( ',', array_map( 'absint', wp_list_pluck( $ids, 'option_id' ) ) );
-            $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_id IN($ids)" );
+        
+            $asset_key = $wpdb->esc_like( $this->get_assets_key() );
+        
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Generated asset cleanup lookup; result should not be cached because cleanup must read current DB state.
+            $ids = $wpdb->get_col(
+                $wpdb->prepare(
+                    "SELECT option_id FROM {$wpdb->options} WHERE option_name LIKE %s",
+                    '%' . $asset_key . '%'
+                )
+            );
+        
+            if ( empty( $ids ) ) {
+                return;
+            }
+        
+            $ids = array_filter( array_map( 'absint', $ids ) );
+        
+            if ( empty( $ids ) ) {
+                return;
+            }
+        
+            $placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+        
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Generated asset cleanup delete; placeholders are generated internally and IDs are prepared as integers.
+            $wpdb->query(
+                $wpdb->prepare(
+                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Placeholders are generated internally and IDs are prepared as integers.
+                    "DELETE FROM {$wpdb->options} WHERE option_id IN ({$placeholders})",
+                    ...$ids
+                )
+            );
         }
 
         public function widget_updated__purge( $instance ) {
@@ -213,6 +265,7 @@ if ( ! class_exists('GSPLUGINS\GS_Asset_Generator_Base') ) {
             $is_builder_preview = $this->is_builder_preview();
 
             if ( $is_builder_preview ) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Shared GS Plugins asset hook name is kept for backward compatibility.
                 do_action( 'GS_Plugins/Load_Builder_Preview_Assets/' . $this->get_assets_key() );
                 return;
             }
@@ -222,12 +275,14 @@ if ( ! class_exists('GSPLUGINS\GS_Asset_Generator_Base') ) {
             $assets = $this->get_assets_data( $main_post_id );
     
             if ( !empty($assets) ) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Shared GS Plugins asset hook name is kept for backward compatibility.
                 do_action( 'GS_Plugins/Load_Assets/' . $this->get_assets_key(), $main_post_id, $assets );
             }
     
         }
 
         final public function force_enqueue_assets( Array $settings ) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Shared GS Plugins asset hook name is kept for backward compatibility.
             do_action( 'GS_Plugins/Force_Enqueue_Assets/' . $this->get_assets_key(), $settings );
         }
 

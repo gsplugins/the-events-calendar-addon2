@@ -15,7 +15,7 @@
  * Version:           	1.0.0
  * Author:       		GS Plugins
  * Author URI:       	https://www.gsplugins.com/
- * Text Domain:       	the-events-calendar-addon
+ * Text Domain:       	the-events-calendar-addon2
  * License:           	GPL-2.0+
  * License URI:       	http://www.gnu.org/licenses/gpl-2.0.txt
  * Requires Plugins:    the-events-calendar

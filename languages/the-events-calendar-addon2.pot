@@ -1,0 +1,2450 @@
+# Copyright (C) 2026 the-events-calendar-addon2
+# This file is distributed under the same license as the the-events-calendar-addon2 package.
+msgid ""
+msgstr ""
+"Project-Id-Version: the-events-calendar-addon2\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-12 12:27+0000\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../includes/calendar-renderer.php:73, ../includes/calendar-renderer.php:139
+msgid "The Events Calendar Views V2 must be enabled to display calendar layouts."
+msgstr ""
+
+#: ../includes/calendar-renderer.php:97
+msgid "The selected calendar layout could not be rendered."
+msgstr ""
+
+#: ../includes/calendar-renderer.php:248
+msgid "Weekly calendar view requires The Events Calendar Pro."
+msgstr ""
+
+#. translators: 1: year, 2: quarter number
+#: ../includes/calendar-renderer.php:463
+msgid "%1$s - Quarter %2$s"
+msgstr ""
+
+#. translators: %d: shortcode ID
+#: ../includes/functions.php:125
+msgid "Shortcode #%d"
+msgstr ""
+
+#: ../includes/functions.php:211, ../includes/functions.php:228, ../includes/integration/tagdiv/class-teca-tagdiv.php:180, ../includes/integration/divi/modules/class-teca-divi-events-module.php:115, ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:132, ../includes/integration/oxygen/elements/class-teca-oxygen-events-element.php:143, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:167
+msgid "No TECA shortcode found"
+msgstr ""
+
+#: ../includes/functions.php:1802, ../templates/calendar/daily-layout-1.php:13, ../templates/calendar/daily-layout-3.php:13, ../templates/calendar/quarterly-layout-1.php:13, ../templates/calendar/quarterly-layout-2.php:13, ../templates/calendar/quarterly-layout-3.php:13, ../templates/calendar/yearly-layout-1.php:13, ../templates/calendar/yearly-layout-2.php:13, ../templates/calendar/yearly-layout-3.php:13
+msgid "Events Schedule"
+msgstr ""
+
+#: ../includes/functions.php:1857, ../includes/functions.php:2456, ../includes/functions.php:2473, ../includes/functions.php:2522, ../templates/partials/gs-teca-date.php:116
+msgid "All Day"
+msgstr ""
+
+#: ../includes/functions.php:2683, ../includes/shortcode-builder/builder.php:1153, ../templates/partials/gs-teca-filters-by-name.php:172
+msgid "Featured Events"
+msgstr ""
+
+#: ../includes/functions.php:2687
+msgid "No featured events found."
+msgstr ""
+
+#: ../includes/functions.php:2690
+msgid "Past Events"
+msgstr ""
+
+#: ../includes/functions.php:2694
+msgid "No past events found."
+msgstr ""
+
+#: ../includes/functions.php:2697
+msgid "Upcoming Events"
+msgstr ""
+
+#: ../includes/functions.php:2701
+msgid "No upcoming events found."
+msgstr ""
+
+#: ../includes/functions.php:2918, ../templates/calendar/daily-layout-3.php:48, ../templates/calendar/monthly-layout-1.php:53, ../templates/calendar/weekly-layout-1.php:62, ../templates/calendar/weekly-layout-2.php:72, ../templates/calendar/weekly-layout-3.php:67
+msgid "Event Type"
+msgstr ""
+
+#: ../includes/functions.php:2932
+msgid "All Event Types"
+msgstr ""
+
+#: ../includes/functions.php:3143, ../includes/functions.php:3426, ../includes/functions.php:4868, ../includes/shortcode-builder/builder.php:1171, ../templates/calendar/daily-layout-2.php:120, ../templates/partials/gs-teca-filters-by-name.php:174
+msgid "All Events"
+msgstr ""
+
+#: ../includes/functions.php:3164
+msgid "1st Quarter"
+msgstr ""
+
+#: ../includes/functions.php:3169
+msgid "2nd Quarter"
+msgstr ""
+
+#: ../includes/functions.php:3174
+msgid "3rd Quarter"
+msgstr ""
+
+#: ../includes/functions.php:3179
+msgid "4th Quarter"
+msgstr ""
+
+#: ../includes/functions.php:4792
+msgid "Select Day"
+msgstr ""
+
+#: ../includes/functions.php:4793
+msgid "No events found for this day."
+msgstr ""
+
+#: ../includes/functions.php:4799
+msgid "Select Week"
+msgstr ""
+
+#: ../includes/functions.php:4800
+msgid "No events found for this week."
+msgstr ""
+
+#: ../includes/functions.php:4806
+msgid "Select Month"
+msgstr ""
+
+#: ../includes/functions.php:4807
+msgid "No events found for this month."
+msgstr ""
+
+#: ../includes/functions.php:4813
+msgid "Select Quarter"
+msgstr ""
+
+#: ../includes/functions.php:4814
+msgid "No events found for this quarter."
+msgstr ""
+
+#. translators: %s: event category, date range, or selected filter label.
+#: ../includes/functions.php:4816, ../includes/functions.php:4825
+msgid "No events found for %s."
+msgstr ""
+
+#: ../includes/functions.php:4822
+msgid "Select Year"
+msgstr ""
+
+#: ../includes/functions.php:4823
+msgid "No events found for this year."
+msgstr ""
+
+#: ../includes/shortcode.php:311, ../includes/shortcode.php:351, ../includes/shortcode.php:391, ../includes/shortcode.php:440, ../includes/sortable.php:316, ../includes/sortable.php:324, ../includes/sortable.php:423, ../includes/sortable.php:447, ../includes/demo-data/dummy-data.php:193, ../includes/demo-data/dummy-data.php:209, ../includes/demo-data/dummy-data.php:225, ../includes/demo-data/dummy-data.php:235, ../includes/demo-data/dummy-data.php:245, ../includes/demo-data/dummy-data.php:255, ../includes/shortcode-builder/builder.php:22, ../includes/shortcode-builder/builder.php:546, ../includes/shortcode-builder/builder.php:595, ../includes/shortcode-builder/builder.php:3471
+msgid "Unauthorised Request"
+msgstr ""
+
+#: ../includes/shortcode.php:452
+msgid "Missing shortcode instance."
+msgstr ""
+
+#: ../includes/shortcode.php:461
+msgid "Unsupported view type."
+msgstr ""
+
+#: ../includes/shortcode.php:473
+msgid "Search is not enabled for this instance."
+msgstr ""
+
+#: ../includes/shortcode.php:502, ../includes/shortcode-builder/builder.php:1178, ../templates/accordion/accordion-1.php:15, ../templates/accordion/accordion-2.php:15, ../templates/accordion/accordion-3.php:15, ../templates/calendar/daily-layout-1.php:53, ../templates/calendar/daily-layout-1.php:141, ../templates/calendar/daily-layout-2.php:60, ../templates/calendar/daily-layout-2.php:207, ../templates/calendar/daily-layout-3.php:131, ../templates/calendar/monthly-layout-1.php:25, ../templates/calendar/monthly-layout-2.php:23, ../templates/calendar/monthly-layout-3.php:25, ../templates/calendar/quarterly-layout-1.php:64, ../templates/calendar/quarterly-layout-2.php:65, ../templates/calendar/quarterly-layout-3.php:48, ../templates/calendar/weekly-layout-1.php:53, ../templates/calendar/weekly-layout-1.php:197, ../templates/calendar/weekly-layout-2.php:54, ../templates/calendar/weekly-layout-2.php:192, ../templates/calendar/weekly-layout-3.php:53, ../templates/calendar/weekly-layout-3.php:186, ../templates/calendar/yearly-layout-1.php:56, ../templates/calendar/yearly-layout-2.php:43, ../templates/calendar/yearly-layout-3.php:56, ../templates/partials/gs-teca-filters-by-name.php:197, ../templates/partials/gs-teca-search-by.php:51, ../templates/partials/teca-calendar-filter-bar.php:73, ../templates/timeline/timeline-3.php:14
+msgid "No events found."
+msgstr ""
+
+#: ../includes/shortcode.php:982
+msgid "All"
+msgstr ""
+
+#: ../includes/shortcode.php:1134
+msgid "No shortcode ID found"
+msgstr ""
+
+#: ../includes/sortable.php:68, ../templates/calendar/daily-layout-1.php:25, ../templates/calendar/daily-layout-1.php:26, ../templates/calendar/daily-layout-2.php:32, ../templates/calendar/daily-layout-2.php:33, ../templates/calendar/monthly-layout-2.php:107, ../templates/calendar/monthly-layout-3.php:75, ../templates/calendar/weekly-layout-1.php:25, ../templates/calendar/weekly-layout-1.php:26, ../templates/calendar/weekly-layout-2.php:26, ../templates/calendar/weekly-layout-2.php:27, ../templates/calendar/weekly-layout-3.php:25, ../templates/calendar/weekly-layout-3.php:26, ../templates/events/event-layout-1.php:56, ../templates/events/event-layout-2.php:28, ../templates/events/event-layout-3.php:29, ../templates/events/event-layout-3.php:86, ../templates/events/event-layout-3.php:97
+msgid "Events"
+msgstr ""
+
+#: ../includes/sortable.php:69
+msgid "Single Post Info"
+msgstr ""
+
+#: ../includes/sortable.php:70, ../includes/shortcode-builder/builder.php:1239, ../includes/shortcode-builder/builder.php:1241, ../includes/shortcode-builder/builder.php:2230
+msgid "Categories"
+msgstr ""
+
+#: ../includes/sortable.php:71, ../includes/shortcode-builder/builder.php:1237, ../includes/shortcode-builder/builder.php:1238, ../includes/shortcode-builder/builder.php:2234
+msgid "Tags"
+msgstr ""
+
+#: ../includes/sortable.php:117
+msgid "Step 1: Drag & Drop to rearrange events"
+msgstr ""
+
+#: ../includes/sortable.php:162
+msgid "No Events Found!"
+msgstr ""
+
+#: ../includes/sortable.php:163
+msgid "We didn't find any event.</br>Please add some events to sort them."
+msgstr ""
+
+#: ../includes/sortable.php:164
+msgid "Add Event"
+msgstr ""
+
+#: ../includes/sortable.php:173
+msgid "Step 2: Query Settings for The Events Calendar Addon"
+msgstr ""
+
+#: ../includes/sortable.php:214
+msgid "Single Events Sorting & Visibility"
+msgstr ""
+
+#: ../includes/sortable.php:491
+msgid "Custom order for Categories"
+msgstr ""
+
+#: ../includes/sortable.php:518
+msgid "No Category Found!"
+msgstr ""
+
+#: ../includes/sortable.php:519
+msgid "We didn't find any Category.</br>Please add some categories to sort them."
+msgstr ""
+
+#: ../includes/sortable.php:520, ../includes/sortable.php:590
+msgid "Add Category"
+msgstr ""
+
+#: ../includes/sortable.php:528
+msgid "Query Settings for Categories"
+msgstr ""
+
+#: ../includes/sortable.php:561
+msgid "Custom order for Tags"
+msgstr ""
+
+#: ../includes/sortable.php:588
+msgid "No Tag Found!"
+msgstr ""
+
+#: ../includes/sortable.php:589
+msgid "We didn't find any Tag.</br>Please add some Tags to sort them."
+msgstr ""
+
+#: ../includes/sortable.php:598
+msgid "Query Settings for Tags"
+msgstr ""
+
+#. translators: %d: calendar layout number
+#: ../includes/teca-calendar-layout.php:109
+msgid "Calendar Layout %d"
+msgstr ""
+
+#: ../includes/teca-calendar-layout.php:234, ../includes/shortcode-builder/builder.php:1998
+msgid "Daily"
+msgstr ""
+
+#: ../includes/teca-calendar-layout.php:238, ../includes/shortcode-builder/builder.php:1999
+msgid "Weekly"
+msgstr ""
+
+#: ../includes/teca-calendar-layout.php:242, ../includes/shortcode-builder/builder.php:2000
+msgid "Monthly"
+msgstr ""
+
+#: ../includes/teca-calendar-layout.php:246, ../includes/shortcode-builder/builder.php:2001
+msgid "Quarterly"
+msgstr ""
+
+#: ../includes/teca-calendar-layout.php:250, ../includes/shortcode-builder/builder.php:2002
+msgid "Yearly"
+msgstr ""
+
+#: ../includes/teca-date-format.php:17
+msgid "Default Format"
+msgstr ""
+
+#: ../includes/teca-date-format.php:53
+msgid "Custom"
+msgstr ""
+
+#: ../includes/teca-demo-linked-posts.php:18
+msgid "GS Conference Hall"
+msgstr ""
+
+#: ../includes/teca-demo-linked-posts.php:27
+msgid "Creative Studio Space"
+msgstr ""
+
+#: ../includes/teca-demo-linked-posts.php:36
+msgid "Riverside Event Center"
+msgstr ""
+
+#: ../includes/teca-demo-linked-posts.php:55
+msgid "GS Events Team"
+msgstr ""
+
+#: ../includes/teca-demo-linked-posts.php:61
+msgid "Creative Collective"
+msgstr ""
+
+#: ../includes/teca-demo-linked-posts.php:67
+msgid "Summit Organizers"
+msgstr ""
+
+#. translators: %s: event excerpt
+#: ../includes/teca-google-calendar.php:56
+msgid "Event details: %s"
+msgstr ""
+
+#. translators: %s: event URL
+#: ../includes/teca-google-calendar.php:64
+msgid "View event: %s"
+msgstr ""
+
+#: ../includes/teca-google-calendar.php:234
+msgid "Google Cal"
+msgstr ""
+
+#: ../includes/teca-google-calendar.php:238
+msgid "Add to Calendar"
+msgstr ""
+
+#: ../includes/teca-google-calendar.php:241, ../includes/shortcode-builder/builder.php:2481
+msgid "Add to calendar"
+msgstr ""
+
+#: ../includes/teca-organizer-template.php:82, ../includes/teca-venue-template.php:159
+msgid "0 Upcoming Events"
+msgstr ""
+
+#: ../includes/teca-organizer-template.php:86, ../includes/teca-venue-template.php:163
+msgid "1 Upcoming Event"
+msgstr ""
+
+#. translators: %d: number of upcoming events
+#: ../includes/teca-organizer-template.php:91, ../includes/teca-venue-template.php:168
+msgid "%d Upcoming Events"
+msgstr ""
+
+#: ../includes/teca-organizer-template.php:104, ../includes/teca-venue-template.php:141
+msgid "1 Event"
+msgstr ""
+
+#. translators: %d: number of upcoming events
+#: ../includes/teca-organizer-template.php:109, ../includes/teca-venue-template.php:146
+msgid "%d Events"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:19, ../includes/shortcode-builder/builder.php:1136, ../templates/gs-teca-table-theme-01.php:35, ../templates/gs-teca-table-theme-02.php:35, ../templates/gs-teca-table-theme-03.php:35, ../templates/gs-teca-table-theme-04.php:35, ../templates/gs-teca-table-theme-05.php:35, ../templates/partials/gs-teca-search-by.php:24
+msgid "Title"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:20, ../includes/teca-related-events.php:611, ../includes/shortcode-builder/builder.php:1144, ../templates/partials/gs-teca-filters-by-name.php:64
+msgid "Category"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:21, ../includes/teca-related-events.php:615, ../includes/shortcode-builder/builder.php:1145, ../templates/partials/gs-teca-filters-by-name.php:76
+msgid "Tag"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:22
+msgid "Venue Title"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:23
+msgid "Venue Value"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:24
+msgid "Organizer Title"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:25
+msgid "Organizer Value"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:26
+msgid "Organizer Phone"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:27
+msgid "Organizer Website"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:28
+msgid "Organizer Email"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:29
+msgid "Excerpt"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:30, ../includes/teca-popup-render.php:441, ../includes/teca-single-render.php:1088, ../includes/teca-single-render.php:1082, ../includes/teca-single-render.php:1070, ../includes/teca-single-render.php:1055, ../includes/teca-single-render.php:1044, ../includes/teca-single-render.php:1726, ../includes/shortcode-builder/builder.php:1142, ../includes/shortcode-builder/builder.php:1435, ../templates/calendar/weekly-layout-3.php:91, ../templates/partials/gs-teca-filters-by-name.php:41
+msgid "Date"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:31, ../includes/teca-popup-render.php:460, ../includes/teca-single-render.php:1099, ../includes/teca-single-render.php:1102, ../includes/shortcode-builder/builder.php:1152, ../templates/calendar/weekly-layout-3.php:92, ../templates/partials/gs-teca-filters-by-name.php:159
+msgid "Time"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:32, ../includes/teca-popup-render.php:538, ../includes/teca-single-render.php:1217, ../includes/teca-single-render.php:1220, ../includes/shortcode-builder/builder.php:1151, ../templates/partials/gs-teca-filters-by-name.php:148
+msgid "Cost"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:33
+msgid "Location"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:34
+msgid "Address"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:35, ../templates/accordion/accordion-3.php:72, ../templates/calendar/weekly-layout-3.php:94
+msgid "Details"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:36
+msgid "View Details Button"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:37
+msgid "Google Calendar Button"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:38
+msgid "Event Website Button"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:290, ../includes/teca-popup-detail-controls.php:297, ../includes/teca-popup-detail-controls.php:318, ../includes/teca-popup-detail-controls.php:339, ../includes/teca-popup-detail-controls.php:367, ../includes/teca-popup-detail-controls.php:395, ../includes/teca-popup-detail-controls.php:445
+msgid "Color"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:304, ../includes/teca-popup-detail-controls.php:325, ../includes/teca-popup-detail-controls.php:346, ../includes/teca-popup-detail-controls.php:374, ../includes/teca-popup-detail-controls.php:402
+msgid "Background Color"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:311, ../includes/teca-popup-detail-controls.php:332, ../includes/teca-popup-detail-controls.php:353, ../includes/teca-popup-detail-controls.php:381, ../includes/teca-popup-detail-controls.php:409, ../includes/teca-popup-detail-controls.php:461
+msgid "Hover Color"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:360, ../includes/teca-popup-detail-controls.php:388, ../includes/teca-popup-detail-controls.php:416
+msgid "Hover Background Color"
+msgstr ""
+
+#: ../includes/teca-popup-detail-controls.php:1005, ../includes/shortcode-builder/builder.php:1130
+msgid "Typography"
+msgstr ""
+
+#: ../includes/teca-popup-render.php:491, ../includes/teca-related-events.php:619, ../includes/teca-single-render.php:1142, ../includes/teca-single-render.php:1136, ../includes/teca-single-render.php:1129, ../includes/teca-single-render.php:1124, ../includes/teca-single-render.php:1119, ../includes/shortcode-builder/builder.php:1137, ../includes/shortcode-builder/builder.php:1146, ../templates/gs-teca-table-theme-01.php:47, ../templates/gs-teca-table-theme-02.php:47, ../templates/gs-teca-table-theme-03.php:47, ../templates/gs-teca-table-theme-04.php:47, ../templates/gs-teca-table-theme-05.php:47, ../templates/partials/gs-teca-filters-by-name.php:88, ../templates/partials/gs-teca-search-by.php:31, ../templates/venues/layout-1.php:42, ../templates/venues/layout-2.php:49, ../templates/venues/layout-3.php:75
+msgid "Venue"
+msgstr ""
+
+#: ../includes/teca-popup-render.php:519, ../includes/teca-related-events.php:623, ../includes/teca-single-render.php:1184, ../includes/teca-single-render.php:1178, ../includes/teca-single-render.php:1171, ../includes/teca-single-render.php:1166, ../includes/teca-single-render.php:1161, ../includes/shortcode-builder/builder.php:1138, ../includes/shortcode-builder/builder.php:1150, ../templates/gs-teca-table-theme-01.php:41, ../templates/gs-teca-table-theme-02.php:41, ../templates/gs-teca-table-theme-03.php:41, ../templates/gs-teca-table-theme-04.php:41, ../templates/gs-teca-table-theme-05.php:41, ../templates/organizers/layout-1.php:44, ../templates/organizers/layout-2.php:30, ../templates/organizers/layout-2.php:62, ../templates/organizers/layout-2.php:87, ../templates/organizers/layout-2.php:92, ../templates/organizers/layout-3.php:74, ../templates/organizers/layout-3.php:111, ../templates/partials/gs-teca-filters-by-name.php:136, ../templates/partials/gs-teca-search-by.php:38
+msgid "Organizer"
+msgstr ""
+
+#: ../includes/teca-popup-render.php:573, ../includes/teca-popup-render.php:587, ../includes/shortcode-builder/builder.php:1191, ../includes/shortcode-builder/builder.php:1218
+msgid "Event Details"
+msgstr ""
+
+#: ../includes/teca-preference-text.php:79, ../includes/teca-related-events.php:46, ../includes/teca-related-events.php:109, ../includes/teca-related-events.php:180, ../includes/teca-related-events.php:169, ../includes/shortcode-builder/builder.php:1196, ../includes/shortcode-builder/builder.php:2373, ../includes/shortcode-builder/builder.php:2479, ../includes/shortcode-builder/builder.php:2839, ../templates/partials/teca-related-events.php:12
+msgid "Related Events"
+msgstr ""
+
+#: ../includes/teca-related-events.php:627
+msgid "Upcoming fallback"
+msgstr ""
+
+#: ../includes/teca-single-event-status.php:78, ../templates/partials/gs-teca-status.php:33
+msgid "Cancelled"
+msgstr ""
+
+#: ../includes/teca-single-event-status.php:76, ../templates/partials/gs-teca-status.php:37
+msgid "Postponed"
+msgstr ""
+
+#: ../includes/template-loader.php:52
+msgid "Template file not found - GS Plugins"
+msgstr ""
+
+#: ../includes/demo-data/dummy-data.php:269
+msgid "Dummy portfolios already imported"
+msgstr ""
+
+#: ../includes/demo-data/dummy-data.php:283
+msgid "Dummy events imported"
+msgstr ""
+
+#: ../includes/demo-data/dummy-data.php:309
+msgid "Dummy events deleted"
+msgstr ""
+
+#: ../includes/demo-data/dummy-data.php:327
+msgid "Dummy Shortcodes already imported"
+msgstr ""
+
+#: ../includes/demo-data/dummy-data.php:341
+msgid "Dummy Shortcodes imported"
+msgstr ""
+
+#: ../includes/demo-data/dummy-data.php:361
+msgid "Dummy Shortcodes deleted"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:53
+msgid "GS Plugins Pro"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:56
+msgid "GS Plugins Lite"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:59
+msgid "Help & Usage"
+msgstr ""
+
+#. translators: 1: The rating
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:109
+msgid "%s rating"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:105
+msgid "%1$s rating based on %2$s rating"
+msgid_plural "%1$s rating based on %2$s ratings"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:126
+msgid "Compatible with your version of WordPress"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:124
+msgid "Incompatible with your version of WordPress"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:122
+msgid "<strong>Untested</strong> with your version of WordPress"
+msgstr ""
+
+#. translators: 1: Plugin name and version.
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:133
+msgid "More Details"
+msgstr ""
+
+#. translators: 1: Plugin name and version.
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:142
+msgid "Install Now"
+msgstr ""
+
+#. translators: 1: Plugin name and version
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:148
+msgid "Update Now"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:153
+msgid "This plugin is already installed and is up to date"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:153
+msgctxt "plugin"
+msgid "Installed"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-plugins-common-pages.php:241
+msgid "Last Updated:"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-teca-common-pages.php:14
+msgid "Lite Plugins by GS Plugins"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-teca-common-pages.php:15
+msgid "Premium Plugins by GS Plugins"
+msgstr ""
+
+#: ../includes/gs-common-pages/gs-teca-common-pages.php:16
+msgid "Support & Documentation by GS Plugins"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:33
+msgid "Invalid nonce."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:155
+msgid "Shortcode Preview"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:231, ../includes/shortcode-builder/builder.php:232
+msgid "Events Addon"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:242
+msgid "Shortcodes "
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:243, ../includes/shortcode-builder/builder.php:989, ../includes/shortcode-builder/page.php:15
+msgid "Shortcodes"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:252, ../includes/shortcode-builder/builder.php:253, ../includes/shortcode-builder/page.php:17
+msgid "Preferences"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:261, ../includes/shortcode-builder/builder.php:262, ../includes/shortcode-builder/page.php:18
+msgid "Layout"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:478, ../includes/shortcode-builder/builder.php:1459, ../includes/shortcode-builder/builder.php:1545, ../includes/shortcode-builder/builder.php:1688, ../includes/shortcode-builder/builder.php:1784, ../includes/shortcode-builder/builder.php:1842, ../includes/shortcode-builder/builder.php:2665
+msgid "Default"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:550, ../includes/shortcode-builder/builder.php:599, ../includes/shortcode-builder/builder.php:881
+msgid "Shortcode ID missing"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:586
+msgid "No shortcode found"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:606
+msgid "No shortcode found to update"
+msgstr ""
+
+#. translators: %1$s: database error message.
+#: ../includes/shortcode-builder/builder.php:646
+msgid "Database Error: %1$s"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:662
+msgid "Shortcode updated"
+msgstr ""
+
+#. translators: %s: database error message.
+#: ../includes/shortcode-builder/builder.php:737, ../includes/shortcode-builder/builder.php:785, ../includes/shortcode-builder/builder.php:844, ../includes/shortcode-builder/builder.php:923
+msgid "Database Error: %s"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:760
+msgid "Undefined"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:763
+msgid "Please configure the settings properly"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:804
+msgid "Shortcode created successfully"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:816
+msgid "Clone Id not provided"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:820
+msgid "Clone shortcode not found"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:823
+msgid "- Cloned"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:858
+msgid "Shortcode cloned successfully"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:899
+msgid "No shortcode ids provided"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:930
+msgid "Shortcode has been deleted"
+msgid_plural "Shortcodes have been deleted"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../includes/shortcode-builder/builder.php:957
+msgid "No temp key provided"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:958
+msgid "No temp settings provided"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:964
+msgid "Temp data saved"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:970
+msgid "Columns"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:971
+msgid "Columns Tablet"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:972
+msgid "Columns Portpait Mobile"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:973
+msgid "Columns Mobile"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:975
+msgid "Desktop"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:976
+msgid "Tablet"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:977
+msgid "Large Mobile"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:978
+msgid "Mobile"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:980
+msgid "Exclude By Cats"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:981
+msgid "Exclude Specific Products"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:982
+msgid "Exclude By Tags"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:983
+msgid "Include By Tags"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:984
+msgid "Display Specific Products"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:985
+msgid "Select Products"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:986
+msgid "Include By Cats"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:988, ../includes/shortcode-builder/builder.php:1263
+msgid "Custom CSS"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:990
+msgid "Global Settings for Woo Product Views"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:991
+msgid "All shortcodes for Woo Product Views"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:992
+msgid "Create Shortcode"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:993
+msgid "Create New Shortcode"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:994
+msgid "Shortcode"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:995
+msgid "Name"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:996
+msgid "Action"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:997
+msgid "Actions"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:998, ../includes/integration/gutenberg/class-teca-gutenberg.php:115, ../includes/integration/divi/modules/class-teca-divi-events-module.php:89, ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:106, ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:153, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:145
+msgid "Edit"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:999
+msgid "Clone"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1000
+msgid "Delete"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1001
+msgid "Delete All"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1002
+msgid "Create a new shortcode & save it to use globally in anywhere"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1003
+msgid "Edit Shortcode"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1004, ../includes/integration/beaver/class-teca-beaver.php:106
+msgid "General"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1005
+msgid "Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1006
+msgid "Query"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1007
+msgid "Visibility"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1008, ../includes/shortcode-builder/builder.php:1009
+msgid "Shortcode Name"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1010
+msgid "Save Shortcode"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1011
+msgid "Preview Shortcode"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1014
+msgid "Theme Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1015
+msgid "View Type"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1016
+msgid "Select Theme Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1017
+msgid "Daily Calendar Layout"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1018
+msgid "Weekly Calendar Layout"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1019
+msgid "Monthly Calendar Layout"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1020
+msgid "Quarterly Calendar Layout"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1021
+msgid "Yearly Calendar Layout"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1022
+msgid "Calendar Layout"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1023, ../templates/partials/teca-calendar-filter-bar.php:22
+msgid "Select Filter"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1024, ../includes/shortcode-builder/builder.php:1929
+msgid "Events Section"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1025
+msgid "Event Layout"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1026, ../includes/shortcode-builder/builder.php:1933
+msgid "Venue Template"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1027
+msgid "Venue Template Name"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1028, ../includes/shortcode-builder/builder.php:1937
+msgid "Organizer Template"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1029
+msgid "Organizer Template Name"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1031
+msgid "Sliding Speed"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1032
+msgid "Set the speed in millisecond. Default 500 ms. To disable autoplay just set the speed 0"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1034
+msgid "Autoplay"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1035
+msgid "Enable/Disable Auto play to change the slides automatically after certain time. Default On"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1037
+msgid "Autoplay Delay"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1038
+msgid "You can adjust the time (in ms) between each slide. Default 4000 ms"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1040
+msgid "Infinite Loop"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1041
+msgid "If ON, clicking on \"Next\" while on the last slide will start over from first slide and vice-versa"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1043
+msgid "Pause on hover"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1044
+msgid "Autoplay will pause when mouse hovers over Post. Default On"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1046
+msgid "Reverse Direction"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1047
+msgid "Reverse the direction of movement. Default Off"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1049
+msgid "Slider Navs"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1050
+msgid "Next / Previous control for Portfolio Slider. Default On Controls are not available when Ticker Mode is enabled"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1051
+msgid "Navs Position"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1052
+msgid "Position of Next / Previous control for Portfolio Slider. Default Bottom"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1053
+msgid "Slider Dots"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1054
+msgid "Dots control for Portfolio Slider below the widget. Default Off"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1055
+msgid "Navs Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1056
+msgid "Dots Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1057
+msgid "Filter By"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1058
+msgid "Filter Position"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1059
+msgid "Filter Styles"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1060
+msgid "Filter Type"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1061
+msgid "Select filter type"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1062, ../includes/shortcode-builder/builder.php:1063, ../includes/shortcode-builder/builder.php:1250, ../includes/shortcode-builder/builder.php:1251
+msgid "Posts"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1064, ../includes/shortcode-builder/builder.php:1252
+msgid "Set max posts numbers you want to show, set -1 for all posts"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1065
+msgid "Enable Pagination"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1066
+msgid "Enable paginations like number pagination, load more button, On scroll load etc."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1067
+msgid "Pagination Type"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1068
+msgid "Select pagination type."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1069
+msgid "This pagination type is available in the Pro version only."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1070
+msgid "This typography control is available in the Pro version only."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1071
+msgid "Categories in Include/Exclude are available in the Pro version only."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1072
+msgid "Tags in Include/Exclude are available in the Pro version only."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1073
+msgid "Custom Order is available in the Pro version only."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1075
+msgid "Initial Items"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1076
+msgid "Set initial number of items that shows on page load (before users interaction)"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1078
+msgid "Per Click"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1079
+msgid "Load members per button click"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1081
+msgid "Per Page"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1082
+msgid "Display members per page"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1084
+msgid "Per Load"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1085
+msgid "Display members per load"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1087
+msgid "Button Text"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1088
+msgid "Load more button text"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1090
+msgid "Popup Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1091
+msgid "Select popup style, this is available for certain theme"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1092
+msgid "Link Events"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1093
+msgid "Add links to title, description & image to display popup or to single page"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1094
+msgid "Link Type"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1095
+msgid "Choose the link type of The Events Calendar Addon"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1096, ../includes/shortcode-builder/builder.php:2475, ../templates/gs-teca-list-theme-02.php:13, ../templates/gs-teca-list-theme-04.php:13, ../templates/gs-teca-list-theme-05.php:13
+msgid "More"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1097
+msgid "Replace with preferred text for More"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1098
+msgid "View Details Button Text"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1099
+msgid "Replace with preferred text for View Details buttons"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1100
+msgid "Related Events Section Title"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1101
+msgid "Replace with preferred text for Related Events section titles"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1102
+msgid "Event Website Button Text"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1103
+msgid "Replace with preferred text for Event Website buttons"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1104
+msgid "Add to Calendar Button Text"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1105
+msgid "Replace with preferred text for Add to Calendar buttons"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1106, ../includes/shortcode-builder/builder.php:2476
+msgid "Prev"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1107
+msgid "Replace with preferred text for Prev"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1108, ../includes/shortcode-builder/builder.php:2477
+msgid "Next"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1109
+msgid "Replace with preferred text for Next"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1110
+msgid "View More"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1111
+msgid "Replace with preferred text for View More"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1112
+msgid "Enable Multilingual"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1113
+msgid "Enable Multilingual mode to translate below strings using any Multilingual plugin like wpml or loco translate."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1114
+msgid "Image Filter"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1115
+msgid "Image Filter Hover"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1117
+msgid "Title Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1118
+msgid "Category Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1119
+msgid "Tag Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1120
+msgid "Organizer Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1121
+msgid "Date Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1122
+msgid "Date Format"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1123
+msgid "Custom Date Format"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1124
+msgid "Applies to readable event date text only. Decorative date badges and calendar day numbers are not changed."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1125
+msgid "Use WordPress/PHP date format characters, e.g. F j, Y or d M Y."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1126
+msgid "Details Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1127
+msgid "Venue Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1128
+msgid "View Details Button Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1129
+msgid "Google Calendar Button Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1131
+msgid "Color Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1132
+msgid "Detail Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1133
+msgid "Detail Color Typography"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1134
+msgid "Filters By"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1135
+msgid "Search By"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1139, ../includes/shortcode-builder/builder.php:1147, ../templates/partials/gs-teca-filters-by-name.php:100, ../templates/partials/gs-teca-search-by.php:45
+msgid "City"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1140
+msgid "Result Limit"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1141
+msgid "Maximum number of events returned by AJAX search."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1143, ../templates/partials/gs-teca-filters-by-name.php:48
+msgid "Day"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1148, ../templates/partials/gs-teca-filters-by-name.php:112
+msgid "State"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1149, ../templates/partials/gs-teca-filters-by-name.php:124
+msgid "Country"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1154, ../templates/partials/gs-teca-filters-by-name.php:183
+msgid "Event Status"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1155, ../templates/partials/gs-teca-filters-by-name.php:194
+msgid "Clear"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1156, ../templates/partials/gs-teca-filters-by-name.php:90
+msgid "All Venues"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1157, ../templates/partials/gs-teca-filters-by-name.php:66
+msgid "All Categories"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1158, ../templates/partials/gs-teca-filters-by-name.php:78
+msgid "All Tags"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1159, ../templates/partials/gs-teca-filters-by-name.php:138
+msgid "All Organizers"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1160, ../templates/partials/gs-teca-filters-by-name.php:102
+msgid "All Cities"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1161, ../templates/partials/gs-teca-filters-by-name.php:114
+msgid "All States"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1162, ../templates/partials/gs-teca-filters-by-name.php:126
+msgid "All Countries"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1163, ../templates/partials/gs-teca-filters-by-name.php:150
+msgid "All Costs"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1164, ../templates/partials/gs-teca-filters-by-name.php:151
+msgid "Free"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1165, ../templates/partials/gs-teca-filters-by-name.php:152
+msgid "Paid"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1166, ../templates/partials/gs-teca-filters-by-name.php:161
+msgid "All Times"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1167, ../templates/partials/gs-teca-filters-by-name.php:162
+msgid "Morning"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1168, ../templates/partials/gs-teca-filters-by-name.php:163
+msgid "Afternoon"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1169, ../templates/partials/gs-teca-filters-by-name.php:164
+msgid "Evening"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1170, ../templates/partials/gs-teca-filters-by-name.php:165
+msgid "Night"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1172, ../templates/partials/gs-teca-filters-by-name.php:175
+msgid "Featured Only"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1173, ../templates/partials/gs-teca-filters-by-name.php:176
+msgid "Non-Featured"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1174, ../templates/partials/gs-teca-filters-by-name.php:185
+msgid "All Statuses"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1175, ../templates/partials/gs-teca-filters-by-name.php:186
+msgid "Upcoming"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1176, ../templates/partials/gs-teca-filters-by-name.php:187
+msgid "Ongoing"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1177, ../templates/partials/gs-teca-filters-by-name.php:188
+msgid "Past"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1180
+msgid "Details Length Type"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1181
+msgid "Details Length"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1182, ../includes/shortcode-builder/builder.php:1413
+msgid "Words"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1183, ../includes/shortcode-builder/builder.php:1417
+msgid "Letter"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1184
+msgid "Choose whether to limit details by word count or letter count"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1185
+msgid "Increase or decrease the number of words or letters to display in event details"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1187, ../includes/shortcode-builder/builder.php:1214
+msgid "Event Title"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1188, ../includes/shortcode-builder/builder.php:1215
+msgid "Event Category"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1189, ../includes/shortcode-builder/builder.php:1216
+msgid "Event Tags"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1190, ../includes/shortcode-builder/builder.php:1217
+msgid "Event Date"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1192, ../includes/shortcode-builder/builder.php:1221
+msgid "Event Thumbnail"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1193, ../includes/shortcode-builder/builder.php:1219
+msgid "Event Organizer"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1194, ../includes/shortcode-builder/builder.php:1220
+msgid "Event Venue"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1195, ../templates/venues/layout-1.php:118
+msgid "Map"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1197, ../includes/shortcode-builder/builder.php:1205
+msgid "Show Related Events"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1198
+msgid "Display related upcoming events below the single event page details."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1199, ../includes/shortcode-builder/builder.php:1207
+msgid "Related Events Title"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1200
+msgid "Heading text for the single page related events section."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1201, ../includes/shortcode-builder/builder.php:1209
+msgid "Related Events Limit"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1202
+msgid "Maximum number of related events to display on the single page (1-12)."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1203, ../includes/shortcode-builder/builder.php:1211
+msgid "Related Events Based On"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1204
+msgid "Choose how single page related events are matched. Sources are tried in order until the limit is reached."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1206
+msgid "Display related upcoming events below the popup event details."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1208
+msgid "Heading text for the popup related events section."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1210
+msgid "Maximum number of related events to display in the popup (1-12)."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1212
+msgid "Choose how popup related events are matched. Sources are tried in order until the limit is reached."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1222
+msgid "Event Time"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1223
+msgid "Event Cost"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1224, ../includes/shortcode-builder/builder.php:2480
+msgid "Event Website"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1225, ../includes/shortcode-builder/builder.php:1226, ../includes/shortcode-builder/builder.php:2478
+msgid "View Details"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1227
+msgid "Google Calendar"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1229
+msgid "Single Page Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1230
+msgid "This Single Style is available in the Pro version only."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1231
+msgid "Event Single Page Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1232
+msgid "Category Archive Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1233
+msgid "Tag Archive Style"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1234, ../includes/integration/gutenberg/class-teca-gutenberg.php:110
+msgid "Select Shortcode"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1235
+msgid "Way To Retrieve Page"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1240
+msgid "Select specific event category to show that specific category events"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1242
+msgid "Select specific event category to hide that specific category events"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1244
+msgid "Category Order By"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1245
+msgid "Category Order"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1247
+msgid "Specific Events"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1248
+msgid "Exclude Specific Events"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1254, ../includes/shortcode-builder/builder.php:1255, ../includes/term-order/term-order.php:416, ../includes/term-order/term-order.php:651, ../includes/term-order/term-order.php:690, ../includes/term-order/term-order.php:739
+msgid "Order"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1257
+msgid "Order By"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1259
+msgid "Global Settings for The Events Calendar Addon"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1260
+msgid "Preference"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1261
+msgid "Save Preference"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1264
+msgid "Anchor Tag Rel"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1265
+msgid "Select Anchor Tag rel attribute's value, to improve security and SEO, by default the value is dofollow."
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1267
+msgid "Install Demo Data"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1268
+msgid "Quick start with GS Plugins by installing the demo data"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1288
+msgid "Left"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1292, ../includes/shortcode-builder/builder.php:1745
+msgid "Center"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1296
+msgid "Right"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1306
+msgid "1 Column"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1310
+msgid "2 Columns"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1314
+msgid "3 Columns"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1318
+msgid "4 Columns"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1322
+msgid "5 Columns"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1326
+msgid "6 Columns"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1387, ../includes/shortcode-builder/builder.php:1402
+msgid "DESC"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1391, ../includes/shortcode-builder/builder.php:1398
+msgid "ASC"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1427
+msgid "Post ID"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1431
+msgid "Post Name"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1439
+msgid "Random"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1443, ../includes/shortcode-builder/builder.php:1471
+msgid "Custom Order"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1463
+msgid "Category ID"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1467
+msgid "Category Name"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1487
+msgid "None"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1491
+msgid "Blur"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1495
+msgid "Brightness"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1499
+msgid "Contrast"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1503
+msgid "Grayscale"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1507
+msgid "Hue Rotate"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1511
+msgid "Invert"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1515
+msgid "Opacity"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1519
+msgid "Saturate"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1523
+msgid "Sepia"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1549, ../includes/shortcode-builder/builder.php:2669
+msgid "Style One"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1553, ../includes/shortcode-builder/builder.php:2673
+msgid "Style Two"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1619
+msgid "Normal Pagination"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1623
+msgid "Ajax Pagination"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1627
+msgid "Load More Button"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1631
+msgid "Load More on Scroll"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1692, ../includes/shortcode-builder/builder.php:1788, ../includes/shortcode-builder/builder.php:1846, ../includes/shortcode-builder/builder.php:2079
+msgid "Style 01"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1696, ../includes/shortcode-builder/builder.php:1792, ../includes/shortcode-builder/builder.php:1850, ../includes/shortcode-builder/builder.php:2083
+msgid "Style 02"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1700, ../includes/shortcode-builder/builder.php:1796, ../includes/shortcode-builder/builder.php:1854, ../includes/shortcode-builder/builder.php:2087
+msgid "Style 03"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1704, ../includes/shortcode-builder/builder.php:1800, ../includes/shortcode-builder/builder.php:1858, ../includes/shortcode-builder/builder.php:2091
+msgid "Style 04"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1708, ../includes/shortcode-builder/builder.php:1804, ../includes/shortcode-builder/builder.php:1862, ../includes/shortcode-builder/builder.php:2095
+msgid "Style 05"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1712, ../includes/shortcode-builder/builder.php:1808, ../includes/shortcode-builder/builder.php:1866, ../includes/shortcode-builder/builder.php:2099
+msgid "Style 06"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1716, ../includes/shortcode-builder/builder.php:1812, ../includes/shortcode-builder/builder.php:1870, ../includes/shortcode-builder/builder.php:2103
+msgid "Style 07"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1720, ../includes/shortcode-builder/builder.php:1816, ../includes/shortcode-builder/builder.php:1874, ../includes/shortcode-builder/builder.php:2107
+msgid "Style 08"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1724, ../includes/shortcode-builder/builder.php:1820, ../includes/shortcode-builder/builder.php:1878, ../includes/shortcode-builder/builder.php:2111
+msgid "Style 09"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1728, ../includes/shortcode-builder/builder.php:1824, ../includes/shortcode-builder/builder.php:1882, ../includes/shortcode-builder/builder.php:2115
+msgid "Style 10"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1741
+msgid "Bottom"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1757
+msgid "Top Right"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1761
+msgid "Top Center"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1765
+msgid "Top Left"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1769
+msgid "Verticle Right"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1773
+msgid "Verticle Left"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1828
+msgid "Style 11"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1905
+msgid "Grid"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1909
+msgid "Masonry"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1913
+msgid "Calendar"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1917
+msgid "Slider"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1921
+msgid "Ticker"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1925
+msgid "Filter"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1992, ../includes/shortcode-builder/builder.php:2022, ../includes/shortcode-builder/builder.php:2039
+msgid "Layout 1"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1993, ../includes/shortcode-builder/builder.php:2026, ../includes/shortcode-builder/builder.php:2043
+msgid "Layout 2"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:1994, ../includes/shortcode-builder/builder.php:2030, ../includes/shortcode-builder/builder.php:2047
+msgid "Layout 3"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2056
+msgid "Event Layout 1"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2060
+msgid "Event Layout 2"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2064
+msgid "Event Layout 3"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2119
+msgid "List 01"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2123
+msgid "List 02"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2127
+msgid "List 03"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2131
+msgid "List 04"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2135
+msgid "List 05"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2139
+msgid "Table 01"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2143
+msgid "Table 02"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2147
+msgid "Table 03"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2151
+msgid "Table 04"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2155
+msgid "Table 05"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2159
+msgid "Timeline 1"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2163
+msgid "Timeline 2"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2167
+msgid "Timeline 3"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2171
+msgid "Accordion 1"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2175
+msgid "Accordion 2"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2179
+msgid "Accordion 3"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2243
+msgid "Normal Filter"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2247
+msgid "Ajax Filter"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2443
+msgid "Single Page"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2447
+msgid "Popup"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2639
+msgid "No Change"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2643
+msgid "Change completely (use all options of the shortcode)"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2677
+msgid "Style Three"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2681
+msgid "Style Four"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2685
+msgid "Style Five"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2750
+msgid "nofollow"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2754
+msgid "noopener"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2758
+msgid "noreferrer"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2762
+msgid "nofollow noopener"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2766
+msgid "nofollow noreferrer"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2770
+msgid "noopener noreferrer"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2774
+msgid "nofollow noopener noreferrer"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2793
+msgid "Preference saved"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2808
+msgid "Layout saved"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2819
+msgid "No layout provided"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:2883
+msgid "No preference provided"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:3482
+msgid "Missing shortcode id"
+msgstr ""
+
+#: ../includes/shortcode-builder/builder.php:3493
+msgid "Invalid order data"
+msgstr ""
+
+#: ../includes/shortcode-builder/page.php:16
+msgid "Create New"
+msgstr ""
+
+#: ../includes/shortcode-builder/page.php:19
+msgid "Demo Data"
+msgstr ""
+
+#: ../includes/shortcode-builder/preview.php:35
+msgid "Something went wrong!"
+msgstr ""
+
+#: ../includes/shortcode-builder/preview.php:36
+msgid "Data not found for preview, probably it's a bug, contact with plugin author"
+msgstr ""
+
+#: ../includes/shortcode-builder/shortcode_builder_fonts.php:41
+msgid "System"
+msgstr ""
+
+#: ../includes/shortcode-builder/shortcode_builder_fonts.php:42
+msgid "Google"
+msgstr ""
+
+#: ../includes/shortcode-builder/shortcode_builder_fonts.php:43
+msgid "Google Early Access"
+msgstr ""
+
+#: ../includes/term-order/term-order.php:150
+msgid "Numeric order for terms, useful when sorting"
+msgstr ""
+
+#: ../includes/term-order/term-order.php:300, ../includes/term-order/term-order.php:292
+msgid "Term Order"
+msgstr ""
+
+#: ../includes/term-order/term-order.php:301
+msgid "To position an item, Quick Edit the row and change the order value to a more suitable number."
+msgstr ""
+
+#: ../includes/term-order/term-order.php:293
+msgid "To reposition an item, drag and drop the row by \"clicking and holding\" it anywhere and moving it to its new position."
+msgstr ""
+
+#: ../includes/term-order/term-order.php:655
+msgid "Set a specific order by entering a number (1 for first, etc.) in this field."
+msgstr ""
+
+#: ../includes/term-order/term-order.php:696
+msgid "Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field."
+msgstr ""
+
+#: ../includes/integration/beaver/class-teca-beaver.php:113, ../includes/integration/tagdiv/class-teca-tagdiv.php:89, ../includes/integration/divi/modules/class-teca-divi-events-module.php:55, ../includes/integration/oxygen/elements/class-teca-oxygen-events-element.php:124, ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:59, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:49
+msgid "Select TECA Shortcode"
+msgstr ""
+
+#: ../includes/integration/elementor/class-teca-elementor.php:84, ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:52, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:43, ../includes/integration/beaver/modules/teca-events/teca-events.php:28
+msgid "GS Plugins"
+msgstr ""
+
+#: ../includes/integration/gutenberg/class-teca-gutenberg.php:111, ../includes/integration/divi/modules/class-teca-divi-events-module.php:195, ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:168, ../includes/integration/oxygen/elements/class-teca-oxygen-events-element.php:98, ../includes/integration/tagdiv/elements/class-teca-tagdiv-events-element.php:44, ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:95, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:95, ../includes/integration/beaver/modules/teca-events/includes/frontend.php:30
+msgid "Please select a TECA shortcode."
+msgstr ""
+
+#: ../includes/integration/gutenberg/class-teca-gutenberg.php:112
+msgid "No TECA shortcodes found. Create one first."
+msgstr ""
+
+#: ../includes/integration/gutenberg/class-teca-gutenberg.php:113
+msgid "The selected TECA shortcode no longer exists."
+msgstr ""
+
+#: ../includes/integration/gutenberg/class-teca-gutenberg.php:114, ../includes/integration/divi/modules/class-teca-divi-events-module.php:87, ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:104, ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:151, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:143
+msgid "Edit this shortcode"
+msgstr ""
+
+#: ../includes/integration/gutenberg/class-teca-gutenberg.php:116, ../includes/integration/divi/modules/class-teca-divi-events-module.php:94, ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:111, ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:158, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:150
+msgid "Create new shortcode"
+msgstr ""
+
+#: ../includes/integration/gutenberg/class-teca-gutenberg.php:117, ../includes/integration/divi/modules/class-teca-divi-events-module.php:96, ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:113, ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:160, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:152
+msgid "Create"
+msgstr ""
+
+#: ../includes/integration/tagdiv/class-teca-tagdiv.php:77, ../includes/integration/divi/modules/class-teca-divi-events-module.php:42, ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:37, ../includes/integration/oxygen/elements/class-teca-oxygen-events-element.php:65, ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:51, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:41, ../includes/integration/beaver/modules/teca-events/teca-events.php:26
+msgid "TECA Events"
+msgstr ""
+
+#: ../includes/integration/divi/modules/class-teca-divi-events-module.php:201, ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:173, ../includes/integration/oxygen/elements/class-teca-oxygen-events-element.php:105, ../includes/integration/tagdiv/elements/class-teca-tagdiv-events-element.php:54, ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:101, ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:101, ../includes/integration/beaver/modules/teca-events/includes/frontend.php:37
+msgid "Selected TECA shortcode was not found."
+msgstr ""
+
+#: ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:76
+msgid "Content"
+msgstr ""
+
+#: ../includes/integration/elementor/widgets/class-teca-elementor-events-widget.php:84
+msgid "TECA Shortcode"
+msgstr ""
+
+#: ../includes/integration/ux-builder/elements/class-teca-ux-builder-events-element.php:54, ../includes/integration/beaver/modules/teca-events/teca-events.php:27
+msgid "Display TECA events/layouts using saved TECA shortcodes."
+msgstr ""
+
+#: ../includes/integration/wpbakery/elements/class-teca-wpbakery-events-element.php:44
+msgid "Display TECA events using a saved shortcode."
+msgstr ""
+
+#: ../includes/integration/beaver/modules/teca-events/teca-events.php:29
+msgid "Basic"
+msgstr ""
+
+#: ../templates/gs-teca-list-theme-01.php:61, ../templates/gs-teca-list-theme-03.php:64, ../templates/gs-teca-theme-02.php:80, ../templates/gs-teca-theme-03.php:58, ../templates/gs-teca-theme-05.php:60, ../templates/gs-teca-theme-07.php:72, ../templates/gs-teca-theme-08.php:67, ../templates/gs-teca-theme-09.php:64, ../templates/gs-teca-theme-10.php:78
+msgid "Event date"
+msgstr ""
+
+#: ../templates/gs-teca-table-theme-01.php:29, ../templates/gs-teca-table-theme-02.php:29, ../templates/gs-teca-table-theme-03.php:29, ../templates/gs-teca-table-theme-04.php:29, ../templates/gs-teca-table-theme-05.php:29
+msgid "Image"
+msgstr ""
+
+#: ../templates/gs-teca-table-theme-01.php:53, ../templates/gs-teca-table-theme-02.php:53, ../templates/gs-teca-table-theme-03.php:53, ../templates/gs-teca-table-theme-04.php:53, ../templates/gs-teca-table-theme-05.php:53
+msgid "Links"
+msgstr ""
+
+#: ../templates/calendar/daily-layout-1.php:92, ../templates/calendar/monthly-layout-1.php:180, ../templates/calendar/monthly-layout-2.php:248, ../templates/calendar/weekly-layout-2.php:170, ../templates/calendar/weekly-layout-3.php:169
+msgid "Get Tickets"
+msgstr ""
+
+#: ../templates/calendar/daily-layout-1.php:93, ../templates/calendar/monthly-layout-1.php:180, ../templates/calendar/monthly-layout-2.php:248, ../templates/calendar/weekly-layout-2.php:170, ../templates/calendar/weekly-layout-3.php:169, ../templates/timeline/partials/event-card-content-timeline-3.php:34
+msgid "View Event"
+msgstr ""
+
+#: ../templates/calendar/daily-layout-2.php:77
+msgid "Search for events"
+msgstr ""
+
+#: ../templates/calendar/daily-layout-2.php:82
+msgid "Find Events"
+msgstr ""
+
+#: ../templates/calendar/daily-layout-2.php:116
+msgid "Previous week"
+msgstr ""
+
+#: ../templates/calendar/daily-layout-2.php:117
+msgid "Next week"
+msgstr ""
+
+#: ../templates/calendar/daily-layout-2.php:118
+msgid "Today"
+msgstr ""
+
+#: ../templates/calendar/daily-layout-2.php:160
+msgid "Recurring event"
+msgstr ""
+
+#: ../templates/calendar/daily-layout-3.php:54, ../templates/calendar/monthly-layout-1.php:59, ../templates/calendar/weekly-layout-1.php:68, ../templates/calendar/weekly-layout-2.php:78, ../templates/calendar/weekly-layout-3.php:73
+msgid "All Types"
+msgstr ""
+
+#: ../templates/calendar/monthly-layout-1.php:13, ../templates/calendar/monthly-layout-2.php:13, ../templates/calendar/monthly-layout-3.php:13
+msgid "Events Calendar"
+msgstr ""
+
+#: ../templates/calendar/monthly-layout-1.php:90
+msgid "Timeline"
+msgstr ""
+
+#. translators: %d: additional event count
+#: ../templates/calendar/monthly-layout-3.php:190, ../templates/calendar/quarterly-layout-2.php:179, ../templates/calendar/quarterly-layout-3.php:170
+msgid "+%d more"
+msgstr ""
+
+#. translators: %d: additional event count
+#: ../templates/calendar/quarterly-layout-1.php:161, ../templates/calendar/yearly-layout-1.php:134, ../templates/calendar/yearly-layout-2.php:124, ../templates/calendar/yearly-layout-3.php:143
+msgid "+%d more event"
+msgid_plural "+%d more events"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../templates/calendar/weekly-layout-1.php:13
+msgid "Weekly Calendar"
+msgstr ""
+
+#: ../templates/calendar/weekly-layout-2.php:13
+msgid "Weekly Program"
+msgstr ""
+
+#: ../templates/calendar/weekly-layout-3.php:13
+msgid "Key Events"
+msgstr ""
+
+#: ../templates/calendar/weekly-layout-3.php:61
+msgid "For The Week"
+msgstr ""
+
+#: ../templates/calendar/weekly-layout-3.php:93
+msgid "Event"
+msgstr ""
+
+#: ../templates/calendar/yearly-layout-2.php:132, ../templates/calendar/yearly-layout-3.php:151
+msgid "No events"
+msgstr ""
+
+#: ../templates/events/event-layout-1.php:57
+msgid "Discover and explore featured, past, and upcoming events."
+msgstr ""
+
+#: ../templates/events/event-layout-1.php:63, ../templates/events/event-layout-2.php:33, ../templates/events/event-layout-3.php:32
+msgid "Event groups"
+msgstr ""
+
+#: ../templates/events/event-layout-2.php:27
+msgid "Popular"
+msgstr ""
+
+#: ../templates/events/event-layout-3.php:89
+msgid "Discover events curated for you."
+msgstr ""
+
+#: ../templates/organizers/layout-1.php:16
+msgid "Organizer Directory"
+msgstr ""
+
+#: ../templates/organizers/layout-1.php:17, ../templates/organizers/layout-3.php:20
+msgid "Meet the People Behind the Events"
+msgstr ""
+
+#: ../templates/organizers/layout-1.php:18
+msgid "Browse organizer profiles, contact information, and event connections."
+msgstr ""
+
+#: ../templates/organizers/layout-1.php:112, ../templates/organizers/layout-2.php:151, ../templates/organizers/layout-3.php:155
+msgid "View Organizer"
+msgstr ""
+
+#: ../templates/organizers/layout-1.php:118, ../templates/organizers/layout-2.php:129, ../templates/organizers/layout-2.php:157, ../templates/organizers/layout-3.php:161
+msgid "Email"
+msgstr ""
+
+#: ../templates/organizers/layout-1.php:124, ../templates/organizers/layout-2.php:138, ../templates/organizers/layout-2.php:163, ../templates/organizers/layout-3.php:167, ../templates/venues/layout-1.php:103, ../templates/venues/layout-2.php:118, ../templates/venues/layout-2.php:143, ../templates/venues/layout-3.php:159
+msgid "Website"
+msgstr ""
+
+#: ../templates/organizers/layout-1.php:23, ../templates/organizers/layout-2.php:41, ../templates/organizers/layout-3.php:51
+msgid "No organizers found"
+msgstr ""
+
+#: ../templates/organizers/layout-1.php:24, ../templates/organizers/layout-2.php:42, ../templates/organizers/layout-3.php:52
+msgid "No organizer profiles are available right now."
+msgstr ""
+
+#: ../templates/organizers/layout-2.php:18
+msgid "Organizer Showcase"
+msgstr ""
+
+#: ../templates/organizers/layout-2.php:19
+msgid "Connect With Event Organizers"
+msgstr ""
+
+#: ../templates/organizers/layout-2.php:20
+msgid "Browse organizer profiles, contact information, and event connections in a premium editorial layout."
+msgstr ""
+
+#: ../templates/organizers/layout-2.php:24, ../templates/organizers/layout-3.php:25
+msgid "Organizer statistics"
+msgstr ""
+
+#: ../templates/organizers/layout-2.php:31
+msgid "Organizers"
+msgstr ""
+
+#: ../templates/organizers/layout-2.php:122, ../templates/organizers/layout-2.php:115, ../templates/venues/layout-2.php:109
+msgid "Phone"
+msgstr ""
+
+#: ../templates/organizers/layout-3.php:19
+msgid "Organizer Network"
+msgstr ""
+
+#: ../templates/organizers/layout-3.php:21
+msgid "Explore organizer profiles, contact details, and event connections in a refined visual showcase."
+msgstr ""
+
+#: ../templates/organizers/layout-3.php:31
+msgid "Organizer Listed"
+msgstr ""
+
+#: ../templates/organizers/layout-3.php:32
+msgid "Organizers Listed"
+msgstr ""
+
+#: ../templates/organizers/layout-3.php:120
+msgid "Organizer Spotlight"
+msgstr ""
+
+#: ../templates/partials/gs-teca-author.php:52
+msgid "By"
+msgstr ""
+
+#: ../templates/partials/gs-teca-filters-by-name.php:50
+msgid "All Days"
+msgstr ""
+
+#: ../templates/partials/gs-teca-filters-by-name.php:51
+msgid "Monday"
+msgstr ""
+
+#: ../templates/partials/gs-teca-filters-by-name.php:52
+msgid "Tuesday"
+msgstr ""
+
+#: ../templates/partials/gs-teca-filters-by-name.php:53
+msgid "Wednesday"
+msgstr ""
+
+#: ../templates/partials/gs-teca-filters-by-name.php:54
+msgid "Thursday"
+msgstr ""
+
+#: ../templates/partials/gs-teca-filters-by-name.php:55
+msgid "Friday"
+msgstr ""
+
+#: ../templates/partials/gs-teca-filters-by-name.php:56
+msgid "Saturday"
+msgstr ""
+
+#: ../templates/partials/gs-teca-filters-by-name.php:57
+msgid "Sunday"
+msgstr ""
+
+#: ../templates/partials/gs-teca-map.php:22
+msgid "Event location map"
+msgstr ""
+
+#: ../templates/partials/gs-teca-map.php:58
+msgid "View on Map"
+msgstr ""
+
+#: ../templates/partials/gs-teca-search-by.php:25
+msgid "Search by title"
+msgstr ""
+
+#: ../templates/partials/gs-teca-search-by.php:32
+msgid "Search by venue"
+msgstr ""
+
+#: ../templates/partials/gs-teca-search-by.php:39
+msgid "Search by organizer"
+msgstr ""
+
+#: ../templates/partials/gs-teca-search-by.php:46
+msgid "Search by city"
+msgstr ""
+
+#: ../templates/partials/gs-teca-search-by.php:50
+msgid "Searching events..."
+msgstr ""
+
+#: ../templates/partials/gs-teca-status.php:46
+msgid "Upcoming Event"
+msgstr ""
+
+#: ../templates/partials/gs-teca-status.php:41
+msgid "Past Event"
+msgstr ""
+
+#: ../templates/partials/gs-teca-table-social.php:38
+msgid "Event page"
+msgstr ""
+
+#: ../templates/partials/gs-teca-table-social.php:49
+msgid "Event website"
+msgstr ""
+
+#: ../templates/partials/gs-teca-table-social.php:95
+msgid "View event details"
+msgstr ""
+
+#: ../templates/partials/teca-calendar-filter-bar.php:72, ../templates/partials/teca-calendar-filter-bar.php:76
+msgid "No events found for the selected filter."
+msgstr ""
+
+#: ../templates/venues/layout-1.php:15
+msgid "Event Venues"
+msgstr ""
+
+#: ../templates/venues/layout-1.php:16
+msgid "Explore Our Venues"
+msgstr ""
+
+#: ../templates/venues/layout-1.php:17
+msgid "Find event locations, contact details, and venue information in one place."
+msgstr ""
+
+#: ../templates/venues/layout-1.php:112, ../templates/venues/layout-2.php:131, ../templates/venues/layout-3.php:147
+msgid "View Venue"
+msgstr ""
+
+#: ../templates/venues/layout-1.php:21
+msgid "No venues found."
+msgstr ""
+
+#: ../templates/venues/layout-2.php:16
+msgid "Curated Event Spaces"
+msgstr ""
+
+#: ../templates/venues/layout-2.php:17
+msgid "Discover Premium Venues"
+msgstr ""
+
+#: ../templates/venues/layout-2.php:19
+msgid "Explore venue locations, contact details, maps, and event spaces in a refined directory layout."
+msgstr ""
+
+#: ../templates/venues/layout-2.php:137, ../templates/venues/layout-3.php:153
+msgid "Open Map"
+msgstr ""
+
+#: ../templates/venues/layout-2.php:25, ../templates/venues/layout-3.php:49
+msgid "No venues found"
+msgstr ""
+
+#: ../templates/venues/layout-2.php:26, ../templates/venues/layout-3.php:50
+msgid "No venue locations are available right now."
+msgstr ""
+
+#: ../templates/venues/layout-3.php:18
+msgid "Signature Venues"
+msgstr ""
+
+#: ../templates/venues/layout-3.php:19
+msgid "Explore Beautiful Event Spaces"
+msgstr ""
+
+#: ../templates/venues/layout-3.php:20
+msgid "Discover curated venues with location details, contact information, and map access in a refined visual showcase."
+msgstr ""
+
+#: ../templates/venues/layout-3.php:24
+msgid "Venue statistics"
+msgstr ""
+
+#: ../templates/venues/layout-3.php:30
+msgid "Venue Listed"
+msgstr ""
+
+#: ../templates/venues/layout-3.php:31
+msgid "Venues Listed"
+msgstr ""
+
+#: ../templates/venues/layout-3.php:122
+msgid "Venue Spotlight"
+msgstr ""
+
+#: ../templates/events/partials/event-layout-1-item.php:61, ../templates/events/partials/event-layout-2-item.php:84, ../templates/events/partials/event-layout-3-item.php:95
+msgid "Learn More"
+msgstr ""

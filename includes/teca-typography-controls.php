@@ -46,6 +46,7 @@ function teca_is_typography_color_controls_pro_feature_available() {
  */
 function teca_get_free_typography_group_slugs() {
 	return apply_filters(
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		'gs_teca_free_typography_group_slugs',
 		array(
 			'title',

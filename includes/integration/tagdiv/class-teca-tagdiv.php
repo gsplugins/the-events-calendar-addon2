@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -73,7 +74,7 @@ class Integration_Tagdiv {
 			[
 				'map_in_visual_composer' => false,
 				'map_in_td_composer'     => true,
-				'name'                   => esc_html__( 'TECA Events', 'the-events-calendar-addon' ),
+				'name'                   => esc_html__( 'TECA Events', 'the-events-calendar-addon2' ),
 				'base'                   => 'td_teca_tagdiv_events',
 				'class'                  => 'td_teca_tagdiv_events',
 				'controls'               => 'full',
@@ -85,7 +86,7 @@ class Integration_Tagdiv {
 						'param_name' => 'shortcode_id',
 						'type'       => 'dropdown',
 						'value'      => $this->get_shortcode_dropdown_values(),
-						'heading'    => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon' ),
+						'heading'    => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon2' ),
 					],
 				],
 			]
@@ -176,7 +177,7 @@ class Integration_Tagdiv {
 		}
 
 		return [
-			esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon' ) => '',
+			esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon2' ) => '',
 		];
 	}
 }

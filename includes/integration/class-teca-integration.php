@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -15,34 +16,42 @@ final class Integrations {
 	 * Boot page builder integrations.
 	 */
 	public function __construct() {
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		if ( apply_filters( 'gs_teca_integration_gutenberg', true ) ) {
 			$this->integration_with_gutenberg();
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		if ( apply_filters( 'gs_teca_integration_elementor', true ) ) {
 			$this->integration_with_elementor();
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		if ( apply_filters( 'gs_teca_integration_divi', true ) ) {
 			$this->integration_with_divi();
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		if ( apply_filters( 'gs_teca_integration_wpbakery', true ) ) {
 			$this->integration_with_wpbakery();
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		if ( apply_filters( 'gs_teca_integration_tagdiv', true ) ) {
 			$this->integration_with_tagdiv();
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		if ( apply_filters( 'gs_teca_integration_oxygen', true ) ) {
 			$this->integration_with_oxygen();
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		if ( apply_filters( 'gs_teca_integration_ux_builder', true ) ) {
 			$this->integration_with_ux_builder();
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		if ( apply_filters( 'gs_teca_integration_beaver', true ) ) {
 			$this->integration_with_beaver();
 		}

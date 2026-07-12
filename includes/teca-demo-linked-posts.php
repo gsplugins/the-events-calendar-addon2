@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -14,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function teca_get_demo_venue_definitions() {
 	return array(
 		array(
-			'Venue'   => __( 'GS Conference Hall', 'the-events-calendar-addon' ),
+			'Venue'   => __( 'GS Conference Hall', 'the-events-calendar-addon2' ),
 			'Address' => '123 Main Street',
 			'City'    => 'New York',
 			'State'   => 'NY',
@@ -23,7 +24,7 @@ function teca_get_demo_venue_definitions() {
 			'Phone'   => '+1 (555) 010-2000',
 		),
 		array(
-			'Venue'   => __( 'Creative Studio Space', 'the-events-calendar-addon' ),
+			'Venue'   => __( 'Creative Studio Space', 'the-events-calendar-addon2' ),
 			'Address' => '456 Market Street',
 			'City'    => 'San Francisco',
 			'State'   => 'CA',
@@ -32,7 +33,7 @@ function teca_get_demo_venue_definitions() {
 			'Phone'   => '+1 (555) 010-3000',
 		),
 		array(
-			'Venue'   => __( 'Riverside Event Center', 'the-events-calendar-addon' ),
+			'Venue'   => __( 'Riverside Event Center', 'the-events-calendar-addon2' ),
 			'Address' => '789 River Road',
 			'City'    => 'Austin',
 			'State'   => 'TX',
@@ -51,19 +52,19 @@ function teca_get_demo_venue_definitions() {
 function teca_get_demo_organizer_definitions() {
 	return array(
 		array(
-			'Organizer' => __( 'GS Events Team', 'the-events-calendar-addon' ),
+			'Organizer' => __( 'GS Events Team', 'the-events-calendar-addon2' ),
 			'Email'     => 'events@gsplugins.com',
 			'Website'   => 'https://www.gsplugins.com/',
 			'Phone'     => '+1 (555) 010-1001',
 		),
 		array(
-			'Organizer' => __( 'Creative Collective', 'the-events-calendar-addon' ),
+			'Organizer' => __( 'Creative Collective', 'the-events-calendar-addon2' ),
 			'Email'     => 'hello@creativecollective.com',
 			'Website'   => 'https://example.com/creative-collective',
 			'Phone'     => '+1 (555) 010-1002',
 		),
 		array(
-			'Organizer' => __( 'Summit Organizers', 'the-events-calendar-addon' ),
+			'Organizer' => __( 'Summit Organizers', 'the-events-calendar-addon2' ),
 			'Email'     => 'info@summitorganizers.com',
 			'Website'   => 'https://example.com/summit-organizers',
 			'Phone'     => '+1 (555) 010-1003',
@@ -183,7 +184,10 @@ function teca_get_existing_demo_linked_post_ids() {
 			'post_status'    => 'any',
 			'posts_per_page' => -1,
 			'fields'         => 'ids',
+			'no_found_rows'  => true,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required to find demo linked organizer/venue posts.
 			'meta_key'       => 'gsteca-demo_data',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required to find demo linked organizer/venue posts.
 			'meta_value'     => '1',
 		)
 	);
@@ -194,7 +198,10 @@ function teca_get_existing_demo_linked_post_ids() {
 			'post_status'    => 'any',
 			'posts_per_page' => -1,
 			'fields'         => 'ids',
+			'no_found_rows'  => true,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required to find demo linked organizer/venue posts.
 			'meta_key'       => 'gsteca-demo_data',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required to find demo linked organizer/venue posts.
 			'meta_value'     => '1',
 		)
 	);
@@ -341,7 +348,10 @@ function teca_delete_demo_linked_posts() {
 				'post_status'    => 'any',
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
+				'no_found_rows'  => true,
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required to find demo linked organizer/venue posts.
 				'meta_key'       => 'gsteca-demo_data',
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required to find demo linked organizer/venue posts.
 				'meta_value'     => '1',
 			)
 		);

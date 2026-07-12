@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $event         = $event ?? array();
 $event_group   = $event_group ?? '';
@@ -55,7 +58,7 @@ $title         = $event['event_name'] ?? '';
 	<?php if ( $permalink ) : ?>
 		<div class="teca-event-layout-1-action">
 			<a class="teca-event-layout-1-button" href="<?php echo esc_url( $permalink ); ?>">
-				<?php esc_html_e( 'Learn More', 'the-events-calendar-addon' ); ?>
+				<?php esc_html_e( 'Learn More', 'the-events-calendar-addon2' ); ?>
 			</a>
 			<?php
 			teca_echo_google_calendar_button_actions(
@@ -69,3 +72,6 @@ $title         = $event['event_name'] ?? '';
 		</div>
 	<?php endif; ?>
 </article>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

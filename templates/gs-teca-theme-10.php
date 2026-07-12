@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 use GS_TECA\Helpers;
@@ -6,6 +7,8 @@ use GS_TECA\Helpers;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 foreach ( $events as $event ) :
 
@@ -72,7 +75,7 @@ foreach ( $events as $event ) :
 			<?php if ( $show_topbar ) : ?>
 				<div class="teca-grid-style-10-topbar">
 					<?php if ( $show_date_badge ) : ?>
-						<div class="teca-grid-style-10-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon' ); ?>">
+						<div class="teca-grid-style-10-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon2' ); ?>">
 							<span class="teca-grid-style-10-date-day"><?php echo esc_html( $day_label ); ?></span>
 							<span class="teca-grid-style-10-date-month"><?php echo esc_html( $month_label ); ?></span>
 						</div>
@@ -192,3 +195,6 @@ foreach ( $events as $event ) :
 	</div>
 
 <?php endforeach; ?>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

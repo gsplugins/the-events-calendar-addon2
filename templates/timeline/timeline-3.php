@@ -1,14 +1,17 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
+
 $card_partial = Template_Loader::locate_template( 'timeline/partials/event-card-content-timeline-3.php' );
 ?>
 <?php if ( empty( $events ) ) : ?>
-	<div class="teca-timeline-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
+	<div class="teca-timeline-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
 <?php else : ?>
 	<div class="teca-timeline teca-timeline-3 teca-timeline-3-agenda">
 		<div class="teca-timeline-3-list">
@@ -57,3 +60,6 @@ $card_partial = Template_Loader::locate_template( 'timeline/partials/event-card-
 		</div>
 	</div>
 <?php endif; ?>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

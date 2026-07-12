@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $event_id = 0;
 
@@ -32,7 +35,7 @@ if ( 'single_page' === $link_type ) {
 	if ( $permalink ) {
 		$links[] = array(
 			'url'   => $permalink,
-			'label' => __( 'Event page', 'the-events-calendar-addon' ),
+			'label' => __( 'Event page', 'the-events-calendar-addon2' ),
 			'icon'  => 'link',
 		);
 	}
@@ -43,7 +46,7 @@ if ( function_exists( 'tribe_get_event_website_url' ) ) {
 	if ( $event_website ) {
 		$links[] = array(
 			'url'   => $event_website,
-			'label' => __( 'Event website', 'the-events-calendar-addon' ),
+			'label' => __( 'Event website', 'the-events-calendar-addon2' ),
 			'icon'  => 'external',
 		);
 	}
@@ -89,7 +92,7 @@ if ( empty( $links ) && 'popup' === $link_type ) {
 		class="<?php echo esc_attr( $social_btn_class ); ?> gs_teca_pop open-popup-link"
 		data-mfp-src="<?php echo esc_attr( $data_src ); ?>"
 		data-theme="<?php echo esc_attr( $data_theme ); ?>"
-		aria-label="<?php esc_attr_e( 'View event details', 'the-events-calendar-addon' ); ?>"
+		aria-label="<?php esc_attr_e( 'View event details', 'the-events-calendar-addon2' ); ?>"
 	>
 		<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
 			<path d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4M14 4h6m0 0v6m0-6L10 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -126,3 +129,6 @@ if ( empty( $links ) ) {
 		</a>
 	<?php endforeach; ?>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

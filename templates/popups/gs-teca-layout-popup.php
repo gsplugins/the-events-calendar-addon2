@@ -1,5 +1,9 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $popup_style = isset( $atts['popup_style'] ) ? sanitize_key( $atts['popup_style'] ) : 'default';
 $popup_style = teca_resolve_popup_style_for_context( $popup_style );
@@ -65,3 +69,6 @@ if ( ! $event_id ) {
     ?>
   </div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

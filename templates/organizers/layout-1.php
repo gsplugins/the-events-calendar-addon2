@@ -1,24 +1,27 @@
 <?php
-
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
+
 $organizers = $organizers ?? array();
 ?>
+
 <div class="teca-organizer-template teca-organizer-template-layout-1">
 	<div class="teca-organizer-l1-header">
-		<span class="teca-organizer-l1-eyebrow"><?php esc_html_e( 'Organizer Directory', 'the-events-calendar-addon' ); ?></span>
-		<h2 class="teca-organizer-l1-title"><?php esc_html_e( 'Meet the People Behind the Events', 'the-events-calendar-addon' ); ?></h2>
-		<p class="teca-organizer-l1-description"><?php esc_html_e( 'Browse organizer profiles, contact information, and event connections.', 'the-events-calendar-addon' ); ?></p>
+		<span class="teca-organizer-l1-eyebrow"><?php esc_html_e( 'Organizer Directory', 'the-events-calendar-addon2' ); ?></span>
+		<h2 class="teca-organizer-l1-title"><?php esc_html_e( 'Meet the People Behind the Events', 'the-events-calendar-addon2' ); ?></h2>
+		<p class="teca-organizer-l1-description"><?php esc_html_e( 'Browse organizer profiles, contact information, and event connections.', 'the-events-calendar-addon2' ); ?></p>
 	</div>
 
 	<?php if ( empty( $organizers ) ) : ?>
 		<div class="teca-organizer-template-empty">
-			<h3 class="teca-organizer-template-empty-title"><?php esc_html_e( 'No organizers found', 'the-events-calendar-addon' ); ?></h3>
-			<p class="teca-organizer-template-empty-text"><?php esc_html_e( 'No organizer profiles are available right now.', 'the-events-calendar-addon' ); ?></p>
+			<h3 class="teca-organizer-template-empty-title"><?php esc_html_e( 'No organizers found', 'the-events-calendar-addon2' ); ?></h3>
+			<p class="teca-organizer-template-empty-text"><?php esc_html_e( 'No organizer profiles are available right now.', 'the-events-calendar-addon2' ); ?></p>
 		</div>
 	<?php else : ?>
 		<div class="teca-organizer-l1-grid">
@@ -28,19 +31,20 @@ $organizers = $organizers ?? array();
 					continue;
 				}
 
-				$organizer_id    = absint( $organizer['id'] ?? 0 );
-				$title           = trim( (string) ( $organizer['title'] ?? '' ) );
-				$permalink       = ! empty( $organizer['permalink'] ) ? (string) $organizer['permalink'] : '';
-				$thumbnail       = ! empty( $organizer['thumbnail'] ) ? (string) $organizer['thumbnail'] : '';
-				$phone           = trim( (string) ( $organizer['phone'] ?? '' ) );
-				$email           = sanitize_email( (string) ( $organizer['email'] ?? '' ) );
-				$website         = trim( (string) ( $organizer['website'] ?? '' ) );
-				$upcoming_count  = absint( $organizer['upcoming_count'] ?? 0 );
-				$excerpt_display = teca_get_organizer_excerpt_display( $organizer );
+				$organizer_id     = absint( $organizer['id'] ?? 0 );
+				$title            = trim( (string) ( $organizer['title'] ?? '' ) );
+				$permalink        = ! empty( $organizer['permalink'] ) ? (string) $organizer['permalink'] : '';
+				$thumbnail        = ! empty( $organizer['thumbnail'] ) ? (string) $organizer['thumbnail'] : '';
+				$phone            = trim( (string) ( $organizer['phone'] ?? '' ) );
+				$email            = sanitize_email( (string) ( $organizer['email'] ?? '' ) );
+				$website          = trim( (string) ( $organizer['website'] ?? '' ) );
+				$upcoming_count   = absint( $organizer['upcoming_count'] ?? 0 );
+				$excerpt_display  = teca_get_organizer_excerpt_display( $organizer );
 				$fallback_initial = teca_get_organizer_fallback_initial( $organizer );
-				$card_title      = $title ?: __( 'Organizer', 'the-events-calendar-addon' );
-				$phone_digits    = preg_replace( '/[^\d\+]/', '', $phone );
+				$card_title       = $title ?: __( 'Organizer', 'the-events-calendar-addon2' );
+				$phone_digits     = preg_replace( '/[^\d\+]/', '', $phone );
 				?>
+
 				<article class="teca-organizer-l1-card"<?php echo $organizer_id ? ' data-organizer-id="' . esc_attr( (string) $organizer_id ) . '"' : ''; ?>>
 					<div class="teca-organizer-l1-card-bg" aria-hidden="true"></div>
 
@@ -105,19 +109,19 @@ $organizers = $organizers ?? array();
 							<div class="teca-organizer-l1-actions">
 								<?php if ( $permalink ) : ?>
 									<a class="teca-organizer-l1-btn teca-organizer-l1-btn-primary" href="<?php echo esc_url( $permalink ); ?>">
-										<?php esc_html_e( 'View Organizer', 'the-events-calendar-addon' ); ?>
+										<?php esc_html_e( 'View Organizer', 'the-events-calendar-addon2' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $email ) : ?>
 									<a class="teca-organizer-l1-btn teca-organizer-l1-btn-secondary" href="<?php echo esc_url( 'mailto:' . $email ); ?>">
-										<?php esc_html_e( 'Email', 'the-events-calendar-addon' ); ?>
+										<?php esc_html_e( 'Email', 'the-events-calendar-addon2' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $website ) : ?>
 									<a class="teca-organizer-l1-btn teca-organizer-l1-btn-secondary" href="<?php echo esc_url( $website ); ?>" target="_blank" rel="noopener noreferrer">
-										<?php esc_html_e( 'Website', 'the-events-calendar-addon' ); ?>
+										<?php esc_html_e( 'Website', 'the-events-calendar-addon2' ); ?>
 									</a>
 								<?php endif; ?>
 							</div>
@@ -128,3 +132,6 @@ $organizers = $organizers ?? array();
 		</div>
 	<?php endif; ?>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -238,6 +239,7 @@ function teca_render_popup_elements( array $event, $popup_visibility_settings = 
 	$args = wp_parse_args(
 		$args,
 		array(
+			// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Element visibility exclude list, not a WP_Query exclude parameter.
 			'exclude'        => array(),
 			'wrap_meta_grid' => true,
 		)
@@ -436,7 +438,7 @@ function teca_render_popup_date_element( $event_id, $visibility ) {
 
 	?>
 	<div class="<?php Helpers::print_visible_classes( $visibility['event_date'] ?? true, 'teca-popup-meta-item teca-popup-element teca-event-date gs-teca-date' ); ?>">
-		<span class="teca-popup-meta-label"><?php esc_html_e( 'Date', 'the-events-calendar-addon' ); ?></span>
+		<span class="teca-popup-meta-label"><?php esc_html_e( 'Date', 'the-events-calendar-addon2' ); ?></span>
 		<div class="teca-popup-meta-value teca-popup-detail-date"><?php echo $markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 	</div>
 	<?php
@@ -455,7 +457,7 @@ function teca_render_popup_time_element( $event_id, $visibility ) {
 
 	?>
 	<div class="<?php Helpers::print_visible_classes( $visibility['event_time'] ?? true, 'teca-popup-meta-item teca-popup-element teca-event-time' ); ?>">
-		<span class="teca-popup-meta-label"><?php esc_html_e( 'Time', 'the-events-calendar-addon' ); ?></span>
+		<span class="teca-popup-meta-label"><?php esc_html_e( 'Time', 'the-events-calendar-addon2' ); ?></span>
 		<span class="teca-popup-meta-value teca-popup-detail-time"><?php echo esc_html( $time_display ); ?></span>
 	</div>
 	<?php
@@ -486,7 +488,7 @@ function teca_render_popup_venue_element( array $event, $visibility ) {
 
 	?>
 	<div class="<?php Helpers::print_visible_classes( $visibility['event_venue'] ?? true, 'teca-popup-meta-item teca-popup-element teca-event-venue gs-teca-venue' ); ?>">
-		<span class="teca-popup-meta-label teca-popup-detail-venue-title"><?php esc_html_e( 'Venue', 'the-events-calendar-addon' ); ?></span>
+		<span class="teca-popup-meta-label teca-popup-detail-venue-title"><?php esc_html_e( 'Venue', 'the-events-calendar-addon2' ); ?></span>
 		<div class="teca-popup-meta-value teca-popup-detail-venue-value"><?php echo $markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 	</div>
 	<?php
@@ -514,7 +516,7 @@ function teca_render_popup_organizer_element( array $event, $visibility ) {
 
 	?>
 	<div class="<?php Helpers::print_visible_classes( $visibility['event_organizer'] ?? true, 'teca-popup-meta-item teca-popup-element teca-event-organizer gs-teca-organizer' ); ?>">
-		<span class="teca-popup-meta-label teca-popup-detail-organizer-title"><?php esc_html_e( 'Organizer', 'the-events-calendar-addon' ); ?></span>
+		<span class="teca-popup-meta-label teca-popup-detail-organizer-title"><?php esc_html_e( 'Organizer', 'the-events-calendar-addon2' ); ?></span>
 		<div class="teca-popup-meta-value"><?php echo $markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 	</div>
 	<?php
@@ -533,7 +535,7 @@ function teca_render_popup_cost_element( $event_id, $visibility ) {
 
 	?>
 	<div class="<?php Helpers::print_visible_classes( $visibility['event_cost'] ?? true, 'teca-popup-meta-item teca-popup-element teca-event-cost' ); ?>">
-		<span class="teca-popup-meta-label"><?php esc_html_e( 'Cost', 'the-events-calendar-addon' ); ?></span>
+		<span class="teca-popup-meta-label"><?php esc_html_e( 'Cost', 'the-events-calendar-addon2' ); ?></span>
 		<span class="teca-popup-meta-value teca-popup-detail-cost"><?php echo esc_html( $cost ); ?></span>
 	</div>
 	<?php
@@ -568,7 +570,7 @@ function teca_render_popup_description_element( $event_id, array $event, $visibi
 
 	if ( 'style-1' === $popup_style ) {
 		$strings = plugin()->builder->get_translation_strings();
-		$label   = $strings['gsp-teca-details'] ?? __( 'Event Details', 'the-events-calendar-addon' );
+		$label   = $strings['gsp-teca-details'] ?? __( 'Event Details', 'the-events-calendar-addon2' );
 		?>
 		<div class="<?php Helpers::print_visible_classes( $visibility['event_details'] ?? true, $base_class . ' teca-popup-element-details' ); ?>">
 			<div class="teca-popup-section-label"><?php echo esc_html( $label ); ?></div>
@@ -582,7 +584,7 @@ function teca_render_popup_description_element( $event_id, array $event, $visibi
 
 	if ( 'style-2' === $popup_style ) {
 		$strings = plugin()->builder->get_translation_strings();
-		$label   = $strings['gsp-teca-details'] ?? __( 'Event Details', 'the-events-calendar-addon' );
+		$label   = $strings['gsp-teca-details'] ?? __( 'Event Details', 'the-events-calendar-addon2' );
 		?>
 		<div class="<?php Helpers::print_visible_classes( $visibility['event_details'] ?? true, $base_class . ' teca-popup-element-details' ); ?>">
 			<div class="teca-popup-section-label"><?php echo esc_html( $label ); ?></div>

@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 
@@ -123,6 +124,7 @@ final class Scripts {
 		// For Divi fix
 		$this->add_style( 'gs-teca-divi-public', GS_TECA_PLUGIN_URI . 'assets/css/gs-teca-divi.min.css', ['gs-teca-public'], GS_TECA_VERSION );
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		do_action( 'gs_teca__add_assets', $this );
 
 	}
@@ -212,6 +214,7 @@ final class Scripts {
 			return;
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Legacy handler-based filter name is kept for backward compatibility.
 		$deps = (array) apply_filters( $handler . '--style', $style['deps'] );
 		wp_register_style(
 			$handler, $style['src'], $deps,
@@ -235,6 +238,7 @@ final class Scripts {
 			return;
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Legacy handler-based filter name is kept for backward compatibility.
 		$deps = (array) apply_filters( $handler . '--script', $script['deps'] );
 		wp_register_script(
 			$handler, $script['src'], $deps,
@@ -250,6 +254,7 @@ final class Scripts {
 	 */
 	public function _get_public_style_all() {
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		return (array) apply_filters( 'gs_teca_get_public_style_all', [
 			'gs-swiper',
 			'gs-tippyjs',
@@ -268,6 +273,7 @@ final class Scripts {
 	 * @return array List of publicly enqueuable scripts.
 	 */
 	public function _get_public_script_all() {
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		return (array) apply_filters( 'gs_teca_get_public_script_all', [
 			'gs-swiper',
 			'gs-isotope',
@@ -286,6 +292,7 @@ final class Scripts {
 	 * @return array List of admin enqueuable stylesheets.
 	 */
 	public function _get_admin_style_all() {
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		return (array) apply_filters( 'gs_teca_get_admin_style_all', [] );
 	}
 
@@ -296,6 +303,7 @@ final class Scripts {
 	 * @return array List of admin enqueuable scripts.
 	 */
 	public function _get_admin_script_all() {
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		return (array) apply_filters( 'gs_teca_get_admin_script_all', [] );
 	}
 
@@ -312,6 +320,7 @@ final class Scripts {
 			$assets = array_diff( $assets, $excludes );
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Dynamic asset group filter name is kept for backward compatibility.
 		return (array) apply_filters( sprintf( 'gs_teca_%s__%s_all', $group, $asset_type ), $assets );
 
 	}
@@ -353,6 +362,7 @@ final class Scripts {
 			return;
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Legacy handler-based filter name is kept for backward compatibility.
 		$deps = (array) apply_filters( $handler . '--style-enqueue', $style['deps'] );
 		wp_enqueue_style(
 			$handler, $style['src'], $deps, $style['ver'], $style['media']
@@ -366,6 +376,7 @@ final class Scripts {
 			return;
 		}
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Legacy handler-based filter name is kept for backward compatibility.
 		$deps = (array) apply_filters( $handler . '--script-enqueue', $script['deps'] );
 
 		wp_enqueue_script(
@@ -451,6 +462,7 @@ final class Scripts {
 		// Maybe enqueue assets
 		gsTecaAssetGenerator()->enqueue( gsTecaAssetGenerator()->get_current_page_id() );
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		do_action( 'gs_teca_assets_loaded' );
 		
 	}

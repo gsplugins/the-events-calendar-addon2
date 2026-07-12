@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -72,9 +73,9 @@ function teca_get_single_event_status_badge_data( $event_id ) {
 			$status_label = $labels->get_canceled_label();
 		}
 	} elseif ( 'postponed' === $status_slug ) {
-		$status_label = __( 'Postponed', 'the-events-calendar' );
+		$status_label = __( 'Postponed', 'the-events-calendar-addon2' );
 	} else {
-		$status_label = __( 'Cancelled', 'the-events-calendar' );
+		$status_label = __( 'Cancelled', 'the-events-calendar-addon2' );
 	}
 
 	$status_label = trim( (string) $status_label );

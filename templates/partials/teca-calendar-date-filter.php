@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $filter_type = $filter_type ?? 'daily';
 $layout_id   = $layout_id ?? 'teca';
@@ -45,3 +48,6 @@ $select_id   = 'teca-calendar-filter-' . $filter_type . '-' . $layout_id;
 >
 	<?php echo esc_html( $config['message'] ); ?>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

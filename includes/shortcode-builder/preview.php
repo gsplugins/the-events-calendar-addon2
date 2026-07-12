@@ -1,3 +1,6 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) exit; 
+?>
 <html class="no-js" <?php language_attributes(); ?>>
 
 <head>
@@ -20,7 +23,7 @@
 
                 <div class="gs-shortcode-preview--wrapper shortcode-found">
 
-                    <?php echo do_shortcode(get_the_content()); ?>
+                    <?php echo do_shortcode( get_the_content() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Shortcode output is escaped inside the shortcode renderer and may include safe inline style tags. ?>
 
                 </div>
 
@@ -29,8 +32,8 @@
 
             <div class="gs-shortcode-preview--wrapper something-wrong">
 
-                <h2><?php _e('Something went wrong!', 'the-events-calendar-addon'); ?></h2>
-                <p><?php _e('Data not found for preview, probably it\'s a bug, contact with plugin author', 'the-events-calendar-addon'); ?></p>
+                <h2><?php esc_html_e('Something went wrong!', 'the-events-calendar-addon2'); ?></h2>
+                <p><?php esc_html_e('Data not found for preview, probably it\'s a bug, contact with plugin author', 'the-events-calendar-addon2'); ?></p>
 
             </div>
 

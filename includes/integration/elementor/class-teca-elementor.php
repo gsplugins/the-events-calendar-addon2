@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -80,7 +81,7 @@ class Integration_Elementor {
 		$elements_manager->add_category(
 			'gs-plugins',
 			[
-				'title' => esc_html__( 'GS Plugins', 'the-events-calendar-addon' ),
+				'title' => esc_html__( 'GS Plugins', 'the-events-calendar-addon2' ),
 				'icon'  => 'fa fa-plug',
 			]
 		);

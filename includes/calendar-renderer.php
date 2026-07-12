@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -69,7 +70,7 @@ class Calendar_Renderer {
 	public static function render_layout( $view_type, array $settings ) {
 		if ( ! self::is_views_v2_enabled() ) {
 			return self::render_notice(
-				__( 'The Events Calendar Views V2 must be enabled to display calendar layouts.', 'the-events-calendar-addon' ),
+				__( 'The Events Calendar Views V2 must be enabled to display calendar layouts.', 'the-events-calendar-addon2' ),
 				$view_type,
 				$settings
 			);
@@ -93,7 +94,7 @@ class Calendar_Renderer {
 
 		if ( ! method_exists( self::class, $render_method ) ) {
 			return self::render_notice(
-				__( 'The selected calendar layout could not be rendered.', 'the-events-calendar-addon' ),
+				__( 'The selected calendar layout could not be rendered.', 'the-events-calendar-addon2' ),
 				'calendar',
 				$settings
 			);
@@ -135,7 +136,7 @@ class Calendar_Renderer {
 
 		if ( ! self::is_views_v2_enabled() ) {
 			return self::render_notice(
-				__( 'The Events Calendar Views V2 must be enabled to display calendar layouts.', 'the-events-calendar-addon' ),
+				__( 'The Events Calendar Views V2 must be enabled to display calendar layouts.', 'the-events-calendar-addon2' ),
 				'daily-calendar',
 				$settings
 			);
@@ -244,7 +245,7 @@ class Calendar_Renderer {
 		if ( ! self::is_week_view_available() ) {
 			return self::wrap_output(
 				'<div class="teca-calendar-notice teca-calendar-week-unavailable">' .
-				esc_html__( 'Weekly calendar view requires The Events Calendar Pro.', 'the-events-calendar-addon' ) .
+				esc_html__( 'Weekly calendar view requires The Events Calendar Pro.', 'the-events-calendar-addon2' ) .
 				'</div>',
 				'weekly-calendar',
 				$settings
@@ -459,7 +460,7 @@ class Calendar_Renderer {
 			esc_html(
 				sprintf(
 					/* translators: 1: year, 2: quarter number */
-					__( '%1$s - Quarter %2$s', 'the-events-calendar-addon' ),
+					__( '%1$s - Quarter %2$s', 'the-events-calendar-addon2' ),
 					$year,
 					$quarter
 				)
@@ -480,9 +481,11 @@ class Calendar_Renderer {
 				esc_html( date_i18n( 'F Y', $month_ts ) )
 			);
 			echo '<div class="teca-calendar-quarter-events">';
-			echo self::render_native_view(
-				'month',
-				self::build_render_args( $settings, 'month', $month_key, 'quarterly-' . $month_key )
+			echo wp_kses_post(
+				self::render_native_view(
+					'month',
+					self::build_render_args( $settings, 'month', $month_key, 'quarterly-' . $month_key )
+				)
 			);
 			echo '</div></div>';
 		}
@@ -590,10 +593,10 @@ class Calendar_Renderer {
 				esc_html( date_i18n( 'F Y', $month_ts ) )
 			);
 			echo '<div class="teca-calendar-year-events">';
-			echo self::render_native_view(
+			echo wp_kses_post( self::render_native_view(
 				'month',
 				self::build_render_args( $settings, 'month', $month_key, 'yearly-' . $month_key )
-			);
+			) );
 			echo '</div></div>';
 		}
 
@@ -803,6 +806,7 @@ class Calendar_Renderer {
 		/**
 		 * Fires when TECA requests native calendar assets.
 		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- The Events Calendar hook name is required for native calendar asset integration.
 		do_action( 'tec_events_calendar_embeds_enqueue_scripts' );
 	}
 }

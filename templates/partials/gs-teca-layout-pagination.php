@@ -1,6 +1,9 @@
 <?php
-
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 /**
  * GS Team - Layout Pagination
  * @author GS Plugins <hello@gsplugins.com>
@@ -13,6 +16,7 @@ namespace GS_TECA;
 
 if( ! is_display_pagination( $carousel_enabled, $filter_enabled, $gs_teca_filter_type ) ) return;
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 do_action( 'gs_teca_before_pagination' );
 
 if( 'on' === $filter_enabled && 'normal-pagination' === $pagination_type && is_pro_active_and_valid() ) {
@@ -50,4 +54,7 @@ if( 'on' === $filter_enabled && 'normal-pagination' === $pagination_type && is_p
 
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 do_action( 'gs_teca_after_pagination' );
+
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

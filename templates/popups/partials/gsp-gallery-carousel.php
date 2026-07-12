@@ -1,8 +1,10 @@
 <?php
-
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing namespace is kept for backward compatibility with reused popup partials.
 namespace GS_POSTS_GRID;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $gallery_images = explode( ',', get_post_meta( get_the_ID(), 'gs_posts_gallery', true ) );
 
@@ -38,3 +40,6 @@ $gallery_images = explode( ',', get_post_meta( get_the_ID(), 'gs_posts_gallery',
     </div>
 
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

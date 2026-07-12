@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -28,9 +29,8 @@ add_action('plugins_loaded', function() {
     register_deactivation_hook( GS_TECA_PLUGIN_FILE, 'GS_TECA\on_deactivation' );
     
     /**
-     * Plugins Load Text Domain
+     * Text domain loading is handled by WordPress.org language packs.
      */
-    add_action( 'init', 'GS_TECA\gs_load_textdomain' );
     add_action('init', function () {
         add_post_type_support('tribe_events', 'page-attributes');
     });

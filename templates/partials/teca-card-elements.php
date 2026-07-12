@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $teca_card_args            = $teca_card_args ?? array();
 $layout                    = $teca_card_args['layout'] ?? 'accordion-panel';
@@ -59,12 +62,12 @@ foreach ( $field_order as $field_key ) {
 				?>
 				<div class="<?php teca_print_card_visible_classes( 'event_thumbnail', 'teca-event-thumb teca-timeline-thumb teca-timeline-2-thumb gs-teca-thumbnail-wrapper', $visibility_settings ); ?>">
 					<?php
-					echo teca_get_card_link_html(
+					echo wp_kses_post( teca_get_card_link_html(
 						$event_id,
 						'<img src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy" />',
 						$link_context,
 						'teca-event-image-link'
-					);
+					) );
 					?>
 					<?php if ( teca_is_card_field_visible( 'event_cat', $visibility_settings ) && ! empty( $category_names ) ) : ?>
 						<div class="teca-event-categories gs-teca-categories teca-timeline-2-categories">
@@ -82,12 +85,12 @@ foreach ( $field_order as $field_key ) {
 				?>
 				<div class="<?php teca_print_card_visible_classes( 'event_thumbnail', 'teca-event-thumb teca-timeline-3-thumb gs-teca-thumbnail-wrapper', $visibility_settings ); ?>">
 					<?php
-					echo teca_get_card_link_html(
+					echo wp_kses_post( teca_get_card_link_html(
 						$event_id,
 						'<img src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy" />',
 						$link_context,
 						'teca-event-image-link'
-					);
+					) );
 					?>
 				</div>
 				<?php
@@ -102,12 +105,12 @@ foreach ( $field_order as $field_key ) {
 			?>
 			<div class="<?php teca_print_card_visible_classes( 'event_thumbnail', $thumb_class, $visibility_settings ); ?>">
 				<?php
-				echo teca_get_card_link_html(
+				echo wp_kses_post( teca_get_card_link_html(
 					$event_id,
 					'<img src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy" />',
 					$link_context,
 					'teca-event-image-link'
-				);
+				) );
 				?>
 			</div>
 			<?php
@@ -351,3 +354,5 @@ if ( $cost_display && ! teca_layout_suppresses_card_event_cost( $layout ) ) {
 	</div>
 	<?php
 }
+
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

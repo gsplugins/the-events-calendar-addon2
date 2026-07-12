@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -162,7 +163,9 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             // Remove dummy indicator from texonomies
             $dummy_terms = wp_get_post_terms( $post_id, $taxonomies, [
                 'fields' => 'ids',
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required to identify plugin demo data during import/cleanup.
                 'meta_key' => 'gsteca-demo_data',
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required to identify plugin demo data during import/cleanup.
                 'meta_value' => 1,
             ]);
 
@@ -187,7 +190,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
         public function import_all_data() {
 
             // Validate nonce && check permission
-            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon'), 401 );
+            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
 
             $response = [
                 'event' => $this->_import_teca_data( false ),
@@ -203,7 +206,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
         public function remove_all_data() {
 
             // Validate nonce && check permission
-            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon'), 401 );
+            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
 
             $response = [
                 'event' => $this->_remove_teca_data( false ),
@@ -219,7 +222,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
         public function import_teca_data() {
 
             // Validate nonce && check permission
-            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon'), 401 );
+            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
 
             // Start importing
             $this->_import_teca_data();
@@ -229,7 +232,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
         public function remove_teca_data() {
 
             // Validate nonce && check permission
-            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon'), 401 );
+            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
 
             // Remove portfolio data
             $this->_remove_teca_data();
@@ -239,7 +242,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
         public function import_shortcode_data() {
 
             // Validate nonce && check permission
-            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon'), 401 );
+            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
 
             // Start importing
             $this->_import_shortcode_data();
@@ -249,7 +252,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
         public function remove_shortcode_data() {
 
             // Validate nonce && check permission
-            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon'), 401 );
+            if ( !check_admin_referer('_gsteca_import_gsteca_demo_gs_') || !current_user_can('publish_pages') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
 
             // Remove portfolio data
             $this->_remove_shortcode_data();
@@ -263,7 +266,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             // Data already imported
             if ( get_option('gsteca_dummy_data_created') !== false || get_transient('gsteca_dummy_data_creating') !== false ) {
 
-                $message_202 = __( 'Dummy portfolios already imported', 'the-events-calendar-addon' );
+                $message_202 = __( 'Dummy portfolios already imported', 'the-events-calendar-addon2' );
 
                 if ( $is_ajax ) wp_send_json_success( $message_202, 202 );
                 
@@ -277,7 +280,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             // Importing demo data
             $this->create_dummy_attachments();
 
-            $message = __( 'Dummy events imported', 'the-events-calendar-addon' );
+            $message = __( 'Dummy events imported', 'the-events-calendar-addon2' );
 
             if ( $is_ajax ) wp_send_json_success( $message, 200 );
 
@@ -303,7 +306,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             delete_option( 'gsteca_demo_linked_post_ids' );
             delete_transient( 'gsteca_dummy_data_creating' );
 
-            $message = __( 'Dummy events deleted', 'the-events-calendar-addon' );
+            $message = __( 'Dummy events deleted', 'the-events-calendar-addon2' );
 
             if ( $is_ajax ) wp_send_json_success( $message, 200 );
 
@@ -321,7 +324,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             // Data already imported
             if ( get_option('gsteca_dummy_shortcode_data_created') !== false || get_transient('gsteca_dummy_shortcode_data_creating') !== false ) {
 
-                $message_202 = __( 'Dummy Shortcodes already imported', 'the-events-calendar-addon' );
+                $message_202 = __( 'Dummy Shortcodes already imported', 'the-events-calendar-addon2' );
 
                 if ( $is_ajax ) wp_send_json_success( $message_202, 202 );
                 
@@ -335,7 +338,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             // Importing demo shortcodes
             $this->create_dummy_shortcodes();
 
-            $message = __( 'Dummy Shortcodes imported', 'the-events-calendar-addon' );
+            $message = __( 'Dummy Shortcodes imported', 'the-events-calendar-addon2' );
 
             if ( $is_ajax ) wp_send_json_success( $message, 200 );
 
@@ -355,7 +358,7 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             delete_option( 'gsteca_dummy_shortcode_data_created' );
             delete_transient( 'gsteca_dummy_shortcode_data_creating' );
 
-            $message = __( 'Dummy Shortcodes deleted', 'the-events-calendar-addon' );
+            $message = __( 'Dummy Shortcodes deleted', 'the-events-calendar-addon2' );
 
             if ( $is_ajax ) wp_send_json_success( $message, 200 );
 
@@ -632,7 +635,10 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             $events = get_posts( array(
                 'numberposts' => -1,
                 'post_type'   => 'tribe_events',
+                'no_found_rows' => true,
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required to identify plugin demo data during import/cleanup.
                 'meta_key' => 'gsteca-demo_data',
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required to identify plugin demo data during import/cleanup.
                 'meta_value' => 1,
             ));
             
@@ -734,7 +740,10 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
                 'numberposts' => -1,
                 'post_type'   => 'attachment',
                 'post_status' => 'inherit',
+                'no_found_rows' => true,
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required to identify plugin demo data during import/cleanup.
                 'meta_key'    => 'gsteca-demo_data',
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required to identify plugin demo data during import/cleanup.
                 'meta_value'  => 1,
             ));
             
@@ -839,7 +848,9 @@ if ( ! class_exists( 'GS_TECA_Dummy_Data' ) ) {
             $terms = get_terms( array(
                 'taxonomy'   => $taxonomies,
                 'hide_empty' => false,
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required to identify plugin demo data during import/cleanup.
                 'meta_key'   => 'gsteca-demo_data',
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Required to identify plugin demo data during import/cleanup.
                 'meta_value' => 1,
             ));
 

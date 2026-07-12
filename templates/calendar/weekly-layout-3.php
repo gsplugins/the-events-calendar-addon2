@@ -1,13 +1,16 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
+
 $events           = $events ?? array();
 $week_groups      = $week_groups ?? teca_group_events_by_week( $events );
-$schedule_title   = $schedule_title ?? __( 'Key Events', 'the-events-calendar-addon' );
+$schedule_title   = $schedule_title ?? __( 'Key Events', 'the-events-calendar-addon2' );
 $category_options = $category_options ?? array();
 $layout_id        = $layout_id ?? 'teca';
 $first_event_id   = ! empty( $events[0]['event_id'] ) ? (int) $events[0]['event_id'] : 0;
@@ -19,8 +22,8 @@ $first_event_id   = ! empty( $events[0]['event_id'] ) ? (int) $events[0]['event_
 	echo teca_render_calendar_date_filter( $events, 'weekly', $layout_id );
 	?>
 	<div class="teca-weekly-layout-3-shell">
-		<aside class="teca-weekly-layout-3-sidebar" aria-label="<?php esc_attr_e( 'Events', 'the-events-calendar-addon' ); ?>">
-			<div class="teca-weekly-layout-3-sidebar-label"><?php esc_html_e( 'Events', 'the-events-calendar-addon' ); ?></div>
+		<aside class="teca-weekly-layout-3-sidebar" aria-label="<?php esc_attr_e( 'Events', 'the-events-calendar-addon2' ); ?>">
+			<div class="teca-weekly-layout-3-sidebar-label"><?php esc_html_e( 'Events', 'the-events-calendar-addon2' ); ?></div>
 
 			<?php if ( ! empty( $events ) ) : ?>
 				<ul class="teca-weekly-layout-3-event-list">
@@ -47,7 +50,7 @@ $first_event_id   = ! empty( $events[0]['event_id'] ) ? (int) $events[0]['event_
 					<?php endforeach; ?>
 				</ul>
 			<?php else : ?>
-				<p class="teca-weekly-layout-3-empty-sidebar"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></p>
+				<p class="teca-weekly-layout-3-empty-sidebar"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></p>
 			<?php endif; ?>
 		</aside>
 
@@ -55,19 +58,19 @@ $first_event_id   = ! empty( $events[0]['event_id'] ) ? (int) $events[0]['event_
 			<div class="teca-weekly-layout-3-header">
 				<div class="teca-weekly-layout-3-heading">
 					<h2 class="teca-weekly-layout-3-title"><?php echo esc_html( strtoupper( $schedule_title ) ); ?></h2>
-					<p class="teca-weekly-layout-3-subtitle"><?php esc_html_e( 'For The Week', 'the-events-calendar-addon' ); ?></p>
+					<p class="teca-weekly-layout-3-subtitle"><?php esc_html_e( 'For The Week', 'the-events-calendar-addon2' ); ?></p>
 				</div>
 
 				<?php if ( ! empty( $category_options ) ) : ?>
 					<div class="teca-weekly-layout-3-toolbar">
 						<label class="teca-weekly-layout-3-filter-label" for="teca-weekly-layout-3-type-<?php echo esc_attr( $layout_id ); ?>">
-							<?php esc_html_e( 'Event Type', 'the-events-calendar-addon' ); ?>
+							<?php esc_html_e( 'Event Type', 'the-events-calendar-addon2' ); ?>
 						</label>
 						<select
 							id="teca-weekly-layout-3-type-<?php echo esc_attr( $layout_id ); ?>"
 							class="teca-weekly-layout-3-type-select"
 						>
-							<option value="all"><?php esc_html_e( 'All Types', 'the-events-calendar-addon' ); ?></option>
+							<option value="all"><?php esc_html_e( 'All Types', 'the-events-calendar-addon2' ); ?></option>
 							<?php foreach ( $category_options as $term_id => $label ) : ?>
 								<option value="<?php echo esc_attr( (string) $term_id ); ?>"><?php echo esc_html( $label ); ?></option>
 							<?php endforeach; ?>
@@ -85,10 +88,10 @@ $first_event_id   = ! empty( $events[0]['event_id'] ) ? (int) $events[0]['event_
 						</div>
 
 						<div class="teca-weekly-layout-3-table-head" aria-hidden="true">
-							<span class="teca-weekly-layout-3-table-head-date"><?php esc_html_e( 'Date', 'the-events-calendar-addon' ); ?></span>
-							<span class="teca-weekly-layout-3-table-head-time"><?php esc_html_e( 'Time', 'the-events-calendar-addon' ); ?></span>
-							<span class="teca-weekly-layout-3-table-head-event"><?php esc_html_e( 'Event', 'the-events-calendar-addon' ); ?></span>
-							<span class="teca-weekly-layout-3-table-head-details"><?php esc_html_e( 'Details', 'the-events-calendar-addon' ); ?></span>
+							<span class="teca-weekly-layout-3-table-head-date"><?php esc_html_e( 'Date', 'the-events-calendar-addon2' ); ?></span>
+							<span class="teca-weekly-layout-3-table-head-time"><?php esc_html_e( 'Time', 'the-events-calendar-addon2' ); ?></span>
+							<span class="teca-weekly-layout-3-table-head-event"><?php esc_html_e( 'Event', 'the-events-calendar-addon2' ); ?></span>
+							<span class="teca-weekly-layout-3-table-head-details"><?php esc_html_e( 'Details', 'the-events-calendar-addon2' ); ?></span>
 						</div>
 
 						<div class="teca-weekly-layout-3-week-events">
@@ -163,7 +166,7 @@ $first_event_id   = ! empty( $events[0]['event_id'] ) ? (int) $events[0]['event_
 															href="<?php echo esc_url( $button_url ); ?>"
 															<?php echo $cta_url ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>
 														>
-															<?php echo esc_html( $cta_url ? __( 'Get Tickets', 'the-events-calendar-addon' ) : __( 'View Event', 'the-events-calendar-addon' ) ); ?>
+															<?php echo esc_html( $cta_url ? __( 'Get Tickets', 'the-events-calendar-addon2' ) : __( 'View Event', 'the-events-calendar-addon2' ) ); ?>
 														</a>
 													<?php endif; ?>
 												</div>
@@ -180,10 +183,13 @@ $first_event_id   = ! empty( $events[0]['event_id'] ) ? (int) $events[0]['event_
 					</section>
 				<?php endforeach; ?>
 			<?php else : ?>
-				<p class="teca-weekly-layout-3-empty-content"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></p>
+				<p class="teca-weekly-layout-3-empty-content"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></p>
 			<?php endif; ?>
 
 			<div class="teca-weekly-layout-3-decor" aria-hidden="true"></div>
 		</div>
 	</div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

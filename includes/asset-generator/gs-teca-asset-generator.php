@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 use GSPLUGINS\GS_Asset_Generator_Base;
 
@@ -48,7 +49,7 @@ class GS_Teca_Asset_Generator extends GS_Asset_Generator_Base {
 			foreach ( $targets as $target ) $selectors[] = $selector . $target;
 		}
 
-		echo wp_strip_all_tags( sprintf( '%s{%s:%s}', join(',', $selectors), $prop, $value ) );
+		echo esc_html( wp_strip_all_tags( sprintf( '%s{%s:%s}', join(',', $selectors), $prop, $value ) ) );
 	}
 
 	protected function get_shortcode_css_selector( $shortcode_id ) {
@@ -70,11 +71,11 @@ class GS_Teca_Asset_Generator extends GS_Asset_Generator_Base {
 		$selector      = $this->get_shortcode_css_selector( $shortCodeId );
 		$selector_divi = '#et-boc .et-l div ' . $selector;
 
-		echo teca_render_typography_preset_scoped_css( $settings, $selector );
-		echo teca_render_typography_scoped_css( $settings, $selector );
-		echo teca_render_color_scoped_css( $settings, $selector );
-		echo teca_render_popup_detail_typography_scoped_css( $settings, $shortCodeId );
-		echo teca_render_popup_detail_color_scoped_css( $settings, $shortCodeId );
+		echo wp_strip_all_tags( teca_render_typography_preset_scoped_css( $settings, $selector ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS is generated from sanitized settings and stripped of HTML tags.
+		echo wp_strip_all_tags( teca_render_typography_scoped_css( $settings, $selector ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS is generated from sanitized settings and stripped of HTML tags.
+		echo wp_strip_all_tags( teca_render_color_scoped_css( $settings, $selector ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS is generated from sanitized settings and stripped of HTML tags.
+		echo wp_strip_all_tags( teca_render_popup_detail_typography_scoped_css( $settings, $shortCodeId ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS is generated from sanitized settings and stripped of HTML tags.
+		echo wp_strip_all_tags( teca_render_popup_detail_color_scoped_css( $settings, $shortCodeId ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS is generated from sanitized settings and stripped of HTML tags.
 
 		$gradient_1 = $settings['custom_gradient_bg_1'] ?? '';
 		$gradient_2 = $settings['custom_gradient_bg_2'] ?? '';
@@ -281,7 +282,7 @@ class GS_Teca_Asset_Generator extends GS_Asset_Generator_Base {
 		$url              = set_url_scheme( $google_fonts_url, 'https' );
 
 		if ( $url ) {
-			wp_enqueue_style( 'gs-teca-google-fonts-' . md5( $url ), $url, array(), null );
+			wp_enqueue_style( 'gs-teca-google-fonts-' . md5( $url ), $url, array(), GS_TECA_VERSION );
 		}
 	}
 
@@ -467,7 +468,14 @@ class GS_Teca_Asset_Generator extends GS_Asset_Generator_Base {
 	}
 
 	public function get_shortcode_custom_css( $settings ) {
-		$shortcode_id = isset( $settings['id'] ) ? absint( $settings['id'] ) : 0;
+		$shortcode_id = $settings['id'] ?? 0;
+
+		if ( is_numeric( $shortcode_id ) ) {
+			$shortcode_id = absint( $shortcode_id );
+		} else {
+			$shortcode_id = sanitize_key( (string) $shortcode_id );
+		}
+
 		return $this->generateCustomCss( $settings, $shortcode_id );
 	}
 }

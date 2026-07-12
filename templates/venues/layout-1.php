@@ -1,22 +1,24 @@
 <?php
-
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
+
 $venues = $venues ?? array();
 ?>
 <div class="teca-venue-template teca-venue-template-layout-1">
 	<div class="teca-venue-template-header">
-		<span class="teca-venue-template-eyebrow"><?php esc_html_e( 'Event Venues', 'the-events-calendar-addon' ); ?></span>
-		<h2 class="teca-venue-template-title"><?php esc_html_e( 'Explore Our Venues', 'the-events-calendar-addon' ); ?></h2>
-		<p class="teca-venue-template-description"><?php esc_html_e( 'Find event locations, contact details, and venue information in one place.', 'the-events-calendar-addon' ); ?></p>
+		<span class="teca-venue-template-eyebrow"><?php esc_html_e( 'Event Venues', 'the-events-calendar-addon2' ); ?></span>
+		<h2 class="teca-venue-template-title"><?php esc_html_e( 'Explore Our Venues', 'the-events-calendar-addon2' ); ?></h2>
+		<p class="teca-venue-template-description"><?php esc_html_e( 'Find event locations, contact details, and venue information in one place.', 'the-events-calendar-addon2' ); ?></p>
 	</div>
 
 	<?php if ( empty( $venues ) ) : ?>
-		<p class="teca-venue-template-empty"><?php esc_html_e( 'No venues found.', 'the-events-calendar-addon' ); ?></p>
+		<p class="teca-venue-template-empty"><?php esc_html_e( 'No venues found.', 'the-events-calendar-addon2' ); ?></p>
 	<?php else : ?>
 		<div class="teca-venue-grid">
 			<?php foreach ( $venues as $venue ) : ?>
@@ -37,7 +39,7 @@ $venues = $venues ?? array();
 				$location_chip   = teca_get_venue_location_chip_label( $venue );
 				$count_chip      = teca_get_venue_upcoming_count_chip_label( $upcoming_count );
 				$fallback_initial = teca_get_venue_fallback_initial( $venue );
-				$card_title      = $title ?: __( 'Venue', 'the-events-calendar-addon' );
+				$card_title      = $title ?: __( 'Venue', 'the-events-calendar-addon2' );
 				?>
 				<article class="teca-venue-card"<?php echo $venue_id ? ' data-venue-id="' . esc_attr( (string) $venue_id ) . '"' : ''; ?>>
 					<div class="teca-venue-card-media">
@@ -98,7 +100,7 @@ $venues = $venues ?? array();
 
 								<?php if ( $website ) : ?>
 									<a class="teca-venue-contact-item teca-venue-contact-item--website" href="<?php echo esc_url( $website ); ?>" target="_blank" rel="noopener noreferrer">
-										<?php esc_html_e( 'Website', 'the-events-calendar-addon' ); ?>
+										<?php esc_html_e( 'Website', 'the-events-calendar-addon2' ); ?>
 									</a>
 								<?php endif; ?>
 							</div>
@@ -107,13 +109,13 @@ $venues = $venues ?? array();
 						<div class="teca-venue-card-actions">
 							<?php if ( $permalink ) : ?>
 								<a class="teca-venue-btn teca-venue-btn-primary" href="<?php echo esc_url( $permalink ); ?>">
-									<?php esc_html_e( 'View Venue', 'the-events-calendar-addon' ); ?>
+									<?php esc_html_e( 'View Venue', 'the-events-calendar-addon2' ); ?>
 								</a>
 							<?php endif; ?>
 
 							<?php if ( $map_link ) : ?>
 								<a class="teca-venue-btn teca-venue-btn-secondary" href="<?php echo esc_url( $map_link ); ?>" target="_blank" rel="noopener noreferrer">
-									<?php esc_html_e( 'Map', 'the-events-calendar-addon' ); ?>
+									<?php esc_html_e( 'Map', 'the-events-calendar-addon2' ); ?>
 								</a>
 							<?php endif; ?>
 						</div>
@@ -123,3 +125,6 @@ $venues = $venues ?? array();
 		</div>
 	<?php endif; ?>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

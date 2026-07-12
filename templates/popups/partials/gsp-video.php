@@ -1,8 +1,10 @@
 <?php
-
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing namespace is kept for backward compatibility with reused popup partials.
 namespace GS_POSTS_GRID;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $video = get_post_meta( get_the_ID(), 'gs_posts_video_url', true );
 
@@ -28,3 +30,6 @@ if ( strpos( $video, 'iframe' ) !== false ) {
         <?php endif; ?>
     </div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

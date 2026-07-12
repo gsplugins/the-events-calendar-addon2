@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 use FLBuilderModule;
@@ -22,10 +23,10 @@ class Teca_Beaver_Events_Module extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(
 			[
-				'name'            => esc_html__( 'TECA Events', 'the-events-calendar-addon' ),
-				'description'     => esc_html__( 'Display TECA events/layouts using saved TECA shortcodes.', 'the-events-calendar-addon' ),
-				'group'           => esc_html__( 'GS Plugins', 'the-events-calendar-addon' ),
-				'category'        => esc_html__( 'Basic', 'the-events-calendar-addon' ),
+				'name'            => esc_html__( 'TECA Events', 'the-events-calendar-addon2' ),
+				'description'     => esc_html__( 'Display TECA events/layouts using saved TECA shortcodes.', 'the-events-calendar-addon2' ),
+				'group'           => esc_html__( 'GS Plugins', 'the-events-calendar-addon2' ),
+				'category'        => esc_html__( 'Basic', 'the-events-calendar-addon2' ),
 				'dir'             => GS_TECA_PLUGIN_DIR . 'includes/integration/beaver/modules/teca-events/',
 				'url'             => GS_TECA_PLUGIN_URI . 'includes/integration/beaver/modules/teca-events/',
 				'icon'            => 'events.svg',

@@ -1,6 +1,8 @@
 <?php 
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once GS_TECA_PLUGIN_DIR . 'includes/calendar-renderer.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/teca-calendar-layout.php';
@@ -41,10 +43,10 @@ function on_deactivation() {
 }
 
 /**
- * Plugins Load Text Domain
+ * Legacy textdomain loader — WordPress.org loads translations automatically.
  */
 function gs_load_textdomain() {
-    load_plugin_textdomain( 'the-events-calendar-addon', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    // Intentionally empty for WordPress.org distribution.
 }
 
 function gs_update_plugin_version() {
@@ -120,7 +122,7 @@ function teca_get_saved_shortcodes_for_builder() {
         if ( '' === $title ) {
             $title = sprintf(
                 /* translators: %d: shortcode ID */
-                __( 'Shortcode #%d', 'the-events-calendar-addon' ),
+                __( 'Shortcode #%d', 'the-events-calendar-addon2' ),
                 $shortcode_id
             );
         }
@@ -206,7 +208,7 @@ function teca_get_saved_shortcodes_for_ux_builder() {
 
     if ( empty( $options ) ) {
         return [
-            '' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon' ),
+            '' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon2' ),
         ];
     }
 
@@ -223,7 +225,7 @@ function teca_get_saved_shortcodes_for_beaver() {
 
     if ( empty( $options ) ) {
         return [
-            '' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon' ),
+            '' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon2' ),
         ];
     }
 
@@ -314,6 +316,7 @@ function teca_prepare_shortcode_settings_for_use( array $settings ) {
  */
 function teca_get_free_pagination_type_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_free_pagination_type_slugs',
         array(
             'normal-pagination',
@@ -391,6 +394,7 @@ function teca_sanitize_pagination_type_setting( $pagination_type ) {
  */
 function teca_get_pro_orderby_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_pro_orderby_slugs',
         array(
             'menu_order',
@@ -405,6 +409,7 @@ function teca_get_pro_orderby_slugs() {
  */
 function teca_get_pro_cat_order_by_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_pro_cat_order_by_slugs',
         array(
             'term_order',
@@ -901,6 +906,7 @@ function disable_pro_items( $free_items, $pro_items ) {
  */
 function teca_get_free_theme_template_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_free_theme_template_slugs',
         array(
             'gs-teca-style-1',
@@ -968,6 +974,7 @@ function teca_sanitize_theme_template_setting( $template ) {
  */
 function teca_get_free_view_type_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_free_view_type_slugs',
         array(
             'grid',
@@ -1034,6 +1041,7 @@ function teca_sanitize_view_type_setting( $view_type ) {
  */
 function teca_get_free_popup_style_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_free_popup_style_slugs',
         array(
             'default',
@@ -1048,6 +1056,7 @@ function teca_get_free_popup_style_slugs() {
  */
 function teca_get_admin_popup_style_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_admin_popup_style_slugs',
         array(
             'default',
@@ -1064,6 +1073,7 @@ function teca_get_admin_popup_style_slugs() {
  */
 function teca_get_removed_popup_style_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_removed_popup_style_slugs',
         array(
             'style-three',
@@ -1138,6 +1148,7 @@ function teca_sanitize_popup_style_setting( $popup_style ) {
  */
 function teca_get_free_single_page_style_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_free_single_page_style_slugs',
         array(
             'default',
@@ -1152,6 +1163,7 @@ function teca_get_free_single_page_style_slugs() {
  */
 function teca_get_admin_single_page_style_slugs() {
     return apply_filters(
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         'gs_teca_admin_single_page_style_slugs',
         array(
             'default',
@@ -1293,8 +1305,9 @@ function get_pagination( $shortcode_id, $items_per_page = 6,$found_events = 0 ) 
     // Generate page parameter name
     $param_name = 'paged' . $shortcode_id;
     
-    // Current Page Number
-    $current = max( 1, $_GET[$param_name] ?? 1 );
+    // Current Page Number — public pagination query var; sanitized on read.
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public pagination parameter for frontend shortcodes.
+    $current = max( 1, isset( $_GET[ $param_name ] ) ? absint( wp_unslash( $_GET[ $param_name ] ) ) : 1 );
 
     // Calculate total pages
     $total_pages = $items_per_page > 0
@@ -1323,8 +1336,13 @@ function get_pagination( $shortcode_id, $items_per_page = 6,$found_events = 0 ) 
 
 function get_current_full_url() {
     $protocol = is_ssl() ? 'https://' : 'http://';
-    $host     = $_SERVER['HTTP_HOST'];
-    $request  = $_SERVER['REQUEST_URI'];
+    $host     = isset( $_SERVER['HTTP_HOST'] )
+        ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) )
+        : '';
+    $request  = isset( $_SERVER['REQUEST_URI'] )
+        ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) )
+        : '';
+
     return $protocol . $host . $request;
 }
 
@@ -1781,7 +1799,7 @@ function teca_get_shortcode_display_title( array $settings ) {
         }
     }
 
-    return __( 'Events Schedule', 'the-events-calendar-addon' );
+    return __( 'Events Schedule', 'the-events-calendar-addon2' );
 }
 
 function teca_group_events_by_month( array $events ) {
@@ -1795,7 +1813,7 @@ function teca_group_events_by_month( array $events ) {
         }
 
         $timestamp = strtotime( $start );
-        $key       = date( 'Y-m', $timestamp );
+        $key       = gmdate( 'Y-m', $timestamp );
 
         if ( ! isset( $groups[ $key ] ) ) {
             $groups[ $key ] = array(
@@ -1836,7 +1854,7 @@ function teca_format_event_time_range( $event_id ) {
     $all_day  = (bool) get_post_meta( $event_id, '_EventAllDay', true );
 
     if ( $all_day ) {
-        return __( 'All Day', 'the-events-calendar-addon' );
+        return __( 'All Day', 'the-events-calendar-addon2' );
     }
 
     $start = get_post_meta( $event_id, '_EventStartDate', true );
@@ -2074,14 +2092,14 @@ function teca_group_events_by_day( array $events ) {
         }
 
         $timestamp = strtotime( $start );
-        $day_key   = date( 'Y-m-d', $timestamp );
+        $day_key   = gmdate( 'Y-m-d', $timestamp );
 
         if ( ! isset( $groups[ $day_key ] ) ) {
             $groups[ $day_key ] = array(
                 'day_key'    => $day_key,
                 'day_label'  => strtoupper( date_i18n( 'D', $timestamp ) ),
                 'day_number' => date_i18n( 'j', $timestamp ),
-                'month_key'  => date( 'Y-m', $timestamp ),
+                'month_key'  => gmdate( 'Y-m', $timestamp ),
                 'month_label'=> date_i18n( 'F Y', $timestamp ),
                 'events'     => array(),
             );
@@ -2185,11 +2203,11 @@ function teca_build_monthly_calendar_cells( $month_key, array $events ) {
         );
     }
 
-    $year          = (int) date( 'Y', $timestamp );
-    $month         = (int) date( 'm', $timestamp );
-    $days_in_month = (int) date( 't', $timestamp );
+    $year          = (int) gmdate( 'Y', $timestamp );
+    $month         = (int) gmdate( 'm', $timestamp );
+    $days_in_month = (int) gmdate( 't', $timestamp );
     $start_of_week = (int) get_option( 'start_of_week', 0 );
-    $first_weekday = (int) date( 'w', $timestamp );
+    $first_weekday = (int) gmdate( 'w', $timestamp );
     $offset        = ( $first_weekday - $start_of_week + 7 ) % 7;
     $events_by_day = array();
 
@@ -2200,7 +2218,7 @@ function teca_build_monthly_calendar_cells( $month_key, array $events ) {
             continue;
         }
 
-        $day_key = date( 'Y-m-d', strtotime( $start ) );
+        $day_key = gmdate( 'Y-m-d', strtotime( $start ) );
 
         if ( substr( $day_key, 0, 7 ) !== $month_key ) {
             continue;
@@ -2261,7 +2279,7 @@ function teca_group_events_by_week( array $events ) {
             continue;
         }
 
-        $range = teca_get_week_range_for_date( date( 'Y-m-d', strtotime( $start ) ) );
+        $range = teca_get_week_range_for_date( gmdate( 'Y-m-d', strtotime( $start ) ) );
         $key   = $range['start'];
 
         if ( ! isset( $weeks[ $key ] ) ) {
@@ -2302,7 +2320,7 @@ function teca_build_week_day_slots( array $events, $week_start ) {
                 continue;
             }
 
-            if ( date( 'Y-m-d', strtotime( $event_start ) ) === $day_key ) {
+            if ( gmdate( 'Y-m-d', strtotime( $event_start ) ) === $day_key ) {
                 $day_events[] = $event;
             }
         }
@@ -2435,7 +2453,7 @@ function teca_format_event_start_time_display( $event_id ) {
     $all_day  = (bool) get_post_meta( $event_id, '_EventAllDay', true );
 
     if ( $all_day ) {
-        return __( 'All Day', 'the-events-calendar-addon' );
+        return __( 'All Day', 'the-events-calendar-addon2' );
     }
 
     $start = get_post_meta( $event_id, '_EventStartDate', true );
@@ -2452,7 +2470,7 @@ function teca_format_event_table_time( $event_id ) {
     $all_day  = (bool) get_post_meta( $event_id, '_EventAllDay', true );
 
     if ( $all_day ) {
-        return __( 'All Day', 'the-events-calendar-addon' );
+        return __( 'All Day', 'the-events-calendar-addon2' );
     }
 
     $start = get_post_meta( $event_id, '_EventStartDate', true );
@@ -2501,7 +2519,7 @@ function teca_format_event_start_time_short( $event_id ) {
     $all_day  = (bool) get_post_meta( $event_id, '_EventAllDay', true );
 
     if ( $all_day ) {
-        return __( 'All Day', 'the-events-calendar-addon' );
+        return __( 'All Day', 'the-events-calendar-addon2' );
     }
 
     $start = get_post_meta( $event_id, '_EventStartDate', true );
@@ -2662,25 +2680,25 @@ function teca_get_events_layout_1_groups_config() {
 function teca_get_events_section_groups_config() {
     return array(
         'featured'  => array(
-            'label'      => __( 'Featured Events', 'the-events-calendar-addon' ),
+            'label'      => __( 'Featured Events', 'the-events-calendar-addon2' ),
             'tab_class'  => 'teca-tab-featured',
             'panel_class'=> 'teca-events-panel-featured',
             'empty_class'=> 'teca-events-empty-featured',
-            'empty_text' => __( 'No featured events found.', 'the-events-calendar-addon' ),
+            'empty_text' => __( 'No featured events found.', 'the-events-calendar-addon2' ),
         ),
         'past'      => array(
-            'label'      => __( 'Past Events', 'the-events-calendar-addon' ),
+            'label'      => __( 'Past Events', 'the-events-calendar-addon2' ),
             'tab_class'  => 'teca-tab-past',
             'panel_class'=> 'teca-events-panel-past',
             'empty_class'=> 'teca-events-empty-past',
-            'empty_text' => __( 'No past events found.', 'the-events-calendar-addon' ),
+            'empty_text' => __( 'No past events found.', 'the-events-calendar-addon2' ),
         ),
         'upcoming'  => array(
-            'label'      => __( 'Upcoming Events', 'the-events-calendar-addon' ),
+            'label'      => __( 'Upcoming Events', 'the-events-calendar-addon2' ),
             'tab_class'  => 'teca-tab-upcoming',
             'panel_class'=> 'teca-events-panel-upcoming',
             'empty_class'=> 'teca-events-empty-upcoming',
-            'empty_text' => __( 'No upcoming events found.', 'the-events-calendar-addon' ),
+            'empty_text' => __( 'No upcoming events found.', 'the-events-calendar-addon2' ),
         ),
     );
 }
@@ -2897,7 +2915,7 @@ function teca_render_calendar_event_type_filter( array $events, $layout_id = '',
     $layout_id      = sanitize_key( (string) $layout_id );
     $select_id      = 'teca-calendar-event-type-' . ( $layout_id ? $layout_id : 'teca' );
     $wrapper_class  = isset( $args['wrapper_class'] ) ? (string) $args['wrapper_class'] : 'teca-calendar-event-type-filter-wrap';
-    $label          = isset( $args['label'] ) ? (string) $args['label'] : __( 'Event Type', 'the-events-calendar-addon' );
+    $label          = isset( $args['label'] ) ? (string) $args['label'] : __( 'Event Type', 'the-events-calendar-addon2' );
     $select_classes = 'teca-calendar-event-type-filter teca-calendar-select';
 
     if ( ! empty( $args['select_class'] ) ) {
@@ -2911,7 +2929,7 @@ function teca_render_calendar_event_type_filter( array $events, $layout_id = '',
             <?php echo esc_html( $label ); ?>
         </label>
         <select id="<?php echo esc_attr( $select_id ); ?>" class="<?php echo esc_attr( $select_classes ); ?>">
-            <option value="all"><?php esc_html_e( 'All Event Types', 'the-events-calendar-addon' ); ?></option>
+            <option value="all"><?php esc_html_e( 'All Event Types', 'the-events-calendar-addon2' ); ?></option>
             <?php foreach ( $options as $slug => $name ) : ?>
                 <option value="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $name ); ?></option>
             <?php endforeach; ?>
@@ -3122,7 +3140,7 @@ function teca_group_events_by_year_quarter( array $events ) {
 
 function teca_get_quarter_filter_options( array $events ) {
     $options = array(
-        'all' => __( 'All Events', 'the-events-calendar-addon' ),
+        'all' => __( 'All Events', 'the-events-calendar-addon2' ),
     );
     $labels  = array();
 
@@ -3143,22 +3161,22 @@ function teca_get_quarter_definitions() {
     return array(
         'Q1' => array(
             'ordinal' => '1st',
-            'label'   => __( '1st Quarter', 'the-events-calendar-addon' ),
+            'label'   => __( '1st Quarter', 'the-events-calendar-addon2' ),
             'months'  => array( 1, 2, 3 ),
         ),
         'Q2' => array(
             'ordinal' => '2nd',
-            'label'   => __( '2nd Quarter', 'the-events-calendar-addon' ),
+            'label'   => __( '2nd Quarter', 'the-events-calendar-addon2' ),
             'months'  => array( 4, 5, 6 ),
         ),
         'Q3' => array(
             'ordinal' => '3rd',
-            'label'   => __( '3rd Quarter', 'the-events-calendar-addon' ),
+            'label'   => __( '3rd Quarter', 'the-events-calendar-addon2' ),
             'months'  => array( 7, 8, 9 ),
         ),
         'Q4' => array(
             'ordinal' => '4th',
-            'label'   => __( '4th Quarter', 'the-events-calendar-addon' ),
+            'label'   => __( '4th Quarter', 'the-events-calendar-addon2' ),
             'months'  => array( 10, 11, 12 ),
         ),
     );
@@ -3405,7 +3423,7 @@ function teca_normalize_year_filter_options( array $options ) {
 
 function teca_get_year_filter_options( array $events ) {
     $options = array(
-        'all' => __( 'All Events', 'the-events-calendar-addon' ),
+        'all' => __( 'All Events', 'the-events-calendar-addon2' ),
     );
     $years   = array();
 
@@ -4771,38 +4789,40 @@ function teca_get_calendar_filter_config( $filter_type ) {
         'daily'   => array(
             'wrapper_class' => 'teca-daily-date-filter',
             'select_class'  => 'teca-daily-date-select',
-            'label'         => __( 'Select Day', 'the-events-calendar-addon' ),
-            'message'       => __( 'No events found for this day.', 'the-events-calendar-addon' ),
+            'label'         => __( 'Select Day', 'the-events-calendar-addon2' ),
+            'message'       => __( 'No events found for this day.', 'the-events-calendar-addon2' ),
             'message_class' => 'teca-daily-empty-message',
         ),
         'weekly'  => array(
             'wrapper_class' => 'teca-weekly-date-filter',
             'select_class'  => 'teca-weekly-date-select',
-            'label'         => __( 'Select Week', 'the-events-calendar-addon' ),
-            'message'       => __( 'No events found for this week.', 'the-events-calendar-addon' ),
+            'label'         => __( 'Select Week', 'the-events-calendar-addon2' ),
+            'message'       => __( 'No events found for this week.', 'the-events-calendar-addon2' ),
             'message_class' => 'teca-weekly-empty-message',
         ),
         'monthly' => array(
             'wrapper_class' => 'teca-monthly-date-filter',
             'select_class'  => 'teca-monthly-date-select',
-            'label'         => __( 'Select Month', 'the-events-calendar-addon' ),
-            'message'       => __( 'No events found for this month.', 'the-events-calendar-addon' ),
+            'label'         => __( 'Select Month', 'the-events-calendar-addon2' ),
+            'message'       => __( 'No events found for this month.', 'the-events-calendar-addon2' ),
             'message_class' => 'teca-monthly-empty-message',
         ),
         'quarterly' => array(
             'wrapper_class'  => 'teca-quarterly-date-filter',
             'select_class'   => 'teca-quarterly-date-select',
-            'label'          => __( 'Select Quarter', 'the-events-calendar-addon' ),
-            'message'        => __( 'No events found for this quarter.', 'the-events-calendar-addon' ),
-            'empty_template' => __( 'No events found for %s.', 'the-events-calendar-addon' ),
+            'label'          => __( 'Select Quarter', 'the-events-calendar-addon2' ),
+            'message'        => __( 'No events found for this quarter.', 'the-events-calendar-addon2' ),
+            /* translators: %s: event category, date range, or selected filter label. */
+            'empty_template' => __( 'No events found for %s.', 'the-events-calendar-addon2' ),
             'message_class'  => 'teca-quarterly-empty-message',
         ),
         'yearly' => array(
             'wrapper_class'  => 'teca-yearly-date-filter',
             'select_class'   => 'teca-yearly-date-select',
-            'label'          => __( 'Select Year', 'the-events-calendar-addon' ),
-            'message'        => __( 'No events found for this year.', 'the-events-calendar-addon' ),
-            'empty_template' => __( 'No events found for %s.', 'the-events-calendar-addon' ),
+            'label'          => __( 'Select Year', 'the-events-calendar-addon2' ),
+            'message'        => __( 'No events found for this year.', 'the-events-calendar-addon2' ),
+            /* translators: %s: event category, date range, or selected filter label. */
+            'empty_template' => __( 'No events found for %s.', 'the-events-calendar-addon2' ),
             'message_class'  => 'teca-yearly-empty-message',
         ),
     );
@@ -4845,7 +4865,7 @@ function teca_get_calendar_filter_options( array $events, $filter_type, $date_la
     }
 
     $options = array(
-        'all' => __( 'All Events', 'the-events-calendar-addon' ),
+        'all' => __( 'All Events', 'the-events-calendar-addon2' ),
     );
     $labels  = array();
 

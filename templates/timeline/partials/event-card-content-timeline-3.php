@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $event = $event ?? array();
 
@@ -28,8 +31,11 @@ $teca_timeline_3_show_button = in_array( $teca_timeline_3_link_type, array( 'pop
 			'link_context'        => $teca_link_context,
 			'excerpt_words'       => 30,
 			'show_button'         => $teca_timeline_3_show_button,
-			'button_text'         => __( 'View Event', 'the-events-calendar-addon' ),
+			'button_text'         => __( 'View Event', 'the-events-calendar-addon2' ),
 		)
 	);
 	?>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

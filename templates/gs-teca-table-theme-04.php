@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 use GS_TECA\Helpers;
@@ -6,6 +7,8 @@ use GS_TECA\Helpers;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $show_image     = Helpers::is_visible( $visibility_settings['event_thumbnail'] ?? true );
 $show_title     = Helpers::is_visible( $visibility_settings['event_title'] ?? true );
@@ -23,31 +26,31 @@ $table_grid_style = teca_build_table_grid_style( '4', $show_image, $show_title, 
 		<div class="teca-table-style-4-row teca-table-style-4-row--header">
 			<?php if ( $show_image ) : ?>
 				<div class="teca-table-style-4-cell teca-table-style-4-image teca-table-event-image" role="columnheader">
-					<?php esc_html_e( 'Image', 'the-events-calendar-addon' ); ?>
+					<?php esc_html_e( 'Image', 'the-events-calendar-addon2' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( $show_title ) : ?>
 				<div class="teca-table-style-4-cell teca-table-style-4-title teca-table-event-title" role="columnheader">
-					<?php esc_html_e( 'Title', 'the-events-calendar-addon' ); ?>
+					<?php esc_html_e( 'Title', 'the-events-calendar-addon2' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( $show_organizer ) : ?>
 				<div class="teca-table-style-4-cell teca-table-style-4-organizer teca-table-event-organizer" role="columnheader">
-					<?php esc_html_e( 'Organizer', 'the-events-calendar-addon' ); ?>
+					<?php esc_html_e( 'Organizer', 'the-events-calendar-addon2' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( $show_venue ) : ?>
 				<div class="teca-table-style-4-cell teca-table-style-4-venue teca-table-event-venue" role="columnheader">
-					<?php esc_html_e( 'Venue', 'the-events-calendar-addon' ); ?>
+					<?php esc_html_e( 'Venue', 'the-events-calendar-addon2' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( $show_links ) : ?>
 				<div class="teca-table-style-4-cell teca-table-style-4-links teca-table-event-links" role="columnheader">
-					<?php esc_html_e( 'Links', 'the-events-calendar-addon' ); ?>
+					<?php esc_html_e( 'Links', 'the-events-calendar-addon2' ); ?>
 				</div>
 			<?php endif; ?>
 		</div>
@@ -158,3 +161,6 @@ $table_grid_style = teca_build_table_grid_style( '4', $show_image, $show_title, 
 
 </div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

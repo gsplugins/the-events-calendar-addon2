@@ -5,13 +5,6 @@
 </template>
 
 <script>
-
-    const CodeMirror = require('../codemirror/lib/codemirror.js');
-
-    require('../codemirror/mode/javascript/javascript.js');
-    require('../codemirror/mode/css/css.js');
-    require('../codemirror/addon/hint/show-hint.js');
-
     export default {
         props: {
             value: {
@@ -37,11 +30,16 @@
             }
         },
         mounted() {
+            const CodeMirror = window.CodeMirror;
+
+            if ( ! CodeMirror ) {
+                return;
+            }
 
             this.editor = CodeMirror.fromTextArea(jQuery(this.$el).find('#'+this.id)[0], {
                 lineNumbers: true,
                 mode: this.mode,
-                theme: 'monokai'
+                theme: 'default'
             });
 
             this.editor.on('change', function(instance){

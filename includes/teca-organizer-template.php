@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -78,16 +79,16 @@ function teca_get_organizer_upcoming_count_label( $count ) {
 	$count = absint( $count );
 
 	if ( 0 === $count ) {
-		return __( '0 Upcoming Events', 'the-events-calendar-addon' );
+		return __( '0 Upcoming Events', 'the-events-calendar-addon2' );
 	}
 
 	if ( 1 === $count ) {
-		return __( '1 Upcoming Event', 'the-events-calendar-addon' );
+		return __( '1 Upcoming Event', 'the-events-calendar-addon2' );
 	}
 
 	return sprintf(
 		/* translators: %d: number of upcoming events */
-		__( '%d Upcoming Events', 'the-events-calendar-addon' ),
+		__( '%d Upcoming Events', 'the-events-calendar-addon2' ),
 		$count
 	);
 }
@@ -100,12 +101,12 @@ function teca_get_organizer_upcoming_count_chip_label( $count ) {
 	$count = absint( $count );
 
 	if ( 1 === $count ) {
-		return __( '1 Event', 'the-events-calendar-addon' );
+		return __( '1 Event', 'the-events-calendar-addon2' );
 	}
 
 	return sprintf(
 		/* translators: %d: number of upcoming events */
-		__( '%d Events', 'the-events-calendar-addon' ),
+		__( '%d Events', 'the-events-calendar-addon2' ),
 		$count
 	);
 }

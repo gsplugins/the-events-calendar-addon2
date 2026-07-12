@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $event = $event ?? array();
 
@@ -25,12 +28,12 @@ if ( teca_is_card_field_visible( 'event_thumbnail', $visibility_settings ) && $i
 	?>
 	<div class="<?php teca_print_card_visible_classes( 'event_thumbnail', 'teca-timeline-thumb teca-timeline-1-thumb gs-teca-thumbnail-wrapper teca-event-thumb', $visibility_settings ); ?>">
 		<?php
-		echo teca_get_card_link_html(
+		echo wp_kses_post( teca_get_card_link_html(
 			$event_id,
 			'<img src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy" />',
 			$teca_link_context,
 			'teca-event-image-link'
-		);
+		) );
 		?>
 	</div>
 	<?php
@@ -51,3 +54,6 @@ endif;
 	);
 	?>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

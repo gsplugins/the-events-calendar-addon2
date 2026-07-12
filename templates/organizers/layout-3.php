@@ -1,32 +1,35 @@
 <?php
-
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$organizers       = $organizers ?? array();
-$organizer_count  = count( $organizers );
-$organizer_index  = 0;
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
+
+$organizers      = $organizers ?? array();
+$organizer_count = count( $organizers );
+$organizer_index = 0;
 ?>
+
 <div class="teca-organizer-template teca-organizer-template-layout-3">
 	<section class="teca-organizer-l3-hero">
 		<div class="teca-organizer-l3-hero-content">
-			<span class="teca-organizer-l3-eyebrow"><?php esc_html_e( 'Organizer Network', 'the-events-calendar-addon' ); ?></span>
-			<h2 class="teca-organizer-l3-title"><?php esc_html_e( 'Meet the People Behind the Events', 'the-events-calendar-addon' ); ?></h2>
-			<p class="teca-organizer-l3-description"><?php esc_html_e( 'Explore organizer profiles, contact details, and event connections in a refined visual showcase.', 'the-events-calendar-addon' ); ?></p>
+			<span class="teca-organizer-l3-eyebrow"><?php esc_html_e( 'Organizer Network', 'the-events-calendar-addon2' ); ?></span>
+			<h2 class="teca-organizer-l3-title"><?php esc_html_e( 'Meet the People Behind the Events', 'the-events-calendar-addon2' ); ?></h2>
+			<p class="teca-organizer-l3-description"><?php esc_html_e( 'Explore organizer profiles, contact details, and event connections in a refined visual showcase.', 'the-events-calendar-addon2' ); ?></p>
 		</div>
 
 		<?php if ( $organizer_count > 0 ) : ?>
-			<div class="teca-organizer-l3-stat" aria-label="<?php esc_attr_e( 'Organizer statistics', 'the-events-calendar-addon' ); ?>">
+			<div class="teca-organizer-l3-stat" aria-label="<?php esc_attr_e( 'Organizer statistics', 'the-events-calendar-addon2' ); ?>">
 				<span class="teca-organizer-l3-stat-number"><?php echo esc_html( (string) $organizer_count ); ?></span>
 				<span class="teca-organizer-l3-stat-label">
 					<?php
 					echo esc_html(
 						1 === $organizer_count
-							? __( 'Organizer Listed', 'the-events-calendar-addon' )
-							: __( 'Organizers Listed', 'the-events-calendar-addon' )
+							? __( 'Organizer Listed', 'the-events-calendar-addon2' )
+							: __( 'Organizers Listed', 'the-events-calendar-addon2' )
 					);
 					?>
 				</span>
@@ -44,8 +47,9 @@ $organizer_index  = 0;
 					<path d="M6 20a6 6 0 0 1 12 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
 				</svg>
 			</div>
-			<h3 class="teca-organizer-l3-empty-title"><?php esc_html_e( 'No organizers found', 'the-events-calendar-addon' ); ?></h3>
-			<p class="teca-organizer-l3-empty-text"><?php esc_html_e( 'No organizer profiles are available right now.', 'the-events-calendar-addon' ); ?></p>
+
+			<h3 class="teca-organizer-l3-empty-title"><?php esc_html_e( 'No organizers found', 'the-events-calendar-addon2' ); ?></h3>
+			<p class="teca-organizer-l3-empty-text"><?php esc_html_e( 'No organizer profiles are available right now.', 'the-events-calendar-addon2' ); ?></p>
 		</div>
 	<?php else : ?>
 		<div class="teca-organizer-l3-bento">
@@ -67,7 +71,7 @@ $organizer_index  = 0;
 				$upcoming_count   = absint( $organizer['upcoming_count'] ?? 0 );
 				$excerpt_display  = teca_get_organizer_excerpt_display( $organizer );
 				$fallback_initial = teca_get_organizer_fallback_initial( $organizer );
-				$card_title       = $title ?: __( 'Organizer', 'the-events-calendar-addon' );
+				$card_title       = $title ?: __( 'Organizer', 'the-events-calendar-addon2' );
 				$is_featured      = 1 === $organizer_index;
 				$count_chip       = teca_get_organizer_upcoming_count_chip_label( $upcoming_count );
 				$phone_digits     = preg_replace( '/[^\d\+]/', '', $phone );
@@ -82,6 +86,7 @@ $organizer_index  = 0;
 					$card_classes[] = 'teca-organizer-l3-card-wide';
 				}
 				?>
+
 				<article class="<?php echo esc_attr( implode( ' ', $card_classes ) ); ?>"<?php echo $organizer_id ? ' data-organizer-id="' . esc_attr( (string) $organizer_id ) . '"' : ''; ?>>
 					<div class="teca-organizer-l3-media">
 						<?php if ( $thumbnail ) : ?>
@@ -103,7 +108,8 @@ $organizer_index  = 0;
 					<div class="teca-organizer-l3-overlay" aria-hidden="true"></div>
 
 					<div class="teca-organizer-l3-topbar">
-						<span class="teca-organizer-l3-role-chip"><?php esc_html_e( 'Organizer', 'the-events-calendar-addon' ); ?></span>
+						<span class="teca-organizer-l3-role-chip"><?php esc_html_e( 'Organizer', 'the-events-calendar-addon2' ); ?></span>
+
 						<?php if ( $upcoming_count > 0 ) : ?>
 							<span class="teca-organizer-l3-count-chip"><?php echo esc_html( $count_chip ); ?></span>
 						<?php endif; ?>
@@ -111,7 +117,7 @@ $organizer_index  = 0;
 
 					<div class="teca-organizer-l3-content<?php echo $is_featured ? ' teca-organizer-l3-content-featured' : ''; ?>">
 						<?php if ( $is_featured ) : ?>
-							<span class="teca-organizer-l3-spotlight"><?php esc_html_e( 'Organizer Spotlight', 'the-events-calendar-addon' ); ?></span>
+							<span class="teca-organizer-l3-spotlight"><?php esc_html_e( 'Organizer Spotlight', 'the-events-calendar-addon2' ); ?></span>
 						<?php endif; ?>
 
 						<h3 class="teca-organizer-l3-name">
@@ -146,19 +152,19 @@ $organizer_index  = 0;
 							<div class="teca-organizer-l3-actions">
 								<?php if ( $permalink ) : ?>
 									<a class="teca-organizer-l3-btn teca-organizer-l3-btn-primary" href="<?php echo esc_url( $permalink ); ?>">
-										<?php esc_html_e( 'View Organizer', 'the-events-calendar-addon' ); ?>
+										<?php esc_html_e( 'View Organizer', 'the-events-calendar-addon2' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $email ) : ?>
 									<a class="teca-organizer-l3-btn teca-organizer-l3-btn-secondary" href="<?php echo esc_url( 'mailto:' . $email ); ?>">
-										<?php esc_html_e( 'Email', 'the-events-calendar-addon' ); ?>
+										<?php esc_html_e( 'Email', 'the-events-calendar-addon2' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $website ) : ?>
 									<a class="teca-organizer-l3-btn teca-organizer-l3-btn-ghost" href="<?php echo esc_url( $website ); ?>" target="_blank" rel="noopener noreferrer">
-										<?php esc_html_e( 'Website', 'the-events-calendar-addon' ); ?>
+										<?php esc_html_e( 'Website', 'the-events-calendar-addon2' ); ?>
 									</a>
 								<?php endif; ?>
 							</div>
@@ -169,3 +175,6 @@ $organizer_index  = 0;
 		</div>
 	<?php endif; ?>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

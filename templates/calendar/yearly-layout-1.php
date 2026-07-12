@@ -1,13 +1,16 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
+
 $events         = $events ?? array();
 $layout_data    = $layout_data ?? teca_build_yearly_layout_1_data( $events );
-$schedule_title = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon' );
+$schedule_title = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon2' );
 $layout_id      = $layout_id ?? 'teca';
 $max_events     = isset( $max_events ) ? (int) $max_events : 5;
 $years          = $layout_data['years'] ?? array();
@@ -50,7 +53,7 @@ $month_accents  = array(
 	</header>
 
 	<?php if ( empty( $events ) ) : ?>
-		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
+		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
 	<?php else : ?>
 		<?php foreach ( $years as $year_group ) : ?>
 			<?php $board_year = (int) ( $year_group['year'] ?? 0 ); ?>
@@ -128,7 +131,7 @@ $month_accents  = array(
 												<?php
 												printf(
 													/* translators: %d: additional event count */
-													esc_html( _n( '+%d more event', '+%d more events', $hidden_count, 'the-events-calendar-addon' ) ),
+													esc_html( _n( '+%d more event', '+%d more events', $hidden_count, 'the-events-calendar-addon2' ) ),
 													(int) $hidden_count
 												);
 												?>
@@ -144,3 +147,6 @@ $month_accents  = array(
 		<?php endforeach; ?>
 	<?php endif; ?>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

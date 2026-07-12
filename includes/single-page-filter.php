@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -45,6 +46,7 @@ class Single_Page_Filter {
 			? teca_extract_single_page_setting_value( $settings['single_page_style'], 'default' )
 			: 'default';
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		$raw_layout = apply_filters( 'gs_teca_single_page_style', $raw_layout );
 
 		if ( is_array( $settings ) && isset( $settings['single_page_style'] ) ) {

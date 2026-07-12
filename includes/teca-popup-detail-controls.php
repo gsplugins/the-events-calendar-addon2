@@ -16,26 +16,26 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function teca_get_popup_detail_typography_group_labels() {
 	return array(
-		'title'              => __( 'Title', 'the-events-calendar-addon' ),
-		'category'           => __( 'Category', 'the-events-calendar-addon' ),
-		'tag'                => __( 'Tag', 'the-events-calendar-addon' ),
-		'venue_title'        => __( 'Venue Title', 'the-events-calendar-addon' ),
-		'venue_value'        => __( 'Venue Value', 'the-events-calendar-addon' ),
-		'organizer_title'    => __( 'Organizer Title', 'the-events-calendar-addon' ),
-		'organizer_value'    => __( 'Organizer Value', 'the-events-calendar-addon' ),
-		'organizer_phone'    => __( 'Organizer Phone', 'the-events-calendar-addon' ),
-		'organizer_website'  => __( 'Organizer Website', 'the-events-calendar-addon' ),
-		'organizer_email'    => __( 'Organizer Email', 'the-events-calendar-addon' ),
-		'excerpt'            => __( 'Excerpt', 'the-events-calendar-addon' ),
-		'date'               => __( 'Date', 'the-events-calendar-addon' ),
-		'time'               => __( 'Time', 'the-events-calendar-addon' ),
-		'cost'               => __( 'Cost', 'the-events-calendar-addon' ),
-		'location'           => __( 'Location', 'the-events-calendar-addon' ),
-		'address'            => __( 'Address', 'the-events-calendar-addon' ),
-		'details'            => __( 'Details', 'the-events-calendar-addon' ),
-		'view_details_button' => __( 'View Details Button', 'the-events-calendar-addon' ),
-		'google_calendar_button' => __( 'Google Calendar Button', 'the-events-calendar-addon' ),
-		'event_website_button' => __( 'Event Website Button', 'the-events-calendar-addon' ),
+		'title'              => __( 'Title', 'the-events-calendar-addon2' ),
+		'category'           => __( 'Category', 'the-events-calendar-addon2' ),
+		'tag'                => __( 'Tag', 'the-events-calendar-addon2' ),
+		'venue_title'        => __( 'Venue Title', 'the-events-calendar-addon2' ),
+		'venue_value'        => __( 'Venue Value', 'the-events-calendar-addon2' ),
+		'organizer_title'    => __( 'Organizer Title', 'the-events-calendar-addon2' ),
+		'organizer_value'    => __( 'Organizer Value', 'the-events-calendar-addon2' ),
+		'organizer_phone'    => __( 'Organizer Phone', 'the-events-calendar-addon2' ),
+		'organizer_website'  => __( 'Organizer Website', 'the-events-calendar-addon2' ),
+		'organizer_email'    => __( 'Organizer Email', 'the-events-calendar-addon2' ),
+		'excerpt'            => __( 'Excerpt', 'the-events-calendar-addon2' ),
+		'date'               => __( 'Date', 'the-events-calendar-addon2' ),
+		'time'               => __( 'Time', 'the-events-calendar-addon2' ),
+		'cost'               => __( 'Cost', 'the-events-calendar-addon2' ),
+		'location'           => __( 'Location', 'the-events-calendar-addon2' ),
+		'address'            => __( 'Address', 'the-events-calendar-addon2' ),
+		'details'            => __( 'Details', 'the-events-calendar-addon2' ),
+		'view_details_button' => __( 'View Details Button', 'the-events-calendar-addon2' ),
+		'google_calendar_button' => __( 'Google Calendar Button', 'the-events-calendar-addon2' ),
+		'event_website_button' => __( 'Event Website Button', 'the-events-calendar-addon2' ),
 	);
 }
 
@@ -61,6 +61,7 @@ function teca_get_popup_detail_typography_group_map() {
  */
 function teca_get_free_popup_detail_typography_group_slugs() {
 	return apply_filters(
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		'gs_teca_free_popup_detail_typography_group_slugs',
 		array(
 			'title',
@@ -85,6 +86,7 @@ function teca_is_free_popup_detail_typography_group( $group ) {
  */
 function teca_get_free_popup_detail_color_field_keys() {
 	return apply_filters(
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		'gs_teca_free_popup_detail_color_field_keys',
 		array(
 			'popup_detail_title_color',
@@ -285,133 +287,133 @@ function teca_get_popup_detail_color_field_map() {
 	$map = array(
 		'popup_detail_title_color' => array(
 			'group'      => 'title',
-			'label'      => $labels['title'] . ' ' . __( 'Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['title'] . ' ' . __( 'Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => '',
 			'selectors'  => array( '.teca-popup-detail-title' ),
 		),
 		'popup_detail_category_color' => array(
 			'group'      => 'category',
-			'label'      => $labels['category'] . ' ' . __( 'Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['category'] . ' ' . __( 'Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => '',
 			'selectors'  => teca_get_popup_detail_category_selectors(),
 		),
 		'popup_detail_category_background_color' => array(
 			'group'      => 'category',
-			'label'      => $labels['category'] . ' ' . __( 'Background Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['category'] . ' ' . __( 'Background Color', 'the-events-calendar-addon2' ),
 			'property'   => 'background-color',
 			'pseudo'     => '',
 			'selectors'  => array( '.teca-popup-detail-category', '.teca-popup-detail-categories .teca-popup-detail-category' ),
 		),
 		'popup_detail_category_hover_color' => array(
 			'group'      => 'category',
-			'label'      => $labels['category'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['category'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => ':hover',
 			'selectors'  => array( '.teca-popup-detail-category', '.teca-popup-detail-categories .teca-popup-detail-category' ),
 		),
 		'popup_detail_tag_color' => array(
 			'group'      => 'tag',
-			'label'      => $labels['tag'] . ' ' . __( 'Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['tag'] . ' ' . __( 'Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => '',
 			'selectors'  => teca_get_popup_detail_tag_selectors(),
 		),
 		'popup_detail_tag_background_color' => array(
 			'group'      => 'tag',
-			'label'      => $labels['tag'] . ' ' . __( 'Background Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['tag'] . ' ' . __( 'Background Color', 'the-events-calendar-addon2' ),
 			'property'   => 'background-color',
 			'pseudo'     => '',
 			'selectors'  => array( '.teca-popup-detail-tag', '.teca-popup-detail-tags .teca-popup-detail-tag' ),
 		),
 		'popup_detail_tag_hover_color' => array(
 			'group'      => 'tag',
-			'label'      => $labels['tag'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['tag'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => ':hover',
 			'selectors'  => array( '.teca-popup-detail-tag', '.teca-popup-detail-tags .teca-popup-detail-tag' ),
 		),
 		'popup_detail_view_details_button_color' => array(
 			'group'      => 'view_details_button',
-			'label'      => $labels['view_details_button'] . ' ' . __( 'Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['view_details_button'] . ' ' . __( 'Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => '',
 			'selectors'  => teca_get_popup_detail_view_details_button_selectors(),
 		),
 		'popup_detail_view_details_button_background_color' => array(
 			'group'      => 'view_details_button',
-			'label'      => $labels['view_details_button'] . ' ' . __( 'Background Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['view_details_button'] . ' ' . __( 'Background Color', 'the-events-calendar-addon2' ),
 			'property'   => 'background-color',
 			'pseudo'     => '',
 			'selectors'  => teca_get_popup_detail_view_details_button_selectors(),
 		),
 		'popup_detail_view_details_button_hover_color' => array(
 			'group'      => 'view_details_button',
-			'label'      => $labels['view_details_button'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['view_details_button'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => ':hover',
 			'selectors'  => teca_get_popup_detail_view_details_button_selectors(),
 		),
 		'popup_detail_view_details_button_hover_background_color' => array(
 			'group'      => 'view_details_button',
-			'label'      => $labels['view_details_button'] . ' ' . __( 'Hover Background Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['view_details_button'] . ' ' . __( 'Hover Background Color', 'the-events-calendar-addon2' ),
 			'property'   => 'background-color',
 			'pseudo'     => ':hover',
 			'selectors'  => teca_get_popup_detail_view_details_button_selectors(),
 		),
 		'popup_detail_google_calendar_button_color' => array(
 			'group'      => 'google_calendar_button',
-			'label'      => $labels['google_calendar_button'] . ' ' . __( 'Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['google_calendar_button'] . ' ' . __( 'Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => '',
 			'selectors'  => teca_get_popup_detail_google_calendar_button_selectors(),
 		),
 		'popup_detail_google_calendar_button_background_color' => array(
 			'group'      => 'google_calendar_button',
-			'label'      => $labels['google_calendar_button'] . ' ' . __( 'Background Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['google_calendar_button'] . ' ' . __( 'Background Color', 'the-events-calendar-addon2' ),
 			'property'   => 'background-color',
 			'pseudo'     => '',
 			'selectors'  => teca_get_popup_detail_google_calendar_button_selectors(),
 		),
 		'popup_detail_google_calendar_button_hover_color' => array(
 			'group'      => 'google_calendar_button',
-			'label'      => $labels['google_calendar_button'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['google_calendar_button'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => ':hover',
 			'selectors'  => teca_get_popup_detail_google_calendar_button_selectors(),
 		),
 		'popup_detail_google_calendar_button_hover_background_color' => array(
 			'group'      => 'google_calendar_button',
-			'label'      => $labels['google_calendar_button'] . ' ' . __( 'Hover Background Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['google_calendar_button'] . ' ' . __( 'Hover Background Color', 'the-events-calendar-addon2' ),
 			'property'   => 'background-color',
 			'pseudo'     => ':hover',
 			'selectors'  => teca_get_popup_detail_google_calendar_button_selectors(),
 		),
 		'popup_detail_event_website_button_color' => array(
 			'group'      => 'event_website_button',
-			'label'      => $labels['event_website_button'] . ' ' . __( 'Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['event_website_button'] . ' ' . __( 'Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => '',
 			'selectors'  => teca_get_popup_detail_event_website_button_selectors(),
 		),
 		'popup_detail_event_website_button_background_color' => array(
 			'group'      => 'event_website_button',
-			'label'      => $labels['event_website_button'] . ' ' . __( 'Background Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['event_website_button'] . ' ' . __( 'Background Color', 'the-events-calendar-addon2' ),
 			'property'   => 'background-color',
 			'pseudo'     => '',
 			'selectors'  => teca_get_popup_detail_event_website_button_selectors(),
 		),
 		'popup_detail_event_website_button_hover_color' => array(
 			'group'      => 'event_website_button',
-			'label'      => $labels['event_website_button'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['event_website_button'] . ' ' . __( 'Hover Color', 'the-events-calendar-addon2' ),
 			'property'   => 'color',
 			'pseudo'     => ':hover',
 			'selectors'  => teca_get_popup_detail_event_website_button_selectors(),
 		),
 		'popup_detail_event_website_button_hover_background_color' => array(
 			'group'      => 'event_website_button',
-			'label'      => $labels['event_website_button'] . ' ' . __( 'Hover Background Color', 'the-events-calendar-addon' ),
+			'label'      => $labels['event_website_button'] . ' ' . __( 'Hover Background Color', 'the-events-calendar-addon2' ),
 			'property'   => 'background-color',
 			'pseudo'     => ':hover',
 			'selectors'  => teca_get_popup_detail_event_website_button_selectors(),
@@ -440,7 +442,7 @@ function teca_get_popup_detail_color_field_map() {
 
 		$map[ $field_key ] = array(
 			'group'     => $group,
-			'label'     => $labels[ $group ] . ' ' . __( 'Color', 'the-events-calendar-addon' ),
+			'label'     => $labels[ $group ] . ' ' . __( 'Color', 'the-events-calendar-addon2' ),
 			'property'  => 'color',
 			'pseudo'    => '',
 			'selectors' => array_values( array_unique( $color_selectors ) ),
@@ -456,7 +458,7 @@ function teca_get_popup_detail_color_field_map() {
 
 			$map[ $hover_key ] = array(
 				'group'     => $group,
-				'label'     => $labels[ $group ] . ' ' . __( 'Hover Color', 'the-events-calendar-addon' ),
+				'label'     => $labels[ $group ] . ' ' . __( 'Hover Color', 'the-events-calendar-addon2' ),
 				'property'  => 'color',
 				'pseudo'    => ':hover',
 				'selectors' => $hover_selectors,
@@ -620,6 +622,7 @@ function teca_get_popup_detail_color_defaults_for_style( $popup_style ) {
 			'tag'                => '#374151',
 			'tag_bg'             => '#f3f4f6',
 			'meta_label'         => '#6b7280',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Popup color palette key, not a WP_Query meta_value parameter.
 			'meta_value'         => '#111827',
 			'body'               => '#4b5563',
 			'meta_item'          => '#111827',
@@ -633,6 +636,7 @@ function teca_get_popup_detail_color_defaults_for_style( $popup_style ) {
 			'tag'                => '#334155',
 			'tag_bg'             => '#f1f5f9',
 			'meta_label'         => '#64748b',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Popup color palette key, not a WP_Query meta_value parameter.
 			'meta_value'         => '#0f172a',
 			'body'               => '#475569',
 			'meta_item'          => '#334155',
@@ -646,6 +650,7 @@ function teca_get_popup_detail_color_defaults_for_style( $popup_style ) {
 			'tag'                => '#4338ca',
 			'tag_bg'             => '#eef2ff',
 			'meta_label'         => '#64748b',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Popup color palette key, not a WP_Query meta_value parameter.
 			'meta_value'         => '#0f172a',
 			'body'               => '#475569',
 			'meta_item'          => '#334155',
@@ -997,7 +1002,7 @@ function teca_get_popup_detail_typography_select_options() {
 
 	foreach ( $map as $group => $setting_key ) {
 		$options[] = array(
-			'label'       => $labels[ $group ] . ' ' . __( 'Typography', 'the-events-calendar-addon' ),
+			'label'       => $labels[ $group ] . ' ' . __( 'Typography', 'the-events-calendar-addon2' ),
 			'value'       => $group,
 			'setting_key' => $setting_key,
 			'pro'         => ! teca_is_free_popup_detail_typography_group( $group ),

@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $event_id   = 0;
 $start_date = '';
@@ -110,9 +113,12 @@ if ( $end_date && ! $event_id ) {
 
 		<?php if ( $all_day ) : ?>
 			<span class="gs-teca-date-allday">
-				<?php esc_html_e( 'All Day', 'the-events-calendar-addon' ); ?>
+				<?php esc_html_e( 'All Day', 'the-events-calendar-addon2' ); ?>
 			</span>
 		<?php endif; ?>
 
 	</div>
 <?php endif; ?>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

@@ -109,7 +109,8 @@ sortable_terms_table.sortable( {
 			id:     termid,
 			previd: prevtermid,
 			nextid: nexttermid,
-			tax:    taxonomy
+			tax:    taxonomy,
+			nonce:  gsTecaTermOrder.nonce
 		}, term_order_update_callback );
 	}
 } );
@@ -181,7 +182,8 @@ function term_order_update_callback( response, post ) {
 			nextid:   changes.next['nextid'],
 			start:    changes.next['start'],
 			excluded: changes.next['excluded'],
-			tax:      taxonomy
+			tax:      taxonomy,
+			nonce:    gsTecaTermOrder.nonce
 		}, term_order_update_callback );
 	}
 

@@ -1,9 +1,12 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally GS_TECA.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $featured_events  = $featured_events ?? array();
 $past_events      = $past_events ?? array();
@@ -21,13 +24,13 @@ $group_events_map = array(
 <div <?php echo teca_get_events_section_wrapper_attributes( $settings ?? array() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> data-default-tab="<?php echo esc_attr( $default_tab ); ?>">
 	<div class="teca-events-layout-2-header">
 		<h2 class="teca-events-layout-2-title">
-			<span class="teca-events-layout-2-title-light"><?php esc_html_e( 'Popular', 'the-events-calendar-addon' ); ?></span>
-			<span class="teca-events-layout-2-title-bold"><?php esc_html_e( 'Events', 'the-events-calendar-addon' ); ?></span>
+			<span class="teca-events-layout-2-title-light"><?php esc_html_e( 'Popular', 'the-events-calendar-addon2' ); ?></span>
+			<span class="teca-events-layout-2-title-bold"><?php esc_html_e( 'Events', 'the-events-calendar-addon2' ); ?></span>
 		</h2>
 	</div>
 
 	<div class="teca-events-layout-2-tabs-wrap">
-		<div class="teca-events-layout-2-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Event groups', 'the-events-calendar-addon' ); ?>">
+		<div class="teca-events-layout-2-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Event groups', 'the-events-calendar-addon2' ); ?>">
 			<?php foreach ( $tab_order as $group_key ) : ?>
 				<?php
 				$group_config = $groups_config[ $group_key ] ?? array();
@@ -60,3 +63,6 @@ $group_events_map = array(
 		?>
 	</div>
 </div>
+
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -105,7 +106,7 @@ function teca_get_all_calendar_layout_select_options() {
 		$options[] = array(
 			'label' => sprintf(
 				/* translators: %d: calendar layout number */
-				__( 'Calendar Layout %d', 'the-events-calendar-addon' ),
+				__( 'Calendar Layout %d', 'the-events-calendar-addon2' ),
 				$i
 			),
 			'value' => 'calendar-layout-' . $i,
@@ -122,6 +123,7 @@ function teca_get_all_calendar_layout_select_options() {
  */
 function teca_get_free_calendar_layout_slugs() {
 	return apply_filters(
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
 		'gs_teca_free_calendar_layout_slugs',
 		array(
 			'calendar-layout-1',
@@ -229,23 +231,23 @@ function teca_get_calendar_layout_select_options() {
 function teca_get_calendar_select_filter_options() {
 	return array(
 		array(
-			'label' => __( 'Daily', 'the-events-calendar-addon' ),
+			'label' => __( 'Daily', 'the-events-calendar-addon2' ),
 			'value' => 'daily',
 		),
 		array(
-			'label' => __( 'Weekly', 'the-events-calendar-addon' ),
+			'label' => __( 'Weekly', 'the-events-calendar-addon2' ),
 			'value' => 'weekly',
 		),
 		array(
-			'label' => __( 'Monthly', 'the-events-calendar-addon' ),
+			'label' => __( 'Monthly', 'the-events-calendar-addon2' ),
 			'value' => 'monthly',
 		),
 		array(
-			'label' => __( 'Quarterly', 'the-events-calendar-addon' ),
+			'label' => __( 'Quarterly', 'the-events-calendar-addon2' ),
 			'value' => 'quarterly',
 		),
 		array(
-			'label' => __( 'Yearly', 'the-events-calendar-addon' ),
+			'label' => __( 'Yearly', 'the-events-calendar-addon2' ),
 			'value' => 'yearly',
 		),
 	);

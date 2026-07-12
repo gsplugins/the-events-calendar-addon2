@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -350,6 +351,7 @@ class Query {
                 $tax_query = array_merge( array( 'relation' => 'AND' ), $tax_query );
             }
 
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Required for event taxonomy filtering.
             $args['tax_query'] = $tax_query;
         }
 
@@ -358,6 +360,7 @@ class Query {
         }
 
         if ( ! empty( $settings['deselect_by_title'] ) && is_array( $settings['deselect_by_title'] ) ) {
+            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- Required to exclude selected events from the event query.
             $args['post__not_in'] = $settings['deselect_by_title'];
         }
 
@@ -415,9 +418,11 @@ class Query {
         $query_args = array_merge(
             self::get_events_section_base_query_args( $settings, $ajax_datas ),
             array(
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required for The Events Calendar date sorting/filtering.
                 'meta_key'   => '_EventStartDate',
                 'orderby'    => 'meta_value',
                 'order'      => 'ASC',
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Required for event date/status filtering.
                 'meta_query' => array(
                     'relation' => 'AND',
                     array(
@@ -457,9 +462,11 @@ class Query {
         $query_args = array_merge(
             self::get_events_section_base_query_args( $settings, $ajax_datas ),
             array(
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required for The Events Calendar date sorting/filtering.
                 'meta_key'   => '_EventEndDate',
                 'orderby'    => 'meta_value',
                 'order'      => 'DESC',
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Required for event date/status filtering.
                 'meta_query' => array(
                     array(
                         'key'     => '_EventEndDate',
@@ -487,9 +494,11 @@ class Query {
         $query_args = array_merge(
             self::get_events_section_base_query_args( $settings, $ajax_datas ),
             array(
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Required for The Events Calendar date sorting/filtering.
                 'meta_key'   => '_EventStartDate',
                 'orderby'    => 'meta_value',
                 'order'      => 'ASC',
+                // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Required for event date/status filtering.
                 'meta_query' => array(
                     array(
                         'key'     => '_EventStartDate',
@@ -560,6 +569,7 @@ class Query {
             'no_found_rows'          => true,
             'update_post_meta_cache' => true,
             'update_post_term_cache' => false,
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Required for The Events Calendar date/status filtering.
             'meta_query'             => array(
                 'relation' => 'AND',
                 array(
@@ -764,6 +774,7 @@ class Query {
             'no_found_rows'          => true,
             'update_post_meta_cache' => true,
             'update_post_term_cache' => false,
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Required for The Events Calendar date/status filtering.
             'meta_query'             => array(
                 array(
                     'key'     => '_EventStartDate',

@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 use FLBuilder;
@@ -102,14 +103,14 @@ class Integration_Beaver {
 			__NAMESPACE__ . '\\Teca_Beaver_Events_Module',
 			[
 				'general' => [
-					'title'    => esc_html__( 'General', 'the-events-calendar-addon' ),
+					'title'    => esc_html__( 'General', 'the-events-calendar-addon2' ),
 					'sections' => [
 						'general' => [
 							'title'  => '',
 							'fields' => [
 								'shortcode_id' => [
 									'type'    => 'select',
-									'label'   => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon' ),
+									'label'   => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon2' ),
 									'options' => teca_get_saved_shortcodes_for_beaver(),
 									'preview' => [
 										'type' => 'none',

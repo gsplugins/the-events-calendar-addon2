@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 /**
@@ -20,8 +21,9 @@ class Hooks {
 
             delete_option('gs_teca_activation_redirect');
 
-            if ( !isset($_GET['activate-multi']) ) {
-                wp_redirect("admin.php?page=the-events-calendar-addon-help");
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Core multi-plugin activation sets this query arg without a nonce.
+            if ( ! isset( $_GET['activate-multi'] ) ) {
+                wp_safe_redirect( esc_url( "admin.php?page=the-events-calendar-addon-help" ) );
             }
         }
     }
@@ -34,7 +36,7 @@ class Hooks {
 
     public function disable_admin_notices() {
         global $parent_file;
-        if ( $parent_file != 'the-events-calendar-addon' ) return;
+        if ( $parent_file != 'the-events-calendar-addon2' ) return;
 
 		remove_all_actions( 'network_admin_notices' );
 		remove_all_actions( 'user_admin_notices' );

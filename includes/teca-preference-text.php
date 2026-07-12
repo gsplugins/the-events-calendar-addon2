@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Existing plugin namespace is intentionally kept for backward compatibility.
 namespace GS_TECA;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -75,7 +76,7 @@ function teca_get_related_events_title_text( $shortcode_title = '' ) {
 		return $shortcode_title;
 	}
 
-	return __( 'Related Events', 'the-events-calendar-addon' );
+	return __( 'Related Events', 'the-events-calendar-addon2' );
 }
 
 /**
