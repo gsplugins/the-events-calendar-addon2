@@ -38,9 +38,9 @@ class GS_TECA_Shortcode_Fonts {
 		if ( null === self::$font_groups ) {
 
 			self::$font_groups = [
-				self::SYSTEM => __( 'System', 'the-events-calendar-addon2' ),
-				self::GOOGLE => __( 'Google', 'the-events-calendar-addon2' ),
-				self::EARLYACCESS => __( 'Google Early Access', 'the-events-calendar-addon2' ),
+				self::SYSTEM => __( 'System', 'the-events-calendar-addon' ),
+				self::GOOGLE => __( 'Google', 'the-events-calendar-addon' ),
+				self::EARLYACCESS => __( 'Google Early Access', 'the-events-calendar-addon' ),
 			];
             
 		}

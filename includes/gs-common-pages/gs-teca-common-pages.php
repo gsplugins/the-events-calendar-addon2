@@ -11,9 +11,9 @@ add_action(
 		new GS_Plugins_Common_Pages(
 			array(
 				'parent_slug'     => 'gs-the-events-calendar-addon',
-				'lite_page_title' => __( 'Lite Plugins by GS Plugins', 'the-events-calendar-addon2' ),
-				'pro_page_title'  => __( 'Premium Plugins by GS Plugins', 'the-events-calendar-addon2' ),
-				'help_page_title' => __( 'Support & Documentation by GS Plugins', 'the-events-calendar-addon2' ),
+				'lite_page_title' => __( 'Lite Plugins by GS Plugins', 'the-events-calendar-addon' ),
+				'pro_page_title'  => __( 'Premium Plugins by GS Plugins', 'the-events-calendar-addon' ),
+				'help_page_title' => __( 'Support & Documentation by GS Plugins', 'the-events-calendar-addon' ),
 				'lite_page_slug'  => 'the-events-calendar-addon2',
 				'pro_page_slug'   => 'the-events-calendar-addon-pro',
 				'help_page_slug'  => 'the-events-calendar-addon-help',

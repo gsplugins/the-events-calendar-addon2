@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
-$more_label = ! empty( $settings['gs_teca_more'] ) ? $settings['gs_teca_more'] : __( 'More', 'the-events-calendar-addon2' );
+$more_label = ! empty( $settings['gs_teca_more'] ) ? $settings['gs_teca_more'] : __( 'More', 'the-events-calendar-addon' );
 
 foreach ( $events as $event ) :
 

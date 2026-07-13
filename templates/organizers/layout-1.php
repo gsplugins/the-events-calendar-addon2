@@ -13,15 +13,15 @@ $organizers = $organizers ?? array();
 
 <div class="teca-organizer-template teca-organizer-template-layout-1">
 	<div class="teca-organizer-l1-header">
-		<span class="teca-organizer-l1-eyebrow"><?php esc_html_e( 'Organizer Directory', 'the-events-calendar-addon2' ); ?></span>
-		<h2 class="teca-organizer-l1-title"><?php esc_html_e( 'Meet the People Behind the Events', 'the-events-calendar-addon2' ); ?></h2>
-		<p class="teca-organizer-l1-description"><?php esc_html_e( 'Browse organizer profiles, contact information, and event connections.', 'the-events-calendar-addon2' ); ?></p>
+		<span class="teca-organizer-l1-eyebrow"><?php esc_html_e( 'Organizer Directory', 'the-events-calendar-addon' ); ?></span>
+		<h2 class="teca-organizer-l1-title"><?php esc_html_e( 'Meet the People Behind the Events', 'the-events-calendar-addon' ); ?></h2>
+		<p class="teca-organizer-l1-description"><?php esc_html_e( 'Browse organizer profiles, contact information, and event connections.', 'the-events-calendar-addon' ); ?></p>
 	</div>
 
 	<?php if ( empty( $organizers ) ) : ?>
 		<div class="teca-organizer-template-empty">
-			<h3 class="teca-organizer-template-empty-title"><?php esc_html_e( 'No organizers found', 'the-events-calendar-addon2' ); ?></h3>
-			<p class="teca-organizer-template-empty-text"><?php esc_html_e( 'No organizer profiles are available right now.', 'the-events-calendar-addon2' ); ?></p>
+			<h3 class="teca-organizer-template-empty-title"><?php esc_html_e( 'No organizers found', 'the-events-calendar-addon' ); ?></h3>
+			<p class="teca-organizer-template-empty-text"><?php esc_html_e( 'No organizer profiles are available right now.', 'the-events-calendar-addon' ); ?></p>
 		</div>
 	<?php else : ?>
 		<div class="teca-organizer-l1-grid">
@@ -41,7 +41,7 @@ $organizers = $organizers ?? array();
 				$upcoming_count   = absint( $organizer['upcoming_count'] ?? 0 );
 				$excerpt_display  = teca_get_organizer_excerpt_display( $organizer );
 				$fallback_initial = teca_get_organizer_fallback_initial( $organizer );
-				$card_title       = $title ?: __( 'Organizer', 'the-events-calendar-addon2' );
+				$card_title       = $title ?: __( 'Organizer', 'the-events-calendar-addon' );
 				$phone_digits     = preg_replace( '/[^\d\+]/', '', $phone );
 				?>
 
@@ -109,19 +109,19 @@ $organizers = $organizers ?? array();
 							<div class="teca-organizer-l1-actions">
 								<?php if ( $permalink ) : ?>
 									<a class="teca-organizer-l1-btn teca-organizer-l1-btn-primary" href="<?php echo esc_url( $permalink ); ?>">
-										<?php esc_html_e( 'View Organizer', 'the-events-calendar-addon2' ); ?>
+										<?php esc_html_e( 'View Organizer', 'the-events-calendar-addon' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $email ) : ?>
 									<a class="teca-organizer-l1-btn teca-organizer-l1-btn-secondary" href="<?php echo esc_url( 'mailto:' . $email ); ?>">
-										<?php esc_html_e( 'Email', 'the-events-calendar-addon2' ); ?>
+										<?php esc_html_e( 'Email', 'the-events-calendar-addon' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $website ) : ?>
 									<a class="teca-organizer-l1-btn teca-organizer-l1-btn-secondary" href="<?php echo esc_url( $website ); ?>" target="_blank" rel="noopener noreferrer">
-										<?php esc_html_e( 'Website', 'the-events-calendar-addon2' ); ?>
+										<?php esc_html_e( 'Website', 'the-events-calendar-addon' ); ?>
 									</a>
 								<?php endif; ?>
 							</div>

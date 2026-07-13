@@ -73,9 +73,9 @@ function teca_get_single_event_status_badge_data( $event_id ) {
 			$status_label = $labels->get_canceled_label();
 		}
 	} elseif ( 'postponed' === $status_slug ) {
-		$status_label = __( 'Postponed', 'the-events-calendar-addon2' );
+		$status_label = __( 'Postponed', 'the-events-calendar-addon' );
 	} else {
-		$status_label = __( 'Cancelled', 'the-events-calendar-addon2' );
+		$status_label = __( 'Cancelled', 'the-events-calendar-addon' );
 	}
 
 	$status_label = trim( (string) $status_label );

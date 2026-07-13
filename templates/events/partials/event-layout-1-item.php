@@ -58,7 +58,7 @@ $title         = $event['event_name'] ?? '';
 	<?php if ( $permalink ) : ?>
 		<div class="teca-event-layout-1-action">
 			<a class="teca-event-layout-1-button" href="<?php echo esc_url( $permalink ); ?>">
-				<?php esc_html_e( 'Learn More', 'the-events-calendar-addon2' ); ?>
+				<?php esc_html_e( 'Learn More', 'the-events-calendar-addon' ); ?>
 			</a>
 			<?php
 			teca_echo_google_calendar_button_actions(

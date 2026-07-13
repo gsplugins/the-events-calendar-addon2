@@ -53,7 +53,7 @@ function teca_get_google_calendar_details( $event_id ) {
 	if ( '' !== $excerpt ) {
 		$parts[] = sprintf(
 			/* translators: %s: event excerpt */
-			__( 'Event details: %s', 'the-events-calendar-addon2' ),
+			__( 'Event details: %s', 'the-events-calendar-addon' ),
 			$excerpt
 		);
 	}
@@ -61,7 +61,7 @@ function teca_get_google_calendar_details( $event_id ) {
 	if ( $permalink ) {
 		$parts[] = sprintf(
 			/* translators: %s: event URL */
-			__( 'View event: %s', 'the-events-calendar-addon2' ),
+			__( 'View event: %s', 'the-events-calendar-addon' ),
 			$permalink
 		);
 	}
@@ -231,14 +231,14 @@ function teca_get_google_calendar_button_label_default( $context = 'card' ) {
 	$context = sanitize_key( (string) $context );
 
 	if ( 'compact' === $context ) {
-		return __( 'Google Cal', 'the-events-calendar-addon2' );
+		return __( 'Google Cal', 'the-events-calendar-addon' );
 	}
 
 	if ( 'table' === $context ) {
-		return __( 'Add to Calendar', 'the-events-calendar-addon2' );
+		return __( 'Add to Calendar', 'the-events-calendar-addon' );
 	}
 
-	return __( 'Add to calendar', 'the-events-calendar-addon2' );
+	return __( 'Add to calendar', 'the-events-calendar-addon' );
 }
 
 /**

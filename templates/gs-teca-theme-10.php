@@ -75,7 +75,7 @@ foreach ( $events as $event ) :
 			<?php if ( $show_topbar ) : ?>
 				<div class="teca-grid-style-10-topbar">
 					<?php if ( $show_date_badge ) : ?>
-						<div class="teca-grid-style-10-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon2' ); ?>">
+						<div class="teca-grid-style-10-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon' ); ?>">
 							<span class="teca-grid-style-10-date-day"><?php echo esc_html( $day_label ); ?></span>
 							<span class="teca-grid-style-10-date-month"><?php echo esc_html( $month_label ); ?></span>
 						</div>

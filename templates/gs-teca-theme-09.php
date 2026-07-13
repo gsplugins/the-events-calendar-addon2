@@ -61,7 +61,7 @@ foreach ( $events as $event ) :
 		<article class="teca-grid-style-9-card gs-teca-event-main<?php echo $show_date_badge ? '' : ' teca-grid-style-9-card--no-date'; ?><?php echo $has_thumbnail ? '' : ' teca-grid-style-9-card--no-media'; ?>">
 
 			<?php if ( $show_date_badge ) : ?>
-				<div class="teca-grid-style-9-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon2' ); ?>">
+				<div class="teca-grid-style-9-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon' ); ?>">
 					<span class="teca-grid-style-9-date-day"><?php echo esc_html( $day_label ); ?></span>
 					<span class="teca-grid-style-9-date-month"><?php echo esc_html( $month_label ); ?></span>
 					<span class="teca-grid-style-9-date-year"><?php echo esc_html( $year_label ); ?></span>

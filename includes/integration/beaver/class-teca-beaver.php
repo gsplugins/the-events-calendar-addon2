@@ -103,14 +103,14 @@ class Integration_Beaver {
 			__NAMESPACE__ . '\\Teca_Beaver_Events_Module',
 			[
 				'general' => [
-					'title'    => esc_html__( 'General', 'the-events-calendar-addon2' ),
+					'title'    => esc_html__( 'General', 'the-events-calendar-addon' ),
 					'sections' => [
 						'general' => [
 							'title'  => '',
 							'fields' => [
 								'shortcode_id' => [
 									'type'    => 'select',
-									'label'   => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon2' ),
+									'label'   => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon' ),
 									'options' => teca_get_saved_shortcodes_for_beaver(),
 									'preview' => [
 										'type' => 'none',

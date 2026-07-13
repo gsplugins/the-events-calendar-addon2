@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $events         = $events ?? array();
 $layout_data    = $layout_data ?? teca_build_yearly_layout_2_data( $events );
-$schedule_title = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon2' );
+$schedule_title = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon' );
 $layout_id      = $layout_id ?? 'teca';
 $max_events     = isset( $max_events ) ? (int) $max_events : 3;
 $years          = $layout_data['years'] ?? array();
@@ -40,7 +40,7 @@ $month_tones    = array( 'blue', 'teal', 'green' );
 	</header>
 
 	<?php if ( empty( $events ) ) : ?>
-		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
+		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
 	<?php else : ?>
 		<?php foreach ( $years as $year_group ) : ?>
 			<?php $board_year = (int) ( $year_group['year'] ?? 0 ); ?>
@@ -121,7 +121,7 @@ $month_tones    = array( 'blue', 'teal', 'green' );
 													<?php
 													printf(
 														/* translators: %d: additional event count */
-														esc_html( _n( '+%d more event', '+%d more events', $hidden_count, 'the-events-calendar-addon2' ) ),
+														esc_html( _n( '+%d more event', '+%d more events', $hidden_count, 'the-events-calendar-addon' ) ),
 														(int) $hidden_count
 													);
 													?>
@@ -129,7 +129,7 @@ $month_tones    = array( 'blue', 'teal', 'green' );
 											<?php endif; ?>
 										</div>
 									<?php else : ?>
-										<p class="teca-yearly-layout-2-month-empty"><?php esc_html_e( 'No events', 'the-events-calendar-addon2' ); ?></p>
+										<p class="teca-yearly-layout-2-month-empty"><?php esc_html_e( 'No events', 'the-events-calendar-addon' ); ?></p>
 									<?php endif; ?>
 								</div>
 							</article>

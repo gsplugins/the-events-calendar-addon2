@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 						</div>
 						<div class="menu-area gs-col-xs-6 text-right">
 							<ul>
-								<router-link to="/" tag="li"><a><?php esc_html_e('Shortcodes', 'the-events-calendar-addon2'); ?></a></router-link>
-								<router-link to="/shortcode" tag="li"><a><?php esc_html_e('Create New', 'the-events-calendar-addon2'); ?></a></router-link>
-								<router-link to="/preferences" tag="li"><a><?php esc_html_e('Preferences', 'the-events-calendar-addon2'); ?></a></router-link>
-								<router-link to="/layout" tag="li"><a><?php esc_html_e('Layout', 'the-events-calendar-addon2'); ?></a></router-link>
-								<router-link to="/demo-data" tag="li"><a><?php esc_html_e('Demo Data', 'the-events-calendar-addon2'); ?></a></router-link>
+								<router-link to="/" tag="li"><a><?php esc_html_e('Shortcodes', 'the-events-calendar-addon'); ?></a></router-link>
+								<router-link to="/shortcode" tag="li"><a><?php esc_html_e('Create New', 'the-events-calendar-addon'); ?></a></router-link>
+								<router-link to="/preferences" tag="li"><a><?php esc_html_e('Preferences', 'the-events-calendar-addon'); ?></a></router-link>
+								<router-link to="/layout" tag="li"><a><?php esc_html_e('Layout', 'the-events-calendar-addon'); ?></a></router-link>
+								<router-link to="/demo-data" tag="li"><a><?php esc_html_e('Demo Data', 'the-events-calendar-addon'); ?></a></router-link>
 							</ul>
 						</div>
 					</div>

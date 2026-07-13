@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $events           = $events ?? array();
 $event_groups     = $event_groups ?? array();
-$schedule_title   = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon2' );
+$schedule_title   = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon' );
 $category_options = $category_options ?? array();
 $hero_images      = $hero_images ?? teca_get_events_hero_images( $events );
 $layout_id        = $layout_id ?? 'teca';
@@ -45,13 +45,13 @@ $card_color_index = 0;
 					<?php if ( ! empty( $category_options ) ) : ?>
 						<div class="teca-daily-layout-3-toolbar">
 							<label class="teca-daily-layout-3-filter-label" for="teca-daily-layout-3-type-<?php echo esc_attr( $layout_id ); ?>">
-								<?php esc_html_e( 'Event Type', 'the-events-calendar-addon2' ); ?>
+								<?php esc_html_e( 'Event Type', 'the-events-calendar-addon' ); ?>
 							</label>
 							<select
 								id="teca-daily-layout-3-type-<?php echo esc_attr( $layout_id ); ?>"
 								class="teca-daily-layout-3-type-select"
 							>
-								<option value="all"><?php esc_html_e( 'All Types', 'the-events-calendar-addon2' ); ?></option>
+								<option value="all"><?php esc_html_e( 'All Types', 'the-events-calendar-addon' ); ?></option>
 								<?php foreach ( $category_options as $term_id => $label ) : ?>
 									<option value="<?php echo esc_attr( (string) $term_id ); ?>"><?php echo esc_html( $label ); ?></option>
 								<?php endforeach; ?>
@@ -128,7 +128,7 @@ $card_color_index = 0;
 						</section>
 					<?php endforeach; ?>
 				<?php else : ?>
-					<p class="teca-daily-layout-3-empty-content"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></p>
+					<p class="teca-daily-layout-3-empty-content"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></p>
 				<?php endif; ?>
 			</div>
 		</div>

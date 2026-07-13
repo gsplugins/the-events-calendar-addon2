@@ -308,7 +308,7 @@ class Shortcode {
 	}
 
 	public function ajax_pagination() {
-		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
+		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon'), 401 );
 
 		$shortcode_id   = isset( $_POST['shortcode_id'] ) ? sanitize_text_field( wp_unslash( $_POST['shortcode_id'] ) ) : '';
 		$posts_per_page = isset( $_POST['posts_per_page'] )
@@ -348,7 +348,7 @@ class Shortcode {
 	}
 
 	public function load_more_posts() {
-		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
+		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon'), 401 );
 
 		$shortcode_id   = isset( $_POST['shortcode_id'] ) ? sanitize_text_field( wp_unslash( $_POST['shortcode_id'] ) ) : '';
 		$posts_per_page = isset( $_POST['posts_per_page'] )
@@ -388,7 +388,7 @@ class Shortcode {
 
 	public function filter_teca() {
 
-		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon2'), 401 );
+		if ( ! check_ajax_referer('gs_teca_user_action') ) wp_send_json_error( __('Unauthorised Request', 'the-events-calendar-addon'), 401 );
 
 		$shortcode_id   = isset( $_POST['shortcode_id'] ) ? sanitize_text_field( wp_unslash( $_POST['shortcode_id'] ) ) : '';
 		$posts_per_page = isset( $_POST['posts_per_page'] )
@@ -437,7 +437,7 @@ class Shortcode {
 		if ( ! check_ajax_referer( 'gs_teca_user_action' ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Unauthorised Request', 'the-events-calendar-addon2' ),
+					'message' => __( 'Unauthorised Request', 'the-events-calendar-addon' ),
 				),
 				401
 			);
@@ -449,7 +449,7 @@ class Shortcode {
 		if ( '' === $shortcode_id ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Missing shortcode instance.', 'the-events-calendar-addon2' ),
+					'message' => __( 'Missing shortcode instance.', 'the-events-calendar-addon' ),
 				),
 				400
 			);
@@ -458,7 +458,7 @@ class Shortcode {
 		if ( ! in_array( $view_type, array( 'grid', 'masonry', 'filter' ), true ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Unsupported view type.', 'the-events-calendar-addon2' ),
+					'message' => __( 'Unsupported view type.', 'the-events-calendar-addon' ),
 				),
 				400
 			);
@@ -470,7 +470,7 @@ class Shortcode {
 		if ( empty( $settings ) || ! teca_should_render_search_by_bar( $settings ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Search is not enabled for this instance.', 'the-events-calendar-addon2' ),
+					'message' => __( 'Search is not enabled for this instance.', 'the-events-calendar-addon' ),
 				),
 				400
 			);
@@ -499,7 +499,7 @@ class Shortcode {
 		$matched_events = teca_filter_events_by_search_query( $data['events'] ?? array(), $settings, $search_params );
 		$html           = $this->render_event_items_html( $settings, $matched_events );
 		$count          = count( $matched_events );
-		$message        = $count ? '' : __( 'No events found.', 'the-events-calendar-addon2' );
+		$message        = $count ? '' : __( 'No events found.', 'the-events-calendar-addon' );
 
 		wp_send_json_success(
 			array(
@@ -979,7 +979,7 @@ class Shortcode {
 
 								<li class="filter active" data-filter="*">
 									<a href="javascript:void(0)">
-										<span><?php esc_html_e( 'All', 'the-events-calendar-addon2' ); ?></span>
+										<span><?php esc_html_e( 'All', 'the-events-calendar-addon' ); ?></span>
 									</a>
 								</li>
 
@@ -1131,7 +1131,7 @@ class Shortcode {
 	public function shortcode( $atts, $ajax_datas = array()) {
 	
         if ( empty( $atts['id'] ) ) {
-            return __( 'No shortcode ID found', 'the-events-calendar-addon2' );
+            return __( 'No shortcode ID found', 'the-events-calendar-addon' );
         }
 
 		

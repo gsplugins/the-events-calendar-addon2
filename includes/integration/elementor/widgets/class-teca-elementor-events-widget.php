@@ -34,7 +34,7 @@ class Teca_Elementor_Events_Widget extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return esc_html__( 'TECA Events', 'the-events-calendar-addon2' );
+		return esc_html__( 'TECA Events', 'the-events-calendar-addon' );
 	}
 
 	/**
@@ -73,7 +73,7 @@ class Teca_Elementor_Events_Widget extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			[
-				'label' => esc_html__( 'Content', 'the-events-calendar-addon2' ),
+				'label' => esc_html__( 'Content', 'the-events-calendar-addon' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -81,7 +81,7 @@ class Teca_Elementor_Events_Widget extends \Elementor\Widget_Base {
 		$this->add_control(
 			'shortcode_id',
 			[
-				'label'       => esc_html__( 'TECA Shortcode', 'the-events-calendar-addon2' ),
+				'label'       => esc_html__( 'TECA Shortcode', 'the-events-calendar-addon' ),
 				'description' => $this->get_field_description(),
 				'label_block' => true,
 				'type'        => \Elementor\Controls_Manager::SELECT,
@@ -101,16 +101,16 @@ class Teca_Elementor_Events_Widget extends \Elementor\Widget_Base {
 	protected function get_field_description() {
 		$edit_link = sprintf(
 			'%s: <a class="teca-elementor-edit-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-			esc_html__( 'Edit this shortcode', 'the-events-calendar-addon2' ),
+			esc_html__( 'Edit this shortcode', 'the-events-calendar-addon' ),
 			esc_url( admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode/' ) ),
-			esc_html__( 'Edit', 'the-events-calendar-addon2' )
+			esc_html__( 'Edit', 'the-events-calendar-addon' )
 		);
 
 		$create_link = sprintf(
 			'%s: <a class="teca-elementor-create-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-			esc_html__( 'Create new shortcode', 'the-events-calendar-addon2' ),
+			esc_html__( 'Create new shortcode', 'the-events-calendar-addon' ),
 			esc_url( admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode' ) ),
-			esc_html__( 'Create', 'the-events-calendar-addon2' )
+			esc_html__( 'Create', 'the-events-calendar-addon' )
 		);
 
 		return implode( '<br />', [ $edit_link, $create_link ] );
@@ -129,7 +129,7 @@ class Teca_Elementor_Events_Widget extends \Elementor\Widget_Base {
 		}
 
 		return [
-			'' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon2' ),
+			'' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon' ),
 		];
 	}
 
@@ -165,12 +165,12 @@ class Teca_Elementor_Events_Widget extends \Elementor\Widget_Base {
 
 		if ( $this->is_editor_placeholder_context() ) {
 			if ( ! $shortcode_id ) {
-				$this->render_placeholder( esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon2' ) );
+				$this->render_placeholder( esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon' ) );
 				return;
 			}
 
 			if ( ! teca_shortcode_exists( $shortcode_id ) ) {
-				$this->render_placeholder( esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon2' ) );
+				$this->render_placeholder( esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon' ) );
 				return;
 			}
 		} elseif ( ! $shortcode_id || ! teca_shortcode_exists( $shortcode_id ) ) {

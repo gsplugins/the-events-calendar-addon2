@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function teca_get_date_format_preset_options() {
 	return array(
 		array(
-			'label' => __( 'Default Format', 'the-events-calendar-addon2' ),
+			'label' => __( 'Default Format', 'the-events-calendar-addon' ),
 			'value' => 'default',
 		),
 		array(
@@ -50,7 +50,7 @@ function teca_get_date_format_preset_options() {
 			'value' => 'l, F j, Y',
 		),
 		array(
-			'label' => __( 'Custom', 'the-events-calendar-addon2' ),
+			'label' => __( 'Custom', 'the-events-calendar-addon' ),
 			'value' => 'custom',
 		),
 	);

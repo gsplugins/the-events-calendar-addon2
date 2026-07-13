@@ -122,7 +122,7 @@ function teca_get_saved_shortcodes_for_builder() {
         if ( '' === $title ) {
             $title = sprintf(
                 /* translators: %d: shortcode ID */
-                __( 'Shortcode #%d', 'the-events-calendar-addon2' ),
+                __( 'Shortcode #%d', 'the-events-calendar-addon' ),
                 $shortcode_id
             );
         }
@@ -208,7 +208,7 @@ function teca_get_saved_shortcodes_for_ux_builder() {
 
     if ( empty( $options ) ) {
         return [
-            '' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon2' ),
+            '' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon' ),
         ];
     }
 
@@ -225,7 +225,7 @@ function teca_get_saved_shortcodes_for_beaver() {
 
     if ( empty( $options ) ) {
         return [
-            '' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon2' ),
+            '' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon' ),
         ];
     }
 
@@ -1799,7 +1799,7 @@ function teca_get_shortcode_display_title( array $settings ) {
         }
     }
 
-    return __( 'Events Schedule', 'the-events-calendar-addon2' );
+    return __( 'Events Schedule', 'the-events-calendar-addon' );
 }
 
 function teca_group_events_by_month( array $events ) {
@@ -1854,7 +1854,7 @@ function teca_format_event_time_range( $event_id ) {
     $all_day  = (bool) get_post_meta( $event_id, '_EventAllDay', true );
 
     if ( $all_day ) {
-        return __( 'All Day', 'the-events-calendar-addon2' );
+        return __( 'All Day', 'the-events-calendar-addon' );
     }
 
     $start = get_post_meta( $event_id, '_EventStartDate', true );
@@ -2453,7 +2453,7 @@ function teca_format_event_start_time_display( $event_id ) {
     $all_day  = (bool) get_post_meta( $event_id, '_EventAllDay', true );
 
     if ( $all_day ) {
-        return __( 'All Day', 'the-events-calendar-addon2' );
+        return __( 'All Day', 'the-events-calendar-addon' );
     }
 
     $start = get_post_meta( $event_id, '_EventStartDate', true );
@@ -2470,7 +2470,7 @@ function teca_format_event_table_time( $event_id ) {
     $all_day  = (bool) get_post_meta( $event_id, '_EventAllDay', true );
 
     if ( $all_day ) {
-        return __( 'All Day', 'the-events-calendar-addon2' );
+        return __( 'All Day', 'the-events-calendar-addon' );
     }
 
     $start = get_post_meta( $event_id, '_EventStartDate', true );
@@ -2519,7 +2519,7 @@ function teca_format_event_start_time_short( $event_id ) {
     $all_day  = (bool) get_post_meta( $event_id, '_EventAllDay', true );
 
     if ( $all_day ) {
-        return __( 'All Day', 'the-events-calendar-addon2' );
+        return __( 'All Day', 'the-events-calendar-addon' );
     }
 
     $start = get_post_meta( $event_id, '_EventStartDate', true );
@@ -2680,25 +2680,25 @@ function teca_get_events_layout_1_groups_config() {
 function teca_get_events_section_groups_config() {
     return array(
         'featured'  => array(
-            'label'      => __( 'Featured Events', 'the-events-calendar-addon2' ),
+            'label'      => __( 'Featured Events', 'the-events-calendar-addon' ),
             'tab_class'  => 'teca-tab-featured',
             'panel_class'=> 'teca-events-panel-featured',
             'empty_class'=> 'teca-events-empty-featured',
-            'empty_text' => __( 'No featured events found.', 'the-events-calendar-addon2' ),
+            'empty_text' => __( 'No featured events found.', 'the-events-calendar-addon' ),
         ),
         'past'      => array(
-            'label'      => __( 'Past Events', 'the-events-calendar-addon2' ),
+            'label'      => __( 'Past Events', 'the-events-calendar-addon' ),
             'tab_class'  => 'teca-tab-past',
             'panel_class'=> 'teca-events-panel-past',
             'empty_class'=> 'teca-events-empty-past',
-            'empty_text' => __( 'No past events found.', 'the-events-calendar-addon2' ),
+            'empty_text' => __( 'No past events found.', 'the-events-calendar-addon' ),
         ),
         'upcoming'  => array(
-            'label'      => __( 'Upcoming Events', 'the-events-calendar-addon2' ),
+            'label'      => __( 'Upcoming Events', 'the-events-calendar-addon' ),
             'tab_class'  => 'teca-tab-upcoming',
             'panel_class'=> 'teca-events-panel-upcoming',
             'empty_class'=> 'teca-events-empty-upcoming',
-            'empty_text' => __( 'No upcoming events found.', 'the-events-calendar-addon2' ),
+            'empty_text' => __( 'No upcoming events found.', 'the-events-calendar-addon' ),
         ),
     );
 }
@@ -2915,7 +2915,7 @@ function teca_render_calendar_event_type_filter( array $events, $layout_id = '',
     $layout_id      = sanitize_key( (string) $layout_id );
     $select_id      = 'teca-calendar-event-type-' . ( $layout_id ? $layout_id : 'teca' );
     $wrapper_class  = isset( $args['wrapper_class'] ) ? (string) $args['wrapper_class'] : 'teca-calendar-event-type-filter-wrap';
-    $label          = isset( $args['label'] ) ? (string) $args['label'] : __( 'Event Type', 'the-events-calendar-addon2' );
+    $label          = isset( $args['label'] ) ? (string) $args['label'] : __( 'Event Type', 'the-events-calendar-addon' );
     $select_classes = 'teca-calendar-event-type-filter teca-calendar-select';
 
     if ( ! empty( $args['select_class'] ) ) {
@@ -2929,7 +2929,7 @@ function teca_render_calendar_event_type_filter( array $events, $layout_id = '',
             <?php echo esc_html( $label ); ?>
         </label>
         <select id="<?php echo esc_attr( $select_id ); ?>" class="<?php echo esc_attr( $select_classes ); ?>">
-            <option value="all"><?php esc_html_e( 'All Event Types', 'the-events-calendar-addon2' ); ?></option>
+            <option value="all"><?php esc_html_e( 'All Event Types', 'the-events-calendar-addon' ); ?></option>
             <?php foreach ( $options as $slug => $name ) : ?>
                 <option value="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $name ); ?></option>
             <?php endforeach; ?>
@@ -3140,7 +3140,7 @@ function teca_group_events_by_year_quarter( array $events ) {
 
 function teca_get_quarter_filter_options( array $events ) {
     $options = array(
-        'all' => __( 'All Events', 'the-events-calendar-addon2' ),
+        'all' => __( 'All Events', 'the-events-calendar-addon' ),
     );
     $labels  = array();
 
@@ -3161,22 +3161,22 @@ function teca_get_quarter_definitions() {
     return array(
         'Q1' => array(
             'ordinal' => '1st',
-            'label'   => __( '1st Quarter', 'the-events-calendar-addon2' ),
+            'label'   => __( '1st Quarter', 'the-events-calendar-addon' ),
             'months'  => array( 1, 2, 3 ),
         ),
         'Q2' => array(
             'ordinal' => '2nd',
-            'label'   => __( '2nd Quarter', 'the-events-calendar-addon2' ),
+            'label'   => __( '2nd Quarter', 'the-events-calendar-addon' ),
             'months'  => array( 4, 5, 6 ),
         ),
         'Q3' => array(
             'ordinal' => '3rd',
-            'label'   => __( '3rd Quarter', 'the-events-calendar-addon2' ),
+            'label'   => __( '3rd Quarter', 'the-events-calendar-addon' ),
             'months'  => array( 7, 8, 9 ),
         ),
         'Q4' => array(
             'ordinal' => '4th',
-            'label'   => __( '4th Quarter', 'the-events-calendar-addon2' ),
+            'label'   => __( '4th Quarter', 'the-events-calendar-addon' ),
             'months'  => array( 10, 11, 12 ),
         ),
     );
@@ -3423,7 +3423,7 @@ function teca_normalize_year_filter_options( array $options ) {
 
 function teca_get_year_filter_options( array $events ) {
     $options = array(
-        'all' => __( 'All Events', 'the-events-calendar-addon2' ),
+        'all' => __( 'All Events', 'the-events-calendar-addon' ),
     );
     $years   = array();
 
@@ -4789,40 +4789,40 @@ function teca_get_calendar_filter_config( $filter_type ) {
         'daily'   => array(
             'wrapper_class' => 'teca-daily-date-filter',
             'select_class'  => 'teca-daily-date-select',
-            'label'         => __( 'Select Day', 'the-events-calendar-addon2' ),
-            'message'       => __( 'No events found for this day.', 'the-events-calendar-addon2' ),
+            'label'         => __( 'Select Day', 'the-events-calendar-addon' ),
+            'message'       => __( 'No events found for this day.', 'the-events-calendar-addon' ),
             'message_class' => 'teca-daily-empty-message',
         ),
         'weekly'  => array(
             'wrapper_class' => 'teca-weekly-date-filter',
             'select_class'  => 'teca-weekly-date-select',
-            'label'         => __( 'Select Week', 'the-events-calendar-addon2' ),
-            'message'       => __( 'No events found for this week.', 'the-events-calendar-addon2' ),
+            'label'         => __( 'Select Week', 'the-events-calendar-addon' ),
+            'message'       => __( 'No events found for this week.', 'the-events-calendar-addon' ),
             'message_class' => 'teca-weekly-empty-message',
         ),
         'monthly' => array(
             'wrapper_class' => 'teca-monthly-date-filter',
             'select_class'  => 'teca-monthly-date-select',
-            'label'         => __( 'Select Month', 'the-events-calendar-addon2' ),
-            'message'       => __( 'No events found for this month.', 'the-events-calendar-addon2' ),
+            'label'         => __( 'Select Month', 'the-events-calendar-addon' ),
+            'message'       => __( 'No events found for this month.', 'the-events-calendar-addon' ),
             'message_class' => 'teca-monthly-empty-message',
         ),
         'quarterly' => array(
             'wrapper_class'  => 'teca-quarterly-date-filter',
             'select_class'   => 'teca-quarterly-date-select',
-            'label'          => __( 'Select Quarter', 'the-events-calendar-addon2' ),
-            'message'        => __( 'No events found for this quarter.', 'the-events-calendar-addon2' ),
+            'label'          => __( 'Select Quarter', 'the-events-calendar-addon' ),
+            'message'        => __( 'No events found for this quarter.', 'the-events-calendar-addon' ),
             /* translators: %s: event category, date range, or selected filter label. */
-            'empty_template' => __( 'No events found for %s.', 'the-events-calendar-addon2' ),
+            'empty_template' => __( 'No events found for %s.', 'the-events-calendar-addon' ),
             'message_class'  => 'teca-quarterly-empty-message',
         ),
         'yearly' => array(
             'wrapper_class'  => 'teca-yearly-date-filter',
             'select_class'   => 'teca-yearly-date-select',
-            'label'          => __( 'Select Year', 'the-events-calendar-addon2' ),
-            'message'        => __( 'No events found for this year.', 'the-events-calendar-addon2' ),
+            'label'          => __( 'Select Year', 'the-events-calendar-addon' ),
+            'message'        => __( 'No events found for this year.', 'the-events-calendar-addon' ),
             /* translators: %s: event category, date range, or selected filter label. */
-            'empty_template' => __( 'No events found for %s.', 'the-events-calendar-addon2' ),
+            'empty_template' => __( 'No events found for %s.', 'the-events-calendar-addon' ),
             'message_class'  => 'teca-yearly-empty-message',
         ),
     );
@@ -4865,7 +4865,7 @@ function teca_get_calendar_filter_options( array $events, $filter_type, $date_la
     }
 
     $options = array(
-        'all' => __( 'All Events', 'the-events-calendar-addon2' ),
+        'all' => __( 'All Events', 'the-events-calendar-addon' ),
     );
     $labels  = array();
 

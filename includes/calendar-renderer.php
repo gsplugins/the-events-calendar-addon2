@@ -70,7 +70,7 @@ class Calendar_Renderer {
 	public static function render_layout( $view_type, array $settings ) {
 		if ( ! self::is_views_v2_enabled() ) {
 			return self::render_notice(
-				__( 'The Events Calendar Views V2 must be enabled to display calendar layouts.', 'the-events-calendar-addon2' ),
+				__( 'The Events Calendar Views V2 must be enabled to display calendar layouts.', 'the-events-calendar-addon' ),
 				$view_type,
 				$settings
 			);
@@ -94,7 +94,7 @@ class Calendar_Renderer {
 
 		if ( ! method_exists( self::class, $render_method ) ) {
 			return self::render_notice(
-				__( 'The selected calendar layout could not be rendered.', 'the-events-calendar-addon2' ),
+				__( 'The selected calendar layout could not be rendered.', 'the-events-calendar-addon' ),
 				'calendar',
 				$settings
 			);
@@ -136,7 +136,7 @@ class Calendar_Renderer {
 
 		if ( ! self::is_views_v2_enabled() ) {
 			return self::render_notice(
-				__( 'The Events Calendar Views V2 must be enabled to display calendar layouts.', 'the-events-calendar-addon2' ),
+				__( 'The Events Calendar Views V2 must be enabled to display calendar layouts.', 'the-events-calendar-addon' ),
 				'daily-calendar',
 				$settings
 			);
@@ -245,7 +245,7 @@ class Calendar_Renderer {
 		if ( ! self::is_week_view_available() ) {
 			return self::wrap_output(
 				'<div class="teca-calendar-notice teca-calendar-week-unavailable">' .
-				esc_html__( 'Weekly calendar view requires The Events Calendar Pro.', 'the-events-calendar-addon2' ) .
+				esc_html__( 'Weekly calendar view requires The Events Calendar Pro.', 'the-events-calendar-addon' ) .
 				'</div>',
 				'weekly-calendar',
 				$settings
@@ -460,7 +460,7 @@ class Calendar_Renderer {
 			esc_html(
 				sprintf(
 					/* translators: 1: year, 2: quarter number */
-					__( '%1$s - Quarter %2$s', 'the-events-calendar-addon2' ),
+					__( '%1$s - Quarter %2$s', 'the-events-calendar-addon' ),
 					$year,
 					$quarter
 				)

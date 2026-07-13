@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $events           = $events ?? array();
 $month_groups     = $month_groups ?? teca_group_events_by_month( $events );
-$schedule_title   = $schedule_title ?? __( 'Events Calendar', 'the-events-calendar-addon2' );
+$schedule_title   = $schedule_title ?? __( 'Events Calendar', 'the-events-calendar-addon' );
 $category_options = $category_options ?? array();
 $layout_id        = $layout_id ?? 'teca';
 $accent_slugs     = array( 'gold', 'red', 'green', 'black' );
@@ -22,7 +22,7 @@ $accent_slugs     = array( 'gold', 'red', 'green', 'black' );
 	echo teca_render_calendar_date_filter( $events, 'monthly', $layout_id );
 	?>
 	<?php if ( empty( $month_groups ) ) : ?>
-		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
+		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
 	<?php else : ?>
 		<?php foreach ( $month_groups as $month_group ) : ?>
 			<?php
@@ -50,13 +50,13 @@ $accent_slugs     = array( 'gold', 'red', 'green', 'black' );
 						<?php if ( ! empty( $category_options ) ) : ?>
 							<div class="teca-monthly-layout-1-toolbar">
 								<label class="teca-monthly-layout-1-filter-label" for="teca-monthly-layout-1-type-<?php echo esc_attr( $layout_id ); ?>-<?php echo esc_attr( $month_group['month'] ); ?>">
-									<?php esc_html_e( 'Event Type', 'the-events-calendar-addon2' ); ?>
+									<?php esc_html_e( 'Event Type', 'the-events-calendar-addon' ); ?>
 								</label>
 								<select
 									id="teca-monthly-layout-1-type-<?php echo esc_attr( $layout_id ); ?>-<?php echo esc_attr( $month_group['month'] ); ?>"
 									class="teca-monthly-layout-1-type-select"
 								>
-									<option value="all"><?php esc_html_e( 'All Types', 'the-events-calendar-addon2' ); ?></option>
+									<option value="all"><?php esc_html_e( 'All Types', 'the-events-calendar-addon' ); ?></option>
 									<?php foreach ( $category_options as $term_id => $label ) : ?>
 										<option value="<?php echo esc_attr( (string) $term_id ); ?>"><?php echo esc_html( $label ); ?></option>
 									<?php endforeach; ?>
@@ -87,7 +87,7 @@ $accent_slugs     = array( 'gold', 'red', 'green', 'black' );
 						<?php endif; ?>
 
 						<div class="teca-monthly-layout-1-timeline-header">
-							<h3 class="teca-monthly-layout-1-timeline-title"><?php esc_html_e( 'Timeline', 'the-events-calendar-addon2' ); ?></h3>
+							<h3 class="teca-monthly-layout-1-timeline-title"><?php esc_html_e( 'Timeline', 'the-events-calendar-addon' ); ?></h3>
 						</div>
 
 						<div class="teca-monthly-layout-1-timeline">
@@ -177,7 +177,7 @@ $accent_slugs     = array( 'gold', 'red', 'green', 'black' );
 													href="<?php echo esc_url( $button_url ); ?>"
 													<?php echo $cta_url ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>
 												>
-													<?php echo esc_html( $cta_url ? __( 'Get Tickets', 'the-events-calendar-addon2' ) : __( 'View Event', 'the-events-calendar-addon2' ) ); ?>
+													<?php echo esc_html( $cta_url ? __( 'Get Tickets', 'the-events-calendar-addon' ) : __( 'View Event', 'the-events-calendar-addon' ) ); ?>
 												</a>
 											<?php endif; ?>
 										</div>

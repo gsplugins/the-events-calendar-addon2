@@ -69,7 +69,7 @@ foreach ( $events as $event ) :
 						<?php endif; ?>
 
 						<?php if ( $day_label && Helpers::is_visible( $visibility_settings['event_date'] ?? true ) ) : ?>
-							<div class="teca-grid-style-7-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon2' ); ?>">
+							<div class="teca-grid-style-7-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon' ); ?>">
 								<span class="teca-grid-style-7-day"><?php echo esc_html( $day_label ); ?></span>
 								<span class="teca-grid-style-7-month"><?php echo esc_html( $month_label ); ?></span>
 							</div>

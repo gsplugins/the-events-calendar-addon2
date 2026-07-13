@@ -81,7 +81,7 @@ class Integration_Elementor {
 		$elements_manager->add_category(
 			'gs-plugins',
 			[
-				'title' => esc_html__( 'GS Plugins', 'the-events-calendar-addon2' ),
+				'title' => esc_html__( 'GS Plugins', 'the-events-calendar-addon' ),
 				'icon'  => 'fa fa-plug',
 			]
 		);

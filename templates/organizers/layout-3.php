@@ -16,20 +16,20 @@ $organizer_index = 0;
 <div class="teca-organizer-template teca-organizer-template-layout-3">
 	<section class="teca-organizer-l3-hero">
 		<div class="teca-organizer-l3-hero-content">
-			<span class="teca-organizer-l3-eyebrow"><?php esc_html_e( 'Organizer Network', 'the-events-calendar-addon2' ); ?></span>
-			<h2 class="teca-organizer-l3-title"><?php esc_html_e( 'Meet the People Behind the Events', 'the-events-calendar-addon2' ); ?></h2>
-			<p class="teca-organizer-l3-description"><?php esc_html_e( 'Explore organizer profiles, contact details, and event connections in a refined visual showcase.', 'the-events-calendar-addon2' ); ?></p>
+			<span class="teca-organizer-l3-eyebrow"><?php esc_html_e( 'Organizer Network', 'the-events-calendar-addon' ); ?></span>
+			<h2 class="teca-organizer-l3-title"><?php esc_html_e( 'Meet the People Behind the Events', 'the-events-calendar-addon' ); ?></h2>
+			<p class="teca-organizer-l3-description"><?php esc_html_e( 'Explore organizer profiles, contact details, and event connections in a refined visual showcase.', 'the-events-calendar-addon' ); ?></p>
 		</div>
 
 		<?php if ( $organizer_count > 0 ) : ?>
-			<div class="teca-organizer-l3-stat" aria-label="<?php esc_attr_e( 'Organizer statistics', 'the-events-calendar-addon2' ); ?>">
+			<div class="teca-organizer-l3-stat" aria-label="<?php esc_attr_e( 'Organizer statistics', 'the-events-calendar-addon' ); ?>">
 				<span class="teca-organizer-l3-stat-number"><?php echo esc_html( (string) $organizer_count ); ?></span>
 				<span class="teca-organizer-l3-stat-label">
 					<?php
 					echo esc_html(
 						1 === $organizer_count
-							? __( 'Organizer Listed', 'the-events-calendar-addon2' )
-							: __( 'Organizers Listed', 'the-events-calendar-addon2' )
+							? __( 'Organizer Listed', 'the-events-calendar-addon' )
+							: __( 'Organizers Listed', 'the-events-calendar-addon' )
 					);
 					?>
 				</span>
@@ -48,8 +48,8 @@ $organizer_index = 0;
 				</svg>
 			</div>
 
-			<h3 class="teca-organizer-l3-empty-title"><?php esc_html_e( 'No organizers found', 'the-events-calendar-addon2' ); ?></h3>
-			<p class="teca-organizer-l3-empty-text"><?php esc_html_e( 'No organizer profiles are available right now.', 'the-events-calendar-addon2' ); ?></p>
+			<h3 class="teca-organizer-l3-empty-title"><?php esc_html_e( 'No organizers found', 'the-events-calendar-addon' ); ?></h3>
+			<p class="teca-organizer-l3-empty-text"><?php esc_html_e( 'No organizer profiles are available right now.', 'the-events-calendar-addon' ); ?></p>
 		</div>
 	<?php else : ?>
 		<div class="teca-organizer-l3-bento">
@@ -71,7 +71,7 @@ $organizer_index = 0;
 				$upcoming_count   = absint( $organizer['upcoming_count'] ?? 0 );
 				$excerpt_display  = teca_get_organizer_excerpt_display( $organizer );
 				$fallback_initial = teca_get_organizer_fallback_initial( $organizer );
-				$card_title       = $title ?: __( 'Organizer', 'the-events-calendar-addon2' );
+				$card_title       = $title ?: __( 'Organizer', 'the-events-calendar-addon' );
 				$is_featured      = 1 === $organizer_index;
 				$count_chip       = teca_get_organizer_upcoming_count_chip_label( $upcoming_count );
 				$phone_digits     = preg_replace( '/[^\d\+]/', '', $phone );
@@ -108,7 +108,7 @@ $organizer_index = 0;
 					<div class="teca-organizer-l3-overlay" aria-hidden="true"></div>
 
 					<div class="teca-organizer-l3-topbar">
-						<span class="teca-organizer-l3-role-chip"><?php esc_html_e( 'Organizer', 'the-events-calendar-addon2' ); ?></span>
+						<span class="teca-organizer-l3-role-chip"><?php esc_html_e( 'Organizer', 'the-events-calendar-addon' ); ?></span>
 
 						<?php if ( $upcoming_count > 0 ) : ?>
 							<span class="teca-organizer-l3-count-chip"><?php echo esc_html( $count_chip ); ?></span>
@@ -117,7 +117,7 @@ $organizer_index = 0;
 
 					<div class="teca-organizer-l3-content<?php echo $is_featured ? ' teca-organizer-l3-content-featured' : ''; ?>">
 						<?php if ( $is_featured ) : ?>
-							<span class="teca-organizer-l3-spotlight"><?php esc_html_e( 'Organizer Spotlight', 'the-events-calendar-addon2' ); ?></span>
+							<span class="teca-organizer-l3-spotlight"><?php esc_html_e( 'Organizer Spotlight', 'the-events-calendar-addon' ); ?></span>
 						<?php endif; ?>
 
 						<h3 class="teca-organizer-l3-name">
@@ -152,19 +152,19 @@ $organizer_index = 0;
 							<div class="teca-organizer-l3-actions">
 								<?php if ( $permalink ) : ?>
 									<a class="teca-organizer-l3-btn teca-organizer-l3-btn-primary" href="<?php echo esc_url( $permalink ); ?>">
-										<?php esc_html_e( 'View Organizer', 'the-events-calendar-addon2' ); ?>
+										<?php esc_html_e( 'View Organizer', 'the-events-calendar-addon' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $email ) : ?>
 									<a class="teca-organizer-l3-btn teca-organizer-l3-btn-secondary" href="<?php echo esc_url( 'mailto:' . $email ); ?>">
-										<?php esc_html_e( 'Email', 'the-events-calendar-addon2' ); ?>
+										<?php esc_html_e( 'Email', 'the-events-calendar-addon' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $website ) : ?>
 									<a class="teca-organizer-l3-btn teca-organizer-l3-btn-ghost" href="<?php echo esc_url( $website ); ?>" target="_blank" rel="noopener noreferrer">
-										<?php esc_html_e( 'Website', 'the-events-calendar-addon2' ); ?>
+										<?php esc_html_e( 'Website', 'the-events-calendar-addon' ); ?>
 									</a>
 								<?php endif; ?>
 							</div>

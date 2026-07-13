@@ -1041,7 +1041,7 @@ function teca_render_single_page_element( $element_key, array $event, array $sor
 						echo '<span class="teca-single-date-number" aria-hidden="true">' . esc_html( $day_number ) . '</span>';
 					}
 					echo '<span class="teca-single-meta-content">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</span>';
 					echo '</div>';
@@ -1052,7 +1052,7 @@ function teca_render_single_page_element( $element_key, array $event, array $sor
 						echo '<span class="teca-single-date-number" aria-hidden="true">' . esc_html( $day_number ) . '</span>';
 					}
 					echo '<span class="teca-single-meta-content">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</span>';
 					echo '</div>';
@@ -1067,7 +1067,7 @@ function teca_render_single_page_element( $element_key, array $event, array $sor
 						echo '<span class="teca-single-date-number" aria-hidden="true">' . esc_html( $day_number ) . '</span>';
 					}
 					echo '<span class="teca-single-meta-content">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</span>';
 					echo '</div>';
@@ -1079,13 +1079,13 @@ function teca_render_single_page_element( $element_key, array $event, array $sor
 						echo '<span class="teca-single-date-number" aria-hidden="true">' . esc_html( $day_number ) . '</span>';
 					}
 					echo '<span class="teca-single-meta-content">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</span>';
 					echo '</div>';
 					echo '</div>';
 				} else {
-					echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon2' ) . '</span>' . $markup . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon' ) . '</span>' . $markup . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 			}
 			break;
@@ -1096,10 +1096,10 @@ function teca_render_single_page_element( $element_key, array $event, array $sor
 				return;
 			}
 			if ( 'style-5' === $style_key ) {
-				echo '<div class="' . esc_attr( $visible_class . ' teca-single-style-5-journey-step' ) . '"><div class="teca-single-style-5-journey-body"><span class="teca-single-meta-content"><span class="teca-single-meta-label">' . esc_html__( 'Time', 'the-events-calendar-addon2' ) . '</span><span class="teca-single-meta-value">' . esc_html( $time ) . '</span></span></div></div>';
+				echo '<div class="' . esc_attr( $visible_class . ' teca-single-style-5-journey-step' ) . '"><div class="teca-single-style-5-journey-body"><span class="teca-single-meta-content"><span class="teca-single-meta-label">' . esc_html__( 'Time', 'the-events-calendar-addon' ) . '</span><span class="teca-single-meta-value">' . esc_html( $time ) . '</span></span></div></div>';
 				break;
 			}
-			echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Time', 'the-events-calendar-addon2' ) . '</span><span class="teca-single-meta-value">' . esc_html( $time ) . '</span></div>';
+			echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Time', 'the-events-calendar-addon' ) . '</span><span class="teca-single-meta-value">' . esc_html( $time ) . '</span></div>';
 			break;
 
 		case 'event_venue':
@@ -1116,30 +1116,30 @@ function teca_render_single_page_element( $element_key, array $event, array $sor
 			if ( '' !== $markup ) {
 				if ( 'default' === $style_key ) {
 					teca_render_single_default_info_card_open( $visible_class );
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					teca_render_single_default_info_card_close();
 				} elseif ( 'style-3' === $style_key ) {
 					echo '<div class="' . esc_attr( $visible_class ) . '">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</div>';
 				} elseif ( 'style-4' === $style_key ) {
 					echo '<div class="' . esc_attr( $visible_class . ' teca-single-style-4-info-card' ) . '">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</div>';
 				} elseif ( 'style-5' === $style_key ) {
 					echo '<div class="' . esc_attr( $visible_class . ' teca-single-style-5-journey-step teca-single-style-5-journey-step--venue' ) . '">';
 					echo '<div class="teca-single-style-5-journey-body">';
 					echo '<span class="teca-single-meta-content">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</span>';
 					echo '</div>';
 					echo '</div>';
 				} else {
-					echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon2' ) . '</span>' . $markup . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Venue', 'the-events-calendar-addon' ) . '</span>' . $markup . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 			}
 			break;
@@ -1158,30 +1158,30 @@ function teca_render_single_page_element( $element_key, array $event, array $sor
 			if ( '' !== $markup ) {
 				if ( 'default' === $style_key ) {
 					teca_render_single_default_info_card_open( $visible_class );
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					teca_render_single_default_info_card_close();
 				} elseif ( 'style-3' === $style_key ) {
 					echo '<div class="' . esc_attr( $visible_class ) . '">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</div>';
 				} elseif ( 'style-4' === $style_key ) {
 					echo '<div class="' . esc_attr( $visible_class . ' teca-single-style-4-info-card teca-single-style-4-info-card--organizer' ) . '">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</div>';
 				} elseif ( 'style-5' === $style_key ) {
 					echo '<div class="' . esc_attr( $visible_class . ' teca-single-style-5-journey-step teca-single-style-5-journey-step--organizer' ) . '">';
 					echo '<div class="teca-single-style-5-journey-body">';
 					echo '<span class="teca-single-meta-content">';
-					echo '<span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon2' ) . '</span>';
+					echo '<span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon' ) . '</span>';
 					echo '<span class="teca-single-meta-value">' . $markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</span>';
 					echo '</div>';
 					echo '</div>';
 				} else {
-					echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon2' ) . '</span>' . $markup . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Organizer', 'the-events-calendar-addon' ) . '</span>' . $markup . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 			}
 			break;
@@ -1214,10 +1214,10 @@ function teca_render_single_page_element( $element_key, array $event, array $sor
 				return;
 			}
 			if ( 'style-5' === $style_key ) {
-				echo '<div class="' . esc_attr( $visible_class . ' teca-single-style-5-journey-step teca-single-style-5-journey-step--cost' ) . '"><div class="teca-single-style-5-journey-body"><span class="teca-single-meta-content"><span class="teca-single-meta-label">' . esc_html__( 'Cost', 'the-events-calendar-addon2' ) . '</span><span class="teca-single-meta-value">' . esc_html( $cost ) . '</span></span></div></div>';
+				echo '<div class="' . esc_attr( $visible_class . ' teca-single-style-5-journey-step teca-single-style-5-journey-step--cost' ) . '"><div class="teca-single-style-5-journey-body"><span class="teca-single-meta-content"><span class="teca-single-meta-label">' . esc_html__( 'Cost', 'the-events-calendar-addon' ) . '</span><span class="teca-single-meta-value">' . esc_html( $cost ) . '</span></span></div></div>';
 				break;
 			}
-			echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Cost', 'the-events-calendar-addon2' ) . '</span><span class="teca-single-meta-value">' . esc_html( $cost ) . '</span></div>';
+			echo '<div class="' . esc_attr( $visible_class ) . '"><span class="teca-single-meta-label">' . esc_html__( 'Cost', 'the-events-calendar-addon' ) . '</span><span class="teca-single-meta-value">' . esc_html( $cost ) . '</span></div>';
 			break;
 
 		case 'event_details':
@@ -1723,7 +1723,7 @@ function teca_get_single_style2_ticket_date_markup( array $event, array $sorted_
 	if ( '' !== $month_label ) {
 		echo '<span class="teca-single-style-2-date-month">' . esc_html( $month_label ) . '</span>';
 	}
-	echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon2' ) . '</span>';
+	echo '<span class="teca-single-meta-label">' . esc_html__( 'Date', 'the-events-calendar-addon' ) . '</span>';
 	echo '<span class="teca-single-meta-value">' . $date_markup . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo '</div>';
 

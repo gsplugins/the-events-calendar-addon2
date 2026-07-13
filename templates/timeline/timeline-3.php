@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $card_partial = Template_Loader::locate_template( 'timeline/partials/event-card-content-timeline-3.php' );
 ?>
 <?php if ( empty( $events ) ) : ?>
-	<div class="teca-timeline-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
+	<div class="teca-timeline-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
 <?php else : ?>
 	<div class="teca-timeline teca-timeline-3 teca-timeline-3-agenda">
 		<div class="teca-timeline-3-list">

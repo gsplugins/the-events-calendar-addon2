@@ -26,10 +26,10 @@ $default_config   = $groups_config[ $default_tab ] ?? array();
 	<div class="teca-events-layout-3-shell">
 		<div class="teca-events-layout-3-header">
 			<div class="teca-events-layout-3-branding">
-				<h2 class="teca-events-layout-3-brand-title"><?php esc_html_e( 'Events', 'the-events-calendar-addon2' ); ?></h2>
+				<h2 class="teca-events-layout-3-brand-title"><?php esc_html_e( 'Events', 'the-events-calendar-addon' ); ?></h2>
 			</div>
 
-			<div class="teca-events-layout-3-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Event groups', 'the-events-calendar-addon2' ); ?>">
+			<div class="teca-events-layout-3-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Event groups', 'the-events-calendar-addon' ); ?>">
 				<?php foreach ( $tab_order as $group_key ) : ?>
 					<?php
 					$group_config = $groups_config[ $group_key ] ?? array();
@@ -83,10 +83,10 @@ $default_config   = $groups_config[ $default_tab ] ?? array();
 
 			<div class="teca-events-layout-3-hero-content">
 				<h3 class="teca-events-layout-3-hero-title" data-hero-title>
-					<?php echo esc_html( $default_config['label'] ?? __( 'Events', 'the-events-calendar-addon2' ) ); ?>
+					<?php echo esc_html( $default_config['label'] ?? __( 'Events', 'the-events-calendar-addon' ) ); ?>
 				</h3>
 				<p class="teca-events-layout-3-hero-subtitle">
-					<?php esc_html_e( 'Discover events curated for you.', 'the-events-calendar-addon2' ); ?>
+					<?php esc_html_e( 'Discover events curated for you.', 'the-events-calendar-addon' ); ?>
 				</p>
 			</div>
 		</div>
@@ -94,7 +94,7 @@ $default_config   = $groups_config[ $default_tab ] ?? array();
 		<div class="teca-events-layout-3-events">
 			<div class="teca-events-layout-3-events-heading">
 				<h3 class="teca-events-layout-3-events-title" data-events-title>
-					<?php echo esc_html( $default_config['label'] ?? __( 'Events', 'the-events-calendar-addon2' ) ); ?>
+					<?php echo esc_html( $default_config['label'] ?? __( 'Events', 'the-events-calendar-addon' ) ); ?>
 				</h3>
 			</div>
 

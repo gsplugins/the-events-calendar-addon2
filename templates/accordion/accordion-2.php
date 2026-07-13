@@ -12,7 +12,7 @@ $panel_partial = Template_Loader::locate_template( 'accordion/partials/panel-con
 $index         = 0;
 ?>
 <?php if ( empty( $events ) ) : ?>
-	<div class="teca-accordion-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
+	<div class="teca-accordion-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
 <?php else : ?>
 	<div class="teca-accordion teca-accordion-2">
 		<?php foreach ( $events as $event ) : ?>

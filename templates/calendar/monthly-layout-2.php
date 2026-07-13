@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $events         = $events ?? array();
 $month_groups   = $month_groups ?? teca_group_events_by_month( $events );
-$schedule_title = $schedule_title ?? __( 'Events Calendar', 'the-events-calendar-addon2' );
+$schedule_title = $schedule_title ?? __( 'Events Calendar', 'the-events-calendar-addon' );
 $layout_id      = $layout_id ?? 'teca';
 ?>
 
@@ -20,7 +20,7 @@ $layout_id      = $layout_id ?? 'teca';
 	echo teca_render_calendar_date_filter( $events, 'monthly', $layout_id );
 	?>
 	<?php if ( empty( $month_groups ) ) : ?>
-		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
+		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
 	<?php else : ?>
 		<?php foreach ( $month_groups as $month_group ) : ?>
 			<?php
@@ -104,7 +104,7 @@ $layout_id      = $layout_id ?? 'teca';
 								<?php endif; ?>
 							</div>
 
-							<ul class="teca-monthly-layout-2-feature-event-list" aria-label="<?php esc_attr_e( 'Events', 'the-events-calendar-addon2' ); ?>">
+							<ul class="teca-monthly-layout-2-feature-event-list" aria-label="<?php esc_attr_e( 'Events', 'the-events-calendar-addon' ); ?>">
 								<?php foreach ( $month_events as $index => $event ) : ?>
 									<?php
 									$event_id      = (int) ( $event['event_id'] ?? 0 );
@@ -245,7 +245,7 @@ $layout_id      = $layout_id ?? 'teca';
 												href="<?php echo esc_url( $button_url ); ?>"
 												<?php echo $cta_url ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>
 											>
-												<?php echo esc_html( $cta_url ? __( 'Get Tickets', 'the-events-calendar-addon2' ) : __( 'View Event', 'the-events-calendar-addon2' ) ); ?>
+												<?php echo esc_html( $cta_url ? __( 'Get Tickets', 'the-events-calendar-addon' ) : __( 'View Event', 'the-events-calendar-addon' ) ); ?>
 											</a>
 										<?php endif; ?>
 									</div>

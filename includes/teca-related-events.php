@@ -43,7 +43,7 @@ function teca_get_popup_related_events_setting_keys() {
 function teca_get_related_events_default_settings( $context = 'single' ) {
 	$defaults = array(
 		'show'    => 'on',
-		'title'   => __( 'Related Events', 'the-events-calendar-addon2' ),
+		'title'   => __( 'Related Events', 'the-events-calendar-addon' ),
 		'limit'   => 3,
 		'sources' => array( 'category', 'tag', 'venue', 'organizer', 'upcoming' ),
 	);
@@ -106,7 +106,7 @@ function teca_is_related_events_enabled( $value ) {
  */
 function teca_normalize_related_events_values( array $values ) {
 	$defaults = array(
-		'title'   => __( 'Related Events', 'the-events-calendar-addon2' ),
+		'title'   => __( 'Related Events', 'the-events-calendar-addon' ),
 		'limit'   => 3,
 		'sources' => teca_get_related_events_allowed_sources(),
 	);
@@ -166,7 +166,7 @@ function teca_extract_related_events_values( array $settings, $context = 'single
 				: ( $settings['show_related_events'] ?? 'on' ),
 			'title'   => array_key_exists( 'popup_related_events_title', $settings )
 				? $settings['popup_related_events_title']
-				: ( $settings['related_events_title'] ?? __( 'Related Events', 'the-events-calendar-addon2' ) ),
+				: ( $settings['related_events_title'] ?? __( 'Related Events', 'the-events-calendar-addon' ) ),
 			'limit'   => array_key_exists( 'popup_related_events_limit', $settings )
 				? $settings['popup_related_events_limit']
 				: ( $settings['related_events_limit'] ?? 3 ),
@@ -177,7 +177,7 @@ function teca_extract_related_events_values( array $settings, $context = 'single
 	} else {
 		$values = array(
 			'show'    => array_key_exists( 'show_related_events', $settings ) ? $settings['show_related_events'] : 'on',
-			'title'   => array_key_exists( 'related_events_title', $settings ) ? $settings['related_events_title'] : __( 'Related Events', 'the-events-calendar-addon2' ),
+			'title'   => array_key_exists( 'related_events_title', $settings ) ? $settings['related_events_title'] : __( 'Related Events', 'the-events-calendar-addon' ),
 			'limit'   => array_key_exists( 'related_events_limit', $settings ) ? $settings['related_events_limit'] : 3,
 			'sources' => array_key_exists( 'related_events_sources', $settings ) ? $settings['related_events_sources'] : array(),
 		);
@@ -608,23 +608,23 @@ function teca_render_related_events_section( $event_id, $settings = array(), $ar
 function teca_get_related_events_source_options() {
 	return array(
 		array(
-			'label' => __( 'Category', 'the-events-calendar-addon2' ),
+			'label' => __( 'Category', 'the-events-calendar-addon' ),
 			'value' => 'category',
 		),
 		array(
-			'label' => __( 'Tag', 'the-events-calendar-addon2' ),
+			'label' => __( 'Tag', 'the-events-calendar-addon' ),
 			'value' => 'tag',
 		),
 		array(
-			'label' => __( 'Venue', 'the-events-calendar-addon2' ),
+			'label' => __( 'Venue', 'the-events-calendar-addon' ),
 			'value' => 'venue',
 		),
 		array(
-			'label' => __( 'Organizer', 'the-events-calendar-addon2' ),
+			'label' => __( 'Organizer', 'the-events-calendar-addon' ),
 			'value' => 'organizer',
 		),
 		array(
-			'label' => __( 'Upcoming fallback', 'the-events-calendar-addon2' ),
+			'label' => __( 'Upcoming fallback', 'the-events-calendar-addon' ),
 			'value' => 'upcoming',
 		),
 	);

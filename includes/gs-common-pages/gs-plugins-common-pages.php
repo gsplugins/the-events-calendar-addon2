@@ -50,13 +50,13 @@ class GS_Plugins_Common_Pages {
 	public function admin_menu() {
 
 		// Pro Plugins
-		add_submenu_page( $this->data['parent_slug'], $this->data['pro_page_title'], __('GS Plugins Pro', 'the-events-calendar-addon2'), 'manage_options', $this->data['pro_page_slug'], array( $this, 'display_pro_plugins' ) );
+		add_submenu_page( $this->data['parent_slug'], $this->data['pro_page_title'], __('GS Plugins Pro', 'the-events-calendar-addon'), 'manage_options', $this->data['pro_page_slug'], array( $this, 'display_pro_plugins' ) );
 		
 		// Free Plugins
-		add_submenu_page( $this->data['parent_slug'], $this->data['lite_page_title'], __('GS Plugins Lite', 'the-events-calendar-addon2'), 'manage_options', $this->data['lite_page_slug'], array( $this, 'display_free_plugins' ) );
+		add_submenu_page( $this->data['parent_slug'], $this->data['lite_page_title'], __('GS Plugins Lite', 'the-events-calendar-addon'), 'manage_options', $this->data['lite_page_slug'], array( $this, 'display_free_plugins' ) );
 		
 		// Help Page
-		add_submenu_page( $this->data['parent_slug'], $this->data['help_page_title'],  __('Help & Usage', 'the-events-calendar-addon2'), 'manage_options', $this->data['help_page_slug'], array( $this, 'display_help_page' ) );
+		add_submenu_page( $this->data['parent_slug'], $this->data['help_page_title'],  __('Help & Usage', 'the-events-calendar-addon'), 'manage_options', $this->data['help_page_slug'], array( $this, 'display_help_page' ) );
 
 	}
 	
@@ -102,11 +102,11 @@ class GS_Plugins_Common_Pages {
 
 		if ( $r['number'] ) {
 			/* translators: 1: The rating, 2: The number of ratings */
-			$format = _n( '%1$s rating based on %2$s rating', '%1$s rating based on %2$s ratings', $r['number'], 'the-events-calendar-addon2' );
+			$format = _n( '%1$s rating based on %2$s rating', '%1$s rating based on %2$s ratings', $r['number'], 'the-events-calendar-addon' );
 			$title = sprintf( $format, number_format_i18n( $rating, 1 ), number_format_i18n( $r['number'] ) );
 		} else {
 			/* translators: 1: The rating */
-			$title = sprintf( __( '%s rating', 'the-events-calendar-addon2' ), number_format_i18n( $rating, 1 ) );
+			$title = sprintf( __( '%s rating', 'the-events-calendar-addon' ), number_format_i18n( $rating, 1 ) );
 		}
 
 			echo '<div class="star-rating" title="' . esc_attr( $title ) . '">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated from sanitized data.	WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated from sanitized data.
@@ -119,18 +119,18 @@ class GS_Plugins_Common_Pages {
 
 	public function plugin_single__compatibility( $plugin ) {
 		if ( !empty($plugin["tested"]) && version_compare(substr($GLOBALS["wp_version"], 0, strlen($plugin["tested"])), $plugin["tested"], ">")) {
-			echo '<span class="gs-plugins--com_untested">' . wp_kses_post( __( '<strong>Untested</strong> with your version of WordPress', 'the-events-calendar-addon2' ) ) . '</span>';
+			echo '<span class="gs-plugins--com_untested">' . wp_kses_post( __( '<strong>Untested</strong> with your version of WordPress', 'the-events-calendar-addon' ) ) . '</span>';
 		} elseif (!empty($plugin["requires"]) && version_compare(substr($GLOBALS["wp_version"], 0, strlen($plugin["requires"])), $plugin["requires"], "<"))  {
-			echo '<span class="gs-plugins--com_incompatible">' . esc_html__( 'Incompatible with your version of WordPress', 'the-events-calendar-addon2' ) . '</span>';
+			echo '<span class="gs-plugins--com_incompatible">' . esc_html__( 'Incompatible with your version of WordPress', 'the-events-calendar-addon' ) . '</span>';
 		} else {
-			echo '<span class="gs-plugins--com_compatible">' . esc_html__( 'Compatible with your version of WordPress', 'the-events-calendar-addon2' ) . '</span>';
+			echo '<span class="gs-plugins--com_compatible">' . esc_html__( 'Compatible with your version of WordPress', 'the-events-calendar-addon' ) . '</span>';
 		}
 	}
 
 	public function plugin_single__action_links( $plugin, $details_link, $name ) {
 		
 		/* translators: 1: Plugin name and version. */
-		$action_links[] = '<a href="' . esc_url( $details_link ) . '" aria-label="' . esc_attr( sprintf( 'More information about %s', $name ) ) . '" data-title="' . esc_attr( $name ) . '">' . esc_html__( 'More Details', 'the-events-calendar-addon2' ) . '</a>';
+		$action_links[] = '<a href="' . esc_url( $details_link ) . '" aria-label="' . esc_attr( sprintf( 'More information about %s', $name ) ) . '" data-title="' . esc_attr( $name ) . '">' . esc_html__( 'More Details', 'the-events-calendar-addon' ) . '</a>';
 		$action_links = array();
 
 		if ( current_user_can( "install_plugins") || current_user_can("update_plugins") ) {
@@ -139,18 +139,18 @@ class GS_Plugins_Common_Pages {
 				case "install":
 					if ( $status["url"] ) {
 						/* translators: 1: Plugin name and version. */
-						$action_links[] = '<a class="install-now button" href="' . esc_url($status['url']) . '" aria-label="' . esc_attr( sprintf( 'Install %s now', $name ) ) . '">' . esc_html__( 'Install Now', 'the-events-calendar-addon2' ) . '</a>';
+						$action_links[] = '<a class="install-now button" href="' . esc_url($status['url']) . '" aria-label="' . esc_attr( sprintf( 'Install %s now', $name ) ) . '">' . esc_html__( 'Install Now', 'the-events-calendar-addon' ) . '</a>';
 					}
 				break;
 				case "update_available":
 					if ($status["url"]) {
 						/* translators: 1: Plugin name and version */
-						$action_links[] = '<a class="button" href="' . esc_url($status['url']) . '" aria-label="' . esc_attr( sprintf( 'Update %s now', $name ) ) . '">' . esc_html__( 'Update Now', 'the-events-calendar-addon2' ) . '</a>';
+						$action_links[] = '<a class="button" href="' . esc_url($status['url']) . '" aria-label="' . esc_attr( sprintf( 'Update %s now', $name ) ) . '">' . esc_html__( 'Update Now', 'the-events-calendar-addon' ) . '</a>';
 					}
 				break;
 				case "latest_installed":
 				case "newer_installed":
-					$action_links[] = '<span class="button button-disabled" title="' . esc_attr__( 'This plugin is already installed and is up to date', 'the-events-calendar-addon2' ) . '">' . esc_html_x( 'Installed', 'plugin', 'the-events-calendar-addon2' ) . '</span>';
+					$action_links[] = '<span class="button button-disabled" title="' . esc_attr__( 'This plugin is already installed and is up to date', 'the-events-calendar-addon' ) . '">' . esc_html_x( 'Installed', 'plugin', 'the-events-calendar-addon' ) . '</span>';
 				break;
 			}
 		}
@@ -238,7 +238,7 @@ class GS_Plugins_Common_Pages {
 						</div>
 						
 						<div class="gs-plugins--single_update">
-							<strong><?php esc_html_e( 'Last Updated:', 'the-events-calendar-addon2' ); ?></strong>
+							<strong><?php esc_html_e( 'Last Updated:', 'the-events-calendar-addon' ); ?></strong>
 							<span title="<?php echo esc_attr($plugin["last_updated"]); ?>">
 								<?php echo esc_html( sprintf( "%s ago", human_time_diff( strtotime( $plugin["last_updated"] ) ) ) ); ?>
 							</span>

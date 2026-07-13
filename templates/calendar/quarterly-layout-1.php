@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $events         = $events ?? array();
 $layout_data    = $layout_data ?? teca_build_quarterly_layout_1_data( $events );
-$schedule_title = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon2' );
+$schedule_title = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon' );
 $layout_id      = $layout_id ?? 'teca';
 $max_events     = isset( $max_events ) ? (int) $max_events : 3;
 $year           = (int) ( $layout_data['year'] ?? wp_date( 'Y' ) );
@@ -61,7 +61,7 @@ $quarter_accents = array(
 	</header>
 
 	<?php if ( empty( $events ) ) : ?>
-		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
+		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
 	<?php else : ?>
 		<div class="teca-quarterly-layout-1-body">
 			<div class="teca-quarterly-layout-1-quarter-list">
@@ -158,7 +158,7 @@ $quarter_accents = array(
 															<?php
 															printf(
 																/* translators: %d: additional event count */
-																esc_html( _n( '+%d more event', '+%d more events', $hidden_count, 'the-events-calendar-addon2' ) ),
+																esc_html( _n( '+%d more event', '+%d more events', $hidden_count, 'the-events-calendar-addon' ) ),
 																(int) $hidden_count
 															);
 															?>

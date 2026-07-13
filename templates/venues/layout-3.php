@@ -15,20 +15,20 @@ $venue_index  = 0;
 <div class="teca-venue-template teca-venue-template-layout-3">
 	<section class="teca-venue-l3-hero">
 		<div class="teca-venue-l3-hero-content">
-			<span class="teca-venue-l3-eyebrow"><?php esc_html_e( 'Signature Venues', 'the-events-calendar-addon2' ); ?></span>
-			<h2 class="teca-venue-l3-title"><?php esc_html_e( 'Explore Beautiful Event Spaces', 'the-events-calendar-addon2' ); ?></h2>
-			<p class="teca-venue-l3-description"><?php esc_html_e( 'Discover curated venues with location details, contact information, and map access in a refined visual showcase.', 'the-events-calendar-addon2' ); ?></p>
+			<span class="teca-venue-l3-eyebrow"><?php esc_html_e( 'Signature Venues', 'the-events-calendar-addon' ); ?></span>
+			<h2 class="teca-venue-l3-title"><?php esc_html_e( 'Explore Beautiful Event Spaces', 'the-events-calendar-addon' ); ?></h2>
+			<p class="teca-venue-l3-description"><?php esc_html_e( 'Discover curated venues with location details, contact information, and map access in a refined visual showcase.', 'the-events-calendar-addon' ); ?></p>
 		</div>
 
 		<?php if ( $venue_count > 0 ) : ?>
-			<div class="teca-venue-l3-stats" aria-label="<?php esc_attr_e( 'Venue statistics', 'the-events-calendar-addon2' ); ?>">
+			<div class="teca-venue-l3-stats" aria-label="<?php esc_attr_e( 'Venue statistics', 'the-events-calendar-addon' ); ?>">
 				<span class="teca-venue-l3-stat-number"><?php echo esc_html( (string) $venue_count ); ?></span>
 				<span class="teca-venue-l3-stat-label">
 					<?php
 					echo esc_html(
 						1 === $venue_count
-							? __( 'Venue Listed', 'the-events-calendar-addon2' )
-							: __( 'Venues Listed', 'the-events-calendar-addon2' )
+							? __( 'Venue Listed', 'the-events-calendar-addon' )
+							: __( 'Venues Listed', 'the-events-calendar-addon' )
 					);
 					?>
 				</span>
@@ -46,8 +46,8 @@ $venue_index  = 0;
 					<circle cx="12" cy="11" r="2.5" stroke="currentColor" stroke-width="1.6"/>
 				</svg>
 			</div>
-			<h3 class="teca-venue-l3-empty-title"><?php esc_html_e( 'No venues found', 'the-events-calendar-addon2' ); ?></h3>
-			<p class="teca-venue-l3-empty-text"><?php esc_html_e( 'No venue locations are available right now.', 'the-events-calendar-addon2' ); ?></p>
+			<h3 class="teca-venue-l3-empty-title"><?php esc_html_e( 'No venues found', 'the-events-calendar-addon' ); ?></h3>
+			<p class="teca-venue-l3-empty-text"><?php esc_html_e( 'No venue locations are available right now.', 'the-events-calendar-addon' ); ?></p>
 		</div>
 	<?php else : ?>
 		<div class="teca-venue-l3-bento">
@@ -72,7 +72,7 @@ $venue_index  = 0;
 				$location_chip    = teca_get_venue_location_chip_label( $venue );
 				$count_chip       = teca_get_venue_upcoming_count_chip_label( $upcoming_count );
 				$fallback_initial = teca_get_venue_fallback_initial( $venue );
-				$card_title       = $title ?: __( 'Venue', 'the-events-calendar-addon2' );
+				$card_title       = $title ?: __( 'Venue', 'the-events-calendar-addon' );
 				$is_featured      = 1 === $venue_index;
 
 				$card_classes = array( 'teca-venue-l3-card' );
@@ -119,7 +119,7 @@ $venue_index  = 0;
 
 					<div class="teca-venue-l3-content<?php echo $is_featured ? ' teca-venue-l3-content-featured' : ''; ?>">
 						<?php if ( $is_featured ) : ?>
-							<span class="teca-venue-l3-spotlight"><?php esc_html_e( 'Venue Spotlight', 'the-events-calendar-addon2' ); ?></span>
+							<span class="teca-venue-l3-spotlight"><?php esc_html_e( 'Venue Spotlight', 'the-events-calendar-addon' ); ?></span>
 						<?php endif; ?>
 
 						<h3 class="teca-venue-l3-card-title">
@@ -144,19 +144,19 @@ $venue_index  = 0;
 							<div class="teca-venue-l3-actions">
 								<?php if ( $permalink ) : ?>
 									<a class="teca-venue-l3-btn teca-venue-l3-btn-primary" href="<?php echo esc_url( $permalink ); ?>">
-										<?php esc_html_e( 'View Venue', 'the-events-calendar-addon2' ); ?>
+										<?php esc_html_e( 'View Venue', 'the-events-calendar-addon' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $map_link ) : ?>
 									<a class="teca-venue-l3-btn teca-venue-l3-btn-secondary" href="<?php echo esc_url( $map_link ); ?>" target="_blank" rel="noopener noreferrer">
-										<?php esc_html_e( 'Open Map', 'the-events-calendar-addon2' ); ?>
+										<?php esc_html_e( 'Open Map', 'the-events-calendar-addon' ); ?>
 									</a>
 								<?php endif; ?>
 
 								<?php if ( $website ) : ?>
 									<a class="teca-venue-l3-btn teca-venue-l3-btn-ghost" href="<?php echo esc_url( $website ); ?>" target="_blank" rel="noopener noreferrer">
-										<?php esc_html_e( 'Website', 'the-events-calendar-addon2' ); ?>
+										<?php esc_html_e( 'Website', 'the-events-calendar-addon' ); ?>
 									</a>
 								<?php endif; ?>
 							</div>

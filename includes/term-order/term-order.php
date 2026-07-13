@@ -147,7 +147,7 @@ final class Term_Order {
 			// Register "order" meta value
 			register_term_meta( $value, 'order', array(
 				'type'              => 'integer',
-				'description'       => esc_html__( 'Numeric order for terms, useful when sorting', 'the-events-calendar-addon2' ),
+				'description'       => esc_html__( 'Numeric order for terms, useful when sorting', 'the-events-calendar-addon' ),
 				'default'           => 0,
 				'single'            => true,
 				'show_in_rest'      => true,
@@ -289,16 +289,16 @@ final class Term_Order {
 		if ( true === $this->fancy ) {
 			get_current_screen()->add_help_tab( array(
 				'id'      => 'gsteca_term_order_help_tab',
-				'title'   => esc_html__( 'Term Order', 'the-events-calendar-addon2' ),
-				'content' => '<p>' . esc_html__( 'To reposition an item, drag and drop the row by "clicking and holding" it anywhere and moving it to its new position.', 'the-events-calendar-addon2' ) . '</p>',
+				'title'   => esc_html__( 'Term Order', 'the-events-calendar-addon' ),
+				'content' => '<p>' . esc_html__( 'To reposition an item, drag and drop the row by "clicking and holding" it anywhere and moving it to its new position.', 'the-events-calendar-addon' ) . '</p>',
 			) );
 
 		// Numbers only
 		} else {
 			get_current_screen()->add_help_tab( array(
 				'id'      => 'gsteca_term_order_help_tab',
-				'title'   => esc_html__( 'Term Order', 'the-events-calendar-addon2' ),
-				'content' => '<p>' . esc_html__( 'To position an item, Quick Edit the row and change the order value to a more suitable number.', 'the-events-calendar-addon2' ) . '</p>',
+				'title'   => esc_html__( 'Term Order', 'the-events-calendar-addon' ),
+				'content' => '<p>' . esc_html__( 'To position an item, Quick Edit the row and change the order value to a more suitable number.', 'the-events-calendar-addon' ) . '</p>',
 			) );
 		}
 	}
@@ -413,7 +413,7 @@ final class Term_Order {
 	 * @return array
 	 */
 	public function add_column_header( $columns = array() ) {
-		$columns['order'] = esc_html__( 'Order', 'the-events-calendar-addon2' );
+		$columns['order'] = esc_html__( 'Order', 'the-events-calendar-addon' );
 
 		return $columns;
 	}
@@ -648,11 +648,11 @@ final class Term_Order {
 
 		<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 			<label for="order">
-				<?php esc_html_e( 'Order', 'the-events-calendar-addon2' ); ?>
+				<?php esc_html_e( 'Order', 'the-events-calendar-addon' ); ?>
 			</label>
 			<input type="number" pattern="[0-9.]+" name="order" id="order" value="0" size="11">
 			<p class="description">
-				<?php esc_html_e( 'Set a specific order by entering a number (1 for first, etc.) in this field.', 'the-events-calendar-addon2' ); ?>
+				<?php esc_html_e( 'Set a specific order by entering a number (1 for first, etc.) in this field.', 'the-events-calendar-addon' ); ?>
 			</p>
 		</div>
 
@@ -687,13 +687,13 @@ final class Term_Order {
 		<tr class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 			<th scope="row" valign="top">
 				<label for="order">
-					<?php esc_html_e( 'Order', 'the-events-calendar-addon2' ); ?>
+					<?php esc_html_e( 'Order', 'the-events-calendar-addon' ); ?>
 				</label>
 			</th>
 			<td>
 				<input name="order" id="order" type="text" value="<?php echo esc_attr($this->get_term_order( $term )); ?>" size="11" />
 				<p class="description">
-					<?php esc_html_e( 'Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field.', 'the-events-calendar-addon2' ); ?>
+					<?php esc_html_e( 'Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field.', 'the-events-calendar-addon' ); ?>
 				</p>
 			</td>
 		</tr>
@@ -736,7 +736,7 @@ final class Term_Order {
 		<fieldset>
 			<div class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 				<label>
-					<span class="title"><?php esc_html_e( 'Order', 'the-events-calendar-addon2' ); ?></span>
+					<span class="title"><?php esc_html_e( 'Order', 'the-events-calendar-addon' ); ?></span>
 					<span class="input-text-wrap">
 						<input type="number" pattern="[0-9.]+" class="ptitle" name="order" value="" size="11">
 					</span>

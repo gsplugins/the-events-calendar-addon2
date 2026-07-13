@@ -81,7 +81,7 @@ $has_meta      = $time_display || $venue_display || ! empty( $category_names ) |
 	<?php if ( $permalink ) : ?>
 		<div class="teca-event-layout-2-action">
 			<a class="teca-event-layout-2-button" href="<?php echo esc_url( $permalink ); ?>">
-				<?php esc_html_e( 'Learn More', 'the-events-calendar-addon2' ); ?>
+				<?php esc_html_e( 'Learn More', 'the-events-calendar-addon' ); ?>
 			</a>
 			<?php
 			teca_echo_google_calendar_button_actions(

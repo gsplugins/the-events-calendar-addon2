@@ -49,7 +49,7 @@ final class Template_Loader {
             $path = self::$pro_plugin_template_path;
         } else {
             if ( ! file_exists( $path . $template_file ) ) {
-                return new WP_Error( 'gs_teca_template_not_found', __( 'Template file not found - GS Plugins', 'the-events-calendar-addon2' ) );
+                return new WP_Error( 'gs_teca_template_not_found', __( 'Template file not found - GS Plugins', 'the-events-calendar-addon' ) );
             }
         }
 

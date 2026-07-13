@@ -19,7 +19,7 @@ if ( empty( $map_data['has_location'] ) ) {
 
 $embed_url      = teca_get_single_event_map_embed_url( $map_data );
 $external_link  = teca_get_single_event_map_external_link( $map_data );
-$iframe_title   = __( 'Event location map', 'the-events-calendar-addon2' );
+$iframe_title   = __( 'Event location map', 'the-events-calendar-addon' );
 $style_class    = '' !== $style_key ? ' teca-single-map--' . sanitize_html_class( $style_key ) : '';
 $has_map_output = ! empty( $map_data['embed_html'] ) || '' !== $embed_url;
 
@@ -55,7 +55,7 @@ if ( ! $has_map_output ) {
 
 				<?php if ( '' !== $external_link ) : ?>
 					<a class="teca-single-map-link" href="<?php echo esc_url( $external_link ); ?>" target="_blank" rel="noopener noreferrer">
-						<?php esc_html_e( 'View on Map', 'the-events-calendar-addon2' ); ?>
+						<?php esc_html_e( 'View on Map', 'the-events-calendar-addon' ); ?>
 					</a>
 				<?php endif; ?>
 			</div>

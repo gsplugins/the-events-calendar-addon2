@@ -39,7 +39,7 @@ class Teca_Divi_Events_Module extends \ET_Builder_Module {
 	 * @return void
 	 */
 	public function init() {
-		$this->name             = esc_html__( 'TECA Events', 'the-events-calendar-addon2' );
+		$this->name             = esc_html__( 'TECA Events', 'the-events-calendar-addon' );
 		$this->icon_path        = GS_TECA_PLUGIN_DIR . 'assets/img/events.svg';
 		$this->main_css_element = '%%order_class%%';
 	}
@@ -52,7 +52,7 @@ class Teca_Divi_Events_Module extends \ET_Builder_Module {
 	public function get_fields() {
 		return [
 			'shortcode_id' => [
-				'label'            => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon2' ),
+				'label'            => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon' ),
 				'type'             => 'select',
 				'option_category'  => 'basic_option',
 				'description'      => $this->get_field_description(),
@@ -84,16 +84,16 @@ class Teca_Divi_Events_Module extends \ET_Builder_Module {
 	protected function get_field_description() {
 		$edit_link = sprintf(
 			'%s: <a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-			esc_html__( 'Edit this shortcode', 'the-events-calendar-addon2' ),
+			esc_html__( 'Edit this shortcode', 'the-events-calendar-addon' ),
 			esc_url( admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode/' ) ),
-			esc_html__( 'Edit', 'the-events-calendar-addon2' )
+			esc_html__( 'Edit', 'the-events-calendar-addon' )
 		);
 
 		$create_link = sprintf(
 			'%s: <a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-			esc_html__( 'Create new shortcode', 'the-events-calendar-addon2' ),
+			esc_html__( 'Create new shortcode', 'the-events-calendar-addon' ),
 			esc_url( admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode' ) ),
-			esc_html__( 'Create', 'the-events-calendar-addon2' )
+			esc_html__( 'Create', 'the-events-calendar-addon' )
 		);
 
 		return implode( '<br />', [ $edit_link, $create_link ] );
@@ -112,7 +112,7 @@ class Teca_Divi_Events_Module extends \ET_Builder_Module {
 		}
 
 		return [
-			'' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon2' ),
+			'' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon' ),
 		];
 	}
 
@@ -192,13 +192,13 @@ class Teca_Divi_Events_Module extends \ET_Builder_Module {
 
 		if ( ! $shortcode_id ) {
 			return $allow_placeholder
-				? '<div class="teca-divi-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon2' ) . '</div>'
+				? '<div class="teca-divi-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon' ) . '</div>'
 				: '';
 		}
 
 		if ( ! teca_shortcode_exists( $shortcode_id ) ) {
 			return $allow_placeholder
-				? '<div class="teca-divi-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon2' ) . '</div>'
+				? '<div class="teca-divi-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon' ) . '</div>'
 				: '';
 		}
 

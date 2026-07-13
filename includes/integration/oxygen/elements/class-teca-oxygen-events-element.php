@@ -62,7 +62,7 @@ class TECA_Oxygen_Events_Element extends OxyEl {
 	 * @return string
 	 */
 	public function name() {
-		return esc_html__( 'TECA Events', 'the-events-calendar-addon2' );
+		return esc_html__( 'TECA Events', 'the-events-calendar-addon' );
 	}
 
 	/**
@@ -95,14 +95,14 @@ class TECA_Oxygen_Events_Element extends OxyEl {
 
 		if ( ! $shortcode_id ) {
 			if ( $allow_placeholder ) {
-				echo '<div class="teca-oxygen-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon2' ) . '</div>';
+				echo '<div class="teca-oxygen-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon' ) . '</div>';
 			}
 			return;
 		}
 
 		if ( ! GS_TECA\teca_shortcode_exists( $shortcode_id ) ) {
 			if ( $allow_placeholder ) {
-				echo '<div class="teca-oxygen-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon2' ) . '</div>';
+				echo '<div class="teca-oxygen-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon' ) . '</div>';
 			}
 			return;
 		}
@@ -121,7 +121,7 @@ class TECA_Oxygen_Events_Element extends OxyEl {
 		$this->addOptionControl(
 			[
 				'type' => 'dropdown',
-				'name' => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon2' ),
+				'name' => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon' ),
 				'slug' => 'shortcode_id',
 			]
 		)->setValue( $this->get_shortcode_dropdown_values() )->rebuildElementOnChange();
@@ -140,7 +140,7 @@ class TECA_Oxygen_Events_Element extends OxyEl {
 		}
 
 		return [
-			'' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon2' ),
+			'' => esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon' ),
 		];
 	}
 

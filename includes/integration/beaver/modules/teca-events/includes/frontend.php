@@ -27,14 +27,14 @@ if ( class_exists( 'FLBuilderModel' ) && FLBuilderModel::is_builder_active() ) {
 
 if ( ! $shortcode_id ) {
 	if ( $allow_placeholder ) {
-		echo '<div class="teca-beaver-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon2' ) . '</div>';
+		echo '<div class="teca-beaver-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon' ) . '</div>';
 	}
 	return;
 }
 
 if ( ! teca_shortcode_exists( $shortcode_id ) ) {
 	if ( $allow_placeholder ) {
-		echo '<div class="teca-beaver-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon2' ) . '</div>';
+		echo '<div class="teca-beaver-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon' ) . '</div>';
 	}
 	return;
 }

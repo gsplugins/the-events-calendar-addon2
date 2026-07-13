@@ -30,20 +30,20 @@ if ( $event_id > 0 ) {
 
     // TEC official helpers (preferred)
     if ( function_exists( 'tribe_is_event_cancelled' ) && tribe_is_event_cancelled( $event_id ) ) {
-        $status       = __( 'Cancelled', 'the-events-calendar-addon2' );
+        $status       = __( 'Cancelled', 'the-events-calendar-addon' );
         $status_class = 'is-cancelled';
     }
     elseif ( function_exists( 'tribe_is_event_postponed' ) && tribe_is_event_postponed( $event_id ) ) {
-        $status       = __( 'Postponed', 'the-events-calendar-addon2' );
+        $status       = __( 'Postponed', 'the-events-calendar-addon' );
         $status_class = 'is-postponed';
     }
     elseif ( function_exists( 'tribe_event_is_over' ) && tribe_event_is_over( $event_id ) ) {
-        $status       = __( 'Past Event', 'the-events-calendar-addon2' );
+        $status       = __( 'Past Event', 'the-events-calendar-addon' );
         $status_class = 'is-past';
     }
     else {
         // Default upcoming / ongoing
-        $status       = __( 'Upcoming Event', 'the-events-calendar-addon2' );
+        $status       = __( 'Upcoming Event', 'the-events-calendar-addon' );
         $status_class = 'is-upcoming';
     }
 }

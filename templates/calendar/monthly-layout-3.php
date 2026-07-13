@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $events          = $events ?? array();
 $month_groups    = $month_groups ?? teca_group_events_by_month( $events );
-$schedule_title  = $schedule_title ?? __( 'Events Calendar', 'the-events-calendar-addon2' );
+$schedule_title  = $schedule_title ?? __( 'Events Calendar', 'the-events-calendar-addon' );
 $layout_id       = $layout_id ?? 'teca';
 $max_cell_events = isset( $max_cell_events ) ? (int) $max_cell_events : 3;
 $weekday_labels  = teca_get_calendar_weekday_labels( 'abbrev' );
@@ -22,7 +22,7 @@ $weekday_labels  = teca_get_calendar_weekday_labels( 'abbrev' );
 	echo teca_render_calendar_date_filter( $events, 'monthly', $layout_id );
 	?>
 	<?php if ( empty( $month_groups ) ) : ?>
-		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
+		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
 	<?php else : ?>
 		<?php foreach ( $month_groups as $month_group ) : ?>
 			<?php
@@ -72,7 +72,7 @@ $weekday_labels  = teca_get_calendar_weekday_labels( 'abbrev' );
 								<?php endif; ?>
 
 								<?php if ( ! empty( $feature_events ) ) : ?>
-									<ul class="teca-monthly-layout-3-feature-event-list" aria-label="<?php esc_attr_e( 'Events', 'the-events-calendar-addon2' ); ?>">
+									<ul class="teca-monthly-layout-3-feature-event-list" aria-label="<?php esc_attr_e( 'Events', 'the-events-calendar-addon' ); ?>">
 										<?php foreach ( $feature_events as $event ) : ?>
 											<?php
 											$event_id     = (int) ( $event['event_id'] ?? 0 );
@@ -187,7 +187,7 @@ $weekday_labels  = teca_get_calendar_weekday_labels( 'abbrev' );
 															<?php
 															printf(
 																/* translators: %d: additional event count */
-																esc_html__( '+%d more', 'the-events-calendar-addon2' ),
+																esc_html__( '+%d more', 'the-events-calendar-addon' ),
 																(int) $hidden_count
 															);
 															?>

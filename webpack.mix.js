@@ -61,8 +61,8 @@ if ( process.env.NODE_ENV.trim() === 'production' ) {
 
 	// Language pot file generator
 	wpPot({
-		destFile: 'languages/the-events-calendar-addon2.pot',
-		domain: 'the-events-calendar-addon2',
+		destFile: 'languages/the-events-calendar-addon.pot',
+		domain: 'the-events-calendar-addon',
 		package: 'the-events-calendar-addon2',
 		src: '**/*.php'
 	});

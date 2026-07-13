@@ -57,7 +57,7 @@ foreach ( $events as $event ) :
 	<article class="gs-teca-event-main teca-style-5-card">
 
 		<?php if ( $day_label && Helpers::is_visible( $visibility_settings['event_date'] ?? true ) ) : ?>
-			<aside class="teca-style-5-date-block teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon2' ); ?>">
+			<aside class="teca-style-5-date-block teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon' ); ?>">
 				<span class="teca-style-5-day"><?php echo esc_html( $day_label ); ?></span>
 				<span class="teca-style-5-month"><?php echo esc_html( $month_label ); ?></span>
 				<span class="teca-style-5-year"><?php echo esc_html( $year_label ); ?></span>

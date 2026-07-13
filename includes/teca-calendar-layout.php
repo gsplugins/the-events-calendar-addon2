@@ -106,7 +106,7 @@ function teca_get_all_calendar_layout_select_options() {
 		$options[] = array(
 			'label' => sprintf(
 				/* translators: %d: calendar layout number */
-				__( 'Calendar Layout %d', 'the-events-calendar-addon2' ),
+				__( 'Calendar Layout %d', 'the-events-calendar-addon' ),
 				$i
 			),
 			'value' => 'calendar-layout-' . $i,
@@ -231,23 +231,23 @@ function teca_get_calendar_layout_select_options() {
 function teca_get_calendar_select_filter_options() {
 	return array(
 		array(
-			'label' => __( 'Daily', 'the-events-calendar-addon2' ),
+			'label' => __( 'Daily', 'the-events-calendar-addon' ),
 			'value' => 'daily',
 		),
 		array(
-			'label' => __( 'Weekly', 'the-events-calendar-addon2' ),
+			'label' => __( 'Weekly', 'the-events-calendar-addon' ),
 			'value' => 'weekly',
 		),
 		array(
-			'label' => __( 'Monthly', 'the-events-calendar-addon2' ),
+			'label' => __( 'Monthly', 'the-events-calendar-addon' ),
 			'value' => 'monthly',
 		),
 		array(
-			'label' => __( 'Quarterly', 'the-events-calendar-addon2' ),
+			'label' => __( 'Quarterly', 'the-events-calendar-addon' ),
 			'value' => 'quarterly',
 		),
 		array(
-			'label' => __( 'Yearly', 'the-events-calendar-addon2' ),
+			'label' => __( 'Yearly', 'the-events-calendar-addon' ),
 			'value' => 'yearly',
 		),
 	);

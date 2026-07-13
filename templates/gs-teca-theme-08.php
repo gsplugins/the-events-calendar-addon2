@@ -64,7 +64,7 @@ foreach ( $events as $event ) :
 					<div class="teca-grid-style-8-media-overlay" aria-hidden="true"></div>
 
 					<?php if ( $day_label && Helpers::is_visible( $visibility_settings['event_date'] ?? true ) ) : ?>
-						<div class="teca-grid-style-8-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon2' ); ?>">
+						<div class="teca-grid-style-8-date-badge teca-event-date" aria-label="<?php esc_attr_e( 'Event date', 'the-events-calendar-addon' ); ?>">
 							<span class="teca-grid-style-8-date-day"><?php echo esc_html( $day_label ); ?></span>
 							<span class="teca-grid-style-8-date-month"><?php echo esc_html( $month_label ); ?></span>
 						</div>

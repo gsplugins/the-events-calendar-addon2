@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function teca_get_demo_venue_definitions() {
 	return array(
 		array(
-			'Venue'   => __( 'GS Conference Hall', 'the-events-calendar-addon2' ),
+			'Venue'   => __( 'GS Conference Hall', 'the-events-calendar-addon' ),
 			'Address' => '123 Main Street',
 			'City'    => 'New York',
 			'State'   => 'NY',
@@ -24,7 +24,7 @@ function teca_get_demo_venue_definitions() {
 			'Phone'   => '+1 (555) 010-2000',
 		),
 		array(
-			'Venue'   => __( 'Creative Studio Space', 'the-events-calendar-addon2' ),
+			'Venue'   => __( 'Creative Studio Space', 'the-events-calendar-addon' ),
 			'Address' => '456 Market Street',
 			'City'    => 'San Francisco',
 			'State'   => 'CA',
@@ -33,7 +33,7 @@ function teca_get_demo_venue_definitions() {
 			'Phone'   => '+1 (555) 010-3000',
 		),
 		array(
-			'Venue'   => __( 'Riverside Event Center', 'the-events-calendar-addon2' ),
+			'Venue'   => __( 'Riverside Event Center', 'the-events-calendar-addon' ),
 			'Address' => '789 River Road',
 			'City'    => 'Austin',
 			'State'   => 'TX',
@@ -52,19 +52,19 @@ function teca_get_demo_venue_definitions() {
 function teca_get_demo_organizer_definitions() {
 	return array(
 		array(
-			'Organizer' => __( 'GS Events Team', 'the-events-calendar-addon2' ),
+			'Organizer' => __( 'GS Events Team', 'the-events-calendar-addon' ),
 			'Email'     => 'events@gsplugins.com',
 			'Website'   => 'https://www.gsplugins.com/',
 			'Phone'     => '+1 (555) 010-1001',
 		),
 		array(
-			'Organizer' => __( 'Creative Collective', 'the-events-calendar-addon2' ),
+			'Organizer' => __( 'Creative Collective', 'the-events-calendar-addon' ),
 			'Email'     => 'hello@creativecollective.com',
 			'Website'   => 'https://example.com/creative-collective',
 			'Phone'     => '+1 (555) 010-1002',
 		),
 		array(
-			'Organizer' => __( 'Summit Organizers', 'the-events-calendar-addon2' ),
+			'Organizer' => __( 'Summit Organizers', 'the-events-calendar-addon' ),
 			'Email'     => 'info@summitorganizers.com',
 			'Website'   => 'https://example.com/summit-organizers',
 			'Phone'     => '+1 (555) 010-1003',

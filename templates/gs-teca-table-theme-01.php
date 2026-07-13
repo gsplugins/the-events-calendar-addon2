@@ -26,31 +26,31 @@ $table_grid_style = teca_build_table_grid_style( '1', $show_image, $show_title, 
 		<div class="teca-table-style-1-row teca-table-style-1-row--header">
 			<?php if ( $show_image ) : ?>
 				<div class="teca-table-style-1-cell teca-table-style-1-image teca-table-event-image" role="columnheader">
-					<?php esc_html_e( 'Image', 'the-events-calendar-addon2' ); ?>
+					<?php esc_html_e( 'Image', 'the-events-calendar-addon' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( $show_title ) : ?>
 				<div class="teca-table-style-1-cell teca-table-style-1-title teca-table-event-title" role="columnheader">
-					<?php esc_html_e( 'Title', 'the-events-calendar-addon2' ); ?>
+					<?php esc_html_e( 'Title', 'the-events-calendar-addon' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( $show_organizer ) : ?>
 				<div class="teca-table-style-1-cell teca-table-style-1-organizer teca-table-event-organizer" role="columnheader">
-					<?php esc_html_e( 'Organizer', 'the-events-calendar-addon2' ); ?>
+					<?php esc_html_e( 'Organizer', 'the-events-calendar-addon' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( $show_venue ) : ?>
 				<div class="teca-table-style-1-cell teca-table-style-1-venue teca-table-event-venue" role="columnheader">
-					<?php esc_html_e( 'Venue', 'the-events-calendar-addon2' ); ?>
+					<?php esc_html_e( 'Venue', 'the-events-calendar-addon' ); ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( $show_links ) : ?>
 				<div class="teca-table-style-1-cell teca-table-style-1-links teca-table-event-links" role="columnheader">
-					<?php esc_html_e( 'Links', 'the-events-calendar-addon2' ); ?>
+					<?php esc_html_e( 'Links', 'the-events-calendar-addon' ); ?>
 				</div>
 			<?php endif; ?>
 		</div>

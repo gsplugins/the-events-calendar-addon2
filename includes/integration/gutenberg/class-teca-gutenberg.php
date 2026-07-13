@@ -107,14 +107,14 @@ class Integration_Gutenberg {
 	 */
 	protected function get_editor_script_data() {
 		return [
-			'select_shortcode'        => __( 'Select Shortcode', 'the-events-calendar-addon2' ),
-			'no_shortcode_selected'   => __( 'Please select a TECA shortcode.', 'the-events-calendar-addon2' ),
-			'no_shortcodes_available' => __( 'No TECA shortcodes found. Create one first.', 'the-events-calendar-addon2' ),
-			'shortcode_missing'       => __( 'The selected TECA shortcode no longer exists.', 'the-events-calendar-addon2' ),
-			'edit_description_text'   => __( 'Edit this shortcode', 'the-events-calendar-addon2' ),
-			'edit_link_text'          => __( 'Edit', 'the-events-calendar-addon2' ),
-			'create_description_text' => __( 'Create new shortcode', 'the-events-calendar-addon2' ),
-			'create_link_text'        => __( 'Create', 'the-events-calendar-addon2' ),
+			'select_shortcode'        => __( 'Select Shortcode', 'the-events-calendar-addon' ),
+			'no_shortcode_selected'   => __( 'Please select a TECA shortcode.', 'the-events-calendar-addon' ),
+			'no_shortcodes_available' => __( 'No TECA shortcodes found. Create one first.', 'the-events-calendar-addon' ),
+			'shortcode_missing'       => __( 'The selected TECA shortcode no longer exists.', 'the-events-calendar-addon' ),
+			'edit_description_text'   => __( 'Edit this shortcode', 'the-events-calendar-addon' ),
+			'edit_link_text'          => __( 'Edit', 'the-events-calendar-addon' ),
+			'create_description_text' => __( 'Create new shortcode', 'the-events-calendar-addon' ),
+			'create_link_text'        => __( 'Create', 'the-events-calendar-addon' ),
 			'edit_link'               => admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode/' ),
 			'create_link'             => admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode' ),
 			'shortcodes'              => $this->get_shortcode_list(),

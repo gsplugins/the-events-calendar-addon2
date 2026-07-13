@@ -76,7 +76,7 @@ function teca_get_related_events_title_text( $shortcode_title = '' ) {
 		return $shortcode_title;
 	}
 
-	return __( 'Related Events', 'the-events-calendar-addon2' );
+	return __( 'Related Events', 'the-events-calendar-addon' );
 }
 
 /**

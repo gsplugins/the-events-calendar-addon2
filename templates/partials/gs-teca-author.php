@@ -49,7 +49,7 @@ if ( $author_id > 0 ) {
     <div class="gs-teca-author">
 
         <span class="gs-teca-author-label">
-            <?php esc_html_e( 'By', 'the-events-calendar-addon2' ); ?>
+            <?php esc_html_e( 'By', 'the-events-calendar-addon' ); ?>
         </span>
 
         <span class="gs-teca-author-name">

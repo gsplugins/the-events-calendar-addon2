@@ -38,15 +38,15 @@ class Teca_WPBakery_Events_Element {
 
 		vc_map(
 			[
-				'name'        => esc_html__( 'TECA Events', 'the-events-calendar-addon2' ),
+				'name'        => esc_html__( 'TECA Events', 'the-events-calendar-addon' ),
 				'base'        => self::BASE,
-				'category'    => esc_html__( 'GS Plugins', 'the-events-calendar-addon2' ),
-				'description' => esc_html__( 'Display TECA events using a saved shortcode.', 'the-events-calendar-addon2' ),
+				'category'    => esc_html__( 'GS Plugins', 'the-events-calendar-addon' ),
+				'description' => esc_html__( 'Display TECA events using a saved shortcode.', 'the-events-calendar-addon' ),
 				'icon'        => 'icon-teca-wpbakery-events',
 				'params'      => [
 					[
 						'type'        => 'dropdown',
-						'heading'     => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon2' ),
+						'heading'     => esc_html__( 'Select TECA Shortcode', 'the-events-calendar-addon' ),
 						'param_name'  => 'shortcode_id',
 						'value'       => self::get_shortcode_dropdown_values(),
 						'std'         => self::get_default_shortcode_value(),
@@ -92,13 +92,13 @@ class Teca_WPBakery_Events_Element {
 
 		if ( ! $shortcode_id ) {
 			return $allow_placeholder
-				? '<div class="teca-wpbakery-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon2' ) . '</div>'
+				? '<div class="teca-wpbakery-placeholder">' . esc_html__( 'Please select a TECA shortcode.', 'the-events-calendar-addon' ) . '</div>'
 				: '';
 		}
 
 		if ( ! teca_shortcode_exists( $shortcode_id ) ) {
 			return $allow_placeholder
-				? '<div class="teca-wpbakery-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon2' ) . '</div>'
+				? '<div class="teca-wpbakery-placeholder">' . esc_html__( 'Selected TECA shortcode was not found.', 'the-events-calendar-addon' ) . '</div>'
 				: '';
 		}
 
@@ -140,16 +140,16 @@ class Teca_WPBakery_Events_Element {
 	protected static function get_field_description() {
 		$edit_link = sprintf(
 			'%s: <a class="teca-wpbakery-edit-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-			esc_html__( 'Edit this shortcode', 'the-events-calendar-addon2' ),
+			esc_html__( 'Edit this shortcode', 'the-events-calendar-addon' ),
 			esc_url( admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode/' ) ),
-			esc_html__( 'Edit', 'the-events-calendar-addon2' )
+			esc_html__( 'Edit', 'the-events-calendar-addon' )
 		);
 
 		$create_link = sprintf(
 			'%s: <a class="teca-wpbakery-create-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
-			esc_html__( 'Create new shortcode', 'the-events-calendar-addon2' ),
+			esc_html__( 'Create new shortcode', 'the-events-calendar-addon' ),
 			esc_url( admin_url( 'admin.php?page=gs-the-events-calendar-addon#/shortcode' ) ),
-			esc_html__( 'Create', 'the-events-calendar-addon2' )
+			esc_html__( 'Create', 'the-events-calendar-addon' )
 		);
 
 		return implode( '<br />', [ $edit_link, $create_link ] );
@@ -164,7 +164,7 @@ class Teca_WPBakery_Events_Element {
 		$values = teca_get_saved_shortcodes_for_wpbakery();
 
 		return ! empty( $values ) ? $values : [
-			esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon2' ) => '',
+			esc_html__( 'No TECA shortcode found', 'the-events-calendar-addon' ) => '',
 		];
 	}
 

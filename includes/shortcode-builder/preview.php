@@ -32,8 +32,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
             <div class="gs-shortcode-preview--wrapper something-wrong">
 
-                <h2><?php esc_html_e('Something went wrong!', 'the-events-calendar-addon2'); ?></h2>
-                <p><?php esc_html_e('Data not found for preview, probably it\'s a bug, contact with plugin author', 'the-events-calendar-addon2'); ?></p>
+                <h2><?php esc_html_e('Something went wrong!', 'the-events-calendar-addon'); ?></h2>
+                <p><?php esc_html_e('Data not found for preview, probably it\'s a bug, contact with plugin author', 'the-events-calendar-addon'); ?></p>
 
             </div>
 

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $events          = $events ?? array();
 $layout_data     = $layout_data ?? teca_build_quarterly_layout_2_data( $events );
-$schedule_title  = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon2' );
+$schedule_title  = $schedule_title ?? __( 'Events Schedule', 'the-events-calendar-addon' );
 $layout_id       = $layout_id ?? 'teca';
 $max_cell_events = isset( $max_cell_events ) ? (int) $max_cell_events : 2;
 $year            = (int) ( $layout_data['year'] ?? wp_date( 'Y' ) );
@@ -62,7 +62,7 @@ $event_index = 0;
 	</header>
 
 	<?php if ( empty( $events ) ) : ?>
-		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon2' ); ?></div>
+		<div class="teca-calendar-empty"><?php esc_html_e( 'No events found.', 'the-events-calendar-addon' ); ?></div>
 	<?php else : ?>
 		<div class="teca-quarterly-layout-2-body">
 			<?php foreach ( $quarters as $quarter_group ) : ?>
@@ -176,7 +176,7 @@ $event_index = 0;
 																	<?php
 																	printf(
 																		/* translators: %d: additional event count */
-																		esc_html__( '+%d more', 'the-events-calendar-addon2' ),
+																		esc_html__( '+%d more', 'the-events-calendar-addon' ),
 																		(int) $hidden_count
 																	);
 																	?>

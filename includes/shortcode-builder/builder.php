@@ -19,7 +19,7 @@ final class Builder {
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error(
                 array(
-                    'message' => esc_html__( 'Unauthorised Request', 'the-events-calendar-addon2' ),
+                    'message' => esc_html__( 'Unauthorised Request', 'the-events-calendar-addon' ),
                 ),
                 401
             );
@@ -30,7 +30,7 @@ final class Builder {
         if ( ! check_ajax_referer( $action, $query_arg, false ) ) {
             wp_send_json_error(
                 array(
-                    'message' => esc_html__( 'Invalid nonce.', 'the-events-calendar-addon2' ),
+                    'message' => esc_html__( 'Invalid nonce.', 'the-events-calendar-addon' ),
                 ),
                 403
             );
@@ -152,7 +152,7 @@ final class Builder {
             $post->post_date = current_time( 'mysql' );
             $post->post_date_gmt = current_time( 'mysql', 1 );
             // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-            $post->post_title = __('Shortcode Preview', 'the-events-calendar-addon2');
+            $post->post_title = __('Shortcode Preview', 'the-events-calendar-addon');
             $preview_id = isset( $_REQUEST['gs_teca_shortcode_preview'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Preview query arg is validated for admin preview pages only.
                 ? sanitize_key( wp_unslash( $_REQUEST['gs_teca_shortcode_preview'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 : '';
@@ -228,8 +228,8 @@ final class Builder {
     public function register_sub_menu() {
 
         add_menu_page(
-            __('Events Addon', 'the-events-calendar-addon2'),
-            __('Events Addon', 'the-events-calendar-addon2'),
+            __('Events Addon', 'the-events-calendar-addon'),
+            __('Events Addon', 'the-events-calendar-addon'),
             'manage_options',
             'gs-the-events-calendar-addon',
             array($this, 'view'),
@@ -239,8 +239,8 @@ final class Builder {
 
         add_submenu_page(
             'gs-the-events-calendar-addon',
-            __('Shortcodes ', 'the-events-calendar-addon2'),
-            __('Shortcodes', 'the-events-calendar-addon2'),
+            __('Shortcodes ', 'the-events-calendar-addon'),
+            __('Shortcodes', 'the-events-calendar-addon'),
             'manage_options',
             'gs-the-events-calendar-addon',
             array($this, 'view'),
@@ -249,8 +249,8 @@ final class Builder {
 
         add_submenu_page(
             'gs-the-events-calendar-addon',
-            __( 'Preferences', 'the-events-calendar-addon2' ),
-            __( 'Preferences', 'the-events-calendar-addon2' ),
+            __( 'Preferences', 'the-events-calendar-addon' ),
+            __( 'Preferences', 'the-events-calendar-addon' ),
             'manage_options',
             'gs-the-events-calendar-addon#/preferences',
             array( $this, 'view' )
@@ -258,8 +258,8 @@ final class Builder {
 
         add_submenu_page(
             'gs-the-events-calendar-addon',
-            __( 'Layout', 'the-events-calendar-addon2' ),
-            __( 'Layout', 'the-events-calendar-addon2' ),
+            __( 'Layout', 'the-events-calendar-addon' ),
+            __( 'Layout', 'the-events-calendar-addon' ),
             'manage_options',
             'gs-the-events-calendar-addon#/layout',
             array( $this, 'view' )
@@ -475,7 +475,7 @@ final class Builder {
             array_unshift(
                 $fonts,
                 array(
-                    'label' => __( 'Default', 'the-events-calendar-addon2' ),
+                    'label' => __( 'Default', 'the-events-calendar-addon' ),
                     'value' => '',
                 )
             );
@@ -543,11 +543,11 @@ final class Builder {
     public function _get_shortcode($shortcode_id, $is_ajax = false) {
         if ( is_admin() && ! wp_doing_ajax() ) {
         if ( !current_user_can('manage_options')) {
-                wp_send_json_error(__('Unauthorised Request', 'the-events-calendar-addon2'), 401);
+                wp_send_json_error(__('Unauthorised Request', 'the-events-calendar-addon'), 401);
             }
         }
         if (empty($shortcode_id)) {
-            if ($is_ajax) wp_send_json_error(__('Shortcode ID missing', 'the-events-calendar-addon2'), 400);
+            if ($is_ajax) wp_send_json_error(__('Shortcode ID missing', 'the-events-calendar-addon'), 400);
             return false;
         }
 
@@ -583,7 +583,7 @@ final class Builder {
             return $shortcode;
         }
 
-        if ($is_ajax) wp_send_json_error(__('No shortcode found', 'the-events-calendar-addon2'), 404);
+        if ($is_ajax) wp_send_json_error(__('No shortcode found', 'the-events-calendar-addon'), 404);
 
         return false;
     }
@@ -592,18 +592,18 @@ final class Builder {
 
         if ( is_admin() && ! wp_doing_ajax() ) {
             if ( ! check_admin_referer('_gsteca_update_shortcode_gs_') || !current_user_can('manage_options') ) { 
-                if ($is_ajax) wp_send_json_error(__('Unauthorised Request', 'the-events-calendar-addon2'), 401); return false; 
+                if ($is_ajax) wp_send_json_error(__('Unauthorised Request', 'the-events-calendar-addon'), 401); return false; 
             }
         }
         if (empty($shortcode_id)) {
-            if ($is_ajax) wp_send_json_error(__('Shortcode ID missing', 'the-events-calendar-addon2'), 400);
+            if ($is_ajax) wp_send_json_error(__('Shortcode ID missing', 'the-events-calendar-addon'), 400);
             return false;
         }
 
         $_shortcode = $this->_get_shortcode($shortcode_id, false);
 
         if (empty($_shortcode)) {
-            if ($is_ajax) wp_send_json_error(__('No shortcode found to update', 'the-events-calendar-addon2'), 404);
+            if ($is_ajax) wp_send_json_error(__('No shortcode found to update', 'the-events-calendar-addon'), 404);
             return false;
         }
 
@@ -643,7 +643,7 @@ final class Builder {
                 wp_send_json_error(
                     sprintf(
                         /* translators: %1$s: database error message. */
-                        esc_html__( 'Database Error: %1$s', 'the-events-calendar-addon2' ),
+                        esc_html__( 'Database Error: %1$s', 'the-events-calendar-addon' ),
                         esc_html( $wpdb->last_error )
                     ),
                     500
@@ -659,7 +659,7 @@ final class Builder {
         do_action('gsteca_shortcode_updated', $num_row_updated);
 
         if ($is_ajax) wp_send_json_success(array(
-            'message' => __('Shortcode updated', 'the-events-calendar-addon2'),
+            'message' => __('Shortcode updated', 'the-events-calendar-addon'),
             'shortcode_id' => $num_row_updated
         ));
 
@@ -734,7 +734,7 @@ final class Builder {
             wp_send_json_error(
                 sprintf(
                     /* translators: %s: database error message. */
-                    esc_html__( 'Database Error: %s', 'the-events-calendar-addon2' ),
+                    esc_html__( 'Database Error: %s', 'the-events-calendar-addon' ),
                     esc_html( $wpdb->last_error )
                 )
             );
@@ -757,10 +757,10 @@ final class Builder {
         $this->verify_ajax_nonce( '_gsteca_create_shortcode_gs_' );
 
         $shortcode_settings = $this->get_post_shortcode_settings();
-        $shortcode_name     = $this->get_post_text( 'shortcode_name', __( 'Undefined', 'the-events-calendar-addon2' ) );
+        $shortcode_name     = $this->get_post_text( 'shortcode_name', __( 'Undefined', 'the-events-calendar-addon' ) );
 
         if (empty($shortcode_settings) || !is_array($shortcode_settings)) {
-            wp_send_json_error(__('Please configure the settings properly', 'the-events-calendar-addon2'), 206);
+            wp_send_json_error(__('Please configure the settings properly', 'the-events-calendar-addon'), 206);
         }
 
         $shortcode_settings = $this->validate_shortcode_settings($shortcode_settings);
@@ -782,7 +782,7 @@ final class Builder {
             wp_send_json_error(
                 sprintf(
                     /* translators: %s: database error message. */
-                    __( 'Database Error: %s', 'the-events-calendar-addon2' ),
+                    __( 'Database Error: %s', 'the-events-calendar-addon' ),
                     $wpdb->last_error
                 ),
                 500
@@ -801,7 +801,7 @@ final class Builder {
 
         // send success response with inserted id
         wp_send_json_success(array(
-            'message' => __('Shortcode created successfully', 'the-events-calendar-addon2'),
+            'message' => __('Shortcode created successfully', 'the-events-calendar-addon'),
             'shortcode_id' => $wpdb->insert_id
         ));
     }
@@ -813,14 +813,14 @@ final class Builder {
 
         $clone_id = $this->get_post_absint( 'clone_id' );
 
-        if (empty($clone_id)) wp_send_json_error(__('Clone Id not provided', 'the-events-calendar-addon2'), 400);
+        if (empty($clone_id)) wp_send_json_error(__('Clone Id not provided', 'the-events-calendar-addon'), 400);
 
         $clone_shortcode = $this->_get_shortcode($clone_id, false);
 
-        if (empty($clone_shortcode)) wp_send_json_error(__('Clone shortcode not found', 'the-events-calendar-addon2'), 404);
+        if (empty($clone_shortcode)) wp_send_json_error(__('Clone shortcode not found', 'the-events-calendar-addon'), 404);
 
         $shortcode_settings  = $clone_shortcode['shortcode_settings'];
-        $shortcode_name  = $clone_shortcode['shortcode_name'] . ' ' . __('- Cloned', 'the-events-calendar-addon2');
+        $shortcode_name  = $clone_shortcode['shortcode_name'] . ' ' . __('- Cloned', 'the-events-calendar-addon');
 
         $shortcode_settings = $this->validate_shortcode_settings($shortcode_settings);
 
@@ -841,7 +841,7 @@ final class Builder {
             wp_send_json_error(
                 sprintf(
                     /* translators: %s: database error message. */
-                    __( 'Database Error: %s', 'the-events-calendar-addon2' ),
+                    __( 'Database Error: %s', 'the-events-calendar-addon' ),
                     $wpdb->last_error
                 ),
                 500
@@ -855,7 +855,7 @@ final class Builder {
 
         // send success response with inserted id
         wp_send_json_success(array(
-            'message' => __('Shortcode cloned successfully', 'the-events-calendar-addon2'),
+            'message' => __('Shortcode cloned successfully', 'the-events-calendar-addon'),
             'shortcode' => $shotcode,
         ));
     }
@@ -878,7 +878,7 @@ final class Builder {
         $shortcode_id = $this->get_post_absint( 'id' );
 
         if ( empty( $shortcode_id ) ) {
-            wp_send_json_error( esc_html__( 'Shortcode ID missing', 'the-events-calendar-addon2' ), 400 );
+            wp_send_json_error( esc_html__( 'Shortcode ID missing', 'the-events-calendar-addon' ), 400 );
         }
 
         $fields = array(
@@ -896,7 +896,7 @@ final class Builder {
         $ids = $this->get_post_ids( 'ids' );
 
         if ( empty( $ids ) ) {
-            wp_send_json_error( esc_html__( 'No shortcode ids provided', 'the-events-calendar-addon2' ), 400 );
+            wp_send_json_error( esc_html__( 'No shortcode ids provided', 'the-events-calendar-addon' ), 400 );
         }
 
         $wpdb       = $this->gsteca_get_wpdb();
@@ -920,7 +920,7 @@ final class Builder {
             wp_send_json_error(
                 sprintf(
                     /* translators: %s: database error message. */
-                    esc_html__( 'Database Error: %s', 'the-events-calendar-addon2' ),
+                    esc_html__( 'Database Error: %s', 'the-events-calendar-addon' ),
                     esc_html( $wpdb->last_error )
                 ),
                 500
@@ -931,7 +931,7 @@ final class Builder {
             'Shortcode has been deleted',
             'Shortcodes have been deleted',
             $count,
-            'the-events-calendar-addon2'
+            'the-events-calendar-addon'
         );
 
         wp_send_json_success(
@@ -954,318 +954,318 @@ final class Builder {
         $temp_key           = $this->get_post_text( 'temp_key' );
         $shortcode_settings = $this->get_post_shortcode_settings();
 
-        if ( empty($temp_key) ) wp_send_json_error(__('No temp key provided', 'the-events-calendar-addon2'), 400);
-        if ( empty($shortcode_settings) ) wp_send_json_error(__('No temp settings provided', 'the-events-calendar-addon2'), 400);
+        if ( empty($temp_key) ) wp_send_json_error(__('No temp key provided', 'the-events-calendar-addon'), 400);
+        if ( empty($shortcode_settings) ) wp_send_json_error(__('No temp settings provided', 'the-events-calendar-addon'), 400);
 
         delete_transient( $temp_key );
         set_transient( $temp_key, $this->validate_shortcode_settings( $shortcode_settings ), 86400 ); // save the transient for 1 day
 
         wp_send_json_success([
-            'message' => __('Temp data saved', 'the-events-calendar-addon2'),
+            'message' => __('Temp data saved', 'the-events-calendar-addon'),
         ]);
     }
 
     public function get_translation_strings() {
         return [
-            'columns'                             => __('Columns', 'the-events-calendar-addon2'),
-            'columns_tablet'                      => __('Columns Tablet', 'the-events-calendar-addon2'),
-            'columns_mobile_portrait'             => __('Columns Portpait Mobile', 'the-events-calendar-addon2'),
-            'columns_mobile'                      => __('Columns Mobile', 'the-events-calendar-addon2'),
+            'columns'                             => __('Columns', 'the-events-calendar-addon'),
+            'columns_tablet'                      => __('Columns Tablet', 'the-events-calendar-addon'),
+            'columns_mobile_portrait'             => __('Columns Portpait Mobile', 'the-events-calendar-addon'),
+            'columns_mobile'                      => __('Columns Mobile', 'the-events-calendar-addon'),
 
-            'desktop'                              => __( 'Desktop', 'the-events-calendar-addon2' ),
-			'tablet'                               => __( 'Tablet', 'the-events-calendar-addon2' ),
-			'mobile_landscape'                     => __( 'Large Mobile', 'the-events-calendar-addon2' ),
-			'mobile'                               => __( 'Mobile', 'the-events-calendar-addon2' ),
+            'desktop'                              => __( 'Desktop', 'the-events-calendar-addon' ),
+			'tablet'                               => __( 'Tablet', 'the-events-calendar-addon' ),
+			'mobile_landscape'                     => __( 'Large Mobile', 'the-events-calendar-addon' ),
+			'mobile'                               => __( 'Mobile', 'the-events-calendar-addon' ),
 
-            'exclude_cats'                        => __('Exclude By Cats', 'the-events-calendar-addon2'),
-            'deselect_by_name'                    => __('Exclude Specific Products', 'the-events-calendar-addon2'),
-            'deselect_by_tag'                     => __('Exclude By Tags', 'the-events-calendar-addon2'),
-            'select_by_tag'                       => __('Include By Tags', 'the-events-calendar-addon2'),
-            'select_by_name'                      => __('Display Specific Products', 'the-events-calendar-addon2'),
-            'select_products'                     => __('Select Products', 'the-events-calendar-addon2'),
-            'select_cats'                         => __('Include By Cats', 'the-events-calendar-addon2'),
+            'exclude_cats'                        => __('Exclude By Cats', 'the-events-calendar-addon'),
+            'deselect_by_name'                    => __('Exclude Specific Products', 'the-events-calendar-addon'),
+            'deselect_by_tag'                     => __('Exclude By Tags', 'the-events-calendar-addon'),
+            'select_by_tag'                       => __('Include By Tags', 'the-events-calendar-addon'),
+            'select_by_name'                      => __('Display Specific Products', 'the-events-calendar-addon'),
+            'select_products'                     => __('Select Products', 'the-events-calendar-addon'),
+            'select_cats'                         => __('Include By Cats', 'the-events-calendar-addon'),
 
-            'custom-css'                          => __('Custom CSS', 'the-events-calendar-addon2'),
-            'shortcodes'                          => __('Shortcodes', 'the-events-calendar-addon2'),
-            'global-settings-for-gs-woo-slider'   => __('Global Settings for Woo Product Views', 'the-events-calendar-addon2'),
-            'all-shortcodes-for-gs-woo-slider'    => __('All shortcodes for Woo Product Views', 'the-events-calendar-addon2'),
-            'create-shortcode'                    => __('Create Shortcode', 'the-events-calendar-addon2'),
-            'create-new-shortcode'                => __('Create New Shortcode', 'the-events-calendar-addon2'),
-            'shortcode'                           => __('Shortcode', 'the-events-calendar-addon2'),
-            'name'                                => __('Name', 'the-events-calendar-addon2'),
-            'action'                              => __('Action', 'the-events-calendar-addon2'),
-            'actions'                             => __('Actions', 'the-events-calendar-addon2'),
-            'edit'                                => __('Edit', 'the-events-calendar-addon2'),
-            'clone'                               => __('Clone', 'the-events-calendar-addon2'),
-            'delete'                              => __('Delete', 'the-events-calendar-addon2'),
-            'delete-all'                          => __('Delete All', 'the-events-calendar-addon2'),
-            'create-a-new-shortcode-and'          => __('Create a new shortcode & save it to use globally in anywhere', 'the-events-calendar-addon2'),
-            'edit-shortcode'                      => __('Edit Shortcode', 'the-events-calendar-addon2'),
-            'general-settings'                    => __('General', 'the-events-calendar-addon2'),
-            'style-settings'                      => __('Style', 'the-events-calendar-addon2'),
-            'query-settings'                      => __('Query', 'the-events-calendar-addon2'),
-            'visibility-settings'                 => __('Visibility', 'the-events-calendar-addon2'),
-            'shortcode-name'                      => __('Shortcode Name', 'the-events-calendar-addon2'),
-            'name-of-the-shortcode'               => __('Shortcode Name', 'the-events-calendar-addon2'),
-            'save-shortcode'                      => __('Save Shortcode', 'the-events-calendar-addon2'),
-            'preview-shortcode'                   => __('Preview Shortcode', 'the-events-calendar-addon2'),
+            'custom-css'                          => __('Custom CSS', 'the-events-calendar-addon'),
+            'shortcodes'                          => __('Shortcodes', 'the-events-calendar-addon'),
+            'global-settings-for-gs-woo-slider'   => __('Global Settings for Woo Product Views', 'the-events-calendar-addon'),
+            'all-shortcodes-for-gs-woo-slider'    => __('All shortcodes for Woo Product Views', 'the-events-calendar-addon'),
+            'create-shortcode'                    => __('Create Shortcode', 'the-events-calendar-addon'),
+            'create-new-shortcode'                => __('Create New Shortcode', 'the-events-calendar-addon'),
+            'shortcode'                           => __('Shortcode', 'the-events-calendar-addon'),
+            'name'                                => __('Name', 'the-events-calendar-addon'),
+            'action'                              => __('Action', 'the-events-calendar-addon'),
+            'actions'                             => __('Actions', 'the-events-calendar-addon'),
+            'edit'                                => __('Edit', 'the-events-calendar-addon'),
+            'clone'                               => __('Clone', 'the-events-calendar-addon'),
+            'delete'                              => __('Delete', 'the-events-calendar-addon'),
+            'delete-all'                          => __('Delete All', 'the-events-calendar-addon'),
+            'create-a-new-shortcode-and'          => __('Create a new shortcode & save it to use globally in anywhere', 'the-events-calendar-addon'),
+            'edit-shortcode'                      => __('Edit Shortcode', 'the-events-calendar-addon'),
+            'general-settings'                    => __('General', 'the-events-calendar-addon'),
+            'style-settings'                      => __('Style', 'the-events-calendar-addon'),
+            'query-settings'                      => __('Query', 'the-events-calendar-addon'),
+            'visibility-settings'                 => __('Visibility', 'the-events-calendar-addon'),
+            'shortcode-name'                      => __('Shortcode Name', 'the-events-calendar-addon'),
+            'name-of-the-shortcode'               => __('Shortcode Name', 'the-events-calendar-addon'),
+            'save-shortcode'                      => __('Save Shortcode', 'the-events-calendar-addon'),
+            'preview-shortcode'                   => __('Preview Shortcode', 'the-events-calendar-addon'),
 
 
-            'gs_teca_template'                    => __('Theme Style', 'the-events-calendar-addon2'),
-            'view_type'                           => __('View Type', 'the-events-calendar-addon2'),
-            'view_type--help'                     => __('Select Theme Style', 'the-events-calendar-addon2'),
-            'daily_calendar_layout'               => __( 'Daily Calendar Layout', 'the-events-calendar-addon2' ),
-            'weekly_calendar_layout'              => __( 'Weekly Calendar Layout', 'the-events-calendar-addon2' ),
-            'monthly_calendar_layout'             => __( 'Monthly Calendar Layout', 'the-events-calendar-addon2' ),
-            'quarterly_calendar_layout'           => __( 'Quarterly Calendar Layout', 'the-events-calendar-addon2' ),
-            'yearly_calendar_layout'              => __( 'Yearly Calendar Layout', 'the-events-calendar-addon2' ),
-            'calendar_layout'                     => __( 'Calendar Layout', 'the-events-calendar-addon2' ),
-            'calendar_select_filter'              => __( 'Select Filter', 'the-events-calendar-addon2' ),
-            'events_section'                      => __( 'Events Section', 'the-events-calendar-addon2' ),
-            'event_layout'                        => __( 'Event Layout', 'the-events-calendar-addon2' ),
-            'venue_template'                      => __( 'Venue Template', 'the-events-calendar-addon2' ),
-            'venue_template_layout'               => __( 'Venue Template Name', 'the-events-calendar-addon2' ),
-            'organizer_template'                  => __( 'Organizer Template', 'the-events-calendar-addon2' ),
-            'organizer_template_layout'           => __( 'Organizer Template Name', 'the-events-calendar-addon2' ),
+            'gs_teca_template'                    => __('Theme Style', 'the-events-calendar-addon'),
+            'view_type'                           => __('View Type', 'the-events-calendar-addon'),
+            'view_type--help'                     => __('Select Theme Style', 'the-events-calendar-addon'),
+            'daily_calendar_layout'               => __( 'Daily Calendar Layout', 'the-events-calendar-addon' ),
+            'weekly_calendar_layout'              => __( 'Weekly Calendar Layout', 'the-events-calendar-addon' ),
+            'monthly_calendar_layout'             => __( 'Monthly Calendar Layout', 'the-events-calendar-addon' ),
+            'quarterly_calendar_layout'           => __( 'Quarterly Calendar Layout', 'the-events-calendar-addon' ),
+            'yearly_calendar_layout'              => __( 'Yearly Calendar Layout', 'the-events-calendar-addon' ),
+            'calendar_layout'                     => __( 'Calendar Layout', 'the-events-calendar-addon' ),
+            'calendar_select_filter'              => __( 'Select Filter', 'the-events-calendar-addon' ),
+            'events_section'                      => __( 'Events Section', 'the-events-calendar-addon' ),
+            'event_layout'                        => __( 'Event Layout', 'the-events-calendar-addon' ),
+            'venue_template'                      => __( 'Venue Template', 'the-events-calendar-addon' ),
+            'venue_template_layout'               => __( 'Venue Template Name', 'the-events-calendar-addon' ),
+            'organizer_template'                  => __( 'Organizer Template', 'the-events-calendar-addon' ),
+            'organizer_template_layout'           => __( 'Organizer Template Name', 'the-events-calendar-addon' ),
 
-            'gs_teca_slide_speed' => __('Sliding Speed', 'the-events-calendar-addon2'),
-            'gs_teca_slide_speed--help' => __('Set the speed in millisecond. Default 500 ms. To disable autoplay just set the speed 0', 'the-events-calendar-addon2'),
+            'gs_teca_slide_speed' => __('Sliding Speed', 'the-events-calendar-addon'),
+            'gs_teca_slide_speed--help' => __('Set the speed in millisecond. Default 500 ms. To disable autoplay just set the speed 0', 'the-events-calendar-addon'),
             
-            'gs_teca_is_autop' => __('Autoplay', 'the-events-calendar-addon2'),
-            'gs-teca-play-pause--help' => __('Enable/Disable Auto play to change the slides automatically after certain time. Default On', 'the-events-calendar-addon2'),
+            'gs_teca_is_autop' => __('Autoplay', 'the-events-calendar-addon'),
+            'gs-teca-play-pause--help' => __('Enable/Disable Auto play to change the slides automatically after certain time. Default On', 'the-events-calendar-addon'),
 
-            'gs_teca_autop_pause' => __('Autoplay Delay', 'the-events-calendar-addon2'),
-            'gs-teca-autop-pause--help' => __('You can adjust the time (in ms) between each slide. Default 4000 ms', 'the-events-calendar-addon2'),
+            'gs_teca_autop_pause' => __('Autoplay Delay', 'the-events-calendar-addon'),
+            'gs-teca-autop-pause--help' => __('You can adjust the time (in ms) between each slide. Default 4000 ms', 'the-events-calendar-addon'),
 
-            'gs_teca_inf_loop' => __('Infinite Loop', 'the-events-calendar-addon2'),
-            'gs-teca-inf-loop--help' => __('If ON, clicking on "Next" while on the last slide will start over from first slide and vice-versa', 'the-events-calendar-addon2'),
+            'gs_teca_inf_loop' => __('Infinite Loop', 'the-events-calendar-addon'),
+            'gs-teca-inf-loop--help' => __('If ON, clicking on "Next" while on the last slide will start over from first slide and vice-versa', 'the-events-calendar-addon'),
 
-            'gs_teca_pause_on_hover' => __('Pause on hover', 'the-events-calendar-addon2'),
-            'gs-teca-slider-stop--help' => __('Autoplay will pause when mouse hovers over Post. Default On', 'the-events-calendar-addon2'),
+            'gs_teca_pause_on_hover' => __('Pause on hover', 'the-events-calendar-addon'),
+            'gs-teca-slider-stop--help' => __('Autoplay will pause when mouse hovers over Post. Default On', 'the-events-calendar-addon'),
 
-            'gs-teca-reverse-direction' => __('Reverse Direction', 'the-events-calendar-addon2'),
-            'gs-teca-reverse-direction--help' => __('Reverse the direction of movement. Default Off', 'the-events-calendar-addon2'),
+            'gs-teca-reverse-direction' => __('Reverse Direction', 'the-events-calendar-addon'),
+            'gs-teca-reverse-direction--help' => __('Reverse the direction of movement. Default Off', 'the-events-calendar-addon'),
 
-            'gs-teca-slider-navs'                       => __( 'Slider Navs', 'the-events-calendar-addon2' ),
-			'gs-teca-slider-navs--help'                 => __( 'Next / Previous control for Portfolio Slider. Default On Controls are not available when Ticker Mode is enabled', 'the-events-calendar-addon2' ),
-			'gs-teca-ctrl-pos'                          => __( 'Navs Position', 'the-events-calendar-addon2' ),
-			'gs-teca-ctrl-pos--placeholder'             => __( 'Position of Next / Previous control for Portfolio Slider. Default Bottom', 'the-events-calendar-addon2' ),
-            'gs-teca-slider-dots'                       => __( 'Slider Dots', 'the-events-calendar-addon2' ),
-			'gs-teca-slider-dots--help'                 => __( 'Dots control for Portfolio Slider below the widget. Default Off', 'the-events-calendar-addon2' ),
-            'gs_teca_navs_style'                         => __( 'Navs Style', 'the-events-calendar-addon2' ),
-			'gs_teca_dots_style'                         => __( 'Dots Style', 'the-events-calendar-addon2' ),
-            'gs-filter-by'                           => __( 'Filter By', 'the-events-calendar-addon2' ),
-			'gs-filter-cat'                          => __( 'Filter Position', 'the-events-calendar-addon2' ),
-            'gs_teca_filter_style'                       => __( 'Filter Styles', 'the-events-calendar-addon2' ),
-            'filter_type' => __('Filter Type', 'the-events-calendar-addon2'),
-            'filter_type__details' => __('Select filter type', 'the-events-calendar-addon2'),
-            'posts' => __('Posts', 'the-events-calendar-addon2'),
-            'posts--placeholder' => __('Posts', 'the-events-calendar-addon2'),
-            'posts--help' => __('Set max posts numbers you want to show, set -1 for all posts', 'the-events-calendar-addon2'),
-            'gs_teca_pagination' => __('Enable Pagination', 'the-events-calendar-addon2'),
-            'gs_teca_pagination__details' => __('Enable paginations like number pagination, load more button, On scroll load etc.', 'the-events-calendar-addon2'),
-            'pagination_type' => __('Pagination Type', 'the-events-calendar-addon2'),
-            'pagination_type__details' => __('Select pagination type.', 'the-events-calendar-addon2'),
-            'pagination_type_pro_message'            => __( 'This pagination type is available in the Pro version only.', 'the-events-calendar-addon2' ),
-            'typography_color_pro_message'           => __( 'This typography control is available in the Pro version only.', 'the-events-calendar-addon2' ),
-            'query_include_exclude_categories_pro_message' => __( 'Categories in Include/Exclude are available in the Pro version only.', 'the-events-calendar-addon2' ),
-            'query_include_exclude_tags_pro_message'       => __( 'Tags in Include/Exclude are available in the Pro version only.', 'the-events-calendar-addon2' ),
-            'query_custom_order_pro_message'               => __( 'Custom Order is available in the Pro version only.', 'the-events-calendar-addon2' ),
+            'gs-teca-slider-navs'                       => __( 'Slider Navs', 'the-events-calendar-addon' ),
+			'gs-teca-slider-navs--help'                 => __( 'Next / Previous control for Portfolio Slider. Default On Controls are not available when Ticker Mode is enabled', 'the-events-calendar-addon' ),
+			'gs-teca-ctrl-pos'                          => __( 'Navs Position', 'the-events-calendar-addon' ),
+			'gs-teca-ctrl-pos--placeholder'             => __( 'Position of Next / Previous control for Portfolio Slider. Default Bottom', 'the-events-calendar-addon' ),
+            'gs-teca-slider-dots'                       => __( 'Slider Dots', 'the-events-calendar-addon' ),
+			'gs-teca-slider-dots--help'                 => __( 'Dots control for Portfolio Slider below the widget. Default Off', 'the-events-calendar-addon' ),
+            'gs_teca_navs_style'                         => __( 'Navs Style', 'the-events-calendar-addon' ),
+			'gs_teca_dots_style'                         => __( 'Dots Style', 'the-events-calendar-addon' ),
+            'gs-filter-by'                           => __( 'Filter By', 'the-events-calendar-addon' ),
+			'gs-filter-cat'                          => __( 'Filter Position', 'the-events-calendar-addon' ),
+            'gs_teca_filter_style'                       => __( 'Filter Styles', 'the-events-calendar-addon' ),
+            'filter_type' => __('Filter Type', 'the-events-calendar-addon'),
+            'filter_type__details' => __('Select filter type', 'the-events-calendar-addon'),
+            'posts' => __('Posts', 'the-events-calendar-addon'),
+            'posts--placeholder' => __('Posts', 'the-events-calendar-addon'),
+            'posts--help' => __('Set max posts numbers you want to show, set -1 for all posts', 'the-events-calendar-addon'),
+            'gs_teca_pagination' => __('Enable Pagination', 'the-events-calendar-addon'),
+            'gs_teca_pagination__details' => __('Enable paginations like number pagination, load more button, On scroll load etc.', 'the-events-calendar-addon'),
+            'pagination_type' => __('Pagination Type', 'the-events-calendar-addon'),
+            'pagination_type__details' => __('Select pagination type.', 'the-events-calendar-addon'),
+            'pagination_type_pro_message'            => __( 'This pagination type is available in the Pro version only.', 'the-events-calendar-addon' ),
+            'typography_color_pro_message'           => __( 'This typography control is available in the Pro version only.', 'the-events-calendar-addon' ),
+            'query_include_exclude_categories_pro_message' => __( 'Categories in Include/Exclude are available in the Pro version only.', 'the-events-calendar-addon' ),
+            'query_include_exclude_tags_pro_message'       => __( 'Tags in Include/Exclude are available in the Pro version only.', 'the-events-calendar-addon' ),
+            'query_custom_order_pro_message'               => __( 'Custom Order is available in the Pro version only.', 'the-events-calendar-addon' ),
 
-            'initial_items'     => __('Initial Items', 'the-events-calendar-addon2'),
-            'initial_items__details'    => __('Set initial number of items that shows on page load (before users interaction)', 'the-events-calendar-addon2'),
+            'initial_items'     => __('Initial Items', 'the-events-calendar-addon'),
+            'initial_items__details'    => __('Set initial number of items that shows on page load (before users interaction)', 'the-events-calendar-addon'),
 
-            'load_per_click' => __('Per Click', 'the-events-calendar-addon2'),
-            'load_per_click__details' => __('Load members per button click', 'the-events-calendar-addon2'),
+            'load_per_click' => __('Per Click', 'the-events-calendar-addon'),
+            'load_per_click__details' => __('Load members per button click', 'the-events-calendar-addon'),
 
-            'item_per_page' => __('Per Page', 'the-events-calendar-addon2'),
-            'item_per_page__details' => __('Display members per page', 'the-events-calendar-addon2'),
+            'item_per_page' => __('Per Page', 'the-events-calendar-addon'),
+            'item_per_page__details' => __('Display members per page', 'the-events-calendar-addon'),
 
-            'per_load' => __('Per Load', 'the-events-calendar-addon2'),
-            'per_load__details' => __('Display members per load', 'the-events-calendar-addon2'),
+            'per_load' => __('Per Load', 'the-events-calendar-addon'),
+            'per_load__details' => __('Display members per load', 'the-events-calendar-addon'),
 
-            'load_button_text' => __('Button Text', 'the-events-calendar-addon2'),
-            'load_button_text__details' => __('Load more button text', 'the-events-calendar-addon2'),
+            'load_button_text' => __('Button Text', 'the-events-calendar-addon'),
+            'load_button_text__details' => __('Load more button text', 'the-events-calendar-addon'),
 
-            'popup_style' => __('Popup Style', 'the-events-calendar-addon2'),
-            'popup_style__details' => __('Select popup style, this is available for certain theme', 'the-events-calendar-addon2'),
-            'gs_teca_name_is_linked' => __('Link Events', 'the-events-calendar-addon2'),
-            'gs_teca_name_is_linked__details' => __('Add links to title, description & image to display popup or to single page', 'the-events-calendar-addon2'),
-            'gs_teca_link_type' => __('Link Type', 'the-events-calendar-addon2'),
-            'gs_teca_link_type__details' => __('Choose the link type of The Events Calendar Addon', 'the-events-calendar-addon2'),
-            'pref-more' => __('More', 'the-events-calendar-addon2'),
-            'pref-more-details' => __('Replace with preferred text for More', 'the-events-calendar-addon2'),
-            'pref-view-details' => __('View Details Button Text', 'the-events-calendar-addon2'),
-            'pref-view-details-details' => __('Replace with preferred text for View Details buttons', 'the-events-calendar-addon2'),
-            'pref-related-events-title' => __('Related Events Section Title', 'the-events-calendar-addon2'),
-            'pref-related-events-title-details' => __('Replace with preferred text for Related Events section titles', 'the-events-calendar-addon2'),
-            'pref-event-website' => __('Event Website Button Text', 'the-events-calendar-addon2'),
-            'pref-event-website-details' => __('Replace with preferred text for Event Website buttons', 'the-events-calendar-addon2'),
-            'pref-add-to-calendar' => __('Add to Calendar Button Text', 'the-events-calendar-addon2'),
-            'pref-add-to-calendar-details' => __('Replace with preferred text for Add to Calendar buttons', 'the-events-calendar-addon2'),
-            'prev' => __('Prev', 'the-events-calendar-addon2'),
-            'prev-details' => __('Replace with preferred text for Prev', 'the-events-calendar-addon2'),
-            'next' => __('Next', 'the-events-calendar-addon2'),
-            'next-details' => __('Replace with preferred text for Next', 'the-events-calendar-addon2'),
-            'link-text' => __('View More', 'the-events-calendar-addon2'),
-            'link-text--details' => __('Replace with preferred text for View More', 'the-events-calendar-addon2'),
-            'enable-multilingual' => __('Enable Multilingual', 'the-events-calendar-addon2'),
-            'enable-multilingual--details' => __('Enable Multilingual mode to translate below strings using any Multilingual plugin like wpml or loco translate.', 'the-events-calendar-addon2'),
-            'image_filter'                       => __('Image Filter', 'the-events-calendar-addon2'),
-            'image_filter_hover'                 => __('Image Filter Hover', 'the-events-calendar-addon2'),
+            'popup_style' => __('Popup Style', 'the-events-calendar-addon'),
+            'popup_style__details' => __('Select popup style, this is available for certain theme', 'the-events-calendar-addon'),
+            'gs_teca_name_is_linked' => __('Link Events', 'the-events-calendar-addon'),
+            'gs_teca_name_is_linked__details' => __('Add links to title, description & image to display popup or to single page', 'the-events-calendar-addon'),
+            'gs_teca_link_type' => __('Link Type', 'the-events-calendar-addon'),
+            'gs_teca_link_type__details' => __('Choose the link type of The Events Calendar Addon', 'the-events-calendar-addon'),
+            'pref-more' => __('More', 'the-events-calendar-addon'),
+            'pref-more-details' => __('Replace with preferred text for More', 'the-events-calendar-addon'),
+            'pref-view-details' => __('View Details Button Text', 'the-events-calendar-addon'),
+            'pref-view-details-details' => __('Replace with preferred text for View Details buttons', 'the-events-calendar-addon'),
+            'pref-related-events-title' => __('Related Events Section Title', 'the-events-calendar-addon'),
+            'pref-related-events-title-details' => __('Replace with preferred text for Related Events section titles', 'the-events-calendar-addon'),
+            'pref-event-website' => __('Event Website Button Text', 'the-events-calendar-addon'),
+            'pref-event-website-details' => __('Replace with preferred text for Event Website buttons', 'the-events-calendar-addon'),
+            'pref-add-to-calendar' => __('Add to Calendar Button Text', 'the-events-calendar-addon'),
+            'pref-add-to-calendar-details' => __('Replace with preferred text for Add to Calendar buttons', 'the-events-calendar-addon'),
+            'prev' => __('Prev', 'the-events-calendar-addon'),
+            'prev-details' => __('Replace with preferred text for Prev', 'the-events-calendar-addon'),
+            'next' => __('Next', 'the-events-calendar-addon'),
+            'next-details' => __('Replace with preferred text for Next', 'the-events-calendar-addon'),
+            'link-text' => __('View More', 'the-events-calendar-addon'),
+            'link-text--details' => __('Replace with preferred text for View More', 'the-events-calendar-addon'),
+            'enable-multilingual' => __('Enable Multilingual', 'the-events-calendar-addon'),
+            'enable-multilingual--details' => __('Enable Multilingual mode to translate below strings using any Multilingual plugin like wpml or loco translate.', 'the-events-calendar-addon'),
+            'image_filter'                       => __('Image Filter', 'the-events-calendar-addon'),
+            'image_filter_hover'                 => __('Image Filter Hover', 'the-events-calendar-addon'),
 
-            'title_typography'                   => __( 'Title Typography', 'the-events-calendar-addon2' ),
-            'cat_typography'                     => __( 'Category Typography', 'the-events-calendar-addon2' ),
-            'tag_typography'                     => __( 'Tag Typography', 'the-events-calendar-addon2' ),
-            'org_typography'                     => __( 'Organizer Typography', 'the-events-calendar-addon2' ),
-            'date_typography'                    => __( 'Date Typography', 'the-events-calendar-addon2' ),
-            'date_format'                        => __( 'Date Format', 'the-events-calendar-addon2' ),
-            'custom_date_format'                 => __( 'Custom Date Format', 'the-events-calendar-addon2' ),
-            'date_format__help'                  => __( 'Applies to readable event date text only. Decorative date badges and calendar day numbers are not changed.', 'the-events-calendar-addon2' ),
-            'custom_date_format__help'           => __( 'Use WordPress/PHP date format characters, e.g. F j, Y or d M Y.', 'the-events-calendar-addon2' ),
-            'details_typography'                 => __( 'Details Typography', 'the-events-calendar-addon2' ),
-            'venue_typography'                   => __( 'Venue Typography', 'the-events-calendar-addon2' ),
-            'view_details_button_typography'     => __( 'View Details Button Typography', 'the-events-calendar-addon2' ),
-            'google_calendar_button_typography'  => __( 'Google Calendar Button Typography', 'the-events-calendar-addon2' ),
-            'style_accordion_typography'         => __( 'Typography', 'the-events-calendar-addon2' ),
-            'style_accordion_color_typography'   => __( 'Color Typography', 'the-events-calendar-addon2' ),
-            'style_accordion_detail_typography'  => __( 'Detail Typography', 'the-events-calendar-addon2' ),
-            'style_accordion_detail_color_typography' => __( 'Detail Color Typography', 'the-events-calendar-addon2' ),
-            'style_accordion_filters_by'           => __( 'Filters By', 'the-events-calendar-addon2' ),
-            'style_accordion_search_by'            => __( 'Search By', 'the-events-calendar-addon2' ),
-            'search_by_title'                      => __( 'Title', 'the-events-calendar-addon2' ),
-            'search_by_venue'                      => __( 'Venue', 'the-events-calendar-addon2' ),
-            'search_by_organizer'                  => __( 'Organizer', 'the-events-calendar-addon2' ),
-            'search_by_city'                       => __( 'City', 'the-events-calendar-addon2' ),
-            'search_result_limit'                  => __( 'Result Limit', 'the-events-calendar-addon2' ),
-            'search_result_limit__details'         => __( 'Maximum number of events returned by AJAX search.', 'the-events-calendar-addon2' ),
-            'filter_by_date'                       => __( 'Date', 'the-events-calendar-addon2' ),
-            'filter_by_day'                        => __( 'Day', 'the-events-calendar-addon2' ),
-            'filter_by_category'                   => __( 'Category', 'the-events-calendar-addon2' ),
-            'filter_by_tag'                        => __( 'Tag', 'the-events-calendar-addon2' ),
-            'filter_by_venue'                      => __( 'Venue', 'the-events-calendar-addon2' ),
-            'filter_by_city'                       => __( 'City', 'the-events-calendar-addon2' ),
-            'filter_by_state'                      => __( 'State', 'the-events-calendar-addon2' ),
-            'filter_by_country'                    => __( 'Country', 'the-events-calendar-addon2' ),
-            'filter_by_organizer'                  => __( 'Organizer', 'the-events-calendar-addon2' ),
-            'filter_by_cost'                       => __( 'Cost', 'the-events-calendar-addon2' ),
-            'filter_by_time'                       => __( 'Time', 'the-events-calendar-addon2' ),
-            'filter_by_featured'                   => __( 'Featured Events', 'the-events-calendar-addon2' ),
-            'filter_by_event_status'               => __( 'Event Status', 'the-events-calendar-addon2' ),
-            'teca_filter_date_clear'               => __( 'Clear', 'the-events-calendar-addon2' ),
-            'teca_filter_all_venues'               => __( 'All Venues', 'the-events-calendar-addon2' ),
-            'teca_filter_all_categories'           => __( 'All Categories', 'the-events-calendar-addon2' ),
-            'teca_filter_all_tags'                 => __( 'All Tags', 'the-events-calendar-addon2' ),
-            'teca_filter_all_organizers'           => __( 'All Organizers', 'the-events-calendar-addon2' ),
-            'teca_filter_all_cities'               => __( 'All Cities', 'the-events-calendar-addon2' ),
-            'teca_filter_all_states'               => __( 'All States', 'the-events-calendar-addon2' ),
-            'teca_filter_all_countries'            => __( 'All Countries', 'the-events-calendar-addon2' ),
-            'teca_filter_all_costs'                => __( 'All Costs', 'the-events-calendar-addon2' ),
-            'teca_filter_cost_free'                => __( 'Free', 'the-events-calendar-addon2' ),
-            'teca_filter_cost_paid'                => __( 'Paid', 'the-events-calendar-addon2' ),
-            'teca_filter_all_times'                => __( 'All Times', 'the-events-calendar-addon2' ),
-            'teca_filter_time_morning'             => __( 'Morning', 'the-events-calendar-addon2' ),
-            'teca_filter_time_afternoon'           => __( 'Afternoon', 'the-events-calendar-addon2' ),
-            'teca_filter_time_evening'             => __( 'Evening', 'the-events-calendar-addon2' ),
-            'teca_filter_time_night'               => __( 'Night', 'the-events-calendar-addon2' ),
-            'teca_filter_all_events'               => __( 'All Events', 'the-events-calendar-addon2' ),
-            'teca_filter_featured_only'            => __( 'Featured Only', 'the-events-calendar-addon2' ),
-            'teca_filter_not_featured'             => __( 'Non-Featured', 'the-events-calendar-addon2' ),
-            'teca_filter_all_statuses'             => __( 'All Statuses', 'the-events-calendar-addon2' ),
-            'teca_filter_status_upcoming'          => __( 'Upcoming', 'the-events-calendar-addon2' ),
-            'teca_filter_status_ongoing'           => __( 'Ongoing', 'the-events-calendar-addon2' ),
-            'teca_filter_status_past'              => __( 'Past', 'the-events-calendar-addon2' ),
-            'teca_filters_by_name_empty_message'   => __( 'No events found.', 'the-events-calendar-addon2' ),
+            'title_typography'                   => __( 'Title Typography', 'the-events-calendar-addon' ),
+            'cat_typography'                     => __( 'Category Typography', 'the-events-calendar-addon' ),
+            'tag_typography'                     => __( 'Tag Typography', 'the-events-calendar-addon' ),
+            'org_typography'                     => __( 'Organizer Typography', 'the-events-calendar-addon' ),
+            'date_typography'                    => __( 'Date Typography', 'the-events-calendar-addon' ),
+            'date_format'                        => __( 'Date Format', 'the-events-calendar-addon' ),
+            'custom_date_format'                 => __( 'Custom Date Format', 'the-events-calendar-addon' ),
+            'date_format__help'                  => __( 'Applies to readable event date text only. Decorative date badges and calendar day numbers are not changed.', 'the-events-calendar-addon' ),
+            'custom_date_format__help'           => __( 'Use WordPress/PHP date format characters, e.g. F j, Y or d M Y.', 'the-events-calendar-addon' ),
+            'details_typography'                 => __( 'Details Typography', 'the-events-calendar-addon' ),
+            'venue_typography'                   => __( 'Venue Typography', 'the-events-calendar-addon' ),
+            'view_details_button_typography'     => __( 'View Details Button Typography', 'the-events-calendar-addon' ),
+            'google_calendar_button_typography'  => __( 'Google Calendar Button Typography', 'the-events-calendar-addon' ),
+            'style_accordion_typography'         => __( 'Typography', 'the-events-calendar-addon' ),
+            'style_accordion_color_typography'   => __( 'Color Typography', 'the-events-calendar-addon' ),
+            'style_accordion_detail_typography'  => __( 'Detail Typography', 'the-events-calendar-addon' ),
+            'style_accordion_detail_color_typography' => __( 'Detail Color Typography', 'the-events-calendar-addon' ),
+            'style_accordion_filters_by'           => __( 'Filters By', 'the-events-calendar-addon' ),
+            'style_accordion_search_by'            => __( 'Search By', 'the-events-calendar-addon' ),
+            'search_by_title'                      => __( 'Title', 'the-events-calendar-addon' ),
+            'search_by_venue'                      => __( 'Venue', 'the-events-calendar-addon' ),
+            'search_by_organizer'                  => __( 'Organizer', 'the-events-calendar-addon' ),
+            'search_by_city'                       => __( 'City', 'the-events-calendar-addon' ),
+            'search_result_limit'                  => __( 'Result Limit', 'the-events-calendar-addon' ),
+            'search_result_limit__details'         => __( 'Maximum number of events returned by AJAX search.', 'the-events-calendar-addon' ),
+            'filter_by_date'                       => __( 'Date', 'the-events-calendar-addon' ),
+            'filter_by_day'                        => __( 'Day', 'the-events-calendar-addon' ),
+            'filter_by_category'                   => __( 'Category', 'the-events-calendar-addon' ),
+            'filter_by_tag'                        => __( 'Tag', 'the-events-calendar-addon' ),
+            'filter_by_venue'                      => __( 'Venue', 'the-events-calendar-addon' ),
+            'filter_by_city'                       => __( 'City', 'the-events-calendar-addon' ),
+            'filter_by_state'                      => __( 'State', 'the-events-calendar-addon' ),
+            'filter_by_country'                    => __( 'Country', 'the-events-calendar-addon' ),
+            'filter_by_organizer'                  => __( 'Organizer', 'the-events-calendar-addon' ),
+            'filter_by_cost'                       => __( 'Cost', 'the-events-calendar-addon' ),
+            'filter_by_time'                       => __( 'Time', 'the-events-calendar-addon' ),
+            'filter_by_featured'                   => __( 'Featured Events', 'the-events-calendar-addon' ),
+            'filter_by_event_status'               => __( 'Event Status', 'the-events-calendar-addon' ),
+            'teca_filter_date_clear'               => __( 'Clear', 'the-events-calendar-addon' ),
+            'teca_filter_all_venues'               => __( 'All Venues', 'the-events-calendar-addon' ),
+            'teca_filter_all_categories'           => __( 'All Categories', 'the-events-calendar-addon' ),
+            'teca_filter_all_tags'                 => __( 'All Tags', 'the-events-calendar-addon' ),
+            'teca_filter_all_organizers'           => __( 'All Organizers', 'the-events-calendar-addon' ),
+            'teca_filter_all_cities'               => __( 'All Cities', 'the-events-calendar-addon' ),
+            'teca_filter_all_states'               => __( 'All States', 'the-events-calendar-addon' ),
+            'teca_filter_all_countries'            => __( 'All Countries', 'the-events-calendar-addon' ),
+            'teca_filter_all_costs'                => __( 'All Costs', 'the-events-calendar-addon' ),
+            'teca_filter_cost_free'                => __( 'Free', 'the-events-calendar-addon' ),
+            'teca_filter_cost_paid'                => __( 'Paid', 'the-events-calendar-addon' ),
+            'teca_filter_all_times'                => __( 'All Times', 'the-events-calendar-addon' ),
+            'teca_filter_time_morning'             => __( 'Morning', 'the-events-calendar-addon' ),
+            'teca_filter_time_afternoon'           => __( 'Afternoon', 'the-events-calendar-addon' ),
+            'teca_filter_time_evening'             => __( 'Evening', 'the-events-calendar-addon' ),
+            'teca_filter_time_night'               => __( 'Night', 'the-events-calendar-addon' ),
+            'teca_filter_all_events'               => __( 'All Events', 'the-events-calendar-addon' ),
+            'teca_filter_featured_only'            => __( 'Featured Only', 'the-events-calendar-addon' ),
+            'teca_filter_not_featured'             => __( 'Non-Featured', 'the-events-calendar-addon' ),
+            'teca_filter_all_statuses'             => __( 'All Statuses', 'the-events-calendar-addon' ),
+            'teca_filter_status_upcoming'          => __( 'Upcoming', 'the-events-calendar-addon' ),
+            'teca_filter_status_ongoing'           => __( 'Ongoing', 'the-events-calendar-addon' ),
+            'teca_filter_status_past'              => __( 'Past', 'the-events-calendar-addon' ),
+            'teca_filters_by_name_empty_message'   => __( 'No events found.', 'the-events-calendar-addon' ),
 
-            'details-length-type'                => __( 'Details Length Type', 'the-events-calendar-addon2' ),
-            'details-length'                     => __( 'Details Length', 'the-events-calendar-addon2' ),
-            'words'                              => __( 'Words', 'the-events-calendar-addon2' ),
-            'letter'                             => __( 'Letter', 'the-events-calendar-addon2' ),
-            'details-length-type--help'          => __( 'Choose whether to limit details by word count or letter count', 'the-events-calendar-addon2' ),
-            'details-length--help'               => __( 'Increase or decrease the number of words or letters to display in event details', 'the-events-calendar-addon2' ),
+            'details-length-type'                => __( 'Details Length Type', 'the-events-calendar-addon' ),
+            'details-length'                     => __( 'Details Length', 'the-events-calendar-addon' ),
+            'words'                              => __( 'Words', 'the-events-calendar-addon' ),
+            'letter'                             => __( 'Letter', 'the-events-calendar-addon' ),
+            'details-length-type--help'          => __( 'Choose whether to limit details by word count or letter count', 'the-events-calendar-addon' ),
+            'details-length--help'               => __( 'Increase or decrease the number of words or letters to display in event details', 'the-events-calendar-addon' ),
 
-            'gs-teca-title'                          => __('Event Title', 'the-events-calendar-addon2'),
-            'gs-teca-cat'                            => __('Event Category', 'the-events-calendar-addon2'),
-            'gs-teca-tags'                           => __('Event Tags', 'the-events-calendar-addon2'),
-            'gs-teca-date'                           => __('Event Date', 'the-events-calendar-addon2'),
-            'gs-teca-details'                        => __('Event Details', 'the-events-calendar-addon2'),
-            'gs-teca-thumbnail'                      => __('Event Thumbnail', 'the-events-calendar-addon2'),
-            'gs-teca-organizer'                      => __('Event Organizer', 'the-events-calendar-addon2'),
-            'gs-teca-venue'                          => __('Event Venue' , 'the-events-calendar-addon2'),
-            'gs-teca-map'                            => __('Map', 'the-events-calendar-addon2'),
-            'gs-teca-related-events'                 => __('Related Events', 'the-events-calendar-addon2'),
-            'show_related_events'                    => __('Show Related Events', 'the-events-calendar-addon2'),
-            'show_related_events__details'           => __('Display related upcoming events below the single event page details.', 'the-events-calendar-addon2'),
-            'related_events_title'                   => __('Related Events Title', 'the-events-calendar-addon2'),
-            'related_events_title__details'          => __('Heading text for the single page related events section.', 'the-events-calendar-addon2'),
-            'related_events_limit'                   => __('Related Events Limit', 'the-events-calendar-addon2'),
-            'related_events_limit__details'          => __('Maximum number of related events to display on the single page (1-12).', 'the-events-calendar-addon2'),
-            'related_events_sources'                 => __('Related Events Based On', 'the-events-calendar-addon2'),
-            'related_events_sources__details'        => __('Choose how single page related events are matched. Sources are tried in order until the limit is reached.', 'the-events-calendar-addon2'),
-            'popup_show_related_events'                    => __('Show Related Events', 'the-events-calendar-addon2'),
-            'popup_show_related_events__details'           => __('Display related upcoming events below the popup event details.', 'the-events-calendar-addon2'),
-            'popup_related_events_title'                   => __('Related Events Title', 'the-events-calendar-addon2'),
-            'popup_related_events_title__details'          => __('Heading text for the popup related events section.', 'the-events-calendar-addon2'),
-            'popup_related_events_limit'                   => __('Related Events Limit', 'the-events-calendar-addon2'),
-            'popup_related_events_limit__details'          => __('Maximum number of related events to display in the popup (1-12).', 'the-events-calendar-addon2'),
-            'popup_related_events_sources'                 => __('Related Events Based On', 'the-events-calendar-addon2'),
-            'popup_related_events_sources__details'        => __('Choose how popup related events are matched. Sources are tried in order until the limit is reached.', 'the-events-calendar-addon2'),
+            'gs-teca-title'                          => __('Event Title', 'the-events-calendar-addon'),
+            'gs-teca-cat'                            => __('Event Category', 'the-events-calendar-addon'),
+            'gs-teca-tags'                           => __('Event Tags', 'the-events-calendar-addon'),
+            'gs-teca-date'                           => __('Event Date', 'the-events-calendar-addon'),
+            'gs-teca-details'                        => __('Event Details', 'the-events-calendar-addon'),
+            'gs-teca-thumbnail'                      => __('Event Thumbnail', 'the-events-calendar-addon'),
+            'gs-teca-organizer'                      => __('Event Organizer', 'the-events-calendar-addon'),
+            'gs-teca-venue'                          => __('Event Venue' , 'the-events-calendar-addon'),
+            'gs-teca-map'                            => __('Map', 'the-events-calendar-addon'),
+            'gs-teca-related-events'                 => __('Related Events', 'the-events-calendar-addon'),
+            'show_related_events'                    => __('Show Related Events', 'the-events-calendar-addon'),
+            'show_related_events__details'           => __('Display related upcoming events below the single event page details.', 'the-events-calendar-addon'),
+            'related_events_title'                   => __('Related Events Title', 'the-events-calendar-addon'),
+            'related_events_title__details'          => __('Heading text for the single page related events section.', 'the-events-calendar-addon'),
+            'related_events_limit'                   => __('Related Events Limit', 'the-events-calendar-addon'),
+            'related_events_limit__details'          => __('Maximum number of related events to display on the single page (1-12).', 'the-events-calendar-addon'),
+            'related_events_sources'                 => __('Related Events Based On', 'the-events-calendar-addon'),
+            'related_events_sources__details'        => __('Choose how single page related events are matched. Sources are tried in order until the limit is reached.', 'the-events-calendar-addon'),
+            'popup_show_related_events'                    => __('Show Related Events', 'the-events-calendar-addon'),
+            'popup_show_related_events__details'           => __('Display related upcoming events below the popup event details.', 'the-events-calendar-addon'),
+            'popup_related_events_title'                   => __('Related Events Title', 'the-events-calendar-addon'),
+            'popup_related_events_title__details'          => __('Heading text for the popup related events section.', 'the-events-calendar-addon'),
+            'popup_related_events_limit'                   => __('Related Events Limit', 'the-events-calendar-addon'),
+            'popup_related_events_limit__details'          => __('Maximum number of related events to display in the popup (1-12).', 'the-events-calendar-addon'),
+            'popup_related_events_sources'                 => __('Related Events Based On', 'the-events-calendar-addon'),
+            'popup_related_events_sources__details'        => __('Choose how popup related events are matched. Sources are tried in order until the limit is reached.', 'the-events-calendar-addon'),
 
-            'gsp-teca-title'                         => __('Event Title', 'the-events-calendar-addon2'),
-            'gsp-teca-cat'                           => __('Event Category', 'the-events-calendar-addon2'),
-            'gsp-teca-tags'                          => __('Event Tags', 'the-events-calendar-addon2'),
-            'gsp-teca-date'                          => __('Event Date', 'the-events-calendar-addon2'),
-            'gsp-teca-details'                       => __('Event Details', 'the-events-calendar-addon2'),
-            'gsp-teca-organizer'                     => __('Event Organizer', 'the-events-calendar-addon2'),
-            'gsp-teca-venue'                         => __('Event Venue', 'the-events-calendar-addon2'),
-            'gsp-teca-thumbnail'                     => __('Event Thumbnail' , 'the-events-calendar-addon2'),
-            'gsp-teca-time'                          => __('Event Time', 'the-events-calendar-addon2'),
-            'gsp-teca-cost'                          => __('Event Cost', 'the-events-calendar-addon2'),
-            'gsp-teca-website'                       => __('Event Website', 'the-events-calendar-addon2'),
-            'gsp-teca-button'                        => __( 'View Details', 'the-events-calendar-addon2' ),
-            'gs-teca-view-details-button'            => __( 'View Details', 'the-events-calendar-addon2' ),
-            'gs-teca-google-calendar'                => __( 'Google Calendar', 'the-events-calendar-addon2' ),
+            'gsp-teca-title'                         => __('Event Title', 'the-events-calendar-addon'),
+            'gsp-teca-cat'                           => __('Event Category', 'the-events-calendar-addon'),
+            'gsp-teca-tags'                          => __('Event Tags', 'the-events-calendar-addon'),
+            'gsp-teca-date'                          => __('Event Date', 'the-events-calendar-addon'),
+            'gsp-teca-details'                       => __('Event Details', 'the-events-calendar-addon'),
+            'gsp-teca-organizer'                     => __('Event Organizer', 'the-events-calendar-addon'),
+            'gsp-teca-venue'                         => __('Event Venue', 'the-events-calendar-addon'),
+            'gsp-teca-thumbnail'                     => __('Event Thumbnail' , 'the-events-calendar-addon'),
+            'gsp-teca-time'                          => __('Event Time', 'the-events-calendar-addon'),
+            'gsp-teca-cost'                          => __('Event Cost', 'the-events-calendar-addon'),
+            'gsp-teca-website'                       => __('Event Website', 'the-events-calendar-addon'),
+            'gsp-teca-button'                        => __( 'View Details', 'the-events-calendar-addon' ),
+            'gs-teca-view-details-button'            => __( 'View Details', 'the-events-calendar-addon' ),
+            'gs-teca-google-calendar'                => __( 'Google Calendar', 'the-events-calendar-addon' ),
 
-            'single_page_style'                      => __('Single Page Style', 'the-events-calendar-addon2'),
-            'single_page_style_pro_message'          => __( 'This Single Style is available in the Pro version only.', 'the-events-calendar-addon2' ),
-            'single_teca_page'                       => __('Event Single Page Style', 'the-events-calendar-addon2'),
-            'event_cat'                              => __('Category Archive Style', 'the-events-calendar-addon2'),
-            'event_tag'                              => __('Tag Archive Style', 'the-events-calendar-addon2'),
-            'event_select_shortcode'                 => __('Select Shortcode', 'the-events-calendar-addon2'),
-            'event_replace_type'                     => __('Way To Retrieve Page', 'the-events-calendar-addon2'),
+            'single_page_style'                      => __('Single Page Style', 'the-events-calendar-addon'),
+            'single_page_style_pro_message'          => __( 'This Single Style is available in the Pro version only.', 'the-events-calendar-addon' ),
+            'single_teca_page'                       => __('Event Single Page Style', 'the-events-calendar-addon'),
+            'event_cat'                              => __('Category Archive Style', 'the-events-calendar-addon'),
+            'event_tag'                              => __('Tag Archive Style', 'the-events-calendar-addon'),
+            'event_select_shortcode'                 => __('Select Shortcode', 'the-events-calendar-addon'),
+            'event_replace_type'                     => __('Way To Retrieve Page', 'the-events-calendar-addon'),
 
-            'include_tags'                           => __( 'Tags', 'the-events-calendar-addon2' ),
-			'exclude_tags'                           => __( 'Tags', 'the-events-calendar-addon2' ),
-            'group'                                  => __( 'Categories', 'the-events-calendar-addon2' ),
-			'group__help'                            => __( 'Select specific event category to show that specific category events', 'the-events-calendar-addon2' ),
-			'exclude_group'                          => __( 'Categories', 'the-events-calendar-addon2' ),
-			'exclude_group__help'                    => __( 'Select specific event category to hide that specific category events', 'the-events-calendar-addon2' ),
+            'include_tags'                           => __( 'Tags', 'the-events-calendar-addon' ),
+			'exclude_tags'                           => __( 'Tags', 'the-events-calendar-addon' ),
+            'group'                                  => __( 'Categories', 'the-events-calendar-addon' ),
+			'group__help'                            => __( 'Select specific event category to show that specific category events', 'the-events-calendar-addon' ),
+			'exclude_group'                          => __( 'Categories', 'the-events-calendar-addon' ),
+			'exclude_group__help'                    => __( 'Select specific event category to hide that specific category events', 'the-events-calendar-addon' ),
 
-            'cat-order-by'                           => __( 'Category Order By', 'the-events-calendar-addon2' ),
-			'cat_order'                              => __( 'Category Order', 'the-events-calendar-addon2' ),
+            'cat-order-by'                           => __( 'Category Order By', 'the-events-calendar-addon' ),
+			'cat_order'                              => __( 'Category Order', 'the-events-calendar-addon' ),
 
-            'select-by-title'                        => __('Specific Events', 'the-events-calendar-addon2'),
-            'deselect-by-title'                      => __('Exclude Specific Events', 'the-events-calendar-addon2'),
+            'select-by-title'                        => __('Specific Events', 'the-events-calendar-addon'),
+            'deselect-by-title'                      => __('Exclude Specific Events', 'the-events-calendar-addon'),
 
-            'posts'                                  => __('Posts', 'the-events-calendar-addon2'),
-            'posts--placeholder'                     => __('Posts', 'the-events-calendar-addon2'),
-            'posts--help'                            => __('Set max posts numbers you want to show, set -1 for all posts', 'the-events-calendar-addon2'),
+            'posts'                                  => __('Posts', 'the-events-calendar-addon'),
+            'posts--placeholder'                     => __('Posts', 'the-events-calendar-addon'),
+            'posts--help'                            => __('Set max posts numbers you want to show, set -1 for all posts', 'the-events-calendar-addon'),
 
-            'order'                                  => __('Order', 'the-events-calendar-addon2'),
-            'order--placeholder'                     => __('Order', 'the-events-calendar-addon2'),
+            'order'                                  => __('Order', 'the-events-calendar-addon'),
+            'order--placeholder'                     => __('Order', 'the-events-calendar-addon'),
 
-            'order-by'                               => __('Order By', 'the-events-calendar-addon2'),
+            'order-by'                               => __('Order By', 'the-events-calendar-addon'),
 
-            'global-settings-for-teca'               => __('Global Settings for The Events Calendar Addon', 'the-events-calendar-addon2'),
-            'preference'                             => __('Preference', 'the-events-calendar-addon2'),
-            'save-preference'                        => __('Save Preference', 'the-events-calendar-addon2'),
+            'global-settings-for-teca'               => __('Global Settings for The Events Calendar Addon', 'the-events-calendar-addon'),
+            'preference'                             => __('Preference', 'the-events-calendar-addon'),
+            'save-preference'                        => __('Save Preference', 'the-events-calendar-addon'),
             
-            'custom-css'                             => __('Custom CSS', 'the-events-calendar-addon2'),
-            'anchor-tag-rel'                         => __('Anchor Tag Rel', 'the-events-calendar-addon2'),
-            'anchor_tag_rel--details'                => __( 'Select Anchor Tag rel attribute\'s value, to improve security and SEO, by default the value is dofollow.', 'the-events-calendar-addon2' ),
+            'custom-css'                             => __('Custom CSS', 'the-events-calendar-addon'),
+            'anchor-tag-rel'                         => __('Anchor Tag Rel', 'the-events-calendar-addon'),
+            'anchor_tag_rel--details'                => __( 'Select Anchor Tag rel attribute\'s value, to improve security and SEO, by default the value is dofollow.', 'the-events-calendar-addon' ),
             
-            'install-demo-data'                      => __( 'Install Demo Data', 'the-events-calendar-addon2' ),
-			'install-demo-data-description'          => __( 'Quick start with GS Plugins by installing the demo data', 'the-events-calendar-addon2' ),
+            'install-demo-data'                      => __( 'Install Demo Data', 'the-events-calendar-addon' ),
+			'install-demo-data-description'          => __( 'Quick start with GS Plugins by installing the demo data', 'the-events-calendar-addon' ),
         ];
     }
 
@@ -1285,15 +1285,15 @@ final class Builder {
     public function get_filter_cat_options() {
         return [
             [
-                'label' => __( 'Left', 'the-events-calendar-addon2' ),
+                'label' => __( 'Left', 'the-events-calendar-addon' ),
                 'value' => 'left',
             ],
             [
-                'label' => __( 'Center', 'the-events-calendar-addon2' ),
+                'label' => __( 'Center', 'the-events-calendar-addon' ),
                 'value' => 'center',
             ],
             [
-                'label' => __( 'Right', 'the-events-calendar-addon2' ),
+                'label' => __( 'Right', 'the-events-calendar-addon' ),
                 'value' => 'right',
             ],
         ];
@@ -1303,27 +1303,27 @@ final class Builder {
 
         $columns = [
             [
-                'label' => __( '1 Column', 'the-events-calendar-addon2' ),
+                'label' => __( '1 Column', 'the-events-calendar-addon' ),
                 'value' => '12'
             ],
             [
-                'label' => __( '2 Columns', 'the-events-calendar-addon2' ),
+                'label' => __( '2 Columns', 'the-events-calendar-addon' ),
                 'value' => '6'
             ],
             [
-                'label' => __( '3 Columns', 'the-events-calendar-addon2' ),
+                'label' => __( '3 Columns', 'the-events-calendar-addon' ),
                 'value' => '4'
             ],
             [
-                'label' => __( '4 Columns', 'the-events-calendar-addon2' ),
+                'label' => __( '4 Columns', 'the-events-calendar-addon' ),
                 'value' => '3'
             ],
             [
-                'label' => __( '5 Columns', 'the-events-calendar-addon2' ),
+                'label' => __( '5 Columns', 'the-events-calendar-addon' ),
                 'value' => '2_4'
             ],
             [
-                'label' => __( '6 Columns', 'the-events-calendar-addon2' ),
+                'label' => __( '6 Columns', 'the-events-calendar-addon' ),
                 'value' => '2'
             ],
         ];
@@ -1384,22 +1384,22 @@ final class Builder {
             'date_format_presets'                   => teca_get_date_format_preset_options(),
             'order' => [
                 [
-                    'label' => __( 'DESC', 'the-events-calendar-addon2' ),
+                    'label' => __( 'DESC', 'the-events-calendar-addon' ),
                     'value' => 'DESC'
                 ],
                 [
-                    'label' => __( 'ASC', 'the-events-calendar-addon2' ),
+                    'label' => __( 'ASC', 'the-events-calendar-addon' ),
                     'value' => 'ASC'
                 ],
             ],
 
             'cat_order' => array(
 				array(
-					'label' => __( 'ASC', 'the-events-calendar-addon2' ),
+					'label' => __( 'ASC', 'the-events-calendar-addon' ),
 					'value' => 'asc',
 				),
 				array(
-					'label' => __( 'DESC', 'the-events-calendar-addon2' ),
+					'label' => __( 'DESC', 'the-events-calendar-addon' ),
 					'value' => 'desc',
 				),
 			),
@@ -1410,11 +1410,11 @@ final class Builder {
     public function get_details_length_type_options() {
         return array(
             array(
-                'label' => __( 'Words', 'the-events-calendar-addon2' ),
+                'label' => __( 'Words', 'the-events-calendar-addon' ),
                 'value' => 'words',
             ),
             array(
-                'label' => __( 'Letter', 'the-events-calendar-addon2' ),
+                'label' => __( 'Letter', 'the-events-calendar-addon' ),
                 'value' => 'letter',
             ),
         );
@@ -1424,23 +1424,23 @@ final class Builder {
 
         $options = [
             [
-                'label' => __( 'Post ID', 'the-events-calendar-addon2' ),
+                'label' => __( 'Post ID', 'the-events-calendar-addon' ),
                 'value' => 'ID',
             ],
             [
-                'label' => __( 'Post Name', 'the-events-calendar-addon2' ),
+                'label' => __( 'Post Name', 'the-events-calendar-addon' ),
                 'value' => 'title',
             ],
             [
-                'label' => __( 'Date', 'the-events-calendar-addon2' ),
+                'label' => __( 'Date', 'the-events-calendar-addon' ),
                 'value' => 'date',
             ],
             [
-                'label' => __( 'Random', 'the-events-calendar-addon2' ),
+                'label' => __( 'Random', 'the-events-calendar-addon' ),
                 'value' => 'rand',
             ],
             [
-                'label' => __( 'Custom Order', 'the-events-calendar-addon2' ),
+                'label' => __( 'Custom Order', 'the-events-calendar-addon' ),
                 'value' => 'menu_order',
             ]
         ];
@@ -1456,19 +1456,19 @@ final class Builder {
 
         $options = [
             [
-                'label' => __( 'Default', 'the-events-calendar-addon2' ),
+                'label' => __( 'Default', 'the-events-calendar-addon' ),
                 'value' => 'none',
             ],
             [
-                'label' => __( 'Category ID', 'the-events-calendar-addon2' ),
+                'label' => __( 'Category ID', 'the-events-calendar-addon' ),
                 'value' => 'id',
             ],
             [
-                'label' => __( 'Category Name', 'the-events-calendar-addon2' ),
+                'label' => __( 'Category Name', 'the-events-calendar-addon' ),
                 'value' => 'name',
             ],
             [
-                'label' => __( 'Custom Order', 'the-events-calendar-addon2' ),
+                'label' => __( 'Custom Order', 'the-events-calendar-addon' ),
                 'value' => 'term_order',
             ]
         ];
@@ -1484,43 +1484,43 @@ final class Builder {
         
         $styles = [
             [
-                'label' => __('None', 'the-events-calendar-addon2'),
+                'label' => __('None', 'the-events-calendar-addon'),
                 'value' => 'none'
             ],
             [
-                'label' => __('Blur', 'the-events-calendar-addon2'),
+                'label' => __('Blur', 'the-events-calendar-addon'),
                 'value' => 'blur'
             ],
             [
-                'label' => __('Brightness', 'the-events-calendar-addon2'),
+                'label' => __('Brightness', 'the-events-calendar-addon'),
                 'value' => 'brightness'
             ],
             [
-                'label' => __('Contrast', 'the-events-calendar-addon2'),
+                'label' => __('Contrast', 'the-events-calendar-addon'),
                 'value' => 'contrast'
             ],
             [
-                'label' => __('Grayscale', 'the-events-calendar-addon2'),
+                'label' => __('Grayscale', 'the-events-calendar-addon'),
                 'value' => 'grayscale'
             ],
             [
-                'label' => __('Hue Rotate', 'the-events-calendar-addon2'),
+                'label' => __('Hue Rotate', 'the-events-calendar-addon'),
                 'value' => 'hue_rotate'
             ],
             [
-                'label' => __('Invert', 'the-events-calendar-addon2'),
+                'label' => __('Invert', 'the-events-calendar-addon'),
                 'value' => 'invert'
             ],
             [
-                'label' => __('Opacity', 'the-events-calendar-addon2'),
+                'label' => __('Opacity', 'the-events-calendar-addon'),
                 'value' => 'opacity'
             ],
             [
-                'label' => __('Saturate', 'the-events-calendar-addon2'),
+                'label' => __('Saturate', 'the-events-calendar-addon'),
                 'value' => 'saturate'
             ],
             [
-                'label' => __('Sepia', 'the-events-calendar-addon2'),
+                'label' => __('Sepia', 'the-events-calendar-addon'),
                 'value' => 'sepia'
             ]
         ];
@@ -1542,15 +1542,15 @@ final class Builder {
     public static function get_all_popup_style_options() {
         return array(
             array(
-                'label' => __( 'Default', 'the-events-calendar-addon2' ),
+                'label' => __( 'Default', 'the-events-calendar-addon' ),
                 'value' => 'default',
             ),
             array(
-                'label' => __( 'Style One', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style One', 'the-events-calendar-addon' ),
                 'value' => 'style-one',
             ),
             array(
-                'label' => __( 'Style Two', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style Two', 'the-events-calendar-addon' ),
                 'value' => 'style-two',
             ),
         );
@@ -1616,19 +1616,19 @@ final class Builder {
     public static function get_all_pagination_type_options() {
         return array(
             array(
-                'label' => __( 'Normal Pagination', 'the-events-calendar-addon2' ),
+                'label' => __( 'Normal Pagination', 'the-events-calendar-addon' ),
                 'value' => 'normal-pagination',
             ),
             array(
-                'label' => __( 'Ajax Pagination', 'the-events-calendar-addon2' ),
+                'label' => __( 'Ajax Pagination', 'the-events-calendar-addon' ),
                 'value' => 'ajax-pagination',
             ),
             array(
-                'label' => __( 'Load More Button', 'the-events-calendar-addon2' ),
+                'label' => __( 'Load More Button', 'the-events-calendar-addon' ),
                 'value' => 'load-more-button',
             ),
             array(
-                'label' => __( 'Load More on Scroll', 'the-events-calendar-addon2' ),
+                'label' => __( 'Load More on Scroll', 'the-events-calendar-addon' ),
                 'value' => 'load-more-scroll',
             ),
         );
@@ -1685,47 +1685,47 @@ final class Builder {
        
         $styles = array(
 				array(
-					'label' => __( 'Default', 'the-events-calendar-addon2' ),
+					'label' => __( 'Default', 'the-events-calendar-addon' ),
 					'value' => 'filter--default',
 				),
 				array(
-					'label' => __( 'Style 01', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 01', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-01',
 				),
 				array(
-					'label' => __( 'Style 02', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 02', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-02',
 				),
 				array(
-					'label' => __( 'Style 03', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 03', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-03',
 				),
 				array(
-					'label' => __( 'Style 04', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 04', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-04',
 				),
 				array(
-					'label' => __( 'Style 05', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 05', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-05',
 				),
 				array(
-					'label' => __( 'Style 06', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 06', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-06',
 				),
 				array(
-					'label' => __( 'Style 07', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 07', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-07',
 				),
 				array(
-					'label' => __( 'Style 08', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 08', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-08',
 				),
 				array(
-					'label' => __( 'Style 09', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 09', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-09',
 				),
 				array(
-					'label' => __( 'Style 10', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 10', 'the-events-calendar-addon' ),
 					'value' => 'filter--style-10',
 				),
             );    
@@ -1738,39 +1738,39 @@ final class Builder {
     public function get_teca_ctrl_pos_options() {
         return [
             [
-                'label' => __( 'Bottom', 'the-events-calendar-addon2' ),
+                'label' => __( 'Bottom', 'the-events-calendar-addon' ),
                 'value' => 'carousel-navs-pos--bottom',
             ],
             [
-                'label' => __( 'Center', 'the-events-calendar-addon2' ),
+                'label' => __( 'Center', 'the-events-calendar-addon' ),
                 'value' => 'carousel-navs-pos--center',
             ],
             // [
-            //     'label' => __( 'Center Outside', 'the-events-calendar-addon2' ),
+            //     'label' => __( 'Center Outside', 'the-events-calendar-addon' ),
             //     'value' => 'carousel-navs-pos--center-outside',
             // ],
             // [
-            //     'label' => __( 'Center Inside', 'the-events-calendar-addon2' ),
+            //     'label' => __( 'Center Inside', 'the-events-calendar-addon' ),
             //     'value' => 'carousel-navs-pos--center-inside',
             // ],
             [
-                'label' => __( 'Top Right', 'the-events-calendar-addon2' ),
+                'label' => __( 'Top Right', 'the-events-calendar-addon' ),
                 'value' => 'carousel-navs-pos--top-right',
             ],
             [
-                'label' => __( 'Top Center', 'the-events-calendar-addon2' ),
+                'label' => __( 'Top Center', 'the-events-calendar-addon' ),
                 'value' => 'carousel-navs-pos--top-center',
             ],
             [
-                'label' => __( 'Top Left', 'the-events-calendar-addon2' ),
+                'label' => __( 'Top Left', 'the-events-calendar-addon' ),
                 'value' => 'carousel-navs-pos--top-left',
             ],
             [
-                'label' => __( 'Verticle Right', 'the-events-calendar-addon2' ),
+                'label' => __( 'Verticle Right', 'the-events-calendar-addon' ),
                 'value' => 'carousel-navs-pos--verticle-right',
             ],
             [
-                'label' => __( 'Verticle Left', 'the-events-calendar-addon2' ),
+                'label' => __( 'Verticle Left', 'the-events-calendar-addon' ),
                 'value' => 'carousel-navs-pos--verticle-left',
             ]
         ];
@@ -1781,51 +1781,51 @@ final class Builder {
         $styles = array(
 
 				array(
-					'label' => __( 'Default', 'the-events-calendar-addon2' ),
+					'label' => __( 'Default', 'the-events-calendar-addon' ),
 					'value' => 'nav--default',
 				),
 				array(
-					'label' => __( 'Style 01', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 01', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-01',
 				),
 				array(
-					'label' => __( 'Style 02', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 02', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-02',
 				),
 				array(
-					'label' => __( 'Style 03', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 03', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-03',
 				),
 				array(
-					'label' => __( 'Style 04', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 04', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-04',
 				),
 				array(
-					'label' => __( 'Style 05', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 05', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-05',
 				),
 				array(
-					'label' => __( 'Style 06', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 06', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-06',
 				),
 				array(
-					'label' => __( 'Style 07', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 07', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-07',
 				),
 				array(
-					'label' => __( 'Style 08', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 08', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-08',
 				),
 				array(
-					'label' => __( 'Style 09', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 09', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-09',
 				),
 				array(
-					'label' => __( 'Style 10', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 10', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-10',
 				),
 				array(
-					'label' => __( 'Style 11', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 11', 'the-events-calendar-addon' ),
 					'value' => 'nav--style-11',
 				),
 			);
@@ -1839,47 +1839,47 @@ final class Builder {
 
         $styles = array(
 				array(
-					'label' => __( 'Default', 'the-events-calendar-addon2' ),
+					'label' => __( 'Default', 'the-events-calendar-addon' ),
 					'value' => 'dot--default',
 				),
 				array(
-					'label' => __( 'Style 01', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 01', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-01',
 				),
 				array(
-					'label' => __( 'Style 02', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 02', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-02',
 				),
 				array(
-					'label' => __( 'Style 03', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 03', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-03',
 				),
 				array(
-					'label' => __( 'Style 04', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 04', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-04',
 				),
 				array(
-					'label' => __( 'Style 05', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 05', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-05',
 				),
 				array(
-					'label' => __( 'Style 06', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 06', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-06',
 				),
 				array(
-					'label' => __( 'Style 07', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 07', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-07',
 				),
 				array(
-					'label' => __( 'Style 08', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 08', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-08',
 				),
 				array(
-					'label' => __( 'Style 09', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 09', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-09',
 				),
 				array(
-					'label' => __( 'Style 10', 'the-events-calendar-addon2' ),
+					'label' => __( 'Style 10', 'the-events-calendar-addon' ),
 					'value' => 'dot--style-10',
 				),
 		);
@@ -1902,39 +1902,39 @@ final class Builder {
     public static function get_all_view_type_options() {
         return [
             [
-                'label' => __('Grid', 'the-events-calendar-addon2'),
+                'label' => __('Grid', 'the-events-calendar-addon'),
                 'value' => 'grid'
             ],
             [
-                'label' => __('Masonry', 'the-events-calendar-addon2'),
+                'label' => __('Masonry', 'the-events-calendar-addon'),
                 'value' => 'masonry'
             ],
             [
-                'label' => __( 'Calendar', 'the-events-calendar-addon2' ),
+                'label' => __( 'Calendar', 'the-events-calendar-addon' ),
                 'value' => 'calendar',
             ],
             [
-                'label' => __('Slider', 'the-events-calendar-addon2'),
+                'label' => __('Slider', 'the-events-calendar-addon'),
                 'value' => 'carousel'
             ],
             [
-                'label' => __('Ticker', 'the-events-calendar-addon2'),
+                'label' => __('Ticker', 'the-events-calendar-addon'),
                 'value' => 'ticker'
             ],
             [
-                'label' => __('Filter', 'the-events-calendar-addon2'),
+                'label' => __('Filter', 'the-events-calendar-addon'),
                 'value' => 'filter'
             ],
             [
-                'label' => __( 'Events Section', 'the-events-calendar-addon2' ),
+                'label' => __( 'Events Section', 'the-events-calendar-addon' ),
                 'value' => 'events-section',
             ],
             [
-                'label' => __( 'Venue Template', 'the-events-calendar-addon2' ),
+                'label' => __( 'Venue Template', 'the-events-calendar-addon' ),
                 'value' => 'venue_template',
             ],
             [
-                'label' => __( 'Organizer Template', 'the-events-calendar-addon2' ),
+                'label' => __( 'Organizer Template', 'the-events-calendar-addon' ),
                 'value' => 'organizer_template',
             ],
         ];
@@ -1989,17 +1989,17 @@ final class Builder {
 
     public function get_calendar_sub_layout_options( $prefix ) {
         $labels = array(
-            1 => __( 'Layout 1', 'the-events-calendar-addon2' ),
-            2 => __( 'Layout 2', 'the-events-calendar-addon2' ),
-            3 => __( 'Layout 3', 'the-events-calendar-addon2' ),
+            1 => __( 'Layout 1', 'the-events-calendar-addon' ),
+            2 => __( 'Layout 2', 'the-events-calendar-addon' ),
+            3 => __( 'Layout 3', 'the-events-calendar-addon' ),
         );
 
         $names = array(
-            'daily'     => __( 'Daily', 'the-events-calendar-addon2' ),
-            'weekly'    => __( 'Weekly', 'the-events-calendar-addon2' ),
-            'monthly'   => __( 'Monthly', 'the-events-calendar-addon2' ),
-            'quarterly' => __( 'Quarterly', 'the-events-calendar-addon2' ),
-            'yearly'    => __( 'Yearly', 'the-events-calendar-addon2' ),
+            'daily'     => __( 'Daily', 'the-events-calendar-addon' ),
+            'weekly'    => __( 'Weekly', 'the-events-calendar-addon' ),
+            'monthly'   => __( 'Monthly', 'the-events-calendar-addon' ),
+            'quarterly' => __( 'Quarterly', 'the-events-calendar-addon' ),
+            'yearly'    => __( 'Yearly', 'the-events-calendar-addon' ),
         );
 
         $prefix  = sanitize_key( (string) $prefix );
@@ -2019,15 +2019,15 @@ final class Builder {
     public function get_organizer_template_layout_options() {
         return array(
             array(
-                'label' => __( 'Layout 1', 'the-events-calendar-addon2' ),
+                'label' => __( 'Layout 1', 'the-events-calendar-addon' ),
                 'value' => 'layout-1',
             ),
             array(
-                'label' => __( 'Layout 2', 'the-events-calendar-addon2' ),
+                'label' => __( 'Layout 2', 'the-events-calendar-addon' ),
                 'value' => 'layout-2',
             ),
             array(
-                'label' => __( 'Layout 3', 'the-events-calendar-addon2' ),
+                'label' => __( 'Layout 3', 'the-events-calendar-addon' ),
                 'value' => 'layout-3',
             ),
         );
@@ -2036,15 +2036,15 @@ final class Builder {
     public function get_venue_template_layout_options() {
         return array(
             array(
-                'label' => __( 'Layout 1', 'the-events-calendar-addon2' ),
+                'label' => __( 'Layout 1', 'the-events-calendar-addon' ),
                 'value' => 'layout-1',
             ),
             array(
-                'label' => __( 'Layout 2', 'the-events-calendar-addon2' ),
+                'label' => __( 'Layout 2', 'the-events-calendar-addon' ),
                 'value' => 'layout-2',
             ),
             array(
-                'label' => __( 'Layout 3', 'the-events-calendar-addon2' ),
+                'label' => __( 'Layout 3', 'the-events-calendar-addon' ),
                 'value' => 'layout-3',
             ),
         );
@@ -2053,15 +2053,15 @@ final class Builder {
     public function get_events_section_layout_options() {
         return array(
             array(
-                'label' => __( 'Event Layout 1', 'the-events-calendar-addon2' ),
+                'label' => __( 'Event Layout 1', 'the-events-calendar-addon' ),
                 'value' => 'event-layout-1',
             ),
             array(
-                'label' => __( 'Event Layout 2', 'the-events-calendar-addon2' ),
+                'label' => __( 'Event Layout 2', 'the-events-calendar-addon' ),
                 'value' => 'event-layout-2',
             ),
             array(
-                'label' => __( 'Event Layout 3', 'the-events-calendar-addon2' ),
+                'label' => __( 'Event Layout 3', 'the-events-calendar-addon' ),
                 'value' => 'event-layout-3',
             ),
         );
@@ -2076,107 +2076,107 @@ final class Builder {
 
         return [
             [
-                'label' => __('Style 01', 'the-events-calendar-addon2'),
+                'label' => __('Style 01', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-style-1'
             ],
             [
-                'label' => __('Style 02', 'the-events-calendar-addon2'),
+                'label' => __('Style 02', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-style-2'
             ],
             [
-                'label' => __('Style 03', 'the-events-calendar-addon2'),
+                'label' => __('Style 03', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-style-3'
             ],
             [
-                'label' => __('Style 04', 'the-events-calendar-addon2'),
+                'label' => __('Style 04', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-style-4'
             ],
             [
-                'label' => __('Style 05', 'the-events-calendar-addon2'),
+                'label' => __('Style 05', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-style-5'
             ],
             [
-                'label' => __( 'Style 06', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style 06', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-style-6'
             ],
             [
-                'label' => __( 'Style 07', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style 07', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-style-7'
             ],
             [
-                'label' => __( 'Style 08', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style 08', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-style-8'
             ],
             [
-                'label' => __( 'Style 09', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style 09', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-style-9'
             ],
             [
-                'label' => __( 'Style 10', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style 10', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-style-10'
             ],
             [
-                'label' => __('List 01', 'the-events-calendar-addon2'),
+                'label' => __('List 01', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-list-style-1'
             ],
             [
-                'label' => __('List 02', 'the-events-calendar-addon2'),
+                'label' => __('List 02', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-list-style-2'
             ],
             [
-                'label' => __('List 03', 'the-events-calendar-addon2'),
+                'label' => __('List 03', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-list-style-3'
             ],
             [
-                'label' => __('List 04', 'the-events-calendar-addon2'),
+                'label' => __('List 04', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-list-style-4'
             ],
             [
-                'label' => __('List 05', 'the-events-calendar-addon2'),
+                'label' => __('List 05', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-list-style-5'
             ],
             [
-                'label' => __('Table 01', 'the-events-calendar-addon2'),
+                'label' => __('Table 01', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-table-style-1'
             ],
             [
-                'label' => __('Table 02', 'the-events-calendar-addon2'),
+                'label' => __('Table 02', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-table-style-2'
             ],
             [
-                'label' => __('Table 03', 'the-events-calendar-addon2'),
+                'label' => __('Table 03', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-table-style-3'
             ],
             [
-                'label' => __('Table 04', 'the-events-calendar-addon2'),
+                'label' => __('Table 04', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-table-style-4'
             ],
             [
-                'label' => __('Table 05', 'the-events-calendar-addon2'),
+                'label' => __('Table 05', 'the-events-calendar-addon'),
                 'value' => 'gs-teca-table-style-5'
             ],
             [
-                'label' => __( 'Timeline 1', 'the-events-calendar-addon2' ),
+                'label' => __( 'Timeline 1', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-timeline-1',
             ],
             [
-                'label' => __( 'Timeline 2', 'the-events-calendar-addon2' ),
+                'label' => __( 'Timeline 2', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-timeline-2',
             ],
             [
-                'label' => __( 'Timeline 3', 'the-events-calendar-addon2' ),
+                'label' => __( 'Timeline 3', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-timeline-3',
             ],
             [
-                'label' => __( 'Accordion 1', 'the-events-calendar-addon2' ),
+                'label' => __( 'Accordion 1', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-accordion-1',
             ],
             [
-                'label' => __( 'Accordion 2', 'the-events-calendar-addon2' ),
+                'label' => __( 'Accordion 2', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-accordion-2',
             ],
             [
-                'label' => __( 'Accordion 3', 'the-events-calendar-addon2' ),
+                'label' => __( 'Accordion 3', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-accordion-3',
             ],
         ];
@@ -2227,11 +2227,11 @@ final class Builder {
     public function get_filters_by_options() {
         return [
             [
-                'label' => __( 'Categories', 'the-events-calendar-addon2' ),
+                'label' => __( 'Categories', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-category',
             ],
             [
-                'label' => __( 'Tags', 'the-events-calendar-addon2' ),
+                'label' => __( 'Tags', 'the-events-calendar-addon' ),
                 'value' => 'gs-teca-tag',
             ]
         ];
@@ -2240,11 +2240,11 @@ final class Builder {
     public function get_filter_type() {
         return [
             [
-                'label' => __( 'Normal Filter', 'the-events-calendar-addon2' ),
+                'label' => __( 'Normal Filter', 'the-events-calendar-addon' ),
                 'value' => 'normal-filter'
             ],
             [
-                'label' => __( 'Ajax Filter', 'the-events-calendar-addon2' ),
+                'label' => __( 'Ajax Filter', 'the-events-calendar-addon' ),
                 'value' => 'ajax-filter'
             ]
         ];
@@ -2370,7 +2370,7 @@ final class Builder {
             'search_result_limit'              => 10,
 
             'popup_show_related_events'        => 'on',
-            'popup_related_events_title'       => __( 'Related Events', 'the-events-calendar-addon2' ),
+            'popup_related_events_title'       => __( 'Related Events', 'the-events-calendar-addon' ),
             'popup_related_events_limit'       => 3,
             'popup_related_events_sources'     => array( 'category', 'tag', 'venue', 'organizer', 'upcoming' ),
 
@@ -2440,11 +2440,11 @@ final class Builder {
         $link_types = [
          
             [
-                'label' => __( 'Single Page', 'the-events-calendar-addon2' ),
+                'label' => __( 'Single Page', 'the-events-calendar-addon' ),
                 'value' => 'single_page'
             ],
             [
-                'label' => __( 'Popup', 'the-events-calendar-addon2' ),
+                'label' => __( 'Popup', 'the-events-calendar-addon' ),
                 'value' => 'popup'
             ]
         ];
@@ -2472,13 +2472,13 @@ final class Builder {
 
     public function get_shortcode_default_translations() {
         $translations = [
-            'gs_teca_more'                             => __('More', 'the-events-calendar-addon2'),
-            'gs_teca_prev_txt'                         => __('Prev', 'the-events-calendar-addon2'),
-            'gs_teca_next_txt'                         => __('Next', 'the-events-calendar-addon2'),
-            'gs_teca_view_details_text'                => __( 'View Details', 'the-events-calendar-addon2' ),
-            'gs_teca_related_events_title'             => __( 'Related Events', 'the-events-calendar-addon2' ),
-            'gs_teca_event_website_text'               => __( 'Event Website', 'the-events-calendar-addon2' ),
-            'gs_teca_add_to_calendar_text'             => __( 'Add to calendar', 'the-events-calendar-addon2' ),
+            'gs_teca_more'                             => __('More', 'the-events-calendar-addon'),
+            'gs_teca_prev_txt'                         => __('Prev', 'the-events-calendar-addon'),
+            'gs_teca_next_txt'                         => __('Next', 'the-events-calendar-addon'),
+            'gs_teca_view_details_text'                => __( 'View Details', 'the-events-calendar-addon' ),
+            'gs_teca_related_events_title'             => __( 'Related Events', 'the-events-calendar-addon' ),
+            'gs_teca_event_website_text'               => __( 'Event Website', 'the-events-calendar-addon' ),
+            'gs_teca_add_to_calendar_text'             => __( 'Add to calendar', 'the-events-calendar-addon' ),
         ];
 
         return $translations;
@@ -2636,11 +2636,11 @@ final class Builder {
             'shortcodes' => $this->get_shortcode_options(),
             'replace_types' => [
                 [
-                    'label' => __( 'No Change', 'the-events-calendar-addon2' ),
+                    'label' => __( 'No Change', 'the-events-calendar-addon' ),
                     'value' => 'no_change'
                 ],
                 [
-                    'label' => __( 'Change completely (use all options of the shortcode)', 'the-events-calendar-addon2' ),
+                    'label' => __( 'Change completely (use all options of the shortcode)', 'the-events-calendar-addon' ),
                     'value' => 'change_all'
                 ]
             ],
@@ -2662,27 +2662,27 @@ final class Builder {
     public static function get_all_single_page_style_options() {
         return array(
             array(
-                'label' => __( 'Default', 'the-events-calendar-addon2' ),
+                'label' => __( 'Default', 'the-events-calendar-addon' ),
                 'value' => 'default',
             ),
             array(
-                'label' => __( 'Style One', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style One', 'the-events-calendar-addon' ),
                 'value' => 'style-one',
             ),
             array(
-                'label' => __( 'Style Two', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style Two', 'the-events-calendar-addon' ),
                 'value' => 'style-two',
             ),
             array(
-                'label' => __( 'Style Three', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style Three', 'the-events-calendar-addon' ),
                 'value' => 'style-three',
             ),
             array(
-                'label' => __( 'Style Four', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style Four', 'the-events-calendar-addon' ),
                 'value' => 'style-four',
             ),
             array(
-                'label' => __( 'Style Five', 'the-events-calendar-addon2' ),
+                'label' => __( 'Style Five', 'the-events-calendar-addon' ),
                 'value' => 'style-five',
             ),
         );
@@ -2747,31 +2747,31 @@ final class Builder {
         return [
             'anchor_tag_rel' => [
                 [
-                    'label' => __( 'nofollow', 'the-events-calendar-addon2' ),
+                    'label' => __( 'nofollow', 'the-events-calendar-addon' ),
                     'value' => 'nofollow'
                 ],
                 [
-                    'label' => __( 'noopener', 'the-events-calendar-addon2' ),
+                    'label' => __( 'noopener', 'the-events-calendar-addon' ),
                     'value' => 'noopener'
                 ],
                 [
-                    'label' => __( 'noreferrer', 'the-events-calendar-addon2' ),
+                    'label' => __( 'noreferrer', 'the-events-calendar-addon' ),
                     'value' => 'noreferrer'
                 ],
                 [
-                    'label' => __( 'nofollow noopener', 'the-events-calendar-addon2' ),
+                    'label' => __( 'nofollow noopener', 'the-events-calendar-addon' ),
                     'value' => 'nofollow noopener'
                 ],
                 [
-                    'label' => __( 'nofollow noreferrer', 'the-events-calendar-addon2' ),
+                    'label' => __( 'nofollow noreferrer', 'the-events-calendar-addon' ),
                     'value' => 'nofollow noreferrer'
                 ],
                 [
-                    'label' => __( 'noopener noreferrer', 'the-events-calendar-addon2' ),
+                    'label' => __( 'noopener noreferrer', 'the-events-calendar-addon' ),
                     'value' => 'noopener noreferrer'
                 ],
                 [
-                    'label' => __( 'nofollow noopener noreferrer', 'the-events-calendar-addon2' ),
+                    'label' => __( 'nofollow noopener noreferrer', 'the-events-calendar-addon' ),
                     'value' => 'nofollow noopener noreferrer'
                 ],
             ],
@@ -2790,7 +2790,7 @@ final class Builder {
         // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         do_action( 'gsteca_preference_update' );
     
-        if ( $is_ajax ) wp_send_json_success( __('Preference saved', 'the-events-calendar-addon2') );
+        if ( $is_ajax ) wp_send_json_success( __('Preference saved', 'the-events-calendar-addon') );
     }
 
     public function _save_shortcode_layout( $layout, $is_ajax ) {
@@ -2805,7 +2805,7 @@ final class Builder {
         // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing hook name is kept for backward compatibility.
         do_action( 'gsteca_layout_update' );
     
-        if ( $is_ajax ) wp_send_json_success( __('Layout saved', 'the-events-calendar-addon2') );
+        if ( $is_ajax ) wp_send_json_success( __('Layout saved', 'the-events-calendar-addon') );
     }
 
     public function save_shortcode_layout( $nonce = null ) {
@@ -2816,7 +2816,7 @@ final class Builder {
         $layout = $this->get_post_array( 'layout' );
 
         if ( empty( $layout ) ) {
-            wp_send_json_error( esc_html__( 'No layout provided', 'the-events-calendar-addon2' ), 400 );
+            wp_send_json_error( esc_html__( 'No layout provided', 'the-events-calendar-addon' ), 400 );
         }
 
         $this->_save_shortcode_layout( $layout, true );
@@ -2836,7 +2836,7 @@ final class Builder {
             'event_tag_replace_type'  => 'no_change',
 
             'show_related_events'     => 'on',
-            'related_events_title'    => __( 'Related Events', 'the-events-calendar-addon2' ),
+            'related_events_title'    => __( 'Related Events', 'the-events-calendar-addon' ),
             'related_events_limit'    => 3,
             'related_events_sources'  => array( 'category', 'tag', 'venue', 'organizer', 'upcoming' ),
         ];
@@ -2880,7 +2880,7 @@ final class Builder {
         $prefs = $this->get_post_array( 'prefs' );
 
         if ( empty( $prefs ) ) {
-            wp_send_json_error( esc_html__( 'No preference provided', 'the-events-calendar-addon2' ), 400 );
+            wp_send_json_error( esc_html__( 'No preference provided', 'the-events-calendar-addon' ), 400 );
         }
 
         $this->_save_shortcode_pref( $prefs, true );
@@ -3468,7 +3468,7 @@ final class Builder {
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error(
                 array(
-                    'message' => esc_html__( 'Unauthorised Request', 'the-events-calendar-addon2' ),
+                    'message' => esc_html__( 'Unauthorised Request', 'the-events-calendar-addon' ),
                 ),
                 401
             );
@@ -3479,7 +3479,7 @@ final class Builder {
         if ( ! $shortcode_id ) {
             wp_send_json_error(
                 array(
-                    'message' => esc_html__( 'Missing shortcode id', 'the-events-calendar-addon2' ),
+                    'message' => esc_html__( 'Missing shortcode id', 'the-events-calendar-addon' ),
                 ),
                 400
             );
@@ -3490,7 +3490,7 @@ final class Builder {
         if ( empty( $order ) ) {
             wp_send_json_error(
                 array(
-                    'message' => esc_html__( 'Invalid order data', 'the-events-calendar-addon2' ),
+                    'message' => esc_html__( 'Invalid order data', 'the-events-calendar-addon' ),
                 ),
                 400
             );

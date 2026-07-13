@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Template variables are intentionally local and may be shared with included partial templates.
 
 $event_ids = isset( $event_ids ) && is_array( $event_ids ) ? $event_ids : array();
-$title     = isset( $title ) ? (string) $title : __( 'Related Events', 'the-events-calendar-addon2' );
+$title     = isset( $title ) ? (string) $title : __( 'Related Events', 'the-events-calendar-addon' );
 $settings  = isset( $settings ) && is_array( $settings ) ? $settings : array();
 $context   = isset( $context ) ? sanitize_key( (string) $context ) : 'single';
 

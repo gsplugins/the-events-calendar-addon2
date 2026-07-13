@@ -113,7 +113,7 @@ if ( $end_date && ! $event_id ) {
 
 		<?php if ( $all_day ) : ?>
 			<span class="gs-teca-date-allday">
-				<?php esc_html_e( 'All Day', 'the-events-calendar-addon2' ); ?>
+				<?php esc_html_e( 'All Day', 'the-events-calendar-addon' ); ?>
 			</span>
 		<?php endif; ?>
 
