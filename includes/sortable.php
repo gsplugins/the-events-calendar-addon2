@@ -472,7 +472,7 @@ if ( ! class_exists('GS_Teca_Sortable') ) {
 					$sanitized_data[ $field ] = $sanitized_item;
 				}
 
-				update_option( 'gs_teca_visibility_order', $sanitized_data );
+				update_option( GS_TECA_VISIBILITY_ORDER_OPTION, $sanitized_data );
 			}
 
 			wp_send_json_success();

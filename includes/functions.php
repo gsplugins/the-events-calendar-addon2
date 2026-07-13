@@ -4998,7 +4998,7 @@ function teca_extract_single_page_setting_value( $value, $default = '' ) {
  * @return array
  */
 function teca_get_single_page_layout_settings() {
-	$layout = get_option( 'gs_teca_shortcode_layout', array() );
+	$layout = get_option( GS_TECA_SHORTCODE_LAYOUT_OPTION, array() );
 
 	if ( ! is_array( $layout ) ) {
 		return array();
@@ -5013,7 +5013,7 @@ function teca_get_single_page_layout_settings() {
  * @return void
  */
 function teca_repair_single_page_layout_option() {
-	$layout = get_option( 'gs_teca_shortcode_layout', array() );
+	$layout = get_option( GS_TECA_SHORTCODE_LAYOUT_OPTION, array() );
 
 	if ( ! is_array( $layout ) || ! isset( $layout['single_page_style'] ) ) {
 		return;
@@ -5026,7 +5026,7 @@ function teca_repair_single_page_layout_option() {
 	}
 
 	$layout['single_page_style'] = teca_extract_single_page_setting_value( $raw, 'default' );
-	update_option( 'gs_teca_shortcode_layout', $layout, 'yes' );
+	update_option( GS_TECA_SHORTCODE_LAYOUT_OPTION, $layout, 'yes' );
 }
 
 add_action(

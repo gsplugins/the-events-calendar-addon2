@@ -10,9 +10,9 @@ if (!defined('ABSPATH')) exit;
 
 final class Builder {
 
-    private $option_name = 'gs_teca_shortcode_prefs';
-    private $layout_option_name = 'gs_teca_shortcode_layout';
-    private $fields_visibility_option_name = 'gs_teca_visibility_settings';
+    private $option_name = GS_TECA_SHORTCODE_PREFS_OPTION;
+    private $layout_option_name = GS_TECA_SHORTCODE_LAYOUT_OPTION;
+    private $fields_visibility_option_name = GS_TECA_VISIBILITY_SETTINGS_OPTION;
     private $archive_wp_query = null;
 
     private function verify_ajax_capability() {
@@ -520,23 +520,35 @@ final class Builder {
             'shortcode_name'     => '%s',
             'shortcode_settings' => '%s',
             'created_at'         => '%s',
-            'updated_at'         => '%s'
+            'updated_at'         => '%s',
+        );
+    }
+
+    protected function get_gsteca_shortcode_insert_columns() {
+
+        return array(
+            'plugin_slug'        => '%s',
+            'shortcode_name'     => '%s',
+            'shortcode_settings' => '%s',
+            'created_at'         => '%s',
+            'updated_at'         => '%s',
         );
     }
 
     private function get_gs_teca_table_name() {
-        $wpdb       = $this->gsteca_get_wpdb();
-        $table_name = $wpdb->prefix . 'gs_teca';
+        return teca_get_shortcode_table_name();
+    }
 
-        return preg_replace( '/[^A-Za-z0-9_]/', '', $table_name );
+    private function get_plugin_slug() {
+        return GS_TECA_PLUGIN_SLUG;
     }
 
     private function clear_shortcode_cache( $shortcode_id = 0 ) {
-        wp_cache_delete( 'gs_teca_shortcodes' );
-        wp_cache_delete( 'gs_teca_shortcodes_minimal' );
+        wp_cache_delete( teca_shortcode_cache_key(), GS_TECA_SHORTCODE_CACHE_GROUP );
+        wp_cache_delete( teca_shortcode_cache_key( 'minimal' ), GS_TECA_SHORTCODE_CACHE_GROUP );
 
         if ( $shortcode_id ) {
-            wp_cache_delete( 'gs_teca_shortcodes_' . absint( $shortcode_id ), 'gs_teca' );
+            wp_cache_delete( teca_shortcode_cache_key( absint( $shortcode_id ) ), GS_TECA_SHORTCODE_CACHE_GROUP );
         }
     }
 
@@ -554,16 +566,17 @@ final class Builder {
         $wpdb = $this->gsteca_get_wpdb();
 
         $shortcode_id = absint( $shortcode_id );
-        $cache_key    = 'gs_teca_shortcodes_' . $shortcode_id;
-        $shortcode    = wp_cache_get( $cache_key, 'gs_teca' );
+        $cache_key    = teca_shortcode_cache_key( $shortcode_id );
+        $shortcode    = wp_cache_get( $cache_key, GS_TECA_SHORTCODE_CACHE_GROUP );
 
         if ( false === $shortcode ) {
             $table_name = $this->get_gs_teca_table_name();
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name is generated internally and sanitized.
             $shortcode = $wpdb->get_row(
                 $wpdb->prepare(
-                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally and sanitized; value is prepared as integer.
-                    "SELECT * FROM {$table_name} WHERE id = %d LIMIT 1",
+                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally and sanitized; values are prepared.
+                    "SELECT * FROM {$table_name} WHERE plugin_slug = %s AND id = %d LIMIT 1",
+                    $this->get_plugin_slug(),
                     $shortcode_id
                 ),
                 ARRAY_A
@@ -572,7 +585,7 @@ final class Builder {
             if ( $shortcode ) {
                 $shortcode['shortcode_settings'] = json_decode( $shortcode['shortcode_settings'], true );
                 $shortcode['shortcode_settings'] = $this->validate_shortcode_settings( $shortcode['shortcode_settings'] );
-                wp_cache_set( $cache_key, $shortcode, 'gs_teca', DAY_IN_SECONDS );
+                wp_cache_set( $cache_key, $shortcode, GS_TECA_SHORTCODE_CACHE_GROUP, DAY_IN_SECONDS );
             }
         }
 
@@ -634,7 +647,16 @@ final class Builder {
         );
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom plugin table write; values are sanitized and shortcode cache is cleared after write.
-        $num_row_updated = $wpdb->update( $table_name, $data, array( 'id' => absint( $shortcode_id ) ), $this->get_gsteca_shortcode_db_columns() );
+        $num_row_updated = $wpdb->update(
+            $table_name,
+            $data,
+            array(
+                'id'          => absint( $shortcode_id ),
+                'plugin_slug' => $this->get_plugin_slug(),
+            ),
+            $this->get_gsteca_shortcode_db_columns(),
+            array( '%d', '%s' )
+        );
 
         $this->clear_shortcode_cache( $shortcode_id );
 
@@ -685,7 +707,8 @@ final class Builder {
                 $shortcodes = $wpdb->get_results(
                     $wpdb->prepare(
                         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Table name and placeholders are generated internally and IDs are prepared as integers.
-                        "SELECT id, shortcode_name FROM {$table_name} WHERE id IN ({$placeholders})",
+                        "SELECT id, shortcode_name FROM {$table_name} WHERE plugin_slug = %s AND id IN ({$placeholders})",
+                        $this->get_plugin_slug(),
                         ...$shortcode_ids
                     ),
                     ARRAY_A
@@ -695,15 +718,16 @@ final class Builder {
                 $shortcodes = $wpdb->get_results(
                     $wpdb->prepare(
                         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Table name and placeholders are generated internally and IDs are prepared as integers.
-                        "SELECT * FROM {$table_name} WHERE id IN ({$placeholders})",
+                        "SELECT * FROM {$table_name} WHERE plugin_slug = %s AND id IN ({$placeholders})",
+                        $this->get_plugin_slug(),
                         ...$shortcode_ids
                     ),
                     ARRAY_A
                 );
             }
         } else {
-            $cache_key  = $minimal ? 'gs_teca_shortcodes_minimal' : 'gs_teca_shortcodes';
-            $shortcodes = wp_cache_get( $cache_key );
+            $cache_key  = $minimal ? teca_shortcode_cache_key( 'minimal' ) : teca_shortcode_cache_key();
+            $shortcodes = wp_cache_get( $cache_key, GS_TECA_SHORTCODE_CACHE_GROUP );
     
             if ( false !== $shortcodes && ! empty( $shortcodes ) ) {
                 if ( $is_ajax ) {
@@ -716,15 +740,21 @@ final class Builder {
             if ( $minimal ) {
                 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name is generated internally and sanitized.
                 $shortcodes = $wpdb->get_results(
-                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally and sanitized.
-                    "SELECT id, shortcode_name FROM {$table_name} ORDER BY id DESC",
+                    $wpdb->prepare(
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally and sanitized.
+                        "SELECT id, shortcode_name FROM {$table_name} WHERE plugin_slug = %s ORDER BY id DESC",
+                        $this->get_plugin_slug()
+                    ),
                     ARRAY_A
                 );
             } else {
                 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name is generated internally and sanitized.
                 $shortcodes = $wpdb->get_results(
-                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally and sanitized.
-                    "SELECT * FROM {$table_name} ORDER BY id DESC",
+                    $wpdb->prepare(
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally and sanitized.
+                        "SELECT * FROM {$table_name} WHERE plugin_slug = %s ORDER BY id DESC",
+                        $this->get_plugin_slug()
+                    ),
                     ARRAY_A
                 );
             }
@@ -741,7 +771,7 @@ final class Builder {
         }
     
         if ( empty( $shortcode_ids ) ) {
-            wp_cache_set( $cache_key, $shortcodes, '', DAY_IN_SECONDS );
+            wp_cache_set( $cache_key, $shortcodes, GS_TECA_SHORTCODE_CACHE_GROUP, DAY_IN_SECONDS );
         }
     
         if ( $is_ajax ) {
@@ -769,14 +799,15 @@ final class Builder {
         $table_name = $this->get_gs_teca_table_name();
 
         $data = array(
-            "shortcode_name" => $shortcode_name,
-            "shortcode_settings" => json_encode($shortcode_settings),
-            "created_at" => current_time('mysql'),
-            "updated_at" => current_time('mysql'),
+            'plugin_slug'        => $this->get_plugin_slug(),
+            'shortcode_name'     => $shortcode_name,
+            'shortcode_settings' => json_encode( $shortcode_settings ),
+            'created_at'         => current_time( 'mysql' ),
+            'updated_at'         => current_time( 'mysql' ),
         );
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom plugin table write; values are sanitized and shortcode cache is cleared after write.
-        $wpdb->insert( $table_name, $data, $this->get_gsteca_shortcode_db_columns() );
+        $wpdb->insert( $table_name, $data, $this->get_gsteca_shortcode_insert_columns() );
 
         if ( $this->gsteca_check_db_error() ) {
             wp_send_json_error(
@@ -828,14 +859,15 @@ final class Builder {
         $table_name = $this->get_gs_teca_table_name();
 
         $data = array(
-            "shortcode_name" => $shortcode_name,
-            "shortcode_settings" => json_encode($shortcode_settings),
-            "created_at" => current_time('mysql'),
-            "updated_at" => current_time('mysql'),
+            'plugin_slug'        => $this->get_plugin_slug(),
+            'shortcode_name'     => $shortcode_name,
+            'shortcode_settings' => json_encode( $shortcode_settings ),
+            'created_at'         => current_time( 'mysql' ),
+            'updated_at'         => current_time( 'mysql' ),
         );
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom plugin table write; values are sanitized and shortcode cache is cleared after write.
-        $wpdb->insert( $table_name, $data, $this->get_gsteca_shortcode_db_columns() );
+        $wpdb->insert( $table_name, $data, $this->get_gsteca_shortcode_insert_columns() );
 
         if ( $this->gsteca_check_db_error() ) {
             wp_send_json_error(
@@ -909,7 +941,8 @@ final class Builder {
         $wpdb->query(
             $wpdb->prepare(
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Placeholders are generated internally and IDs are prepared as integers.
-                "DELETE FROM {$table_name} WHERE ID IN ({$placeholders})",
+                "DELETE FROM {$table_name} WHERE plugin_slug = %s AND id IN ({$placeholders})",
+                $this->get_plugin_slug(),
                 ...$ids
             )
         );
@@ -2511,7 +2544,7 @@ final class Builder {
     public function override_taxonomy_templates() {
         // Check if we're on a taxonomy archive page
         if (is_category() || is_tag() || is_date()) {
-            $layout = get_option('gs_teca_shortcode_layout', array());
+            $layout = get_option( $this->layout_option_name, array() );
             
             // Handle category archives
             if (is_category() && !empty($layout['event_cat']) && !empty($layout['event_cat_shortcode'])) {
@@ -2943,35 +2976,7 @@ final class Builder {
     }
 
     static function maybe_create_shortcodes_table() {
-
-        global $wpdb;
-
-        $gs_teca_db_version = '1.0';
-
-        $saved_db_version = get_option("{$wpdb->prefix}gs_teca_db_version");
-
-        if ( $saved_db_version == $gs_teca_db_version ) return; // vail early
-
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-        $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}gs_teca (
-            id BIGINT(20) unsigned NOT NULL AUTO_INCREMENT,
-            shortcode_name TEXT NOT NULL,
-            shortcode_settings LONGTEXT NOT NULL,
-            created_at DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-            updated_at DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-            PRIMARY KEY (id)
-        )" . $wpdb->get_charset_collate() . ";";
-
-        if ( $saved_db_version < $gs_teca_db_version ) {
-            dbDelta($sql);
-        }
-
-        update_option("{$wpdb->prefix}gs_teca_db_version", $gs_teca_db_version);
-
-        if ( $saved_db_version === false ) {
-            update_option( 'gsteca_install_demo_shortcodes_initially', true );
-        }
+        teca_maybe_create_shortcode_storage();
     }
 
     public function create_dummy_shortcodes() {
@@ -2994,14 +2999,15 @@ final class Builder {
             $shortcode['shortcode_settings']['gsteca-demo_data'] = true;
 
             $data = array(
-                "shortcode_name"     => $shortcode['shortcode_name'],
-                "shortcode_settings" => json_encode($shortcode['shortcode_settings']),
-                "created_at"         => current_time('mysql'),
-                "updated_at"         => current_time('mysql'),
+                'plugin_slug'        => $this->get_plugin_slug(),
+                'shortcode_name'     => $shortcode['shortcode_name'],
+                'shortcode_settings' => json_encode( $shortcode['shortcode_settings'] ),
+                'created_at'         => current_time( 'mysql' ),
+                'updated_at'         => current_time( 'mysql' ),
             );
 
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Custom plugin table write; values are sanitized and shortcode cache is cleared after write.
-            $wpdb->insert( $table_name, $data, $this->get_gsteca_shortcode_db_columns() );
+            $wpdb->insert( $table_name, $data, $this->get_gsteca_shortcode_insert_columns() );
         }
 
         $this->clear_shortcode_cache();
@@ -3016,7 +3022,8 @@ final class Builder {
         $wpdb->query(
             $wpdb->prepare(
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally and sanitized.
-                "DELETE FROM {$table_name} WHERE shortcode_settings LIKE %s",
+                "DELETE FROM {$table_name} WHERE plugin_slug = %s AND shortcode_settings LIKE %s",
+                $this->get_plugin_slug(),
                 '%' . $wpdb->esc_like( $needle ) . '%'
             )
         );
@@ -3068,7 +3075,7 @@ final class Builder {
 
 		$fields_visibility = $this->get_visibility_defaults( $this->single_page_fields_visibility_exclude() );
 
-		$fields_visibility_saved = get_option( 'gs_teca_visibility_order', [] );
+		$fields_visibility_saved = get_option( GS_TECA_VISIBILITY_ORDER_OPTION, [] );
 
 		if ( !empty($fields_visibility_saved) ) {
 			$fields_visibility_merged = array();

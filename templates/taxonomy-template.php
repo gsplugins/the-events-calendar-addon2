@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 get_header(); 
 
 // Get the layout settings
-$layout = get_option('gs_teca_shortcode_layout', array());
+$layout = get_option( GS_TECA_SHORTCODE_LAYOUT_OPTION, array() );
 $shortcode_id = '';
 
 if (is_category() && !empty($layout['event_cat_shortcode'])) {

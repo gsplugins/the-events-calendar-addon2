@@ -48,6 +48,7 @@ if ( ! defined('GS_TECA_PLUGIN_URL') ) {
     define( 'GS_TECA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
+require_once GS_TECA_PLUGIN_DIR . 'includes/shortcode-storage.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/autoloader.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/teca-event-datetime.php';
 require_once GS_TECA_PLUGIN_DIR . 'includes/teca-demo-linked-posts.php';
