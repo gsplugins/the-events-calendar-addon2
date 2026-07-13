@@ -11,6 +11,7 @@ class Hooks {
 
     public function __construct() {
         add_action( 'admin_init', [ $this, 'maybe_redirect' ] );
+        add_action( 'admin_init', [ $this, 'maybe_upgrade_shortcode_storage' ] );
         add_action( 'plugins_loaded', [ $this, 'plugin_loaded' ] );
         add_action( 'in_admin_header', [ $this, 'disable_admin_notices' ], 200 );
     }
@@ -31,7 +32,16 @@ class Hooks {
     public function plugin_loaded() {
         gs_update_plugin_version();
         gs_teca_maybe_purge_assets_cache();
-        plugin()->builder->maybe_create_shortcodes_table();
+        teca_maybe_migrate_shortcode_storage();
+    }
+
+    public function maybe_upgrade_shortcode_storage() {
+        if ( ! teca_shortcode_storage_needs_schema_upgrade() ) {
+            return;
+        }
+
+        teca_install_shortcode_storage_schema();
+        teca_maybe_migrate_shortcode_storage();
     }
 
     public function disable_admin_notices() {

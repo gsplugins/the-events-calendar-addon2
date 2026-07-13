@@ -689,41 +689,49 @@ final class Builder {
     }
 
     public function _get_shortcodes( $shortcode_ids = array(), $is_ajax = false, $minimal = false ) {
-        $wpdb       = $this->gsteca_get_wpdb();
-        $table_name = $this->get_gs_teca_table_name();
+        $wpdb        = $this->gsteca_get_wpdb();
+        $table_name  = $this->get_gs_teca_table_name();
+        $plugin_slug = sanitize_key( $this->get_plugin_slug() );
+        $cache_key   = '';
     
         if ( ! empty( $shortcode_ids ) ) {
             $shortcode_ids = is_array( $shortcode_ids ) ? $shortcode_ids : explode( ',', $shortcode_ids );
-            $shortcode_ids = array_filter( array_map( 'absint', $shortcode_ids ) );
+            $shortcode_ids = array_values( array_unique( array_filter( array_map( 'absint', $shortcode_ids ) ) ) );
     
             if ( empty( $shortcode_ids ) ) {
                 return array();
             }
     
-            $placeholders = implode( ', ', array_fill( 0, count( $shortcode_ids ), '%d' ) );
+            $shortcodes = array();
     
-            if ( $minimal ) {
-                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name and placeholders are generated internally and IDs are prepared as integers.
-                $shortcodes = $wpdb->get_results(
-                    $wpdb->prepare(
-                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Table name and placeholders are generated internally and IDs are prepared as integers.
-                        "SELECT id, shortcode_name FROM {$table_name} WHERE plugin_slug = %s AND id IN ({$placeholders})",
-                        $this->get_plugin_slug(),
-                        ...$shortcode_ids
-                    ),
-                    ARRAY_A
-                );
-            } else {
-                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name and placeholders are generated internally and IDs are prepared as integers.
-                $shortcodes = $wpdb->get_results(
-                    $wpdb->prepare(
-                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Table name and placeholders are generated internally and IDs are prepared as integers.
-                        "SELECT * FROM {$table_name} WHERE plugin_slug = %s AND id IN ({$placeholders})",
-                        $this->get_plugin_slug(),
-                        ...$shortcode_ids
-                    ),
-                    ARRAY_A
-                );
+            foreach ( $shortcode_ids as $shortcode_id ) {
+                if ( $minimal ) {
+                    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name is generated internally and values are prepared.
+                    $row = $wpdb->get_row(
+                        $wpdb->prepare(
+                            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally by the plugin.
+                            "SELECT id, shortcode_name FROM {$table_name} WHERE plugin_slug = %s AND id = %d",
+                            $plugin_slug,
+                            $shortcode_id
+                        ),
+                        ARRAY_A
+                    );
+                } else {
+                    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name is generated internally and values are prepared.
+                    $row = $wpdb->get_row(
+                        $wpdb->prepare(
+                            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally by the plugin.
+                            "SELECT * FROM {$table_name} WHERE plugin_slug = %s AND id = %d",
+                            $plugin_slug,
+                            $shortcode_id
+                        ),
+                        ARRAY_A
+                    );
+                }
+    
+                if ( ! empty( $row ) ) {
+                    $shortcodes[] = $row;
+                }
             }
         } else {
             $cache_key  = $minimal ? teca_shortcode_cache_key( 'minimal' ) : teca_shortcode_cache_key();
@@ -738,22 +746,22 @@ final class Builder {
             }
     
             if ( $minimal ) {
-                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name is generated internally and sanitized.
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name is generated internally and value is prepared.
                 $shortcodes = $wpdb->get_results(
                     $wpdb->prepare(
-                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally and sanitized.
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally by the plugin.
                         "SELECT id, shortcode_name FROM {$table_name} WHERE plugin_slug = %s ORDER BY id DESC",
-                        $this->get_plugin_slug()
+                        $plugin_slug
                     ),
                     ARRAY_A
                 );
             } else {
-                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name is generated internally and sanitized.
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table query; table name is generated internally and value is prepared.
                 $shortcodes = $wpdb->get_results(
                     $wpdb->prepare(
-                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally and sanitized.
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is generated internally by the plugin.
                         "SELECT * FROM {$table_name} WHERE plugin_slug = %s ORDER BY id DESC",
-                        $this->get_plugin_slug()
+                        $plugin_slug
                     ),
                     ARRAY_A
                 );
@@ -770,7 +778,7 @@ final class Builder {
             );
         }
     
-        if ( empty( $shortcode_ids ) ) {
+        if ( empty( $shortcode_ids ) && ! empty( $cache_key ) ) {
             wp_cache_set( $cache_key, $shortcodes, GS_TECA_SHORTCODE_CACHE_GROUP, DAY_IN_SECONDS );
         }
     
@@ -780,7 +788,6 @@ final class Builder {
     
         return $shortcodes;
     }
-
     public function create_shortcode() {
 
         $this->verify_ajax_capability();
@@ -924,31 +931,50 @@ final class Builder {
     public function delete_shortcodes() {
         $this->verify_ajax_capability();
         $this->verify_ajax_nonce( '_gsteca_delete_shortcodes_gs_' );
-
+    
         $ids = $this->get_post_ids( 'ids' );
-
+        $ids = array_values( array_unique( array_filter( array_map( 'absint', (array) $ids ) ) ) );
+    
         if ( empty( $ids ) ) {
             wp_send_json_error( esc_html__( 'No shortcode ids provided', 'the-events-calendar-addon' ), 400 );
         }
-
+    
         $wpdb       = $this->gsteca_get_wpdb();
         $count      = count( $ids );
         $table_name = $this->get_gs_teca_table_name();
-
-        $placeholders = implode( ',', array_fill( 0, $count, '%d' ) );
-
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table write; table name is generated internally and sanitized, IDs are prepared as integers, cache is cleared after write.
-        $wpdb->query(
-            $wpdb->prepare(
-                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Placeholders are generated internally and IDs are prepared as integers.
-                "DELETE FROM {$table_name} WHERE plugin_slug = %s AND id IN ({$placeholders})",
-                $this->get_plugin_slug(),
-                ...$ids
-            )
-        );
-
+        $plugin_slug = sanitize_key( $this->get_plugin_slug() );
+        $deleted     = 0;
+    
+        foreach ( $ids as $id ) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Custom plugin table write; table name is generated internally, values are sanitized/prepared by wpdb::delete(), and cache is cleared after write.
+            $result = $wpdb->delete(
+                $table_name,
+                array(
+                    'plugin_slug' => $plugin_slug,
+                    'id'          => $id,
+                ),
+                array(
+                    '%s',
+                    '%d',
+                )
+            );
+    
+            if ( false === $result ) {
+                wp_send_json_error(
+                    sprintf(
+                        /* translators: %s: database error message. */
+                        esc_html__( 'Database Error: %s', 'the-events-calendar-addon' ),
+                        esc_html( $wpdb->last_error )
+                    ),
+                    500
+                );
+            }
+    
+            $deleted += (int) $result;
+        }
+    
         $this->clear_shortcode_cache();
-
+    
         if ( $this->gsteca_check_db_error() ) {
             wp_send_json_error(
                 sprintf(
@@ -959,17 +985,18 @@ final class Builder {
                 500
             );
         }
-
+    
         $message = _n(
             'Shortcode has been deleted',
             'Shortcodes have been deleted',
             $count,
             'the-events-calendar-addon'
         );
-
+    
         wp_send_json_success(
             array(
                 'message' => $message,
+                'deleted' => $deleted,
             )
         );
     }

@@ -180,8 +180,10 @@ function teca_migrate_legacy_shortcode_rows() {
 
 	global $wpdb;
 
-	$legacy_table = teca_get_legacy_shortcode_table_name();
-	$new_table    = teca_get_shortcode_table_name();
+	$legacy_table     = teca_get_legacy_shortcode_table_name();
+	$new_table        = teca_get_shortcode_table_name();
+	$legacy_table_sql = esc_sql( $legacy_table );
+	$new_table_sql    = esc_sql( $new_table );
 
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time migration check against legacy table name.
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $legacy_table ) ) !== $legacy_table ) {
@@ -189,8 +191,8 @@ function teca_migrate_legacy_shortcode_rows() {
 		return;
 	}
 
-	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- One-time migration read from legacy table; table name is generated internally and sanitized.
-	$rows = $wpdb->get_results( "SELECT * FROM {$legacy_table}", ARRAY_A );
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- One-time migration read from legacy table; table name is generated internally and escaped.
+	$rows = $wpdb->get_results( "SELECT * FROM `{$legacy_table_sql}`", ARRAY_A );
 
 	if ( empty( $rows ) ) {
 		update_option( GS_TECA_SHORTCODE_MIGRATION_OPTION, 1, false );
@@ -210,14 +212,16 @@ function teca_migrate_legacy_shortcode_rows() {
 			continue;
 		}
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- One-time migration existence check; table name is generated internally and values are prepared.
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- One-time migration existence check; table name is generated internally and escaped, values are prepared.
 		$exists = $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT id FROM {$new_table} WHERE plugin_slug = %s AND id = %d LIMIT 1",
+				"SELECT id FROM `{$new_table_sql}` WHERE plugin_slug = %s AND id = %d LIMIT 1",
 				GS_TECA_PLUGIN_SLUG,
 				$row_id
 			)
 		);
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		if ( $exists ) {
 			$max_id = max( $max_id, $row_id );
@@ -227,13 +231,13 @@ function teca_migrate_legacy_shortcode_rows() {
 		$data = array(
 			'id'                 => $row_id,
 			'plugin_slug'        => GS_TECA_PLUGIN_SLUG,
-			'shortcode_name'     => $row['shortcode_name'],
+			'shortcode_name'     => sanitize_text_field( $row['shortcode_name'] ?? '' ),
 			'shortcode_settings' => $row['shortcode_settings'],
-			'created_at'         => $row['created_at'] ?? current_time( 'mysql' ),
-			'updated_at'         => $row['updated_at'] ?? current_time( 'mysql' ),
+			'created_at'         => sanitize_text_field( $row['created_at'] ?? current_time( 'mysql' ) ),
+			'updated_at'         => sanitize_text_field( $row['updated_at'] ?? current_time( 'mysql' ) ),
 		);
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- One-time migration insert into isolated table.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter -- One-time migration insert into isolated custom table; table name is generated internally.
 		$wpdb->insert(
 			$new_table,
 			$data,
@@ -244,36 +248,24 @@ function teca_migrate_legacy_shortcode_rows() {
 	}
 
 	if ( $max_id > 0 ) {
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- One-time migration adjusts AUTO_INCREMENT on isolated table; table name is generated internally and max id is cast to int.
-		$wpdb->query( 'ALTER TABLE `' . esc_sql( $new_table ) . '` AUTO_INCREMENT = ' . ( $max_id + 1 ) );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- One-time migration adjusts AUTO_INCREMENT on isolated table; table name is generated internally and escaped, max id is cast to int.
+		$wpdb->query( "ALTER TABLE `{$new_table_sql}` AUTO_INCREMENT = " . absint( $max_id + 1 ) );
 	}
 
 	update_option( GS_TECA_SHORTCODE_MIGRATION_OPTION, 1, false );
 }
 
 /**
- * Create or upgrade the isolated shortcode table and run one-time migrations.
+ * Build the dbDelta SQL for the isolated shortcode table.
  *
- * @return void
+ * @return string
  */
-function teca_maybe_create_shortcode_storage() {
+function teca_get_shortcode_table_schema_sql() {
 	global $wpdb;
-
-	$saved_db_version = get_option( GS_TECA_SHORTCODE_DB_VERSION_OPTION );
-
-	if ( GS_TECA_SHORTCODE_DB_VERSION === $saved_db_version ) {
-		if ( ! get_option( GS_TECA_SHORTCODE_MIGRATION_OPTION ) ) {
-			teca_maybe_migrate_shortcode_options();
-			teca_migrate_legacy_shortcode_rows();
-		}
-		return;
-	}
-
-	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 	$table_name = teca_get_shortcode_table_name();
 
-	$sql = "CREATE TABLE {$table_name} (
+	return "CREATE TABLE {$table_name} (
 		id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 		plugin_slug varchar(100) NOT NULL DEFAULT 'the-events-calendar-addon2',
 		shortcode_name text NOT NULL,
@@ -283,15 +275,68 @@ function teca_maybe_create_shortcode_storage() {
 		PRIMARY KEY  (id),
 		KEY plugin_slug (plugin_slug)
 	) " . $wpdb->get_charset_collate() . ';';
+}
 
-	dbDelta( $sql );
+/**
+ * Whether the shortcode table schema needs to be installed or upgraded.
+ *
+ * @return bool
+ */
+function teca_shortcode_storage_needs_schema_upgrade() {
+	return GS_TECA_SHORTCODE_DB_VERSION !== get_option( GS_TECA_SHORTCODE_DB_VERSION_OPTION );
+}
+
+/**
+ * Install or upgrade the isolated shortcode table schema.
+ *
+ * Runs only when the saved DB version differs from the current version.
+ *
+ * @return bool True when schema was installed or upgraded.
+ */
+function teca_install_shortcode_storage_schema() {
+	if ( ! teca_shortcode_storage_needs_schema_upgrade() ) {
+		return false;
+	}
+
+	$saved_db_version = get_option( GS_TECA_SHORTCODE_DB_VERSION_OPTION );
+
+	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange -- Custom plugin table is created or upgraded once via dbDelta during activation or version upgrade.
+	dbDelta( teca_get_shortcode_table_schema_sql() );
 
 	update_option( GS_TECA_SHORTCODE_DB_VERSION_OPTION, GS_TECA_SHORTCODE_DB_VERSION, false );
-
-	teca_maybe_migrate_shortcode_options();
-	teca_migrate_legacy_shortcode_rows();
 
 	if ( false === $saved_db_version ) {
 		update_option( 'gsteca_install_demo_shortcodes_initially', true, false );
 	}
+
+	return true;
+}
+
+/**
+ * Run one-time shortcode data migrations after schema is current.
+ *
+ * @return void
+ */
+function teca_maybe_migrate_shortcode_storage() {
+	if ( teca_shortcode_storage_needs_schema_upgrade() ) {
+		return;
+	}
+
+	if ( get_option( GS_TECA_SHORTCODE_MIGRATION_OPTION ) ) {
+		return;
+	}
+
+	teca_maybe_migrate_shortcode_options();
+	teca_migrate_legacy_shortcode_rows();
+}
+
+/**
+ * Back-compat wrapper: migrate data only; schema runs on activation/admin upgrade.
+ *
+ * @return void
+ */
+function teca_maybe_create_shortcode_storage() {
+	teca_maybe_migrate_shortcode_storage();
 }

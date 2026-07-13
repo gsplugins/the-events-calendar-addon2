@@ -31,6 +31,8 @@ function is_pro_active_and_valid() {
  */
 function on_activation() {
     add_option('gs_teca_activation_redirect', true);
+    teca_install_shortcode_storage_schema();
+    teca_maybe_migrate_shortcode_storage();
 }
 
 /**
